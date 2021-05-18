@@ -1,0 +1,11 @@
+svg {
+    fill: currentColor;
+}
+
+pre {
+    overflow: auto;
+    width: 100%;
+    font-size: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+}

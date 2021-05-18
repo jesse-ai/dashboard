@@ -1,0 +1,25 @@
+@import "tailwindcss/base";
+
+@layer base {
+    body {
+        @apply text-base;
+    }
+    h1, .h1 {
+        @apply text-xl;
+    }
+    h2, .h2 {
+        @apply text-lg;
+    }
+    h3, .h3 {
+        @apply text-base font-semibold;
+    }
+}
+
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+    .container {
+        @apply max-w-sm mx-auto px-4
+    }
+}

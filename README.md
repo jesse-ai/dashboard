@@ -1,4 +1,4 @@
-# vue-dashboard
+# Jesse Dashboard
 
 ## Project setup
 ```
