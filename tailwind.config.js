@@ -18,6 +18,10 @@ module.exports = {
       body: {
         DEFAULT: '#ffffff',
         dark: '#111c2a'
+      },
+      secondary: {
+        DEFAULT: '#f3f3f6',
+        dark: '#0d1620'
       }
     },
     extend: {
