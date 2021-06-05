@@ -5,4 +5,7 @@ import store from './store'
 
 import './assets/styles/styles.css'
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App)
+  .use(store)
+  .use(router)
+  .mount('#app')

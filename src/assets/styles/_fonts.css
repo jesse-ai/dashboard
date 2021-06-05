@@ -2,23 +2,23 @@
   font-family: 'Proxima Nova';
   font-style: normal;
   font-weight: normal;
-  src: url('/fonts/Proxima-Nova-Regular.woff2') format('woff2'),
-  url('/fonts/Proxima-Nova-Regular.woff') format('woff'),
-  url('/fonts/Proxima-Nova-Regular.ttf') format('truetype');
+  src: url('../../../public/fonts/Proxima-Nova-Regular.woff2') format('woff2'),
+  url('../../../public/fonts/Proxima-Nova-Regular.woff') format('woff'),
+  url('../../../public/fonts/Proxima-Nova-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Proxima Nova';
   font-style: normal;
   font-weight: bold;
-  src: url('/fonts/Proxima-Nova-Bold.woff2') format('woff2'),
-  url('/fonts/Proxima-Nova-Bold.woff') format('woff');
+  src: url('../../../public/fonts/Proxima-Nova-Bold.woff2') format('woff2'),
+  url('../../../public/fonts/Proxima-Nova-Bold.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Proxima Nova';
   font-style: normal;
   font-weight: 600;
-  src: url('/fonts/Proxima-Nova-Semibold.woff2') format('woff2'),
-  url('/fonts/Proxima-Nova-Semibold.woff') format('woff');
+  src: url('../../../public/fonts/Proxima-Nova-Semibold.woff2') format('woff2'),
+  url('../../../public/fonts/Proxima-Nova-Semibold.woff') format('woff');
 }
