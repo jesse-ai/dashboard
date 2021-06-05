@@ -1,8 +1,11 @@
 @import "tailwindcss/base";
 
 @layer base {
-    body {
-        @apply text-base;
+    html {
+        @apply text-base bg-body;
+    }
+    html.dark {
+        @apply text-white bg-body-dark;
     }
     h1, .h1 {
         @apply text-xl;
@@ -17,6 +20,7 @@
 
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
 
 @layer components {
     .container {

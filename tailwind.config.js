@@ -1,8 +1,25 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   mode: 'jit',
   purge: ['./index.html', './src/**/*.vue'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      white: colors.white,
+      gray: colors.coolGray,
+      primary: {
+        DEFAULT: '#4f46e5',
+        dark: '#f9b537'
+      },
+      body: {
+        DEFAULT: '#ffffff',
+        dark: '#111c2a'
+      }
+    },
     extend: {
       fontSize: {
         xl: ['30px', '36px'], // H1
@@ -10,11 +27,6 @@ module.exports = {
         base: ['16px', '24px'],
         sm: ['14px', '20px'],
         caption: ['12px', '16px']
-      },
-      colors: {
-        primary: {
-          DEFAULT: '#4f46e5'
-        }
       },
       fontFamily: {
         sans: [
