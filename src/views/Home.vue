@@ -5,20 +5,24 @@
     <ThemeSwitch/>
   </div>
 
-  <div class="container">
-    <InfoTable/>
+  <div class="container mb-8">
+    <InfoTable class="mb-8"/>
+
+    <InfoLogsTable/>
   </div>
 </template>
 
 <script>
 import ThemeSwitch from '@/components/ThemeSwitch'
 import InfoTable from '@/components/InfoTable'
+import InfoLogsTable from '@/components/InfoLogsTable'
 
 export default {
   name: 'Home',
   components: {
     ThemeSwitch,
-    InfoTable
+    InfoTable,
+    InfoLogsTable
   }
 }
 </script>

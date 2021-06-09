@@ -3,7 +3,7 @@
     <thead class="border-b border-dashed">
       <tr>
         <th class="font-bold pb-2 border-r border-dashed">Paper trade</th>
-        <th>&nbsp;</th>
+        <td/>
       </tr>
     </thead>
 
