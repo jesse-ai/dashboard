@@ -5,6 +5,10 @@ module.exports = {
   purge: ['./index.html', './src/**/*.vue'],
   darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: '1rem'
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
@@ -43,7 +47,5 @@ module.exports = {
     extend: {}
   },
   plugins: [],
-  corePlugins: {
-    container: false
-  }
+  corePlugins: {}
 }

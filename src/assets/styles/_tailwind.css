@@ -21,9 +21,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-
 @layer components {
-    .container {
-        @apply max-w-sm mx-auto px-4
-    }
+
 }

@@ -1,25 +1,24 @@
 <template>
-  <div class="container mx-auto py-5">
-    <HelloWorld/>
+  <div class="container my-5 flex justify-between">
+    <h1>Dashboard</h1>
 
     <ThemeSwitch/>
+  </div>
 
-    <div class="text-primary dark:text-primary-dark">
-      Primary color
-    </div>
+  <div class="container">
+    <InfoTable/>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
 import ThemeSwitch from '@/components/ThemeSwitch'
-
+import InfoTable from '@/components/InfoTable'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
-    ThemeSwitch
+    ThemeSwitch,
+    InfoTable
   }
 }
 </script>
