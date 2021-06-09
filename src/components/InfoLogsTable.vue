@@ -30,8 +30,7 @@ export default {
   name: 'InfoLogsTable',
   components: {},
   data () {
-    return {
-    }
+    return {}
   },
   computed: {},
   mounted () {
@@ -49,6 +48,9 @@ export default {
   }
   table th {
     @apply border-r border-dashed
+  }
+  table tbody td {
+    @apply py-1
   }
 </style>
 

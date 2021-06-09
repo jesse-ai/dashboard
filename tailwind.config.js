@@ -13,19 +13,17 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
+      green: colors.green,
+      red: colors.red,
       white: colors.white,
       gray: colors.coolGray,
       primary: {
         DEFAULT: '#4f46e5',
         dark: '#f9b537'
       },
-      body: {
-        DEFAULT: '#ffffff',
-        dark: '#111c2a'
-      },
-      secondary: {
-        DEFAULT: '#f3f3f6',
-        dark: '#0d1620'
+      main: {
+        DEFAULT: '#1f2937',
+        dark: '#ffffff'
       }
     },
     extend: {

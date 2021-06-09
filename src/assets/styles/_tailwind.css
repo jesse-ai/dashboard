@@ -2,10 +2,10 @@
 
 @layer base {
     html {
-        @apply text-base bg-body;
+        @apply text-main;
     }
     html.dark {
-        @apply text-white bg-body-dark;
+        @apply text-main-dark bg-[#111c2a];
     }
     h1, .h1 {
         @apply text-xl;
