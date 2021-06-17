@@ -17,6 +17,7 @@ module.exports = {
       red: colors.red,
       white: colors.white,
       gray: colors.coolGray,
+      indigo: colors.indigo,
       primary: {
         DEFAULT: '#4f46e5',
         dark: '#f9b537'
