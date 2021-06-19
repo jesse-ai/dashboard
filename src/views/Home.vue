@@ -39,6 +39,36 @@ export default {
     InfoLogsTable,
     RecentCandlesTable,
     PositionsTable
+  },
+  data () {
+    return {
+    }
+  },
+  created () {
+    console.log('Starting connection to websocket server...')
+
+    this.connection = new WebSocket('ws://127.0.0.1:8000/ws')
+
+    this.connection.onmessage = function (event) {
+      // console.log(event)
+      // console.log(typeof event.data)
+      const msg = JSON.parse(event.data)
+      const eventName = msg.event
+      const data = msg.data
+      console.log(eventName)
+      console.log(JSON.stringify(msg))
+
+      // if (msg.event === 'update-dashboard') {
+      //   // console.log(msg.data.positions)
+      //   this.$store.commit('updatePaperModeData', {
+      //     positions: msg.data.positions
+      //   })
+      // }
+    }
+
+    this.connection.onopen = function (event) {
+      console.log('Successfully connected to the echo websocket server...')
+    }
   }
 }
 </script>

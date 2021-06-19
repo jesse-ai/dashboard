@@ -20,7 +20,7 @@
             </thead>
 
             <tbody>
-              <tr>
+              <tr v-for="p in positions" :key="p.symbol">
                 <td class="text-red-500">short</td>
                 <td>TestLiveMode01</td>
                 <td>ETC-USDT</td>
@@ -32,20 +32,6 @@
                 <td>91.8729</td>
                 <td>
                   <span class="text-red-500">-11.54</span> (<span class="text-red-500">-0.2431</span>%)
-                </td>
-              </tr>
-              <tr>
-                <td class="text-red-500">short</td>
-                <td>TestLiveMode01</td>
-                <td>BTC-USDT</td>
-                <td>3</td>
-                <td>25 seconds ago</td>
-                <td>-0.323</td>
-                <td>38042.112</td>
-                <td>38051.168</td>
-                <td>50570.8</td>
-                <td>
-                  <span class="text-red-500">-1.69</span> (<span class="text-red-500">-0.6873</span>%)
                 </td>
               </tr>
             </tbody>
@@ -65,7 +51,11 @@ export default {
     return {
     }
   },
-  computed: {},
+  computed: {
+    positions () {
+      return this.$store.state.modes.paper.positions
+    }
+  },
   mounted () {
   },
   methods: {}
