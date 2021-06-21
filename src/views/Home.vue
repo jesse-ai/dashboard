@@ -30,6 +30,7 @@ import InfoTable from '@/components/Tables/InfoTable'
 import InfoLogsTable from '@/components/Tables/InfoLogsTable'
 import RecentCandlesTable from '@/components/Tables/RecentCandlesTable'
 import PositionsTable from '@/components/Tables/PositionsTable'
+import store from '../store'
 
 export default {
   name: 'Home',
@@ -55,15 +56,14 @@ export default {
       const msg = JSON.parse(event.data)
       const eventName = msg.event
       const data = msg.data
-      console.log(eventName)
-      console.log(JSON.stringify(msg))
+      // console.log(eventName)
+      // console.log(JSON.stringify(msg))
 
-      // if (msg.event === 'update-dashboard') {
-      //   // console.log(msg.data.positions)
-      //   this.$store.commit('updatePaperModeData', {
-      //     positions: msg.data.positions
-      //   })
-      // }
+      if (eventName === 'papertrade.positions') {
+        store.commit('updatePaperModeData', {
+          positions: data
+        })
+      }
     }
 
     this.connection.onopen = function (event) {
