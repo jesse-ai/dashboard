@@ -60,8 +60,16 @@ export default {
       // console.log(JSON.stringify(msg))
 
       if (eventName === 'papertrade.positions') {
-        store.commit('updatePaperModeData', {
+        store.commit('updatePaperPositions', {
           positions: data
+        })
+      } else if (eventName === 'papertrade.general_info') {
+        store.commit('updatePaperGeneralInfo', {
+          general_info: data
+        })
+      } else if (eventName === 'papertrade.orders') {
+        store.commit('updatePaperOrders', {
+          orders: data
         })
       }
     }

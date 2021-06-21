@@ -4,13 +4,28 @@ export default createStore({
   state: {
     modes: {
       paper: {
-        positions: []
+        progressbar: {},
+        positions: [],
+        orders: [],
+        general_info: []
+      },
+      backtest: {
+        progressbar: {}
+      },
+      importCandles: {
+        progressbar: {}
       }
     }
   },
   mutations: {
-    updatePaperModeData (state, payload) {
+    updatePaperPositions (state, payload) {
       state.modes.paper.positions = payload.positions
+    },
+    updatePaperGeneralInfo (state, payload) {
+      state.modes.paper.general_info = payload.general_info
+    },
+    updatePaperOrders (state, payload) {
+      state.modes.paper.orders = payload.orders
     }
   },
   getters: {
