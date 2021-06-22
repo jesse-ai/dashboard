@@ -20,32 +20,18 @@
             </thead>
 
             <tbody>
-              <tr>
-                <td class="text-red-500">short</td>
-                <td>TestLiveMode01</td>
-                <td>ETC-USDT</td>
-                <td>3</td>
-                <td>26 seconds ago</td>
-                <td>-206</td>
-                <td>69.112</td>
-                <td>69.168</td>
-                <td>91.8729</td>
+              <tr v-for="p in positions" :key="p.symbol">
+                <td>{{ p.type }}</td>
+                <td>{{ p.strategy_name }}</td>
+                <td>{{ p.symbol }}</td>
+                <td>{{ p.leverage }}</td>
+                <td>{{ p.opened_at }}</td>
+                <td>{{ p.qty }}</td>
+                <td>{{ p.entry }}</td>
+                <td>{{ p.current_price }}</td>
+                <td>{{ p.liq_price }}</td>
                 <td>
-                  <span class="text-red-500">-11.54</span> (<span class="text-red-500">-0.2431</span>%)
-                </td>
-              </tr>
-              <tr>
-                <td class="text-red-500">short</td>
-                <td>TestLiveMode01</td>
-                <td>BTC-USDT</td>
-                <td>3</td>
-                <td>25 seconds ago</td>
-                <td>-0.323</td>
-                <td>38042.112</td>
-                <td>38051.168</td>
-                <td>50570.8</td>
-                <td>
-                  <span class="text-red-500">-1.69</span> (<span class="text-red-500">-0.6873</span>%)
+                  <span class="text-red-500">{{ p.pnl }}</span> (<span class="text-red-500">{{ p.pnl_perc }}</span>%)
                 </td>
               </tr>
             </tbody>
@@ -57,6 +43,7 @@
 </template>
 
 <script>
+import store from '../../store'
 
 export default {
   name: 'PositionsTable',
@@ -65,7 +52,11 @@ export default {
     return {
     }
   },
-  computed: {},
+  computed: {
+    positions () {
+      return store.state.modes.paper.positions
+    }
+  },
   mounted () {
   },
   methods: {}

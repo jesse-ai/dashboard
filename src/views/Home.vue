@@ -30,6 +30,7 @@ import InfoTable from '@/components/Tables/InfoTable'
 import InfoLogsTable from '@/components/Tables/InfoLogsTable'
 import RecentCandlesTable from '@/components/Tables/RecentCandlesTable'
 import PositionsTable from '@/components/Tables/PositionsTable'
+import store from '../store'
 
 export default {
   name: 'Home',
@@ -39,6 +40,43 @@ export default {
     InfoLogsTable,
     RecentCandlesTable,
     PositionsTable
+  },
+  data () {
+    return {
+    }
+  },
+  created () {
+    console.log('Starting connection to websocket server...')
+
+    this.connection = new WebSocket('ws://127.0.0.1:8000/ws')
+
+    this.connection.onmessage = function (event) {
+      // console.log(event)
+      // console.log(typeof event.data)
+      const msg = JSON.parse(event.data)
+      const eventName = msg.event
+      const data = msg.data
+      // console.log(eventName)
+      // console.log(JSON.stringify(msg))
+
+      if (eventName === 'papertrade.positions') {
+        store.commit('updatePaperPositions', {
+          positions: data
+        })
+      } else if (eventName === 'papertrade.general_info') {
+        store.commit('updatePaperGeneralInfo', {
+          general_info: data
+        })
+      } else if (eventName === 'papertrade.orders') {
+        store.commit('updatePaperOrders', {
+          orders: data
+        })
+      }
+    }
+
+    this.connection.onopen = function (event) {
+      console.log('Successfully connected to the echo websocket server...')
+    }
   }
 }
 </script>
