@@ -3,7 +3,7 @@
     <button
       type="button"
       :class="{ 'selected': theme === 'light' }"
-      class="relative inline-flex items-center px-4 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+      class="switch-btn rounded-l-md"
       @click="setTheme('light')">
       <SunIcon class="w-4 h-4 mr-1"/>
 
@@ -13,7 +13,7 @@
     <button
       type="button"
       :class="{ 'selected': theme === 'dark' }"
-      class="-ml-px relative inline-flex items-center px-4 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+      class="-ml-px switch-btn rounded-r-md"
       @click="setTheme('dark')">
       <MoonIcon class="w-4 h-4 mr-1"/>
 
@@ -75,7 +75,14 @@ export default {
 </script>
 
 <style scoped>
-  .selected {
-    @apply bg-gray-100
+  .switch-btn {
+    @apply relative inline-flex items-center px-4 py-1 text-sm font-medium focus:z-10;
+    @apply border border-gray-200 dark:border-gray-500;
+    @apply bg-transparent;
+    @apply text-gray-600 dark:text-gray-500;
+    @apply focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary dark:focus:ring-primary-dark dark:focus:border-primary-dark;
+  }
+  .switch-btn.selected {
+    @apply bg-gray-100 dark:bg-backdrop-secondary-dark;
   }
 </style>

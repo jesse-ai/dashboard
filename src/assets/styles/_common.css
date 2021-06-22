@@ -16,3 +16,8 @@ table {
 table th, table td {
     @apply px-2
 }
+
+.dark {
+    @apply text-primary-dark;
+    background: red;
+}

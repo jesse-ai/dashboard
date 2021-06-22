@@ -22,9 +22,20 @@ module.exports = {
         DEFAULT: '#4f46e5',
         dark: '#f9b537'
       },
-      main: {
-        DEFAULT: '#1f2937',
-        dark: '#ffffff'
+      // Background colors
+      backdrop: {
+        DEFAULT: '#ffffff',
+        dark: '#111c2a'
+      },
+      // Background secondary colors
+      'backdrop-secondary': {
+        DEFAULT: '#f3f3f6',
+        dark: '#0d1620'
+      },
+      // Text colors
+      body: {
+        DEFAULT: '#333333',
+        dark: '#f6f7ee'
       }
     },
     extend: {

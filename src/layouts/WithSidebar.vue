@@ -1,6 +1,5 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="h-screen flex overflow-hidden bg-white">
+  <div class="h-screen flex overflow-hidden bg-white bg-backdrop dark:bg-backdrop-dark">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
@@ -27,7 +26,7 @@
           leave="transition ease-in-out duration-300 transform"
           leave-from="translate-x-0"
           leave-to="-translate-x-full">
-          <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+          <div class="relative flex-1 flex flex-col max-w-xs w-full bg-backdrop dark:bg-backdrop-dark">
             <TransitionChild
               as="template"
               enter="ease-in-out duration-300"
@@ -41,6 +40,7 @@
                   class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   @click="sidebarOpen = false">
                   <span class="sr-only">Close sidebar</span>
+
                   <XIcon class="h-6 w-6 text-white" aria-hidden="true"/>
                 </button>
               </div>
@@ -59,7 +59,7 @@
 
             <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
               <div class="flex items-center justify-center w-full">
-                <span class="mr-2">Theme:</span>
+                <span class="mr-2">Theme: 1</span>
 
                 <ThemeSwitch/>
               </div>
@@ -77,7 +77,7 @@
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
+        <div class="flex flex-col h-0 flex-1 border-r border-gray-200 bg-backdrop dark:bg-backdrop-dark">
           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
               <img
@@ -91,7 +91,7 @@
 
           <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
             <div class="flex items-center justify-center w-full">
-              <span class="mr-2">Theme:</span>
+              <span class="mr-2 text-gray-600 dark:text-gray-500">Theme:</span>
 
               <ThemeSwitch/>
             </div>
@@ -113,10 +113,6 @@
 
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         <div class="py-6">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-          </div>
-
           <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <router-view/>
           </div>
