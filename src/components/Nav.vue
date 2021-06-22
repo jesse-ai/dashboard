@@ -4,7 +4,7 @@
       v-for="item in navigation"
       :key="item.name"
       :to="item.to"
-      class="nav-item group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+      class="nav-item group flex items-center px-2 py-2 text-base font-medium rounded-md"
       :exact-active-class="'nav-item-current'">
       {{ item.name }}
     </router-link>
@@ -33,9 +33,9 @@ export default {
 
 <style scoped>
   .nav-item {
-    @apply text-indigo-100 hover:bg-indigo-600;
+    @apply text-gray-400 group-hover:text-gray-500
   }
   .nav-item.nav-item-current {
-    @apply bg-indigo-800 text-white
+    @apply bg-gray-100 text-gray-900
   }
 </style>
