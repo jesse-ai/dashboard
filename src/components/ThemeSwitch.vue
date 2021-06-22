@@ -77,7 +77,7 @@ export default {
 <style scoped>
   .switch-btn {
     @apply relative inline-flex items-center px-4 py-1 text-sm font-medium focus:z-10;
-    @apply border border-gray-200 dark:border-gray-500;
+    @apply border border-gray-200 dark:border-gray-600;
     @apply bg-transparent;
     @apply text-gray-600 dark:text-gray-500;
     @apply focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary dark:focus:ring-primary-dark dark:focus:border-primary-dark;
