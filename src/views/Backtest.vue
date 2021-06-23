@@ -1,21 +1,51 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="mb-5">Backtest</h1>
 
-    <p class="mb-2">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi asperiores commodi consequuntur, dolor ducimus eos
-      hic illo, ipsam libero natus nisi, nostrum omnis quibusdam quis sunt totam vel veritatis voluptatem!
-    </p>
+<!--    <CircleProgressbar :progress="20"/>-->
 
-    <h2>Content will be here</h2>
+    <br>
+
+    <Toggle class="mb-4"
+            title="Debug Mode"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <Toggle class="mb-4"
+            title="Export CSV"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <Toggle class="mb-4"
+            title="Export JSON"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <Toggle class="mb-4"
+            title="Charts"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <Toggle class="mb-4"
+            title="Full Metrics Report"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <Toggle class="mb-4"
+            title="Export TradingView"
+            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+
+    <br>
+    <br>
+
+    <div class="flex justify-center items-center">
+      <button class="btn-primary w-64 h-12 text-center">
+        Start
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import CircleProgressbar from '@/components/Functional/CircleProgressbar'
+import Toggle from '@/components/Functional/Toggle'
 
 export default {
   name: 'Backtest',
-  components: {},
+  components: {
+    CircleProgressbar,
+    Toggle
+  },
   data () {
     return {}
   },
