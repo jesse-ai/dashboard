@@ -17,6 +17,14 @@
 @font-face {
   font-family: 'Proxima Nova';
   font-style: normal;
+  font-weight: 500;
+  src: url('../../../public/fonts/Proxima-Nova-Medium.woff2') format('woff2'),
+  url('../../../public/fonts/Proxima-Nova-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
   font-weight: 600;
   src: url('../../../public/fonts/Proxima-Nova-Semibold.woff2') format('woff2'),
   url('../../../public/fonts/Proxima-Nova-Semibold.woff') format('woff');

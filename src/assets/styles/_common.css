@@ -9,15 +9,3 @@ pre {
     padding-bottom: 10px;
     margin-bottom: 0;
 }
-
-table {
-    @apply font-mono font-normal text-left
-}
-table th, table td {
-    @apply px-2
-}
-
-.dark {
-    @apply text-primary-dark;
-    background: red;
-}
