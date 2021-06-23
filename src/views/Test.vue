@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h1>Test</h1>
+    <InfoTable/>
   </div>
 </template>
 
 <script>
 
+import InfoTable from '@/components/Tables/InfoTable'
+
 export default {
   name: 'Test',
-  components: {},
+  components: {
+    InfoTable
+  },
   data () {
     return {}
   },

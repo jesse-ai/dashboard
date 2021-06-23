@@ -97,7 +97,7 @@
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
       <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button
-          class="-ml-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          class="-ml-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md menu-button"
           @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
 
@@ -163,3 +163,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .menu-button {
+    @apply text-gray-500 hover:text-gray-900 dark:hover:text-gray-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:focus:ring-primary-dark;
+  }
+</style>
