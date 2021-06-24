@@ -26,7 +26,7 @@ module.exports = {
     }],
     'prefer-const': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     'padded-blocks': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'comma-dangle': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    'comma-dangle': 0,
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 'warn' : 'warn',
     'vue/no-unused-vars': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
