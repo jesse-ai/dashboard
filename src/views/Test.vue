@@ -1,17 +1,21 @@
 <template>
   <div>
-    <InfoTable/>
+    <InfoTable class="mb-5"/>
+
+    <InfoLogsTable/>
   </div>
 </template>
 
 <script>
 
 import InfoTable from '@/components/Tables/InfoTable'
+import InfoLogsTable from '@/components/Tables/InfoLogsTable'
 
 export default {
   name: 'Test',
   components: {
-    InfoTable
+    InfoTable,
+    InfoLogsTable
   },
   data () {
     return {}
