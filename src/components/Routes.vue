@@ -92,6 +92,73 @@
         </Menu>
       </div>
     </div>
+
+    <Divider v-if="extraRoutes.length">Extra Routes</Divider>
+
+    <div v-for="er in extraRoutes"
+         :key="er.exchange"
+         class="flex border rounded-lg mb-4">
+      <select id="extra_exchange" name="exchange"
+              class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
+        <option selected>{{ er.exchange }}</option>
+        <option>Canada</option>
+        <option>EU</option>
+      </select>
+      <select id="extra_symbol" name="symbol"
+              class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        <option selected>BTC-USDT</option>
+        <option>Canada</option>
+        <option>EU</option>
+      </select>
+      <select id="extra_timeframe" name="timeframe"
+              class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        <option selected>1h</option>
+        <option>Canada</option>
+        <option>EU</option>
+      </select>
+
+      <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 rounded-r-lg">
+        <Menu as="div" class="relative block h-full w-full">
+          <MenuButton class="px-5 block text-left h-full w-full focus:outline-none">
+            <DotsVerticalIcon class="h-8 w-8 text-gray-400" />
+          </MenuButton>
+
+          <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+                      leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+            <MenuItems class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white z-10 ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+              <div class="py-1">
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                    Delete
+                  </a>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                    Duplicate
+                  </a>
+                </MenuItem>
+              </div>
+              <div class="py-1">
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                    Move Up
+                  </a>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                    Move Down
+                  </a>
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </transition>
+        </Menu>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -99,36 +166,27 @@
 <script>
 import {
   PlusSmIcon, DotsVerticalIcon,
-  ArchiveIcon,
-  ArrowCircleRightIcon,
-  ChevronDownIcon,
   DuplicateIcon,
-  HeartIcon,
-  PencilAltIcon,
   TrashIcon,
-  UserAddIcon,
   ArrowCircleUpIcon,
   ArrowCircleDownIcon
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import Divider from '@/components/Divider'
+
 
 export default {
   name: 'Routes',
   components: {
+    Divider,
     PlusSmIcon,
     DotsVerticalIcon,
     Menu,
     MenuButton,
     MenuItem,
     MenuItems,
-    ArchiveIcon,
-    ArrowCircleRightIcon,
-    ChevronDownIcon,
     DuplicateIcon,
-    HeartIcon,
-    PencilAltIcon,
     TrashIcon,
-    UserAddIcon,
     ArrowCircleUpIcon,
     ArrowCircleDownIcon
   },
@@ -160,6 +218,11 @@ export default {
           exchange: 'Binance Futures',
         }, {
           exchange: 'Binance Futures',
+        },
+      ],
+      extraRoutes: [
+        {
+          exchange: 'Binance',
         },
       ]
     }
