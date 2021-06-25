@@ -1,17 +1,17 @@
 <template>
   <!-- Page title & actions -->
-  <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+  <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
     <div class="flex-1 min-w-0">
       <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
         Backtest
       </h1>
     </div>
     <div class="mt-4 flex sm:mt-0 sm:ml-4">
-      <button type="button" class="btn-secondary mr-2">
-        Share
+      <button type="button" class="btn-link mr-4">
+        Documentation
       </button>
-      <button type="button" class="btn-success">
-        Create
+      <button type="button" class="btn-link">
+        FAQ
       </button>
     </div>
   </div>
