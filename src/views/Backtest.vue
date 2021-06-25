@@ -26,19 +26,12 @@
     <!--      <Select :options="routes.strategies" />-->
     <!--    </div>-->
 
-    <div class="my-6">
-      <div class="flex justify-between items-center">
-        <h3 class="font-semibold mb-2">
-          Routes
-        </h3>
-
-        <div>
-          sdff
-        </div>
-      </div>
-
-      <Route/>
-    </div>
+    <Routes
+      :exchanges="routes.exchanges"
+      :timeframes="routes.timeframes"
+      :symbols="routes.symbols"
+      :strategies="routes.strategies"
+    />
 
     <br>
 
@@ -89,7 +82,7 @@ import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Toggle from '@/components/Functional/Toggle'
 import DatePicker from '@/components/Functional/DatePicker'
 import Select from '@/components/Functional/Select'
-import Route from '@/components/Functional/Route'
+import Routes from '@/components/Routes'
 // import { PlusCircleIcon } from ''
 
 export default {
@@ -99,7 +92,7 @@ export default {
     Toggle,
     DatePicker,
     Select,
-    Route
+    Routes
   },
   data () {
     return {
