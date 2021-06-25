@@ -1,140 +1,83 @@
 <template>
-  <!-- Page title & actions -->
-  <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-    <div class="flex-1 min-w-0">
-      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-        Backtest
-      </h1>
-    </div>
-    <div class="mt-4 flex sm:mt-0 sm:ml-4">
-      <button type="button" class="btn-link mr-4">
-        Documentation
-      </button>
-      <button type="button" class="btn-link">
-        FAQ
-      </button>
-    </div>
-  </div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-    <!--    <CircleProgressbar :progress="20"/>-->
-
-    <!--    <div class="my-6 grid grid-cols-4 gap-4">-->
-    <!--      <Select :options="routes.exchanges" />-->
-    <!--      <Select :options="routes.symbols" />-->
-    <!--      <Select :options="routes.timeframes" />-->
-    <!--      <Select :options="routes.strategies" />-->
-    <!--    </div>-->
-
-    <Routes
-      :exchanges="routes.exchanges"
-      :timeframes="routes.timeframes"
-      :symbols="routes.symbols"
-      :strategies="routes.strategies"
-    />
-
-    <br>
-
-    <Divider>Options</Divider>
-
-    <div class="grid grid-cols-2 gap-8">
-      <Toggle
-        title="Debug Mode"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-      <Toggle
-        title="Export CSV"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-      <Toggle
-        title="Export JSON"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-      <Toggle
-        title="Charts"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-      <Toggle
-        title="Full Metrics Report"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-      <Toggle
-        title="Export TradingView"
-        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+  <section class="h-full flex flex-col justify-between">
+    <!-- Page title & actions -->
+    <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+          Backtest
+        </h1>
+      </div>
+      <div class="mt-4 flex sm:mt-0 sm:ml-4">
+        <button type="button" class="btn-link mr-4">
+          Documentation
+        </button>
+        <button type="button" class="btn-link">
+          FAQ
+        </button>
+      </div>
     </div>
 
-    <br>
-    <br>
+    <!-- Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+      <Routes
+        :exchanges="routes.exchanges"
+        :timeframes="routes.timeframes"
+        :symbols="routes.symbols"
+        :strategies="routes.strategies"
+      />
 
-    <Divider>Duration</Divider>
+      <Divider class="mt-16">Options</Divider>
 
-    <div class="flex items-center select-none flex-1">
-      <input id="start_date"
-             type="date"
-             name="start_date"
-             class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
-      >
-      <input id="finish_date"
-             type="date"
-             name="finish_date"
-             class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md"
-      >
+      <div class="grid grid-cols-2 gap-8">
+        <Toggle
+          title="Debug Mode"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <Toggle
+          title="Export CSV"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <Toggle
+          title="Export JSON"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <Toggle
+          title="Charts"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <Toggle
+          title="Full Metrics Report"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <Toggle
+          title="Export TradingView"
+          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      </div>
+
+      <Divider class="mt-16">Duration</Divider>
+
+      <div class="flex items-center select-none flex-1">
+        <input id="start_date"
+               type="date"
+               name="start_date"
+               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+        >
+        <input id="finish_date"
+               type="date"
+               name="finish_date"
+               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md"
+        >
+      </div>
     </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <!-- Main actions -->
+    <div class="py-4 px-4 sm:px-6 md:px-8 w-full">
+      <div class="max-w-7xl mx-auto flex">
+        <button class="btn-primary text-center mr-2 flex-1">
+          Start
+        </button>
 
-    <div class="flex">
-      <button class="btn-primary text-center mr-2 flex-1">
-        Start
-      </button>
-
-      <button class="btn-secondary text-center ml-2 flex-1">
-        Start in a new tab
-      </button>
+        <button class="btn-secondary text-center ml-2 flex-1">
+          Start in a new tab
+        </button>
+      </div>
     </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <!--    <div class="flex justify-between items-center">-->
-    <!--      <div class="flex items-center select-none flex-1">-->
-    <!--        <input id="start_date"-->
-    <!--               type="date"-->
-    <!--               name="start_date"-->
-    <!--               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"-->
-    <!--        >-->
-    <!--        <input id="finish_date"-->
-    <!--               type="date"-->
-    <!--               name="finish_date"-->
-    <!--               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-r-md"-->
-    <!--        >-->
-    <!--      </div>-->
-
-    <!--      <div class="flex-1 flex">-->
-    <!--        <button class="btn-primary text-center mx-4 flex-1">-->
-    <!--          Start-->
-    <!--        </button>-->
-
-    <!--        <button class="btn-secondary text-center flex-1">-->
-    <!--          Start in a new tab-->
-    <!--        </button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-  </div>
+  </section>
 </template>
 
 <script>
