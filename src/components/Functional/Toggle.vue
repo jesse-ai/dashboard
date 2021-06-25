@@ -1,5 +1,5 @@
 <template>
-  <SwitchGroup as="div" class="flex items-center justify-between">
+  <SwitchGroup as="div" class="flex items-center justify-between select-none">
     <span class="flex-grow flex flex-col">
       <SwitchLabel as="span" class="text-sm font-medium text-gray-900" passive>{{ title }}</SwitchLabel>
       <SwitchDescription as="span" class="text-sm text-gray-500">{{ description }}</SwitchDescription>
