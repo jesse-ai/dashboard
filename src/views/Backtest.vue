@@ -8,12 +8,12 @@
         </h1>
       </div>
       <div class="mt-4 flex sm:mt-0 sm:ml-4">
-        <button type="button" class="btn-link mr-4">
+        <a href="https://docs.jesse.trade/docs/backtest.html" target="_blank" class="btn-link mr-4">
           Documentation
-        </button>
-        <button type="button" class="btn-link">
+        </a>
+        <a href="https://jesse.trade/help" target="_blank" class="btn-link">
           FAQ
-        </button>
+        </a>
       </div>
     </div>
 
