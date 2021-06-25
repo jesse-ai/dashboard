@@ -35,6 +35,8 @@
 
     <br>
 
+    <Divider>Config</Divider>
+
     <Toggle class="mb-4"
             title="Debug Mode"
             description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
@@ -56,6 +58,8 @@
 
     <br>
     <br>
+
+    <Divider>Duration</Divider>
 
     <div class="flex justify-between items-center">
       <div class="flex items-center select-none">
@@ -83,6 +87,7 @@ import Toggle from '@/components/Functional/Toggle'
 import DatePicker from '@/components/Functional/DatePicker'
 import Select from '@/components/Functional/Select'
 import Routes from '@/components/Routes'
+import Divider from '@/components/Divider'
 // import { PlusCircleIcon } from ''
 
 export default {
@@ -92,7 +97,8 @@ export default {
     Toggle,
     DatePicker,
     Select,
-    Routes
+    Routes,
+    Divider
   },
   data () {
     return {
