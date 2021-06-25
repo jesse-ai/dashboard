@@ -37,54 +37,103 @@
 
     <Divider>Options</Divider>
 
-    <Toggle class="mb-4"
-            title="Debug Mode"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-    <Toggle class="mb-4"
-            title="Export CSV"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-    <Toggle class="mb-4"
-            title="Export JSON"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-    <Toggle class="mb-4"
-            title="Charts"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-    <Toggle class="mb-4"
-            title="Full Metrics Report"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-    <Toggle class="mb-4"
-            title="Export TradingView"
-            description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    <div class="grid grid-cols-2 gap-8">
+      <Toggle
+        title="Debug Mode"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      <Toggle
+        title="Export CSV"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      <Toggle
+        title="Export JSON"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      <Toggle
+        title="Charts"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      <Toggle
+        title="Full Metrics Report"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+      <Toggle
+        title="Export TradingView"
+        description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+    </div>
 
     <br>
     <br>
 
     <Divider>Duration</Divider>
 
-    <div class="flex justify-between items-center">
-      <div class="flex items-center select-none flex-1">
-        <input id="start_date"
-               type="date"
-               name="start_date"
-               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
-        >
-        <input id="finish_date"
-               type="date"
-               name="finish_date"
-               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-r-md"
-        >
-      </div>
-
-      <div class="flex-1 flex">
-        <button class="btn-primary text-center mx-4 flex-1">
-          Start
-        </button>
-
-        <button class="btn-secondary text-center flex-1">
-          Start in a new tab
-        </button>
-      </div>
+    <div class="flex items-center select-none flex-1">
+      <input id="start_date"
+             type="date"
+             name="start_date"
+             class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+      >
+      <input id="finish_date"
+             type="date"
+             name="finish_date"
+             class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md"
+      >
     </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="flex">
+      <button class="btn-primary text-center mr-2 flex-1">
+        Start
+      </button>
+
+      <button class="btn-secondary text-center ml-2 flex-1">
+        Start in a new tab
+      </button>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!--    <div class="flex justify-between items-center">-->
+    <!--      <div class="flex items-center select-none flex-1">-->
+    <!--        <input id="start_date"-->
+    <!--               type="date"-->
+    <!--               name="start_date"-->
+    <!--               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"-->
+    <!--        >-->
+    <!--        <input id="finish_date"-->
+    <!--               type="date"-->
+    <!--               name="finish_date"-->
+    <!--               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-r-md"-->
+    <!--        >-->
+    <!--      </div>-->
+
+    <!--      <div class="flex-1 flex">-->
+    <!--        <button class="btn-primary text-center mx-4 flex-1">-->
+    <!--          Start-->
+    <!--        </button>-->
+
+    <!--        <button class="btn-secondary text-center flex-1">-->
+    <!--          Start in a new tab-->
+    <!--        </button>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
