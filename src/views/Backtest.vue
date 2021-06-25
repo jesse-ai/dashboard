@@ -35,7 +35,7 @@
 
     <br>
 
-    <Divider>Config</Divider>
+    <Divider>Options</Divider>
 
     <Toggle class="mb-4"
             title="Debug Mode"
@@ -62,18 +62,25 @@
     <Divider>Duration</Divider>
 
     <div class="flex justify-between items-center">
-      <div class="flex items-center select-none">
-        <DatePicker class="flex-1" name="start_date"/>
-        <span class="mx-2">to</span>
-        <DatePicker class="flex-1" name="finish_date"/>
+      <div class="flex items-center select-none flex-1">
+        <input id="start_date"
+               type="date"
+               name="start_date"
+               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+        >
+        <input id="finish_date"
+               type="date"
+               name="finish_date"
+               class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 text-center sm:text-sm border-gray-300 rounded-r-md"
+        >
       </div>
 
-      <div>
-        <button class="btn-primary text-center mr-4">
+      <div class="flex-1 flex">
+        <button class="btn-primary text-center mx-4 flex-1">
           Start
         </button>
 
-        <button class="btn-secondary text-center">
+        <button class="btn-secondary text-center flex-1">
           Start in a new tab
         </button>
       </div>
