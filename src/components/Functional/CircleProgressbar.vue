@@ -37,7 +37,7 @@ export default {
 
 <style scoped>
 .progress-circle {
-  font-size: 20px;
+  font-size: 40px;
   margin: 20px;
   position: relative; /* so that children can be absolutely positioned */
   padding: 0;
@@ -69,7 +69,7 @@ export default {
   width: 5em;
   text-align: center;
   display: block;
-  color: #53777A;
+  color: #4f46e5;
   z-index: 2;
 }
 
@@ -96,7 +96,7 @@ export default {
   width: 5em;
   height: 5em;
   border-radius: 50%;
-  border: 0.45em solid #53777A; /*The border is 0.35 but making it larger removes visual artifacts */
+  border: 0.45em solid #4f46e5; /*The border is 0.35 but making it larger removes visual artifacts */
   /*background-color: #4D642D;*/ /* for debug */
   box-sizing: border-box;
 
@@ -107,7 +107,7 @@ export default {
   /*Progress bar for the first 50%, filling the whole right half*/
   position: absolute; /*needed for clipping*/
   clip: rect(0, 5em, 5em, 2.5em);
-  background-color: #53777A;
+  background-color: #4f46e5;
   border-radius: 50%;
   width: 5em;
   height: 5em;
