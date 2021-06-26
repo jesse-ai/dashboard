@@ -18,7 +18,7 @@
     </div>
 
     <!-- Content -->
-    <div v-if="!executing"
+    <div v-if="!executing && !showResults"
          class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <Routes
         :exchanges="routes.exchanges"
@@ -66,7 +66,25 @@
       </div>
     </div>
 
-    <!-- Main actions -->
+    <!-- Results -->
+    <div v-if="showResults"
+         class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+      <div>
+        <Divider class="mt-16">
+          Equity Curve
+        </Divider>
+
+        <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
+
+        <Divider class="mt-16">
+          Performance
+        </Divider>
+
+        <KeyValueTable :data="results.metrics" />
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
     <div v-if="!executing"
          class="py-4 px-4 sm:px-6 md:px-8 w-full">
       <div class="max-w-7xl mx-auto flex">
@@ -80,7 +98,8 @@
       </div>
     </div>
 
-    <div v-if="executing"
+    <!-- Execution -->
+    <div v-if="executing && !showResults"
          class="h-full flex flex-col items-center justify-center select-none"
     >
       <div class="">
@@ -105,6 +124,7 @@ import DatePicker from '@/components/Functional/DatePicker'
 import Select from '@/components/Functional/Select'
 import Routes from '@/components/Routes'
 import Divider from '@/components/Divider'
+import KeyValueTable from '@/components/KeyValueTable'
 import axios from 'axios'
 
 export default {
@@ -115,10 +135,12 @@ export default {
     DatePicker,
     Select,
     Routes,
-    Divider
+    Divider,
+    KeyValueTable
   },
   data () {
     return {
+      showResults: true,
       executing: false,
       progress: {
         current: 0,
@@ -129,6 +151,15 @@ export default {
         symbols: ['BTC-USDT', 'ETH-USDT'],
         timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
         strategies: ['TrendFollowing01']
+      },
+      results: {
+        metrics: [
+          ['Total Closed Trades', 'value: 221'],
+          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
+          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
+          ['Total Open Trades', '0'],
+          ['Open PL', '0'],
+        ]
       }
     }
   },
@@ -167,6 +198,8 @@ export default {
           console.log(i)
           that.progress.current = i + 1
         }
+
+        that.showResults = true
       }
 
       demo(this)
