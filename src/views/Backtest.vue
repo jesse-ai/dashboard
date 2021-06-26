@@ -18,7 +18,8 @@
     </div>
 
     <!-- Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+    <div v-if="!executing"
+         class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <Routes
         :exchanges="routes.exchanges"
         :timeframes="routes.timeframes"
@@ -66,14 +67,31 @@
     </div>
 
     <!-- Main actions -->
-    <div class="py-4 px-4 sm:px-6 md:px-8 w-full">
+    <div v-if="!executing"
+         class="py-4 px-4 sm:px-6 md:px-8 w-full">
       <div class="max-w-7xl mx-auto flex">
-        <button class="btn-primary text-center mr-2 flex-1">
+        <button class="btn-primary text-center mr-2 flex-1" @click="start">
           Start
         </button>
 
         <button class="btn-secondary text-center ml-2 flex-1">
           Start in a new tab
+        </button>
+      </div>
+    </div>
+
+    <div v-if="executing"
+         class="h-full flex flex-col items-center justify-center select-none"
+    >
+      <div class="">
+        <CircleProgressbar :progress="progress.current" />
+      </div>
+
+      <h3 class="mt-8">{{ progress.estimated_remaining_seconds }} seconds remaining...</h3>
+
+      <div class="mt-8">
+        <button class="btn-secondary w-64" @click="cancel">
+          Cancel
         </button>
       </div>
     </div>
@@ -87,7 +105,7 @@ import DatePicker from '@/components/Functional/DatePicker'
 import Select from '@/components/Functional/Select'
 import Routes from '@/components/Routes'
 import Divider from '@/components/Divider'
-// import { PlusCircleIcon } from ''
+import axios from 'axios'
 
 export default {
   name: 'Backtest',
@@ -101,6 +119,11 @@ export default {
   },
   data () {
     return {
+      executing: false,
+      progress: {
+        current: 0,
+        estimated_remaining_seconds: 0
+      },
       routes: {
         exchanges: ['Binance', 'Binance Futures'],
         symbols: ['BTC-USDT', 'ETH-USDT'],
@@ -112,7 +135,43 @@ export default {
   computed: {},
   mounted () {
   },
-  methods: {}
+  methods: {
+    cancel () {
+      this.executing = false
+    },
+    start () {
+      this.progress.current = 0
+      this.executing = true
+
+      axios.post('http://127.0.0.1:8000/backtest', {
+        start_date: '2021-06-01',
+        finish_date: '2021-06-18',
+        debug_mode: false,
+        export_csv: false,
+        export_chart: false,
+        export_tradingview: false,
+        export_full_reports: false,
+        export_json: false,
+      }).then(r => {
+        console.log(r.data)
+      })
+
+      function sleep (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+      }
+
+      async function demo (that) {
+        // Sleep in loop
+        for (let i = 0; i < 100; i++) {
+          await sleep(10)
+          console.log(i)
+          that.progress.current = i + 1
+        }
+      }
+
+      demo(this)
+    }
+  }
 }
 </script>
 
