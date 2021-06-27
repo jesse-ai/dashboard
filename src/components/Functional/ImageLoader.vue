@@ -2,7 +2,7 @@
   <div class="inline-block relative">
     <slot :setLoaded="setLoaded"/>
 
-    <CubeSpinner
+    <Spinner
       v-show="!isLoaded"
       class="absolute inset-0 h-full w-full bg-gray-300 dark:bg-gray-500"/>
   </div>
@@ -10,12 +10,12 @@
 
 <script>
 
-import CubeSpinner from '@/components/Functional/Spinner'
+import Spinner from '@/components/Functional/Spinner'
 
 export default {
   name: 'ImageLoader',
   components: {
-    CubeSpinner
+    Spinner
   },
   data () {
     return {

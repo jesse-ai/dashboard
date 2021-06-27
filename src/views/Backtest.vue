@@ -7,10 +7,12 @@
           Backtest
         </h1>
       </div>
+
       <div class="mt-4 flex sm:mt-0 sm:ml-4">
         <a href="https://docs.jesse.trade/docs/backtest.html" target="_blank" class="btn-link mr-4">
           Documentation
         </a>
+
         <a href="https://jesse.trade/help" target="_blank" class="btn-link">
           FAQ
         </a>
@@ -55,13 +57,12 @@
         <input id="start_date"
                type="date"
                name="start_date"
-               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
-        >
+               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0">
+
         <input id="finish_date"
                type="date"
                name="finish_date"
-               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md"
-        >
+               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
       </div>
     </div>
 
@@ -72,18 +73,20 @@
         <Divider>
           Info
         </Divider>
-        <KeyValueTable :data="results.info" />
+        <KeyValueTable :data="results.info"/>
 
         <Divider class="mt-16">
           Equity Curve
         </Divider>
+
         <!-- TODO: replace with actual chart -->
         <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
 
         <Divider class="mt-16">
           Performance
         </Divider>
-        <KeyValueTable :data="results.metrics" />
+
+        <KeyValueTable :data="results.metrics"/>
       </div>
     </div>
 
@@ -103,10 +106,9 @@
 
     <!-- Execution -->
     <div v-if="executing && !showResults"
-         class="h-full flex flex-col items-center justify-center select-none"
-    >
+         class="h-full flex flex-col items-center justify-center select-none">
       <div class="">
-        <CircleProgressbar :progress="progress.current" />
+        <CircleProgressbar :progress="progress.current"/>
       </div>
 
       <h3 class="mt-8">{{ progress.estimated_remaining_seconds }} seconds remaining...</h3>
@@ -223,22 +225,21 @@ export default {
         console.log(r.data)
       })
 
-      // function sleep (ms) {
-      //   return new Promise(resolve => setTimeout(resolve, ms))
-      // }
+      function sleep (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+      }
 
-      // async function demo (that) {
-      //   // Sleep in loop
-      //   for (let i = 0; i < 100; i++) {
-      //     await sleep(10)
-      //     console.log(i)
-      //     that.progress.current = i + 1
-      //   }
-      //
-      //   that.showResults = true
-      // }
-      //
-      // demo(this)
+      async function demo (that) {
+        // Sleep in loop
+        for (let i = 0; i < 100; i++) {
+          await sleep(10)
+          that.progress.current = i + 1
+        }
+
+        that.showResults = true
+      }
+
+      await demo(this)
     }
   }
 }

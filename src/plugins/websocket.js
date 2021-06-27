@@ -58,7 +58,7 @@ export default {
       const event = message.event
       const actions = socketActions.get(event)
 
-      console.log(1, event, message)
+      // console.log(1, event, message)
 
       if (actions !== undefined) {
         actions.forEach(method => {

@@ -1,9 +1,12 @@
 const getDefaultState = () => {
   return {
-    progressbar: {},
-    positions: [],
-    orders: [],
-    general_info: []
+    candlesInfo: {},
+    routesInfo: [],
+    progressbar: {
+      current: 0,
+      estimated_remaining_seconds: 0
+    },
+    metrics: {}
   }
 }
 
@@ -13,29 +16,32 @@ const mutations = {
   RESET_STATE (state) {
     Object.assign(state, getDefaultState())
   },
-  SET_PROGRESSBAR ({ state }, payload) {
+  SET_CANDLES_INFO (state, payload) {
+    state.candlesInfo = payload
+  },
+  SET_ROUTES_INFO (state, payload) {
+    state.routesInfo = payload
+  },
+  SET_PROGRESSBAR (state, payload) {
     state.progressbar = payload
   },
-  SET_POSITIONS ({ state }, payload) {
-    state.positions = payload
-  },
-  SET_ORDERS ({ state }, payload) {
-    state.orders = payload
-  },
-  SET_GENERAL_INFO ({ state }, payload) {
-    state.general_info = payload
+  SET_METRICS (state, payload) {
+    state.metrics = payload
   }
 }
 
 // The Vuex state, except of mutations, should always be accessed by getters, including actions
 const getters = {
+  candlesInfo: (state) => state.candlesInfo,
+  routesInfo: (state) => state.routesInfo,
   progressbar: (state) => state.progressbar,
-  positions: (state) => state.positions,
-  orders: (state) => state.orders,
-  general_info: (state) => state.general_info
+  currentRoundedProgress: (state) => {
+    return Math.round(state.progressbar.current)
+  },
+  metrics: (state) => state.metrics
 }
 
-// Every state change from outside of a module should be invoked as an action.
+// Every state change from outside of a module should be invoked as an action
 const actions = {
   resetState ({ commit }) {
     commit('RESET_STATE')
@@ -43,8 +49,21 @@ const actions = {
   /* Socket Events */
 
   // Name of action event repeat's socket's method name in camelCase
-  backtestCandlesInfo ({ commit }, { data }) {
-
+  candlesInfo ({ commit }, { data }) {
+    console.log('candlesInfo', data)
+    commit('SET_CANDLES_INFO', data)
+  },
+  routesInfo  ({ commit }, { data }) {
+    console.log('routesInfo', data)
+    commit('SET_ROUTES_INFO', data)
+  },
+  progressbar  ({ commit }, { data }) {
+    console.log('progressbar', data)
+    commit('SET_PROGRESSBAR', data)
+  },
+  metrics  ({ commit }, { data }) {
+    console.log('backtestMetrics', data)
+    commit('SET_METRICS', data)
   }
 }
 
