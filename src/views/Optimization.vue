@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-w-xl mx-auto my-5">
     <h1>Optimization</h1>
   </div>
 </template>

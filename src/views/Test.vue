@@ -5,8 +5,7 @@
     <p class="mb-5">Pure backtest example</p>
 
     <button
-      v-show="currentRoundedProgress !== 100"
-      :disabled="currentRoundedProgress > 0"
+      v-show="currentRoundedProgress === 0"
       class="btn-primary text-center px-10 mb-5"
       @click="start">
       Start backtest {{ currentRoundedProgress ? currentRoundedProgress : '' }}
