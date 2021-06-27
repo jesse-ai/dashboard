@@ -1,3 +1,4 @@
+// Handle ws events and pass data to actions
 export default new Map([
   ['backtest.candles_info', [
     'backtest/candlesInfo'

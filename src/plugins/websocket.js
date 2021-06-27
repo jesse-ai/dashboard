@@ -23,6 +23,7 @@ export default {
             clearInterval(openIntervalId)
           }
 
+          // Reset reopen attempts after ws reopened
           reopenAttempts = 3
         })
         .catch(error => {
@@ -43,7 +44,7 @@ export default {
       if (openIntervalId) clearInterval(openIntervalId)
 
       if (reopenAttempts > 0) {
-        // Trying to re-open web-socket
+        // Trying to re-open web-socket after close
         openIntervalId = setInterval(() => {
           console.log('Trying to re-open web-socket')
           reopenAttempts--
@@ -54,11 +55,10 @@ export default {
       }
     })
 
+    // Listen ws events and pass data to vuex's actions
     wsp.onUnpackedMessage.addListener(async message => {
       const event = message.event
       const actions = socketActions.get(event)
-
-      // console.log(1, event, message)
 
       if (actions !== undefined) {
         actions.forEach(method => {

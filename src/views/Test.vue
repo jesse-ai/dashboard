@@ -11,9 +11,20 @@
       Start backtest {{ currentRoundedProgress ? currentRoundedProgress : '' }}
     </button>
 
+    <button
+      v-show="currentRoundedProgress === 100"
+      class="btn-danger text-center px-10 mb-5"
+      @click="backtestResetState">
+      RESET
+    </button>
+
     <Spinner
       v-show="currentRoundedProgress > 0 && currentRoundedProgress !== 100"
       class="h-6 w-6 bg-gray-300"/>
+
+    <h3 v-show="currentRoundedProgress > 0" class="pb-3">
+      Progress: {{ currentRoundedProgress }}
+    </h3>
 
     <template v-if="currentRoundedProgress === 100">
       <h3>Candles</h3>
@@ -34,7 +45,7 @@
 <script>
 
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Spinner from '@/components/Functional/Spinner'
 
 export default {
@@ -58,6 +69,9 @@ export default {
   mounted () {
   },
   methods: {
+    ...mapActions({
+      backtestResetState: 'backtest/resetState',
+    }),
     async start () {
       await axios.post('http://127.0.0.1:8000/backtest', {
         start_date: '2021-04-01',

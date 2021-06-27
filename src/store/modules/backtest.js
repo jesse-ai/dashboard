@@ -54,15 +54,12 @@ const actions = {
     commit('SET_CANDLES_INFO', data)
   },
   routesInfo  ({ commit }, { data }) {
-    console.log('routesInfo', data)
     commit('SET_ROUTES_INFO', data)
   },
   progressbar  ({ commit }, { data }) {
-    console.log('progressbar', data)
     commit('SET_PROGRESSBAR', data)
   },
   metrics  ({ commit }, { data }) {
-    console.log('backtestMetrics', data)
     commit('SET_METRICS', data)
   }
 }
