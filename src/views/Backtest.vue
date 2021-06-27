@@ -24,8 +24,7 @@
         :exchanges="routes.exchanges"
         :timeframes="routes.timeframes"
         :symbols="routes.symbols"
-        :strategies="routes.strategies"
-      />
+        :strategies="routes.strategies"/>
 
       <Divider class="mt-16">Options</Divider>
 
@@ -124,8 +123,8 @@
 <script>
 import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Toggle from '@/components/Functional/Toggle'
-import DatePicker from '@/components/Functional/DatePicker'
-import Select from '@/components/Functional/Select'
+// import DatePicker from '@/components/Functional/DatePicker'
+// import Select from '@/components/Functional/Select'
 import Routes from '@/components/Routes'
 import Divider from '@/components/Divider'
 import KeyValueTable from '@/components/KeyValueTable'
@@ -136,8 +135,8 @@ export default {
   components: {
     CircleProgressbar,
     Toggle,
-    DatePicker,
-    Select,
+    // DatePicker,
+    // Select,
     Routes,
     Divider,
     KeyValueTable
@@ -184,17 +183,36 @@ export default {
   computed: {},
   mounted () {
   },
+  created () {
+    // this.connection = new WebSocket('ws://127.0.0.1:8000/ws')
+    //
+    // this.connection.onmessage = function (event) {
+    //   const msg = JSON.parse(event.data)
+    //   const eventName = msg.event
+    //   const data = msg.data
+    //
+    //   if (eventName === 'papertrade.positions') {
+    //     store.commit('updatePaperModeData', {
+    //       positions: data
+    //     })
+    //   }
+    // }
+    //
+    // this.connection.onopen = function (event) {
+    //   console.log('Successfully connected to the echo websocket server...')
+    // }
+  },
   methods: {
     cancel () {
       this.executing = false
     },
-    start () {
+    async start () {
       this.progress.current = 0
       this.executing = true
 
-      axios.post('http://127.0.0.1:8000/backtest', {
-        start_date: '2021-06-01',
-        finish_date: '2021-06-18',
+      await axios.post('http://127.0.0.1:8000/backtest', {
+        start_date: '2021-04-01',
+        finish_date: '2021-04-18',
         debug_mode: false,
         export_csv: false,
         export_chart: false,
@@ -205,22 +223,22 @@ export default {
         console.log(r.data)
       })
 
-      function sleep (ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
-      }
+      // function sleep (ms) {
+      //   return new Promise(resolve => setTimeout(resolve, ms))
+      // }
 
-      async function demo (that) {
-        // Sleep in loop
-        for (let i = 0; i < 100; i++) {
-          await sleep(10)
-          console.log(i)
-          that.progress.current = i + 1
-        }
-
-        that.showResults = true
-      }
-
-      demo(this)
+      // async function demo (that) {
+      //   // Sleep in loop
+      //   for (let i = 0; i < 100; i++) {
+      //     await sleep(10)
+      //     console.log(i)
+      //     that.progress.current = i + 1
+      //   }
+      //
+      //   that.showResults = true
+      // }
+      //
+      // demo(this)
     }
   }
 }
