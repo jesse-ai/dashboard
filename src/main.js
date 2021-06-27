@@ -28,4 +28,17 @@ app.use(notyf, {
 app.use(websocket, {
   socketPath: process.env.VUE_APP_SOCKET_PATH
 })
+
+// import and register vue components globally
+const files = require.context('./components', true, /\.vue$/i)
+files.keys().map(key =>
+  app.component(
+    key
+      .split('/')
+      .pop()
+      .split('.')[0],
+    files(key).default
+  )
+)
+
 app.mount('#app')

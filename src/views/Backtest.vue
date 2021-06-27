@@ -123,26 +123,10 @@
 </template>
 
 <script>
-import CircleProgressbar from '@/components/Functional/CircleProgressbar'
-import Toggle from '@/components/Functional/Toggle'
-// import DatePicker from '@/components/Functional/DatePicker'
-// import Select from '@/components/Functional/Select'
-import Routes from '@/components/Routes'
-import Divider from '@/components/Divider'
-import KeyValueTable from '@/components/KeyValueTable'
 import axios from 'axios'
 
 export default {
   name: 'Backtest',
-  components: {
-    CircleProgressbar,
-    Toggle,
-    // DatePicker,
-    // Select,
-    Routes,
-    Divider,
-    KeyValueTable
-  },
   data () {
     return {
       showResults: false,
