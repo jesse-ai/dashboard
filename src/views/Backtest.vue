@@ -70,16 +70,20 @@
     <div v-if="showResults"
          class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <div>
+        <Divider>
+          Info
+        </Divider>
+        <KeyValueTable :data="results.info" />
+
         <Divider class="mt-16">
           Equity Curve
         </Divider>
-
+        <!-- TODO: replace with actual chart -->
         <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
 
         <Divider class="mt-16">
           Performance
         </Divider>
-
         <KeyValueTable :data="results.metrics" />
       </div>
     </div>
@@ -140,7 +144,7 @@ export default {
   },
   data () {
     return {
-      showResults: true,
+      showResults: false,
       executing: false,
       progress: {
         current: 0,
@@ -153,7 +157,21 @@ export default {
         strategies: ['TrendFollowing01']
       },
       results: {
+        info: [
+          ['Period', '1792 days (4.91 years)'],
+          ['Starting-Ending Date', '2016-01-01 => 2020-11-27'],
+        ],
         metrics: [
+          ['Total Closed Trades', 'value: 221'],
+          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
+          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
+          ['Total Open Trades', '0'],
+          ['Open PL', '0'],
+          ['Total Closed Trades', 'value: 221'],
+          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
+          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
+          ['Total Open Trades', '0'],
+          ['Open PL', '0'],
           ['Total Closed Trades', 'value: 221'],
           ['Total Net Profit', '1,699,245.56 (1699.25%)'],
           ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
