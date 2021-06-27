@@ -38,6 +38,6 @@ export default {
     @apply hover:bg-gray-50 dark:hover:bg-gray-900
   }
   .nav-item.nav-item-current {
-    @apply bg-gray-100 dark:bg-backdrop-secondary-dark text-gray-900 dark:text-gray-100
+    @apply bg-gray-200 dark:bg-backdrop-secondary-dark text-gray-900 dark:text-gray-100
   }
 </style>

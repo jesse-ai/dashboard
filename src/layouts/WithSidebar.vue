@@ -48,7 +48,7 @@
 
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
               <div class="flex-shrink-0 flex items-center px-4">
-                <span class="h2 font-bold">Dashboard</span>
+                <span class="h2">Dashboard</span>
               </div>
 
               <Nav class="mt-5"/>
@@ -74,10 +74,10 @@
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex flex-col h-0 flex-1 border-r border-gray-200 dark:border-gray-700 bg-backdrop dark:bg-backdrop-dark">
+        <div class="bg-gray-50 flex flex-col h-0 flex-1 border-r border-gray-200 dark:border-gray-700 bg-backdrop dark:bg-backdrop-dark">
           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
-              <span class="h2 font-bold">Dashboard</span>
+              <span class="h2">Dashboard</span>
             </div>
 
             <Nav class="mt-5 flex-1"/>
@@ -106,11 +106,7 @@
       </div>
 
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <div class="py-6">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <router-view/>
-          </div>
-        </div>
+        <router-view/>
       </main>
     </div>
   </div>
