@@ -31,39 +31,103 @@
       <Divider class="mt-16">Options</Divider>
 
       <div class="grid grid-cols-2 gap-8">
-        <Toggle
-          title="Debug Mode"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-        <Toggle
-          title="Export CSV"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-        <Toggle
-          title="Export JSON"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-        <Toggle
-          title="Charts"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-        <Toggle
-          title="Full Metrics Report"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
-        <Toggle
-          title="Export TradingView"
-          description="Nulla amet tempus sit accumsan. Aliquet turpis sed sit lacinia."/>
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="debug_mode" v-model="form.debug_mode"
+                   name="debug_mode"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="debug_mode" class="font-medium text-gray-700">debug_mode</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="export_chart" v-model="form.export_chart"
+                   name="export_chart"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="export_chart" class="font-medium text-gray-700">export_chart</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="export_tradingview" v-model="form.export_tradingview"
+                   name="export_tradingview"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="export_tradingview" class="font-medium text-gray-700">export_tradingview</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="export_full_reports" v-model="form.export_full_reports"
+                   name="export_full_reports"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="export_full_reports" class="font-medium text-gray-700">export_full_reports</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="export_csv" v-model="form.export_csv"
+                   name="export_csv"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="export_csv" class="font-medium text-gray-700">export_csv</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start select-none">
+          <div class="h-5 flex items-center">
+            <input id="export_json" v-model="form.export_json"
+                   name="export_json"
+                   type="checkbox"
+                   class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+          </div>
+          <div class="ml-3 text-sm">
+            <label for="export_json" class="font-medium text-gray-700">export_json</label>
+            <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+          </div>
+        </div>
       </div>
 
       <Divider class="mt-16">Duration</Divider>
 
       <div class="flex items-center select-none flex-1">
         <input id="start_date"
+               v-model="form.start_date"
                type="date"
                name="start_date"
-               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0">
+               class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+        >
 
         <input id="finish_date"
+               v-model="form.finish_date"
                type="date"
                name="finish_date"
                class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
       </div>
+
+      {{ form }}
     </div>
 
     <!-- Results -->
@@ -124,11 +188,24 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
+import store from '@/store'
+
 
 export default {
   name: 'Backtest',
   data () {
     return {
+      form: {
+        start_date: '2021-06-01',
+        finish_date: '2021-06-18',
+        debug_mode: false,
+        export_chart: false,
+        export_tradingview: false,
+        export_full_reports: false,
+        export_csv: false,
+        export_json: false,
+      },
       showResults: false,
       executing: false,
       progress: {
@@ -166,7 +243,15 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      candlesInfo: 'backtest/candlesInfo',
+      routesInfo: 'backtest/routesInfo',
+      progressbar: 'backtest/progressbar',
+      currentRoundedProgress: 'backtest/currentRoundedProgress',
+      metrics: 'backtest/metrics'
+    })
+  },
   mounted () {
   },
   created () {
@@ -197,14 +282,14 @@ export default {
       this.executing = true
 
       await axios.post('http://127.0.0.1:8000/backtest', {
-        start_date: '2021-04-01',
-        finish_date: '2021-04-18',
-        debug_mode: false,
-        export_csv: false,
-        export_chart: false,
-        export_tradingview: false,
-        export_full_reports: false,
-        export_json: false,
+        start_date: this.form.start_date,
+        finish_date: this.form.finish_date,
+        debug_mode: this.form.debug_mode,
+        export_csv: this.form.export_csv,
+        export_chart: this.form.export_chart,
+        export_tradingview: this.form.export_tradingview,
+        export_full_reports: this.form.export_full_reports,
+        export_json: this.form.export_json,
       }).then(r => {
         console.log(r.data)
       })
