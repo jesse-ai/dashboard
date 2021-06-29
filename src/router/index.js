@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store/index'
+import { useMainStore } from '@/stores/main'
 
 // Layouts
 import WithSidebar from '@/layouts/WithSidebar'
@@ -10,20 +10,25 @@ import Backtest from '@/views/Backtest'
 import LiveTrade from '@/views/LiveTrade'
 import Optimization from '@/views/Optimization'
 import PaperTrade from '@/views/PaperTrade'
+import PiniaTest from '@/views/PiniaTest'
+
+import { watch } from 'vue'
 
 // Check whether socket is connected or not
 const isSocketConnected = (to, from, next) => {
-  if (store.state.socket.isConnected) {
+  const store = useMainStore()
+
+  if (store.isConnected) {
     next()
   } else {
-    // Wait socket to be connected if page reloaded
-    const unwatch = store.watch(state => state.socket.isConnected, (connected) => {
-      if (connected) {
-        next()
-        // https://vuex.vuejs.org/api/#watch
-        unwatch()
-      }
-    })
+    watch(store,
+      (state) => {
+        if (state.isConnected) {
+          next()
+        }
+      },
+      { deep: true }
+    )
   }
 }
 
@@ -85,6 +90,18 @@ const routes = [
         path: '',
         name: 'Test',
         component: Test
+      }
+    ]
+  },
+  {
+    path: '/pinia-test',
+    component: WithSidebar,
+    beforeEnter: isSocketConnected,
+    children: [
+      {
+        path: '',
+        name: 'PiniaTest',
+        component: PiniaTest
       }
     ]
   }

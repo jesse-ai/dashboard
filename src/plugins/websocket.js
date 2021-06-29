@@ -1,6 +1,8 @@
 import WebSocketAsPromised from 'websocket-as-promised'
-import store from '@/store'
+// import store from '@/store'
 import socketActions from '@/plugins/socketActions'
+
+import { useMainStore } from '@/stores/main'
 
 export default {
   install: (app, settings) => {
@@ -11,13 +13,15 @@ export default {
       extractRequestId: data => data && data.id
     })
 
+    const store = useMainStore()
+
     let openIntervalId = null
     let reopenAttempts = 3
 
     function wsOpen () {
       wsp.open()
         .then(async () => {
-          await store.dispatch('socket/setIsConnected', true)
+          store.isConnected = true
 
           if (openIntervalId) {
             clearInterval(openIntervalId)
@@ -40,7 +44,7 @@ export default {
     wsp.onClose.addListener(async () => {
       console.log('Connection closed.')
 
-      await store.dispatch('socket/setIsConnected', false)
+      store.isConnected = false
       if (openIntervalId) clearInterval(openIntervalId)
 
       if (reopenAttempts > 0) {
@@ -61,9 +65,10 @@ export default {
       const actions = socketActions.get(event)
 
       if (actions !== undefined) {
-        actions.forEach(method => {
-          store.dispatch(method, message)
-        })
+        // todo
+        // actions.forEach(method => {
+        //   store.dispatch(method, message)
+        // })
       }
     })
 

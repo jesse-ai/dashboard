@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+// import store from './store'
+// import { pinia } from './stores'
 
 // Plugins
 import websocket from './plugins/websocket'
@@ -9,9 +10,11 @@ import notyf from '@/plugins/notyf'
 
 import './assets/styles/styles.css'
 
-const app = createApp(App)
+import { createPinia } from 'pinia'
 
-app.use(store)
+const app = createApp(App)
+app.use(createPinia())
+// app.use(store)
 app.use(router)
 app.use(notyf, {
   duration: 5000,
