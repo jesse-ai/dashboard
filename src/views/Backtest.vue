@@ -39,7 +39,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="debug_mode" class="font-medium text-gray-700">debug_mode</label>
+            <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -52,7 +52,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_chart" class="font-medium text-gray-700">export_chart</label>
+            <label for="export_chart" class="font-medium text-gray-700 cursor-pointer">export_chart</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -65,7 +65,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_tradingview" class="font-medium text-gray-700">export_tradingview</label>
+            <label for="export_tradingview" class="font-medium text-gray-700 cursor-pointer">export_tradingview</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -78,7 +78,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_full_reports" class="font-medium text-gray-700">export_full_reports</label>
+            <label for="export_full_reports" class="font-medium text-gray-700 cursor-pointer">export_full_reports</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -91,7 +91,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_csv" class="font-medium text-gray-700">export_csv</label>
+            <label for="export_csv" class="font-medium text-gray-700 cursor-pointer">export_csv</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -104,7 +104,7 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_json" class="font-medium text-gray-700">export_json</label>
+            <label for="export_json" class="font-medium text-gray-700 cursor-pointer">export_json</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -205,6 +205,8 @@ export default {
         export_full_reports: false,
         export_csv: false,
         export_json: false,
+        routes: [],
+        extraRoutes: []
       },
       showResults: false,
       executing: false,
