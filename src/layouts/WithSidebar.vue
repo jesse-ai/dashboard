@@ -83,6 +83,10 @@
             <Nav class="mt-5 flex-1"/>
           </div>
 
+          <div class="border-b dark:border-gray-700"/>
+
+          <p class="px-2 dark:text-gray-400">Is socket connected: {{ !!isConnected }}</p>
+
           <div class="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center justify-center w-full">
               <span class="mr-2 text-gray-600 dark:text-gray-500">Theme:</span>
@@ -128,6 +132,7 @@ import {
 
 import Nav from '@/components/Nav'
 import ThemeSwitch from '@/components/ThemeSwitch'
+import { useMainStore } from '@/stores/main'
 
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -151,10 +156,12 @@ export default {
   },
   setup () {
     const sidebarOpen = ref(false)
+    const mainStore = useMainStore()
 
     return {
       navigation,
-      sidebarOpen
+      sidebarOpen,
+      isConnected: mainStore.isConnected
     }
   }
 }

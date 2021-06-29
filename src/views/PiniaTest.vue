@@ -7,10 +7,8 @@
     <button
       class="btn-primary text-center px-10 mb-5"
       @click="startBacktest">
-      Start backtest
+      Start backtest {{ progressPercent }}
     </button>
-
-    <pre>isConnected: {{ isConnected }}</pre>
 
     <h3>Candles</h3>
     <pre>{{ candlesInfo }}</pre>
@@ -28,12 +26,9 @@
 
 <script>
 
-// import axios from 'axios'
 import Spinner from '@/components/Functional/Spinner'
-
-import { ref, defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useBacktestStore } from '@/stores/backtest'
-import { useMainStore } from '@/stores/main'
 import axios from 'axios'
 
 export default defineComponent({
@@ -42,14 +37,7 @@ export default defineComponent({
     Spinner
   },
   setup () {
-    const itemName = ref('itemName')
-
     const backtest = useBacktestStore()
-    const main = useMainStore()
-
-    function modifyProgressbar () {
-      backtest.progressbar.current = Math.random()
-    }
 
     async function startBacktest () {
       await axios.post('http://127.0.0.1:8000/backtest', {
@@ -65,16 +53,13 @@ export default defineComponent({
     }
 
     return {
-      itemName,
-      progressbar: backtest.progressbar,
-      test: backtest.test,
-      someObject: backtest.someObject,
-
-      modifyProgressbar,
-      isConnected: main.isConnected,
-
+      candlesInfo: computed(() => backtest.candlesInfo),
+      routesInfo: computed(() => backtest.routesInfo),
+      progressbar: computed(() => backtest.progressbar),
+      metrics: computed(() => backtest.metrics),
+      progressPercent: computed(() => backtest.progressPercent),
       startBacktest
     }
-  },
+  }
 })
 </script>

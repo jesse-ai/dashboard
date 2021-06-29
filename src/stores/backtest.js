@@ -11,26 +11,23 @@ export const useBacktestStore = defineStore({
     },
     metrics: {}
   }),
+  getters: {
+    progressPercent: (state) => Math.round(state.progressbar.current),
+  },
   actions: {
     candlesInfoEvent (data) {
-      this.patch({
-        candlesInfo: data
-      })
+      console.log(1, data)
+      this.candlesInfo = data
+      console.log(this.candlesInfo)
     },
     routesInfoEvent  (data) {
-      this.patch({
-        routesInfo: data
-      })
+      this.routesInfo = data
     },
     progressbarEvent  (data) {
-      this.patch({
-        progressbar: data
-      })
+      this.progressbar = data
     },
     metricsEvent  (data) {
-      this.patch({
-        metrics: data
-      })
+      this.metrics = data
     }
   },
 })

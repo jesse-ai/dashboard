@@ -188,9 +188,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
-import store from '@/store'
-
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Backtest',

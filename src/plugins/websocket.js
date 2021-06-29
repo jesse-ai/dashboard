@@ -1,5 +1,4 @@
 import WebSocketAsPromised from 'websocket-as-promised'
-// import store from '@/store'
 import socketActions from '@/plugins/socketActions'
 
 import { useMainStore } from '@/stores/main'
@@ -13,7 +12,7 @@ export default {
       extractRequestId: data => data && data.id
     })
 
-    const store = useMainStore()
+    const mainStore = useMainStore()
 
     let openIntervalId = null
     let reopenAttempts = 3
@@ -21,7 +20,7 @@ export default {
     function wsOpen () {
       wsp.open()
         .then(async () => {
-          store.isConnected = true
+          mainStore.isConnected = true
 
           if (openIntervalId) {
             clearInterval(openIntervalId)
@@ -44,7 +43,7 @@ export default {
     wsp.onClose.addListener(async () => {
       console.log('Connection closed.')
 
-      store.isConnected = false
+      mainStore.isConnected = false
       if (openIntervalId) clearInterval(openIntervalId)
 
       if (reopenAttempts > 0) {
@@ -59,16 +58,16 @@ export default {
       }
     })
 
-    // Listen ws events and pass data to vuex's actions
+    // Listen ws events and pass data to Pinia's actions
     wsp.onUnpackedMessage.addListener(async message => {
       const event = message.event
-      const actions = socketActions.get(event)
+      const data = message.data
+      const actions = socketActions().get(event)
 
       if (actions !== undefined) {
-        // todo
-        // actions.forEach(method => {
-        //   store.dispatch(method, message)
-        // })
+        actions.forEach(action => {
+          action(data)
+        })
       }
     })
 
