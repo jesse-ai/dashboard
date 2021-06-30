@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 export const useBacktestStore = defineStore({
   id: 'backtest',
   state: () => ({
+    testCheckbox: false,
     candlesInfo: {},
     routesInfo: [],
     progressbar: {

@@ -7,8 +7,14 @@
     <button
       class="btn-primary text-center px-10 mb-5"
       @click="startBacktest">
-      Start backtest {{ progressPercent }}
+      Start backtest
     </button>
+
+    <br>
+    <br>
+    <input v-model="testCheckbox" type="checkbox" name="test-checkbox">
+    testCheckbox: {{ testCheckbox }}
+    <br>
 
     <h3>Candles</h3>
     <pre>{{ candlesInfo }}</pre>
@@ -29,6 +35,7 @@
 import Spinner from '@/components/Functional/Spinner'
 import { defineComponent, computed } from 'vue'
 import { useBacktestStore } from '@/stores/backtest'
+import { mapWritableState, mapState } from 'pinia'
 import axios from 'axios'
 
 export default defineComponent({
@@ -36,13 +43,20 @@ export default defineComponent({
   components: {
     Spinner
   },
-  setup () {
-    const backtest = useBacktestStore()
-
-    async function startBacktest () {
+  computed: {
+    ...mapState(useBacktestStore, [
+      'candlesInfo',
+      'routesInfo',
+      'progressbar',
+      'metrics',
+    ]),
+    ...mapWritableState(useBacktestStore, ['testCheckbox'])
+  },
+  methods: {
+    async startBacktest () {
       await axios.post('http://127.0.0.1:8000/backtest', {
-        start_date: '2021-04-01',
-        finish_date: '2021-04-18',
+        start_date: '2021-06-01',
+        finish_date: '2021-06-07',
         debug_mode: false,
         export_csv: false,
         export_chart: false,
@@ -50,15 +64,6 @@ export default defineComponent({
         export_full_reports: false,
         export_json: false,
       })
-    }
-
-    return {
-      candlesInfo: computed(() => backtest.candlesInfo),
-      routesInfo: computed(() => backtest.routesInfo),
-      progressbar: computed(() => backtest.progressbar),
-      metrics: computed(() => backtest.metrics),
-      progressPercent: computed(() => backtest.progressPercent),
-      startBacktest
     }
   }
 })
