@@ -155,9 +155,18 @@
     </div>
 
     <!-- Action Buttons -->
-    <div v-if="!results.executing"
-         class="py-4 px-4 sm:px-6 md:px-8 w-full">
-      <div class="max-w-7xl mx-auto flex">
+    <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full">
+      <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
+        <button class="btn-primary text-center mr-2 flex-1" @click="rerun">
+          Rerun
+        </button>
+
+        <button class="btn-secondary text-center ml-2 flex-1" @click="newBacktest">
+          New backtest
+        </button>
+      </div>
+
+      <div v-else class="max-w-7xl mx-auto flex">
         <button class="btn-primary text-center mr-2 flex-1" @click="start">
           Start
         </button>
@@ -229,7 +238,14 @@ export default {
       }).then(r => {
         console.log(r.data)
       })
-    }
+    },
+    rerun () {
+      this.results.showResults = false
+      this.start()
+    },
+    newBacktest () {
+      this.results.showResults = false
+    },
   }
 }
 </script>
