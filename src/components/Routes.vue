@@ -4,6 +4,8 @@
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
         <div class="w-full border-t-2 border-dashed border-gray-300"/>
       </div>
+
+      <!-- Trading Routes-->
       <div class="relative flex items-center justify-between">
         <span class="pr-3 bg-white text-lg font-medium text-gray-900">
           Routes
@@ -40,13 +42,12 @@
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
         <option v-for="item in timeframes" :key="item">{{ item }}</option>
       </select>
-      <select id="strategy" name="strategy"
+      <select v-model="r.strategy"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option selected>TrendFollowing01</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in strategies" :key="item">{{ item }}</option>
       </select>
 
+      <!-- More Button -->
       <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 rounded-r-lg">
         <Menu as="div" class="relative block h-full w-full">
           <MenuButton class="px-5 block text-left h-full w-full focus:outline-none">
@@ -90,6 +91,7 @@
       </div>
     </div>
 
+    <!-- Extra Routes-->
     <Divider v-if="extraRoutes.length">Extra Routes</Divider>
 
     <div v-for="r in extraRoutes"
@@ -108,6 +110,7 @@
         <option v-for="item in timeframes" :key="item">{{ item }}</option>
       </select>
 
+      <!-- More Button -->
       <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 rounded-r-lg">
         <Menu as="div" class="relative block h-full w-full">
           <MenuButton class="px-5 block text-left h-full w-full focus:outline-none">
