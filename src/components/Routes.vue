@@ -2,7 +2,7 @@
   <div class="my-6 select-none">
     <div class="relative mb-4">
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t-2 border-dashed border-gray-300" />
+        <div class="w-full border-t-2 border-dashed border-gray-300"/>
       </div>
       <div class="relative flex items-center justify-between">
         <span class="pr-3 bg-white text-lg font-medium text-gray-900">
@@ -10,12 +10,15 @@
         </span>
 
         <span>
-          <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 text-sm leading-5 font-medium rounded-l-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <button type="button"
+                  class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 text-sm leading-5 font-medium rounded-l-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                  @click="addRoute">
+            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
             <span>Trading Route</span>
           </button>
-          <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 text-sm leading-5 font-medium rounded-r-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 text-sm leading-5 font-medium rounded-r-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                  @click="addExtraRoute">
+            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
             <span>Extra Route</span>
           </button>
         </span>
@@ -23,25 +26,19 @@
     </div>
 
     <div v-for="r in routes"
-         :key="r.exchange"
+         :key="r.exchange + r.symbol"
          class="flex border rounded-lg mb-4">
-      <select id="exchange" name="exchange"
+      <select v-model="r.exchange"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
-        <option selected>{{ r.exchange }}</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select id="symbol" name="symbol"
+      <select v-model="r.symbol"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option selected>BTC-USDT</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in symbols" :key="item">{{ item }}</option>
       </select>
-      <select id="timeframe" name="timeframe"
+      <select v-model="r.timeframe"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option selected>1h</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in timeframes" :key="item">{{ item }}</option>
       </select>
       <select id="strategy" name="strategy"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
@@ -95,61 +92,63 @@
 
     <Divider v-if="extraRoutes.length">Extra Routes</Divider>
 
-    <div v-for="er in extraRoutes"
-         :key="er.exchange"
+    <div v-for="r in extraRoutes"
+         :key="r.exchange + r.symbol + r.timeframe"
          class="flex border rounded-lg mb-4">
-      <select id="extra_exchange" name="exchange"
+      <select v-model="r.exchange"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
-        <option selected>{{ er.exchange }}</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select id="extra_symbol" name="symbol"
+      <select v-model="r.symbol"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option selected>BTC-USDT</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in symbols" :key="item">{{ item }}</option>
       </select>
-      <select id="extra_timeframe" name="timeframe"
+      <select v-model="r.timeframe"
               class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option selected>1h</option>
-        <option>Canada</option>
-        <option>EU</option>
+        <option v-for="item in timeframes" :key="item">{{ item }}</option>
       </select>
 
       <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 rounded-r-lg">
         <Menu as="div" class="relative block h-full w-full">
           <MenuButton class="px-5 block text-left h-full w-full focus:outline-none">
-            <DotsVerticalIcon class="h-8 w-8 text-gray-400" />
+            <DotsVerticalIcon class="h-8 w-8 text-gray-400"/>
           </MenuButton>
 
-          <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+          <transition enter-active-class="transition ease-out duration-100"
+                      enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                      leave-active-class="transition ease-in duration-75"
                       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-            <MenuItems class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white z-10 ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+            <MenuItems
+              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white z-10 ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
-                    <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                  <a href="#"
+                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Delete
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
-                    <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                  <a href="#"
+                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Duplicate
                   </a>
                 </MenuItem>
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                  <a href="#"
+                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Move Up
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                  <a href="#"
+                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                         aria-hidden="true"/>
                     Move Down
                   </a>
                 </MenuItem>
@@ -190,41 +189,43 @@ export default {
     ArrowCircleUpIcon,
     ArrowCircleDownIcon
   },
-  props: {
-    exchanges: {
-      type: Array,
-      required: true
-    },
-    symbols: {
-      type: Array,
-      required: true
-    },
-    timeframes: {
-      type: Array,
-      required: true
-    },
-    strategies: {
-      type: Array,
-      required: true
-    },
-  },
   data () {
     return {
-      routes: [
-        {
-          exchange: 'Binance',
-        },
-        {
-          exchange: 'Binance Futures',
-        }, {
-          exchange: 'Binance Futures',
-        },
-      ],
-      extraRoutes: [
-        {
-          exchange: 'Binance',
-        },
-      ]
+      // TODO: must be only existing candles?
+      exchanges: ['Bitfinex', 'Binance', 'Binance Futures'],
+      symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
+      timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
+      strategies: ['TrendFollowing01'],
+
+      routes: [],
+      extraRoutes: []
+    }
+  },
+  created () {
+    this.routes.push({
+      exchange: this.exchanges[0],
+      symbol: this.symbols[0],
+      timeframe: this.timeframes[0],
+      strategy: this.strategies[0]
+    })
+  },
+  methods: {
+    addRoute () {
+      // duplicate the last one
+      this.routes.push({
+        exchange: this.routes[this.routes.length - 1].exchange,
+        symbol: this.symbols[0],
+        timeframe: this.timeframes[0],
+        strategy: this.strategies[0]
+      })
+    },
+    addExtraRoute () {
+      // duplicate the last one
+      this.extraRoutes.push({
+        exchange: this.routes[this.routes.length - 1].exchange,
+        symbol: this.routes[this.routes.length - 1].symbol,
+        timeframe: this.timeframes[0]
+      })
     }
   }
 }

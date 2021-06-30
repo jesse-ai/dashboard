@@ -22,11 +22,7 @@
     <!-- Content -->
     <div v-if="!results.executing && !results.showResults"
          class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-      <Routes
-        :exchanges="routes.exchanges"
-        :timeframes="routes.timeframes"
-        :symbols="routes.symbols"
-        :strategies="routes.strategies"/>
+      <Routes/>
 
       <Divider class="mt-16">Options</Divider>
 
@@ -127,7 +123,8 @@
                class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
       </div>
 
-      {{ form }}
+      <br>
+      <pre>{{ form }}</pre>
     </div>
 
     <!-- Results -->
@@ -204,12 +201,6 @@ export default {
   name: 'Backtest',
   data () {
     return {
-      routes: {
-        exchanges: ['Binance', 'Binance Futures'],
-        symbols: ['BTC-USDT', 'ETH-USDT'],
-        timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
-        strategies: ['TrendFollowing01']
-      },
     }
   },
   computed: {
@@ -235,9 +226,7 @@ export default {
         export_tradingview: this.form.export_tradingview,
         export_full_reports: this.form.export_full_reports,
         export_json: this.form.export_json,
-      }).then(r => {
-        console.log(r.data)
-      })
+      }).catch(() => this.notyf.error('Request failed'))
     },
     rerun () {
       this.results.showResults = false
