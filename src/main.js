@@ -6,6 +6,7 @@ import router from './router'
 import websocket from './plugins/websocket'
 import notyf from '@/plugins/notyf'
 
+import 'notyf/notyf.min.css'
 import './assets/styles/styles.css'
 
 import { createPinia } from 'pinia'
