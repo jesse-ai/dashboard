@@ -20,7 +20,7 @@
     </div>
 
     <!-- Content -->
-    <div v-if="!executing && !showResults"
+    <div v-if="!results.executing && !results.showResults"
          class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <Routes
         :exchanges="routes.exchanges"
@@ -131,7 +131,7 @@
     </div>
 
     <!-- Results -->
-    <div v-if="showResults"
+    <div v-if="results.showResults"
          class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <div>
         <Divider>
@@ -155,7 +155,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div v-if="!executing"
+    <div v-if="!results.executing"
          class="py-4 px-4 sm:px-6 md:px-8 w-full">
       <div class="max-w-7xl mx-auto flex">
         <button class="btn-primary text-center mr-2 flex-1" @click="start">
@@ -169,13 +169,13 @@
     </div>
 
     <!-- Execution -->
-    <div v-if="executing && !showResults"
+    <div v-if="results.executing && !results.showResults"
          class="h-full flex flex-col items-center justify-center select-none">
       <div class="">
-        <CircleProgressbar :progress="progress.current"/>
+        <CircleProgressbar :progress="results.progressbar.current"/>
       </div>
 
-      <h3 class="mt-8">{{ progress.estimated_remaining_seconds }} seconds remaining...</h3>
+      <h3 class="mt-8">{{ results.progressbar.estimated_remaining_seconds }} seconds remaining...</h3>
 
       <div class="mt-8">
         <button class="btn-secondary w-64" @click="cancel">
@@ -188,100 +188,36 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapState, mapWritableState } from 'pinia'
+import { useBacktestStore } from '@/stores/backtest'
 
 export default {
   name: 'Backtest',
   data () {
     return {
-      form: {
-        start_date: '2021-06-01',
-        finish_date: '2021-06-18',
-        debug_mode: false,
-        export_chart: false,
-        export_tradingview: false,
-        export_full_reports: false,
-        export_csv: false,
-        export_json: false,
-        routes: [],
-        extraRoutes: []
-      },
-      showResults: false,
-      executing: false,
-      progress: {
-        current: 0,
-        estimated_remaining_seconds: 0
-      },
       routes: {
         exchanges: ['Binance', 'Binance Futures'],
         symbols: ['BTC-USDT', 'ETH-USDT'],
         timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
         strategies: ['TrendFollowing01']
       },
-      results: {
-        info: [
-          ['Period', '1792 days (4.91 years)'],
-          ['Starting-Ending Date', '2016-01-01 => 2020-11-27'],
-        ],
-        metrics: [
-          ['Total Closed Trades', 'value: 221'],
-          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
-          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
-          ['Total Open Trades', '0'],
-          ['Open PL', '0'],
-          ['Total Closed Trades', 'value: 221'],
-          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
-          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
-          ['Total Open Trades', '0'],
-          ['Open PL', '0'],
-          ['Total Closed Trades', 'value: 221'],
-          ['Total Net Profit', '1,699,245.56 (1699.25%)'],
-          ['Starting => Finishing Balance', '100,000 => 1,799,245.56'],
-          ['Total Open Trades', '0'],
-          ['Open PL', '0'],
-        ]
-      }
     }
   },
   computed: {
-    ...mapGetters({
-      candlesInfo: 'backtest/candlesInfo',
-      routesInfo: 'backtest/routesInfo',
-      progressbar: 'backtest/progressbar',
-      currentRoundedProgress: 'backtest/currentRoundedProgress',
-      metrics: 'backtest/metrics'
-    })
-  },
-  mounted () {
-  },
-  created () {
-    // this.connection = new WebSocket('ws://127.0.0.1:8000/ws')
-    //
-    // this.connection.onmessage = function (event) {
-    //   const msg = JSON.parse(event.data)
-    //   const eventName = msg.event
-    //   const data = msg.data
-    //
-    //   if (eventName === 'papertrade.positions') {
-    //     store.commit('updatePaperModeData', {
-    //       positions: data
-    //     })
-    //   }
-    // }
-    //
-    // this.connection.onopen = function (event) {
-    //   console.log('Successfully connected to the echo websocket server...')
-    // }
+    // ...mapState(useBacktestStore, ['results']),
+    ...mapWritableState(useBacktestStore, [
+      'form', 'results'
+    ])
   },
   methods: {
     cancel () {
-      this.executing = false
+      this.results.executing = false
     },
-    async start () {
-      this.progress.current = 0
-      this.executing = true
+    start () {
+      this.results.progressbar.current = 0
+      this.results.executing = true
 
-      await axios.post('http://127.0.0.1:8000/backtest', {
+      axios.post('http://127.0.0.1:8000/backtest', {
         start_date: this.form.start_date,
         finish_date: this.form.finish_date,
         debug_mode: this.form.debug_mode,
@@ -293,22 +229,6 @@ export default {
       }).then(r => {
         console.log(r.data)
       })
-
-      function sleep (ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
-      }
-
-      async function demo (that) {
-        // Sleep in loop
-        for (let i = 0; i < 100; i++) {
-          await sleep(10)
-          that.progress.current = i + 1
-        }
-
-        that.showResults = true
-      }
-
-      await demo(this)
     }
   }
 }
