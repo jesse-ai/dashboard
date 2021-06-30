@@ -26,7 +26,7 @@ export default {
         arr += ' over50'
       }
 
-      arr += ` p${this.progress}`
+      arr += ` p${Math.round(this.progress)}`
 
       return arr
     }
