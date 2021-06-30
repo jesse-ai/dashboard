@@ -61,6 +61,7 @@ export default {
     // Listen ws events and pass data to Pinia's actions
     wsp.onUnpackedMessage.addListener(async message => {
       const event = message.event
+      console.log(event)
       const data = message.data
       const actions = socketActions().get(event)
 

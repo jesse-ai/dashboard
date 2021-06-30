@@ -38,13 +38,12 @@ export const useBacktestStore = defineStore({
       ]
     },
     routesInfoEvent (data) {
-      console.log('routesInfoEvent')
+      console.log('routesInfoEvent is empty')
     },
     progressbarEvent (data) {
       this.results.progressbar = data
     },
     metricsEvent (data) {
-      console.log(data)
       this.results.metrics = [
         ['Total Closed Trades', data.total],
         ['Total Net Profit', `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)})`],
