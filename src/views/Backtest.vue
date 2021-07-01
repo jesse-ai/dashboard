@@ -1,27 +1,49 @@
 <template>
   <section class="h-full flex flex-col justify-between">
     <!-- Page title & actions -->
-    <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-      <div class="flex-1 min-w-0">
-        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-          Backtest
-        </h1>
+    <!--    <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">-->
+    <!--      <div class="flex-1 min-w-0">-->
+    <!--        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">-->
+    <!--          Backtest-->
+    <!--        </h1>-->
+    <!--      </div>-->
+
+    <!--      <div class="mt-4 flex sm:mt-0 sm:ml-4">-->
+    <!--        <a href="https://docs.jesse.trade/docs/backtest.html" target="_blank" class="btn-link mr-4">-->
+    <!--          Documentation-->
+    <!--        </a>-->
+
+    <!--        <a href="https://jesse.trade/help" target="_blank" class="btn-link">-->
+    <!--          FAQ-->
+    <!--        </a>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!-- Tabs -->
+    <div class="mb-4">
+      <div class="sm:hidden">
+        <label for="tabs" class="sr-only">Select a tab</label>
+        <select
+          id="tabs" v-model="activeTab" name="tabs" class="block w-full border-0 border-t border-b border-gray-300">
+          <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
+        </select>
       </div>
-
-      <div class="mt-4 flex sm:mt-0 sm:ml-4">
-        <a href="https://docs.jesse.trade/docs/backtest.html" target="_blank" class="btn-link mr-4">
-          Documentation
-        </a>
-
-        <a href="https://jesse.trade/help" target="_blank" class="btn-link">
-          FAQ
-        </a>
+      <div class="hidden sm:block">
+        <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
+          <button v-for="(tab, tabIdx) in tabs" :key="tab"
+                  :class="[tab === activeTab ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'focus:outline-none group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10']"
+                  @click="selectTab(tab)">
+            <span>{{ tab }}</span>
+            <span aria-hidden="true"
+                  :class="[tab === activeTab ? 'bg-indigo-500' : 'bg-transparent', 'absolute inset-x-0 bottom-0 h-0.5']"/>
+          </button>
+        </nav>
       </div>
     </div>
 
     <!-- Content -->
     <div v-if="!results.executing && !results.showResults"
-         class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+         class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
       <Routes/>
 
       <Divider class="mt-16">Options</Divider>
@@ -74,7 +96,8 @@
                    class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
           </div>
           <div class="ml-3 text-sm">
-            <label for="export_full_reports" class="font-medium text-gray-700 cursor-pointer">export_full_reports</label>
+            <label for="export_full_reports"
+                   class="font-medium text-gray-700 cursor-pointer">export_full_reports</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -124,6 +147,7 @@
       </div>
 
       <br>
+      <pre>{{ activeTab }}</pre>
       <pre>{{ form }}</pre>
     </div>
 
@@ -201,6 +225,8 @@ export default {
   name: 'Backtest',
   data () {
     return {
+      activeTab: null,
+      tabs: ['Tab 1', 'Tab 2', 'Tab 3']
     }
   },
   computed: {
@@ -209,7 +235,13 @@ export default {
       'form', 'results'
     ])
   },
+  created () {
+    this.activeTab = this.tabs[0]
+  },
   methods: {
+    selectTab (tab) {
+      this.activeTab = tab
+    },
     cancel () {
       this.results.executing = false
     },
