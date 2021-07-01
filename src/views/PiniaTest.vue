@@ -33,7 +33,7 @@
 <script>
 
 import Spinner from '@/components/Functional/Spinner'
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 import { useBacktestStore } from '@/stores/backtest'
 import { mapWritableState, mapState } from 'pinia'
 import axios from 'axios'
