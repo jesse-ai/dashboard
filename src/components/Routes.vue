@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div v-for="r in routes"
+    <div v-for="r in form.routes"
          :key="r.exchange + r.symbol"
          class="flex border rounded-lg mb-4">
       <select v-model="r.exchange"
@@ -58,14 +58,14 @@
                       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
             <MenuItems class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white z-10 ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
               <div class="py-1">
-                <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                <MenuItem v-slot="{ active }" @click="deleteRoute(r)">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Delete
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Duplicate
                   </a>
@@ -73,13 +73,13 @@
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Up
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Down
                   </a>
@@ -92,9 +92,9 @@
     </div>
 
     <!-- Extra Routes-->
-    <Divider v-if="extraRoutes.length">Extra Routes</Divider>
+    <Divider v-if="form.extraRoutes.length">Extra Routes</Divider>
 
-    <div v-for="r in extraRoutes"
+    <div v-for="r in form.extraRoutes"
          :key="r.exchange + r.symbol + r.timeframe"
          class="flex border rounded-lg mb-4">
       <select v-model="r.exchange"
@@ -125,15 +125,15 @@
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white z-10 ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#"
-                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']"
+                     @click="deleteExtraRoute(r)">
                     <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Delete
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#"
-                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a
+                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Duplicate
                   </a>
@@ -141,15 +141,15 @@
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a href="#"
-                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a
+                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Move Up
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#"
-                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
+                  <a
+                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                          aria-hidden="true"/>
                     Move Down
@@ -175,6 +175,8 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
+import { mapState, mapWritableState } from 'pinia'
+import { useBacktestStore } from '@/stores/backtest'
 
 
 export default {
@@ -199,13 +201,13 @@ export default {
       symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
       strategies: ['TrendFollowing01'],
-
-      routes: [],
-      extraRoutes: []
     }
   },
+  computed: {
+    ...mapState(useBacktestStore, ['form']),
+  },
   created () {
-    this.routes.push({
+    this.form.routes.push({
       exchange: this.exchanges[0],
       symbol: this.symbols[0],
       timeframe: this.timeframes[0],
@@ -215,8 +217,8 @@ export default {
   methods: {
     addRoute () {
       // duplicate the last one
-      this.routes.push({
-        exchange: this.routes[this.routes.length - 1].exchange,
+      this.form.routes.push({
+        exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: this.symbols[0],
         timeframe: this.timeframes[0],
         strategy: this.strategies[0]
@@ -224,10 +226,20 @@ export default {
     },
     addExtraRoute () {
       // duplicate the last one
-      this.extraRoutes.push({
-        exchange: this.routes[this.routes.length - 1].exchange,
-        symbol: this.routes[this.routes.length - 1].symbol,
+      this.form.extraRoutes.push({
+        exchange: this.form.routes[this.form.routes.length - 1].exchange,
+        symbol: this.form.routes[this.form.routes.length - 1].symbol,
         timeframe: this.timeframes[0]
+      })
+    },
+    deleteRoute (item) {
+      this.form.routes = this.form.routes.filter((value, index, arr) => {
+        return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
+      })
+    },
+    deleteExtraRoute (item) {
+      this.form.extraRoutes = this.form.extraRoutes.filter((value, index, arr) => {
+        return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
       })
     }
   }
