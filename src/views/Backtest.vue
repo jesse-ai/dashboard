@@ -1,24 +1,5 @@
 <template>
   <section class="h-full flex flex-col justify-between">
-    <!-- Page title & actions -->
-    <!--    <div class="select-none border-b border-gray-200 px-4 py-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">-->
-    <!--      <div class="flex-1 min-w-0">-->
-    <!--        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">-->
-    <!--          Backtest-->
-    <!--        </h1>-->
-    <!--      </div>-->
-
-    <!--      <div class="mt-4 flex sm:mt-0 sm:ml-4">-->
-    <!--        <a href="https://docs.jesse.trade/docs/backtest.html" target="_blank" class="btn-link mr-4">-->
-    <!--          Documentation-->
-    <!--        </a>-->
-
-    <!--        <a href="https://jesse.trade/help" target="_blank" class="btn-link">-->
-    <!--          FAQ-->
-    <!--        </a>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
     <!-- Tabs -->
     <div class="mb-4">
       <div class="sm:hidden">
@@ -30,13 +11,24 @@
       </div>
       <div class="hidden sm:block">
         <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
-          <button v-for="(tab, tabIdx) in tabs" :key="tab"
-                  :class="[tab === activeTab ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'focus:outline-none group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10']"
-                  @click="selectTab(tab)">
+          <div v-for="tab in tabs" :key="tab"
+               :class="[tab === activeTab ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'select-none cursor-pointer focus:outline-none group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10']"
+               @click="selectTab(tab)">
             <span>{{ tab }}</span>
             <span aria-hidden="true"
                   :class="[tab === activeTab ? 'bg-indigo-500' : 'bg-transparent', 'absolute inset-x-0 bottom-0 h-0.5']"/>
-          </button>
+            <button v-show="tabs.length > 1" class="absolute right-[1em] focus:outline-none" @click="closeTab(tab)">
+              <XIcon class="h-5 w-5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full" aria-hidden="true" />
+            </button>
+          </div>
+
+          <!-- New Tab Button-->
+          <div class="select-none cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white py-4 px-4 font-medium hover:bg-gray-50 focus:z-10 flex items-center justify-center"
+               @click="addTab">
+            <button class="absolute right-[1em] focus:outline-none">
+              <PlusSmIcon class="h-6 w-6 rounded-full" aria-hidden="true" />
+            </button>
+          </div>
         </nav>
       </div>
     </div>
@@ -218,11 +210,15 @@
 
 <script>
 import axios from 'axios'
-import { mapState, mapWritableState } from 'pinia'
+import { mapWritableState } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
+import { XIcon, PlusSmIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'Backtest',
+  components: {
+    XIcon, PlusSmIcon
+  },
   data () {
     return {
       activeTab: null,
@@ -241,6 +237,12 @@ export default {
   methods: {
     selectTab (tab) {
       this.activeTab = tab
+    },
+    closeTab (tab) {
+      this.tabs = this.tabs.filter(item => item !== tab)
+    },
+    addTab () {
+      this.tabs.push(`Tab ${this.tabs.length + 1}`)
     },
     cancel () {
       this.results.executing = false
