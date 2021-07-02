@@ -175,9 +175,8 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
-import { mapState, mapWritableState } from 'pinia'
-import { useBacktestStore } from '@/stores/backtest'
-
+import { useMainStore } from '@/stores/main'
+import { mapState } from 'pinia'
 
 export default {
   name: 'Routes',
@@ -194,6 +193,20 @@ export default {
     ArrowCircleUpIcon,
     ArrowCircleDownIcon
   },
+  props: {
+    id: {
+      type: Number,
+      require: true
+    },
+    form: {
+      type: Object,
+      required: true
+    },
+    results: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       // TODO: must be only existing candles?
@@ -203,18 +216,25 @@ export default {
       strategies: ['TrendFollowing01'],
     }
   },
-  computed: {
-    ...mapState(useBacktestStore, ['form']),
+  watch: {
+    id () {
+      this.fillEmptyRoutes()
+    }
   },
   created () {
-    this.form.routes.push({
-      exchange: this.exchanges[0],
-      symbol: this.symbols[0],
-      timeframe: this.timeframes[0],
-      strategy: this.strategies[0]
-    })
+    this.fillEmptyRoutes()
   },
   methods: {
+    fillEmptyRoutes () {
+      if (this.form.routes.length) return
+
+      this.form.routes.push({
+        exchange: this.exchanges[0],
+        symbol: this.symbols[0],
+        timeframe: this.timeframes[0],
+        strategy: this.strategies[0]
+      })
+    },
     addRoute () {
       // duplicate the last one
       this.form.routes.push({

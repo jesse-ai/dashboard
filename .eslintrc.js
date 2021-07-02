@@ -37,6 +37,7 @@ module.exports = {
         allowFirstLine: true
       }
     }],
-    'no-extra-semi': 'warn'
+    'no-extra-semi': 'warn',
+    'vue/no-mutating-props': 'off'
   }
 }

@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 
-export const useBacktestStore = defineStore({
-  id: 'backtest',
-  state: () => ({
+
+function newTab () {
+  return _.cloneDeep({
+    id: 0,
+    name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
       finish_date: '2021-06-18',
@@ -25,14 +27,24 @@ export const useBacktestStore = defineStore({
       },
       info: [],
       metrics: []
-    },
+    }
+  })
+}
+
+
+export const useBacktestStore = defineStore({
+  id: 'backtest',
+  state: () => ({
+    tabs: [
+      newTab()
+    ],
   }),
-  getters: {
-    progressPercent: (state) => Math.round(state.progressbar.current),
-  },
   actions: {
-    candlesInfoEvent (data) {
-      this.results.info = [
+    newTab () {
+      return newTab()
+    },
+    candlesInfoEvent (id, data) {
+      this.tabs[id].results.info = [
         ['Period', data.duration],
         ['Starting-Ending Date', `${data.starting_time} => ${data.finishing_time}`],
       ]
@@ -40,11 +52,11 @@ export const useBacktestStore = defineStore({
     routesInfoEvent (data) {
       console.log('routesInfoEvent is empty')
     },
-    progressbarEvent (data) {
-      this.results.progressbar = data
+    progressbarEvent (id, data) {
+      this.tabs[id].results.progressbar = data
     },
-    metricsEvent (data) {
-      this.results.metrics = [
+    metricsEvent (id, data) {
+      this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
         ['Total Net Profit', `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)})`],
         ['Starting => Finishing Balance', `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`],
@@ -73,8 +85,8 @@ export const useBacktestStore = defineStore({
       ]
 
       // backtest is finished:
-      this.results.executing = false
-      this.results.showResults = true
+      this.tabs[id].results.executing = false
+      this.tabs[id].results.showResults = true
     }
   },
 })
