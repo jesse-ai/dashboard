@@ -13,6 +13,7 @@ import PaperTrade from '@/views/PaperTrade'
 import PiniaTest from '@/views/PiniaTest'
 
 import { watch } from 'vue'
+import BacktestTab from '@/views/tabs/BacktestTab'
 
 // Check whether socket is connected or not
 const isSocketConnected = (to, from, next) => {
@@ -33,77 +34,43 @@ const isSocketConnected = (to, from, next) => {
 }
 
 const routes = [
+  { path: '/', redirect: '/backtest/1' },
+  { path: '/backtest', redirect: '/backtest/1' },
   {
-    path: '/',
-    component: WithSidebar,
+    path: '/backtest/:id',
+    component: Backtest,
+    name: 'Backtest',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'Backtest',
-        component: Backtest
-      }
-    ]
   },
   {
     path: '/live-trade',
-    component: WithSidebar,
+    component: LiveTrade,
+    name: 'LiveTrade',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'LiveTrade',
-        component: LiveTrade
-      }
-    ]
   },
   {
     path: '/optimization',
-    component: WithSidebar,
+    component: Optimization,
+    name: 'Optimization',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'Optimization',
-        component: Optimization
-      }
-    ]
   },
   {
     path: '/paper-trade',
-    component: WithSidebar,
+    component: PaperTrade,
+    name: 'PaperTrade',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'PaperTrade',
-        component: PaperTrade
-      }
-    ]
   },
   {
     path: '/test',
-    component: WithSidebar,
+    component: Test,
+    name: 'Test',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'Test',
-        component: Test
-      }
-    ]
   },
   {
     path: '/pinia-test',
-    component: WithSidebar,
+    component: PiniaTest,
+    name: 'PiniaTest',
     beforeEnter: isSocketConnected,
-    children: [
-      {
-        path: '',
-        name: 'PiniaTest',
-        component: PiniaTest
-      }
-    ]
   }
 ]
 
