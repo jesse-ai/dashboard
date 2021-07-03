@@ -14,6 +14,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.5",
+    "lightweight-charts": "^3.3.0",
     "lodash": "^4.17.21",
     "notyf": "^3.10.0",
     "pinia": "^2.0.0-beta.3",

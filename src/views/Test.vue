@@ -1,90 +1,24 @@
 <template>
-  <div class="max-w-2xl mx-auto my-5">
-    <h1 class="mb-3">Backtest</h1>
-
-    <p class="mb-5">Pure backtest example</p>
-
-    <button
-      v-show="currentRoundedProgress === 0"
-      class="btn-primary text-center px-10 mb-5"
-      @click="start">
-      Start backtest {{ currentRoundedProgress ? currentRoundedProgress : '' }}
-    </button>
-
-    <button
-      v-show="currentRoundedProgress === 100"
-      class="btn-danger text-center px-10 mb-5"
-      @click="backtestResetState">
-      RESET
-    </button>
-
-    <Spinner
-      v-show="currentRoundedProgress > 0 && currentRoundedProgress !== 100"
-      class="h-6 w-6 bg-gray-300"/>
-
-    <h3 v-show="currentRoundedProgress > 0" class="pb-3">
-      Progress: {{ currentRoundedProgress }}
-    </h3>
-
-    <template v-if="currentRoundedProgress === 100">
-      <h3>Candles</h3>
-      <pre>{{ candlesInfo }}</pre>
-
-      <h3>Routes</h3>
-      <pre>{{ routesInfo }}</pre>
-
-      <h3>Progressbar</h3>
-      <pre>{{ progressbar }}</pre>
-
-      <h3>Metrics</h3>
-      <pre>{{ metrics }}</pre>
-    </template>
+  <div class="container py-5">
+    <Chart/>
   </div>
 </template>
 
 <script>
-
-import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
-import Spinner from '@/components/Functional/Spinner'
+import Chart from '@/components/EquityCurve/Chart'
 
 export default {
   name: 'Test',
   components: {
-    Spinner
+    Chart
   },
   data () {
-    return {
-    }
+    return {}
   },
-  computed: {
-    ...mapGetters({
-      candlesInfo: 'backtest/candlesInfo',
-      routesInfo: 'backtest/routesInfo',
-      progressbar: 'backtest/progressbar',
-      currentRoundedProgress: 'backtest/currentRoundedProgress',
-      metrics: 'backtest/metrics'
-    }),
-  },
+  computed: {},
   mounted () {
   },
-  methods: {
-    ...mapActions({
-      backtestResetState: 'backtest/resetState',
-    }),
-    async start () {
-      await axios.post('http://127.0.0.1:8000/backtest', {
-        start_date: '2021-04-01',
-        finish_date: '2021-04-18',
-        debug_mode: false,
-        export_csv: false,
-        export_chart: false,
-        export_tradingview: false,
-        export_full_reports: false,
-        export_json: false,
-      })
-    }
-  }
+  methods: {}
 }
 </script>
 
