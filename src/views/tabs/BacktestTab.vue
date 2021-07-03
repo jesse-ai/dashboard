@@ -175,15 +175,9 @@
 
 <script>
 import axios from 'axios'
-import { mapState, mapWritableState } from 'pinia'
-import { useBacktestStore } from '@/stores/backtest'
-import { XIcon, PlusSmIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'BacktestTab',
-  components: {
-    XIcon, PlusSmIcon
-  },
   // beforeRouteUpdate (to, from, next) {
   //   this.updateData(to.params.id)
   //   next()

@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useMainStore } from '@/stores/main'
 
-// Layouts
-import WithSidebar from '@/layouts/WithSidebar'
-
 // Views
 import Test from '@/views/Test' // For debug purpose
 import Backtest from '@/views/Backtest'
@@ -13,7 +10,6 @@ import PaperTrade from '@/views/PaperTrade'
 import PiniaTest from '@/views/PiniaTest'
 
 import { watch } from 'vue'
-import BacktestTab from '@/views/tabs/BacktestTab'
 
 // Check whether socket is connected or not
 const isSocketConnected = (to, from, next) => {
