@@ -2,7 +2,7 @@
   <!-- Content -->
   <div v-if="!results.executing && !results.showResults"
        class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Routes :id="id" :form="form" :results="results" />
+    <Routes :form="form" :results="results" />
 
     <Divider class="mt-16">Options</Divider>
 
@@ -105,6 +105,7 @@
     </div>
 
     <br>
+    <!--    <pre>{{ activeTabIndex }}</pre>-->
     <pre>{{ form }}</pre>
   </div>
 
@@ -183,11 +184,15 @@ export default {
   components: {
     XIcon, PlusSmIcon
   },
+  // beforeRouteUpdate (to, from, next) {
+  //   this.updateData(to.params.id)
+  //   next()
+  // },
   props: {
-    id: {
-      type: Number,
-      required: true
-    },
+    // id: {
+    //   type: Number,
+    //   required: true
+    // },
     form: {
       type: Object,
       required: true
@@ -199,26 +204,71 @@ export default {
   },
   data () {
     return {
+      // form: null,
+      // results: null
     }
   },
-  // computed: {
-  //   ...mapState(useBacktestStore, {
-  //     form: store => {
-  //       console.log(store.tabs[this.tabindex].form)
-  //       return store.tabs[this.tabindex].form
-  //     },
-  //     results: (store, something) => {
-  //       console.log('something', something)
-  //       console.log(store)
-  //       console.log(store.tabs)
-  //       console.log(this.$route)
-  //       console.log(this.tabindex)
-  //       // console.log('results', store.tabs[this.tabindex].results)
-  //       return store.tabs[this.tabindex].results
-  //     }
-  //   }),
-  // },
+  computed: {
+    // ...mapState(useBacktestStore, ['tabs']),
+    // form: () => this.tabs[this.$route.params.id].form,
+    // results: () => this.tabs[this.$route.params.id].results,
+    // store () {
+    //   return useBacktestStore()
+    // },
+    // activeTabIndex () {
+    //   const id = this.$route.params.id
+    //   let tabIndex = 0
+    //   for (let i = 0; i++; i < this.tabs.length) {
+    //     if (this.tabs[i].id === id) {
+    //       tabIndex = id
+    //       break
+    //     }
+    //   }
+    //   return tabIndex
+    // },
+    // form () {
+    //   return this.store.tabs[this.activeTabIndex].form
+    // },
+    // results () {
+    //   return this.store.tabs[this.activeTabIndex].results
+    // },
+    // ...mapState(useBacktestStore, {
+    //   form: store => {
+    //     console.log(store.$route.params.id)
+    //     return store.tabs[store.$route.params.id].form
+    //   },
+    //   results: (store) => {
+    //   // console.log('something', something)
+    //     console.log(store.router.currentRoute.value.params)
+    //     console.log(store.$route.params.id)
+    //     // console.log(store)
+    //     // console.log(store.tabs)
+    //     // console.log(this.$route)
+    //     // console.log(this.tabindex)
+    //     // console.log('results', store.tabs[this.tabindex].results)
+    //     return store.tabs[store.$route.params.id].results
+    //   }
+    // }),
+  },
+  created () {
+    // this.updateData(this.$route.params.id)
+    // console.log(this.results)
+  },
   methods: {
+    // updateData (id) {
+    //   console.log('created', id)
+    //
+    //   let activeTabIndex = 0
+    //   for (let i = 0; i++; i < this.tabs.length) {
+    //     if (this.tabs[i].id === id) {
+    //       activeTabIndex = id
+    //       break
+    //     }
+    //   }
+    //
+    //   this.results = this.tabs[activeTabIndex].results
+    //   this.form = this.tabs[activeTabIndex].form
+    // },
     cancel () {
       this.results.executing = false
     },
@@ -226,10 +276,10 @@ export default {
       this.results.progressbar.current = 0
       this.results.executing = true
 
-      console.log('id:', this.id)
+      console.log('id:', this.$route.params.id)
 
       axios.post('http://127.0.0.1:8000/backtest', {
-        id: this.id,
+        id: this.$route.params.id,
         start_date: this.form.start_date,
         finish_date: this.form.finish_date,
         debug_mode: this.form.debug_mode,

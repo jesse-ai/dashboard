@@ -175,8 +175,6 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
-import { useMainStore } from '@/stores/main'
-import { mapState } from 'pinia'
 
 export default {
   name: 'Routes',
@@ -194,10 +192,6 @@ export default {
     ArrowCircleDownIcon
   },
   props: {
-    id: {
-      type: Number,
-      require: true
-    },
     form: {
       type: Object,
       required: true
@@ -217,13 +211,14 @@ export default {
     }
   },
   watch: {
-    id () {
+    form () {
       this.fillEmptyRoutes()
     }
   },
   created () {
     this.fillEmptyRoutes()
   },
+
   methods: {
     fillEmptyRoutes () {
       if (this.form.routes.length) return
