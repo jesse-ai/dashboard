@@ -2,9 +2,11 @@ import { defineStore } from 'pinia'
 import _ from 'lodash'
 
 
+let idCounter = 0
+
 function newTab () {
   return _.cloneDeep({
-    id: 0,
+    id: ++idCounter,
     name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
