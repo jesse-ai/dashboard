@@ -163,7 +163,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8">{{ results.progressbar.estimated_remaining_seconds }} seconds remaining...</h3>
+    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
       <button class="btn-secondary w-64" @click="cancel">
