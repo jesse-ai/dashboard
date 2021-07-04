@@ -2,7 +2,7 @@
   <!-- Content -->
   <div v-if="!results.executing && !results.showResults"
        class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Routes :form="form" :results="results" />
+    <Routes :form="form" :results="results"/>
 
     <Divider class="mt-16">Options</Divider>
 
@@ -130,6 +130,11 @@
       </Divider>
 
       <KeyValueTable :data="results.metrics"/>
+
+      <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
+        <Logs :logs="results.infoLogs" :full="false"/>
+        <br>
+      </div>
     </div>
   </div>
 
@@ -157,9 +162,11 @@
   </div>
 
   <!-- Execution -->
-  <div v-if="results.executing && !results.showResults"
-       class="h-full flex flex-col items-center justify-center select-none">
-    <div class="">
+  <div v-if="!form.debug_mode && results.executing && !results.showResults"
+       class="flex flex-col items-center justify-center select-none"
+       :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
+  >
+    <div>
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
@@ -171,15 +178,22 @@
       </button>
     </div>
   </div>
+
+  <!-- Logs while execution -->
+  <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
+    <Logs :logs="results.infoLogs"/>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapActions } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
+import Logs from '@/components/Logs'
 
 export default {
   name: 'BacktestTab',
+  components: { Logs },
   props: {
     form: {
       type: Object,

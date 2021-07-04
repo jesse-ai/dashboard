@@ -17,6 +17,9 @@ export default function () {
     ['backtest.metrics', [
       backtest.metricsEvent
     ]],
+    ['backtest.info_log', [
+      backtest.infoLogEvent
+    ]],
   ])
 }
 
