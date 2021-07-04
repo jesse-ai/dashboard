@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto my-5">
+  <div class="max-w-2xl mx-auto my-5 px-4">
     <button
       class="btn-primary text-center px-10 mb-5"
       @click="startBacktest">

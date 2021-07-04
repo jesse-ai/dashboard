@@ -1,26 +1,37 @@
 <template>
-  <div class="container py-5">
-    <h2 class="mb-5">Equity curve</h2>
+  <div class="max-w-6xl w-full mx-auto px-4 py-5">
+    <h1 class="mb-1 font-bold">Charts</h1>
+
+    <h2 class="mb-4">
+      Equity curve
+    </h2>
 
     <TheEquityCurve
+      class="mb-8"
       :trades="trades"
       :equity-curve="equityCurve"/>
+
+    <h2 class="mb-4">
+      Candles
+    </h2>
+
+    <TheCandles
+      :candles="candles"
+      :orders="orders"/>
   </div>
 </template>
 
 <script>
-import TheEquityCurve from '@/components/EquityCurve/TheEquityCurve'
-import { equityCurve, trades } from '@/components/EquityCurve/ChartsFakeData'
+import { equityCurve, trades, orders, candles } from '@/components/Charts/ChartsFakeData'
 
 export default {
   name: 'Test',
-  components: {
-    TheEquityCurve
-  },
   data () {
     return {
       equityCurve: equityCurve,
-      trades: trades
+      trades: trades,
+      orders: orders,
+      candles: candles
     }
   }
 }
