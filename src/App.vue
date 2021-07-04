@@ -1,15 +1,15 @@
 <template>
-  <WithSidebar />
+  <AppLayout />
 </template>
 
 
 <script>
-import WithSidebar from '@/layouts/WithSidebar'
+import AppLayout from '@/layouts/AppLayout'
 
 export default {
   name: 'App',
   components: {
-    WithSidebar
+    AppLayout
   }
 }
 </script>
