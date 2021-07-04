@@ -110,7 +110,9 @@
       </div>
 
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <router-view/>
+        <section class="h-full flex flex-col justify-between">
+          <router-view/>
+        </section>
       </main>
     </div>
   </div>

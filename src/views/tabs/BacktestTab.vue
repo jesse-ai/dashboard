@@ -150,7 +150,7 @@
         Start
       </button>
 
-      <button class="btn-secondary text-center ml-2 flex-1">
+      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab">
         Start in a new tab
       </button>
     </div>
@@ -163,7 +163,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8">{{ results.progressbar.estimated_remaining_seconds }} seconds remaining...</h3>
+    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
       <button class="btn-secondary w-64" @click="cancel">
@@ -175,18 +175,12 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'pinia'
+import { useBacktestStore } from '@/stores/backtest'
 
 export default {
   name: 'BacktestTab',
-  // beforeRouteUpdate (to, from, next) {
-  //   this.updateData(to.params.id)
-  //   next()
-  // },
   props: {
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
     form: {
       type: Object,
       required: true
@@ -196,75 +190,18 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      // form: null,
-      // results: null
-    }
-  },
-  computed: {
-    // ...mapState(useBacktestStore, ['tabs']),
-    // form: () => this.tabs[this.$route.params.id].form,
-    // results: () => this.tabs[this.$route.params.id].results,
-    // store () {
-    //   return useBacktestStore()
-    // },
-    // activeTabIndex () {
-    //   const id = this.$route.params.id
-    //   let tabIndex = 0
-    //   for (let i = 0; i++; i < this.tabs.length) {
-    //     if (this.tabs[i].id === id) {
-    //       tabIndex = id
-    //       break
-    //     }
-    //   }
-    //   return tabIndex
-    // },
-    // form () {
-    //   return this.store.tabs[this.activeTabIndex].form
-    // },
-    // results () {
-    //   return this.store.tabs[this.activeTabIndex].results
-    // },
-    // ...mapState(useBacktestStore, {
-    //   form: store => {
-    //     console.log(store.$route.params.id)
-    //     return store.tabs[store.$route.params.id].form
-    //   },
-    //   results: (store) => {
-    //   // console.log('something', something)
-    //     console.log(store.router.currentRoute.value.params)
-    //     console.log(store.$route.params.id)
-    //     // console.log(store)
-    //     // console.log(store.tabs)
-    //     // console.log(this.$route)
-    //     // console.log(this.tabindex)
-    //     // console.log('results', store.tabs[this.tabindex].results)
-    //     return store.tabs[store.$route.params.id].results
-    //   }
-    // }),
-  },
-  created () {
-    // this.updateData(this.$route.params.id)
-    // console.log(this.results)
-  },
   methods: {
-    // updateData (id) {
-    //   console.log('created', id)
-    //
-    //   let activeTabIndex = 0
-    //   for (let i = 0; i++; i < this.tabs.length) {
-    //     if (this.tabs[i].id === id) {
-    //       activeTabIndex = id
-    //       break
-    //     }
-    //   }
-    //
-    //   this.results = this.tabs[activeTabIndex].results
-    //   this.form = this.tabs[activeTabIndex].form
-    // },
+    ...mapActions(useBacktestStore, ['addTab']),
     cancel () {
       this.results.executing = false
+    },
+    startInNewTab () {
+      // TODO: must duplicate current tab (with its routes, config, etc) and start a backtest there
+      // TODO: so below code doesn't work
+      // this.addTab().then(() => {
+      //   this.start()
+      // })
+      alert('not implemented yet')
     },
     start () {
       this.results.progressbar.current = 0

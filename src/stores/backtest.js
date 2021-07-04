@@ -37,14 +37,17 @@ function newTab () {
 export const useBacktestStore = defineStore({
   id: 'backtest',
   state: () => ({
-    tabs: [
-      newTab()
-    ],
+    tabs: {
+      1: newTab()
+    }
   }),
   actions: {
-    newTab () {
-      return newTab()
+    addTab () {
+      const tab = newTab()
+      this.tabs[tab.id] = tab
+      return this.$router.push(`/backtest/${tab.id}`)
     },
+    duplicateTab () {},
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
