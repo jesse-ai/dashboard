@@ -1,20 +1,50 @@
 <template>
   <div class="relative">
     <div ref="chart"/>
+
+    <EquityCurveTooltip :settings="tooltipSettings"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { createChart } from 'lightweight-charts'
+import { find } from 'lodash'
+
+const getDefaultTooltipState = () => {
+  return {
+    data: {
+      closed_at: null,
+      PNL_percentage: null,
+      holding_period: null,
+      type: null,
+      symbol: null,
+      strategy_name: null,
+      exchange: null,
+      orders: null
+    },
+    height: 110,
+    width: 135,
+    margin: 15,
+    left: null,
+    top: null
+  }
+}
+
+let chart = null
+let lineSeries = null
 
 export default {
   name: 'TheEquityCurve',
-  components: {
-  },
   props: {
     // Line series data
     equityCurve: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
+    // Tooltip's data
+    trades: {
       type: Array,
       required: true,
       default: () => []
@@ -22,8 +52,7 @@ export default {
   },
   data () {
     return {
-      chart: null,
-      lineSeries: null,
+      // lineSeries: null,
       settings: {
         width: 800,
         height: 300,
@@ -60,9 +89,10 @@ export default {
           }
         },
         series: {
-          color: '#5a67d8'
+          color: '#4f46e5'
         }
-      }
+      },
+      tooltipSettings: getDefaultTooltipState()
     }
   },
   computed: {
@@ -72,19 +102,71 @@ export default {
   },
   mounted () {
     this.settings.width = this.$refs.chart.clientWidth
-    this.chart = createChart(this.$refs.chart, this.settings)
+    chart = createChart(this.$refs.chart, this.settings)
 
-    this.lineSeries = this.chart.addLineSeries({
+    lineSeries = chart.addLineSeries({
       lineWidth: 1.5
     })
 
-    this.chart.timeScale().fitContent()
-    this.lineSeries.setData(this.equityCurve)
+    chart.timeScale().fitContent()
+    lineSeries.setData(this.equityCurve)
 
-    this.chart.applyOptions(this.lightTheme.chart)
-    this.lineSeries.applyOptions(this.lightTheme.series)
+    chart.applyOptions(this.lightTheme.chart)
+    lineSeries.applyOptions(this.lightTheme.series)
+
+    chart.subscribeCrosshairMove(this.handleCrosshairMove)
   },
-  methods: {}
+  beforeUnmount () {
+    chart.unsubscribeCrosshairMove(this.handleCrosshairMove)
+    chart = null
+    lineSeries = null
+  },
+  methods: {
+    handleCrosshairMove (param) {
+      const el = this.$refs.chart
+
+      if (param.point === undefined || !param.time || param.point.x < 0 || param.point.x > el.clientWidth || param.point.y < 0 || param.point.y > el.clientHeight) {
+        // Reset tooltip
+        this.tooltipSettings = getDefaultTooltipState()
+      } else {
+        const tradeItem = find(this.trades, (item) => {
+          return item.closed_at / 1000 === param.time
+        })
+
+        if (tradeItem !== undefined) {
+          this.tooltipSettings.data = {
+            closed_at: tradeItem.closed_at,
+            PNL_percentage: tradeItem.PNL_percentage,
+            holding_period: tradeItem.holding_period,
+            type: tradeItem.type,
+            symbol: tradeItem.symbol,
+            strategy_name: tradeItem.strategy_name,
+            exchange: tradeItem.exchange,
+            orders: tradeItem.ordersLength
+          }
+
+          const price = param.seriesPrices.get(lineSeries)
+          const coordinate = lineSeries.priceToCoordinate(price)
+          let shiftedCoordinate = param.point.x - this.tooltipSettings.width / 2
+
+          if (!coordinate) {
+            return
+          }
+
+          const width = this.tooltipSettings.width
+          const height = this.tooltipSettings.height
+          const margin = this.tooltipSettings.margin
+
+          shiftedCoordinate = Math.max(0, Math.min(el.clientWidth - width, shiftedCoordinate))
+
+          const coordinateY = coordinate - height - margin > 0 ? coordinate - height - margin : Math.max(0, Math.min(el.clientHeight - height - margin, coordinate + margin))
+
+          this.tooltipSettings.left = shiftedCoordinate
+          this.tooltipSettings.top = coordinateY
+        }
+      }
+    }
+  }
 }
 </script>
 
