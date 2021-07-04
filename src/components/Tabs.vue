@@ -9,13 +9,13 @@
     <!--      </div>-->
     <div class="hidden sm:block">
       <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
-        <div v-for="tab in tabs" :key="tab.id"
+        <div v-for="(tab, name, index) in tabs" :key="tab.id"
              class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center"
         >
           <router-link
             :class="[tab.id === pageId ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none bg-white w-full text-sm font-medium hover:bg-gray-50 focus:z-10']"
             :to="`${tab.id}`">
-            <span>{{ tab.id }}</span>
+            <span>Tab {{ index + 1 }}</span>
             <span aria-hidden="true"
                   :class="[tab.id === pageId ? 'bg-indigo-500' : 'bg-transparent', 'absolute inset-x-0 bottom-0 h-0.5']"/>
           </router-link>
@@ -44,7 +44,7 @@ import { useBacktestStore } from '@/stores/backtest'
 import { XIcon, PlusSmIcon } from '@heroicons/vue/outline'
 
 export default {
-  name: 'Backtest',
+  name: 'Tabs',
   components: {
     XIcon,
     PlusSmIcon
