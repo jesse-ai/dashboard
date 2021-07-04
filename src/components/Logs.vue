@@ -2,12 +2,8 @@
   <Divider>Logs</Divider>
 
   <pre class="whitespace-pre-line rounded border bg-gray-50 select-text text-sm w-full px-4 sm:px-6 py-2"
-       :class="full ? 'max-h-[90%]' : 'max-h-[48em]'"
-  >
-    <span v-for="item in logs" :key="item.id" class="block overflow-hidden">[{{
-        timestampToTime(item.time)
-      }}]: {{ item.message }}</span>
-  </pre>
+       :class="full ? 'max-h-[90%]' : 'max-h-[48em]'" v-html="logs"
+  />
 </template>
 
 <script>
@@ -22,7 +18,7 @@ export default {
       default: true
     },
     logs: {
-      type: Array,
+      type: String,
       required: true
     }
   },

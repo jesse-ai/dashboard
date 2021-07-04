@@ -30,7 +30,7 @@ function newTab () {
       },
       info: [],
       metrics: [],
-      infoLogs: []
+      infoLogs: ''
     }
   })
 }
@@ -63,7 +63,7 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.progressbar = data
     },
     infoLogEvent (id, data) {
-      this.tabs[id].results.infoLogs.push(data)
+      this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(data.time)}] ${data.message}\n`
     },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [
