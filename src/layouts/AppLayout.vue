@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
   CalendarIcon,
@@ -163,7 +163,7 @@ export default {
     return {
       navigation,
       sidebarOpen,
-      isConnected: mainStore.isConnected
+      isConnected: computed(() => mainStore.isConnected),
     }
   }
 }
