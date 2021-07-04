@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
+import helpers from '@/helpers'
 
 
 let idCounter = 0
@@ -10,8 +11,8 @@ function newTab () {
     name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
-      finish_date: '2021-06-18',
-      debug_mode: false,
+      finish_date: '2021-06-02',
+      debug_mode: true,
       export_chart: false,
       export_tradingview: false,
       export_full_reports: false,
@@ -28,7 +29,8 @@ function newTab () {
         estimated_remaining_seconds: 0
       },
       info: [],
-      metrics: []
+      metrics: [],
+      infoLogs: []
     }
   })
 }
@@ -51,7 +53,7 @@ export const useBacktestStore = defineStore({
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
-        ['Starting-Ending Date', `${data.starting_time} => ${data.finishing_time}`],
+        ['Starting-Ending Date', `${helpers.timestampToTime(data.starting_time)} => ${helpers.timestampToTime(data.finishing_time)}`],
       ]
     },
     routesInfoEvent (data) {
@@ -59,6 +61,9 @@ export const useBacktestStore = defineStore({
     },
     progressbarEvent (id, data) {
       this.tabs[id].results.progressbar = data
+    },
+    infoLogEvent (id, data) {
+      this.tabs[id].results.infoLogs.push(data)
     },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [
