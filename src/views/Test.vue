@@ -1,90 +1,28 @@
 <template>
-  <div class="max-w-2xl mx-auto my-5">
-    <h1 class="mb-3">Backtest</h1>
+  <div class="container py-5">
+    <h2 class="mb-5">Basic equity curve <small class="text-gray-500">without tooltip</small></h2>
 
-    <p class="mb-5">Pure backtest example</p>
-
-    <button
-      v-show="currentRoundedProgress === 0"
-      class="btn-primary text-center px-10 mb-5"
-      @click="start">
-      Start backtest {{ currentRoundedProgress ? currentRoundedProgress : '' }}
-    </button>
-
-    <button
-      v-show="currentRoundedProgress === 100"
-      class="btn-danger text-center px-10 mb-5"
-      @click="backtestResetState">
-      RESET
-    </button>
-
-    <Spinner
-      v-show="currentRoundedProgress > 0 && currentRoundedProgress !== 100"
-      class="h-6 w-6 bg-gray-300"/>
-
-    <h3 v-show="currentRoundedProgress > 0" class="pb-3">
-      Progress: {{ currentRoundedProgress }}
-    </h3>
-
-    <template v-if="currentRoundedProgress === 100">
-      <h3>Candles</h3>
-      <pre>{{ candlesInfo }}</pre>
-
-      <h3>Routes</h3>
-      <pre>{{ routesInfo }}</pre>
-
-      <h3>Progressbar</h3>
-      <pre>{{ progressbar }}</pre>
-
-      <h3>Metrics</h3>
-      <pre>{{ metrics }}</pre>
-    </template>
+    <TheEquityCurve :equity-curve="equityCurve"/>
   </div>
 </template>
 
 <script>
-
-import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
-import Spinner from '@/components/Functional/Spinner'
+import TheEquityCurve from '@/components/EquityCurve/TheEquityCurve'
 
 export default {
   name: 'Test',
   components: {
-    Spinner
+    TheEquityCurve
   },
   data () {
     return {
+      equityCurve: [{ value: 10000, time: 1612410540 }, { value: 11240.231560725342, time: 1612420320 }, { value: 254369.4912485959, time: 1612602780 }, { value: -489028.803655967, time: 1612663320 }, { value: -484197.7802230198, time: 1612685580 }, { value: -244547.05983960393, time: 1612788420 }, { value: -206530.29565983053, time: 1612817340 }, { value: 1451947.0971254236, time: 1613433600 }]
     }
   },
-  computed: {
-    ...mapGetters({
-      candlesInfo: 'backtest/candlesInfo',
-      routesInfo: 'backtest/routesInfo',
-      progressbar: 'backtest/progressbar',
-      currentRoundedProgress: 'backtest/currentRoundedProgress',
-      metrics: 'backtest/metrics'
-    }),
-  },
+  computed: {},
   mounted () {
   },
-  methods: {
-    ...mapActions({
-      backtestResetState: 'backtest/resetState',
-    }),
-    async start () {
-      await axios.post('http://127.0.0.1:8000/backtest', {
-        start_date: '2021-04-01',
-        finish_date: '2021-04-18',
-        debug_mode: false,
-        export_csv: false,
-        export_chart: false,
-        export_tradingview: false,
-        export_full_reports: false,
-        export_json: false,
-      })
-    }
-  }
+  methods: {}
 }
 </script>
 
