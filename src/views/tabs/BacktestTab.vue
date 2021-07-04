@@ -178,15 +178,7 @@ import axios from 'axios'
 
 export default {
   name: 'BacktestTab',
-  // beforeRouteUpdate (to, from, next) {
-  //   this.updateData(to.params.id)
-  //   next()
-  // },
   props: {
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
     form: {
       type: Object,
       required: true
@@ -196,73 +188,7 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      // form: null,
-      // results: null
-    }
-  },
-  computed: {
-    // ...mapState(useBacktestStore, ['tabs']),
-    // form: () => this.tabs[this.$route.params.id].form,
-    // results: () => this.tabs[this.$route.params.id].results,
-    // store () {
-    //   return useBacktestStore()
-    // },
-    // activeTabIndex () {
-    //   const id = this.$route.params.id
-    //   let tabIndex = 0
-    //   for (let i = 0; i++; i < this.tabs.length) {
-    //     if (this.tabs[i].id === id) {
-    //       tabIndex = id
-    //       break
-    //     }
-    //   }
-    //   return tabIndex
-    // },
-    // form () {
-    //   return this.store.tabs[this.activeTabIndex].form
-    // },
-    // results () {
-    //   return this.store.tabs[this.activeTabIndex].results
-    // },
-    // ...mapState(useBacktestStore, {
-    //   form: store => {
-    //     console.log(store.$route.params.id)
-    //     return store.tabs[store.$route.params.id].form
-    //   },
-    //   results: (store) => {
-    //   // console.log('something', something)
-    //     console.log(store.router.currentRoute.value.params)
-    //     console.log(store.$route.params.id)
-    //     // console.log(store)
-    //     // console.log(store.tabs)
-    //     // console.log(this.$route)
-    //     // console.log(this.tabindex)
-    //     // console.log('results', store.tabs[this.tabindex].results)
-    //     return store.tabs[store.$route.params.id].results
-    //   }
-    // }),
-  },
-  created () {
-    // this.updateData(this.$route.params.id)
-    // console.log(this.results)
-  },
   methods: {
-    // updateData (id) {
-    //   console.log('created', id)
-    //
-    //   let activeTabIndex = 0
-    //   for (let i = 0; i++; i < this.tabs.length) {
-    //     if (this.tabs[i].id === id) {
-    //       activeTabIndex = id
-    //       break
-    //     }
-    //   }
-    //
-    //   this.results = this.tabs[activeTabIndex].results
-    //   this.form = this.tabs[activeTabIndex].form
-    // },
     cancel () {
       this.results.executing = false
     },
