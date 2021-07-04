@@ -11,16 +11,22 @@
       <!--      </div>-->
       <div class="hidden sm:block">
         <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
-          <router-link v-for="tab in tabs" :key="tab.id"
-                       :class="[tab.id === pageId ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'select-none cursor-pointer focus:outline-none group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10']"
-                       :to="`${tab.id}`">
-            <span>{{ tab.id }}</span>
-            <span aria-hidden="true"
-                  :class="[tab.id === pageId ? 'bg-indigo-500' : 'bg-transparent', 'absolute inset-x-0 bottom-0 h-0.5']"/>
-            <button v-show="tabs.length > 1" class="absolute right-[1em] focus:outline-none z-40" @click="closeTab(tab.id)">
+          <div v-for="tab in tabs" :key="tab.id"
+               class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center"
+          >
+            <router-link
+              :class="[tab.id === pageId ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none bg-white w-full text-sm font-medium hover:bg-gray-50 focus:z-10']"
+              :to="`${tab.id}`">
+              <span>{{ tab.id }}</span>
+              <span aria-hidden="true"
+                    :class="[tab.id === pageId ? 'bg-indigo-500' : 'bg-transparent', 'absolute inset-x-0 bottom-0 h-0.5']"/>
+            </router-link>
+
+            <!-- Tab close button -->
+            <button v-show="Object.keys(tabs).length > 1" class="absolute right-[1em] focus:outline-none z-40" @click="closeTab(tab.id)">
               <XIcon class="h-5 w-5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full" aria-hidden="true" />
             </button>
-          </router-link>
+          </div>
 
           <!-- New Tab Button-->
           <div class="select-none cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white py-4 px-4 font-medium hover:bg-gray-50 focus:z-10 flex items-center justify-center"
@@ -34,7 +40,7 @@
     </div>
 
     <!-- Backtest Tabs -->
-    <BacktestTab :form="tabs[activeTabIndex].form" :results="tabs[activeTabIndex].results" />
+    <BacktestTab v-if="tabs[pageId]" :form="tabs[pageId].form" :results="tabs[pageId].results" />
   </section>
 </template>
 
@@ -53,7 +59,6 @@ export default {
   },
   data () {
     return {
-      // activeTabIndex: 0
     }
   },
   computed: {
@@ -63,30 +68,26 @@ export default {
     pageId () {
       return parseInt(this.$route.params.id)
     },
-    activeTabIndex () {
-      let tabIndex = 0
-      for (let i = 0; i < this.tabs.length; i++) {
-        if (this.tabs[i].id === this.pageId) {
-          tabIndex = i
-          break
-        }
-      }
-      return tabIndex
+  },
+  created () {
+    // redirect to first time on page refresh
+    if (this.pageId !== 1 && !(this.pageId in this.tabs)) {
+      this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
     }
   },
   methods: {
     ...mapActions(useBacktestStore, ['newTab']),
 
     closeTab (tabId) {
-      // if (this.this.this.pageId === tabId) {
-      //   this.pageId = this.this.this.pageId === 0 ? 1 : this.tabs[0].id
-      // }
+      delete this.tabs[tabId]
 
-      this.tabs = this.tabs.filter(item => item.id !== tabId)
+      if (this.pageId === tabId) {
+        this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
+      }
     },
     addTab () {
       const newTab = this.newTab()
-      this.tabs.push(newTab)
+      this.tabs[newTab.id] = newTab
       this.$router.push(`/backtest/${newTab.id}`)
     },
   }

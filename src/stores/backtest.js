@@ -37,9 +37,9 @@ function newTab () {
 export const useBacktestStore = defineStore({
   id: 'backtest',
   state: () => ({
-    tabs: [
-      newTab()
-    ],
+    tabs: {
+      1: newTab()
+    }
   }),
   actions: {
     newTab () {
