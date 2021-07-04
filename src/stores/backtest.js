@@ -53,7 +53,7 @@ export const useBacktestStore = defineStore({
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
-        ['Starting-Ending Date', `${helpers.timestampToTime(data.starting_time)} => ${helpers.timestampToTime(data.finishing_time)}`],
+        ['Starting-Ending Date', `${helpers.timestampToDate(data.starting_time)} => ${helpers.timestampToDate(data.finishing_time)}`],
       ]
     },
     routesInfoEvent (data) {
