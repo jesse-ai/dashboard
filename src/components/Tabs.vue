@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useBacktestStore, ['newTab']),
+    ...mapActions(useBacktestStore, ['addTab']),
 
     closeTab (tabId) {
       delete this.tabs[tabId]
@@ -74,11 +74,6 @@ export default {
       if (this.pageId === tabId) {
         this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
       }
-    },
-    addTab () {
-      const newTab = this.newTab()
-      this.tabs[newTab.id] = newTab
-      this.$router.push(`/backtest/${newTab.id}`)
     },
   }
 }

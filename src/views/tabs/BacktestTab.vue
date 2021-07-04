@@ -150,7 +150,7 @@
         Start
       </button>
 
-      <button class="btn-secondary text-center ml-2 flex-1">
+      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab">
         Start in a new tab
       </button>
     </div>
@@ -175,6 +175,8 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'pinia'
+import { useBacktestStore } from '@/stores/backtest'
 
 export default {
   name: 'BacktestTab',
@@ -189,8 +191,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useBacktestStore, ['addTab']),
     cancel () {
       this.results.executing = false
+    },
+    startInNewTab () {
+      // TODO: must duplicate current tab (with its routes, config, etc) and start a backtest there
+      // TODO: so below code doesn't work
+      // this.addTab().then(() => {
+      //   this.start()
+      // })
+      alert('not implemented yet')
     },
     start () {
       this.results.progressbar.current = 0

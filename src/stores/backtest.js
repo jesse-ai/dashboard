@@ -42,9 +42,12 @@ export const useBacktestStore = defineStore({
     }
   }),
   actions: {
-    newTab () {
-      return newTab()
+    addTab () {
+      const tab = newTab()
+      this.tabs[tab.id] = tab
+      return this.$router.push(`/backtest/${tab.id}`)
     },
+    duplicateTab () {},
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
