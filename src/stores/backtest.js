@@ -28,7 +28,7 @@ function newTab () {
         current: 0,
         estimated_remaining_seconds: 0
       },
-      info: [],
+      routes_info: [],
       metrics: [],
       infoLogs: ''
     }
@@ -56,8 +56,14 @@ export const useBacktestStore = defineStore({
         ['Starting-Ending Date', `${helpers.timestampToDate(data.starting_time)} => ${helpers.timestampToDate(data.finishing_time)}`],
       ]
     },
-    routesInfoEvent (data) {
-      console.log('routesInfoEvent is empty')
+    routesInfoEvent (id, data) {
+      const arr = []
+      data.forEach(item => {
+        arr.push([
+          item.exchange, item.symbol, item.timeframe, item.strategy_name
+        ])
+      })
+      this.tabs[id].results.routes_info = arr
     },
     progressbarEvent (id, data) {
       this.tabs[id].results.progressbar = data

@@ -114,6 +114,12 @@
        class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
     <div>
       <Divider>
+        Routes
+      </Divider>
+      <MultipleValuesTable :data="results.routes_info"/>
+
+
+      <Divider class="mt-16">
         Info
       </Divider>
       <KeyValueTable :data="results.info"/>
@@ -135,6 +141,10 @@
         <Logs :logs="results.infoLogs" :full="false"/>
         <br>
       </div>
+
+      <pre>
+      {{ results }}
+    </pre>
     </div>
   </div>
 
