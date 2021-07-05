@@ -12,14 +12,14 @@ function newTab () {
     form: {
       start_date: '2021-06-01',
       finish_date: '2021-06-02',
-      debug_mode: true,
+      debug_mode: false,
       export_chart: false,
       export_tradingview: false,
       export_full_reports: false,
       export_csv: false,
       export_json: false,
       routes: [],
-      extraRoutes: []
+      extra_routes: []
     },
     results: {
       showResults: false,

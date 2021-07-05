@@ -38,6 +38,7 @@ module.exports = {
       }
     }],
     'no-extra-semi': 'warn',
-    'vue/no-mutating-props': 'off'
+    'vue/no-mutating-props': 'off',
+    'vue/no-v-html': 'off'
   }
 }

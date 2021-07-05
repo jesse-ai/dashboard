@@ -92,9 +92,9 @@
     </div>
 
     <!-- Extra Routes-->
-    <Divider v-if="form.extraRoutes.length">Extra Routes</Divider>
+    <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
 
-    <div v-for="r in form.extraRoutes"
+    <div v-for="r in form.extra_routes"
          :key="r.exchange + r.symbol + r.timeframe"
          class="flex border rounded-lg mb-4">
       <select v-model="r.exchange"
@@ -204,10 +204,10 @@ export default {
   data () {
     return {
       // TODO: must be only existing candles?
-      exchanges: ['Bitfinex', 'Binance', 'Binance Futures'],
+      exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
       symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
-      strategies: ['TrendFollowing01'],
+      strategies: ['TestLiveMode01'],
     }
   },
   watch: {
@@ -241,7 +241,7 @@ export default {
     },
     addExtraRoute () {
       // duplicate the last one
-      this.form.extraRoutes.push({
+      this.form.extra_routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: this.form.routes[this.form.routes.length - 1].symbol,
         timeframe: this.timeframes[0]
@@ -253,7 +253,7 @@ export default {
       })
     },
     deleteExtraRoute (item) {
-      this.form.extraRoutes = this.form.extraRoutes.filter((value, index, arr) => {
+      this.form.extra_routes = this.form.extra_routes.filter((value, index, arr) => {
         return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
       })
     }

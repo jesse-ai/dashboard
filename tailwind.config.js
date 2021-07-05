@@ -47,11 +47,6 @@ module.exports = {
         sm: ['14px', '20px'],
         caption: ['12px', '16px']
       },
-      fontFamily: {
-        sans: [
-          '"Proxima Nova"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'
-        ]
-      }
     }
   },
   variants: {

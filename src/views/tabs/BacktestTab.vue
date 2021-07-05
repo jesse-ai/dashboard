@@ -220,9 +220,11 @@ export default {
     start () {
       this.results.progressbar.current = 0
       this.results.executing = true
-      
+
       axios.post('http://127.0.0.1:8000/backtest', {
         id: this.$route.params.id,
+        routes: this.form.routes,
+        extra_routes: this.form.extra_routes,
         start_date: this.form.start_date,
         finish_date: this.form.finish_date,
         debug_mode: this.form.debug_mode,
