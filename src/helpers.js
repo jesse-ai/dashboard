@@ -1,12 +1,14 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const helpers = {
   timestampToTime (timestamp) {
-    return moment.utc(timestamp).format('YYYY-MM-DD HH:mm:ss')
+    return dayjs(timestamp).utc().format('YYYY-MM-DD HH:mm:ss')
   },
 
   timestampToDate (timestamp) {
-    return moment.utc(timestamp).format('YYYY-MM-DD')
+    return dayjs(timestamp).utc().format('YYYY-MM-DD')
   }
 }
 
