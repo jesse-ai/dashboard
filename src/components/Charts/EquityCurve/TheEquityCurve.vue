@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { createChart } from 'lightweight-charts'
 import { find } from 'lodash'
 
@@ -52,7 +51,6 @@ export default {
   },
   data () {
     return {
-      // lineSeries: null,
       settings: {
         width: 800,
         height: 300,
@@ -96,9 +94,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      theme: 'settings/theme'
-    })
   },
   mounted () {
     this.settings.width = this.$refs.chart.clientWidth
