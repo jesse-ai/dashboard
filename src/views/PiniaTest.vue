@@ -27,19 +27,32 @@ export default defineComponent({
   },
   methods: {
     async startBacktest () {
+      const data = {
+        id: '1',
+        routes: [
+          {
+            exchange: 'Binance',
+            symbol: 'BTC-USDT',
+            timeframe: '1h',
+            strategy: 'PinballMonster01'
+          }],
+        extra_routes: [],
+        start_date: '2021-01-01',
+        finish_date: '2021-02-10',
+        debug_mode: false,
+        export_csv: false,
+        export_chart: false,
+        export_tradingview: false,
+        export_full_reports: false,
+        export_json: false
+      }
+
       await axios
-        .post('http://127.0.0.1:8000/backtest', {
-          id: 0,
-          start_date: '2021-01-01',
-          finish_date: '2021-01-20',
-          debug_mode: false,
-          export_csv: false,
-          export_chart: false,
-          export_tradingview: false,
-          export_full_reports: false,
-          export_json: false,
+        .post('http://127.0.0.1:8000/backtest', data)
+        .catch((err) => {
+          console.log(err)
+          this.notyf.error('Request failed')
         })
-        .catch(() => this.notyf.error('Request failed'))
     }
   }
 })
