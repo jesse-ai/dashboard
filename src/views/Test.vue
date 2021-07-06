@@ -6,32 +6,37 @@
       Equity curve
     </h2>
 
-    <TheEquityCurve
+    <EquityCurve
       class="mb-8"
-      :trades="trades"
       :equity-curve="equityCurve"/>
 
-    <h2 class="mb-4">
-      Candles
-    </h2>
-
-    <TheCandles
-      :candles="candles"
-      :orders="orders"/>
+    <button
+      class="btn btn-primary"
+      @click="getRandomData">
+      Get random data
+    </button>
   </div>
 </template>
 
 <script>
-import { equityCurve, trades, orders, candles } from '@/components/Charts/ChartsFakeData'
+import { equityCurve0, equityCurve1, equityCurve2, trades, orders, candles } from '@/components/Charts/ChartsFakeData'
+import { random } from 'lodash'
 
 export default {
   name: 'Test',
   data () {
     return {
-      equityCurve: equityCurve,
+      equityCurve: equityCurve1,
       trades: trades,
       orders: orders,
       candles: candles
+    }
+  },
+  methods: {
+    getRandomData () {
+      const arrays = [equityCurve0, equityCurve1, equityCurve2]
+
+      this.equityCurve = arrays[random(0, 2)]
     }
   }
 }

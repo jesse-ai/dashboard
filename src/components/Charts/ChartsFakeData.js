@@ -1,4 +1,4 @@
-const equityCurve = [
+const equityCurve0 = [
   {
     value: 10000,
     time: 1612410540
@@ -30,6 +30,68 @@ const equityCurve = [
   {
     value: 1451947.0971254236,
     time: 1613433600
+  }
+]
+
+const equityCurve1 = [
+  {
+    time: 1622505600000,
+    value: 10000
+  },
+  {
+    time: 1622592000000,
+    value: 9684.452381828
+  },
+  {
+    time: 1622678400000,
+    value: 10106.481005982003
+  },
+  {
+    time: 1622764800000,
+    value: 10068.463634272
+  },
+  {
+    time: 1622851200000,
+    value: 9917.305238247001
+  },
+  {
+    time: 1622937600000,
+    value: 10371.068634044
+  },
+  {
+    time: 1623024000000,
+    value: 10711.963949255003
+  }
+]
+
+const equityCurve2 = [
+  {
+    time: 1622505600000,
+    value: 11000
+  },
+  {
+    time: 1622592000000,
+    value: 19684.452381828
+  },
+  {
+    time: 1622678400000,
+    value: 12106.481005982003
+  },
+  {
+    time: 1622764800000,
+    value: 13068.463634272
+  },
+  {
+    time: 1622851200000,
+    value: 14917.305238247001
+  },
+  {
+    time: 1622937600000,
+    value: 11371.068634044
+  },
+  {
+    time: 1623024000000,
+    value: 11711.963949255003
   }
 ]
 
@@ -1085,7 +1147,9 @@ const candles = [
   }]
 
 export {
-  equityCurve,
+  equityCurve0,
+  equityCurve1,
+  equityCurve2,
   trades,
   orders,
   candles
