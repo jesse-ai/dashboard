@@ -16,7 +16,7 @@ module.exports = {
       green: colors.green,
       red: colors.red,
       white: colors.white,
-      gray: colors.coolGray,
+      gray: colors.trueGray,
       indigo: colors.indigo,
       'cool-gray': colors.coolGray,
       primary: {
@@ -26,12 +26,12 @@ module.exports = {
       // Background colors
       backdrop: {
         DEFAULT: '#ffffff',
-        dark: '#111c2a'
+        dark: '#333333'
       },
       // Background secondary colors
       'backdrop-secondary': {
         DEFAULT: '#f3f3f6',
-        dark: '#0d1620'
+        dark: '#282828'
       },
       // Text colors
       body: {
