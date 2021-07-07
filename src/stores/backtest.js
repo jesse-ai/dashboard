@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
 
-
 let idCounter = 0
 
 function newTab () {
@@ -35,7 +34,6 @@ function newTab () {
   })
 }
 
-
 export const useBacktestStore = defineStore({
   id: 'backtest',
   state: () => ({
@@ -53,14 +51,22 @@ export const useBacktestStore = defineStore({
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
-        ['Starting-Ending Date', `${helpers.timestampToDate(data.starting_time)} => ${helpers.timestampToDate(data.finishing_time)}`],
+        [
+          'Starting-Ending Date',
+          `${helpers.timestampToDate(
+            data.starting_time
+          )} => ${helpers.timestampToDate(data.finishing_time)}`
+        ]
       ]
     },
     routesInfoEvent (id, data) {
       const arr = []
       data.forEach(item => {
         arr.push([
-          item.exchange, item.symbol, item.timeframe, item.strategy_name
+          item.exchange,
+          item.symbol,
+          item.timeframe,
+          item.strategy_name
         ])
       })
       this.tabs[id].results.routes_info = arr
@@ -69,24 +75,56 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.progressbar = data
     },
     infoLogEvent (id, data) {
-      this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(data.time)}] ${data.message}\n`
+      this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(
+        data.time
+      )}] ${data.message}\n`
     },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
-        ['Total Net Profit', `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)})`],
-        ['Starting => Finishing Balance', `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`],
+        [
+          'Total Net Profit',
+          `${_.round(data.net_profit, 2)} (${_.round(
+            data.net_profit_percentage,
+            2
+          )})`
+        ],
+        [
+          'Starting => Finishing Balance',
+          `${_.round(data.starting_balance, 2)} => ${_.round(
+            data.finishing_balance,
+            2
+          )}`
+        ],
         ['Open Trades', data.total_open_trades],
         ['Total Paid Fees', _.round(data.fee, 2)],
         ['Max Drawdown', _.round(data.max_drawdown, 2)],
         ['Annual Return', `${_.round(data.annual_return, 2)}%`],
-        ['Expectancy', `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`],
-        ['Avg Win | Avg Loss', `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`],
+        [
+          'Expectancy',
+          `${_.round(data.expectancy, 2)} (${_.round(
+            data.expectancy_percentage,
+            2
+          )}%)`
+        ],
+        [
+          'Avg Win | Avg Loss',
+          `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`
+        ],
         ['Ratio Avg Win / Avg Loss', _.round(data.open_pl, 2)],
         ['Win-rate', `${_.round(data.win_rate * 100, 2)}%`],
-        ['Longs | Shorts', `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`],
+        [
+          'Longs | Shorts',
+          `${_.round(data.longs_percentage, 2)}% | ${_.round(
+            data.shorts_percentage,
+            2
+          )}%`
+        ],
         ['Avg Holding Time', data.average_holding_period],
-        ['Winning Trades Avg Holding Time', data.average_winning_holding_period],
+        [
+          'Winning Trades Avg Holding Time',
+          data.average_winning_holding_period
+        ],
         ['Losing Trades Avg Holding Time', data.average_losing_holding_period],
         ['Sharpe Ratio', _.round(data.sharpe_ratio, 2)],
         ['Calmar Ratio', _.round(data.calmar_ratio, 2)],
@@ -97,12 +135,12 @@ export const useBacktestStore = defineStore({
         ['Largest Winning Trade', _.round(data.largest_winning_trade, 2)],
         ['Largest Losing Trade', _.round(data.largest_losing_trade, 2)],
         ['Total Winning Trades', data.total_winning_trades],
-        ['Total Losing Trades', data.total_losing_trades],
+        ['Total Losing Trades', data.total_losing_trades]
       ]
 
       // backtest is finished:
       this.tabs[id].results.executing = false
       this.tabs[id].results.showResults = true
     }
-  },
+  }
 })
