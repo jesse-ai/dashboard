@@ -14,7 +14,8 @@
 <script>
 
 const navigation = [
-  { name: 'Backtest', to: '/' },
+  { name: 'Import Candles', to: '/candles' },
+  { name: 'Backtest', to: '/backtest' },
   { name: 'Optimization', to: '/optimization' },
   { name: 'Paper Trade', to: '/paper-trade' },
   { name: 'Live Trade', to: '/live-trade' },

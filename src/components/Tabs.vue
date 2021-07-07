@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { mapActions, } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
 import { XIcon, PlusSmIcon } from '@heroicons/vue/outline'
+import { useCandlesStore } from '@/stores/candles'
 
 export default {
   name: 'Tabs',
@@ -62,17 +62,26 @@ export default {
   created () {
     // redirect to first time on page refresh
     if (this.pageId !== 1 && !(this.pageId in this.tabs)) {
-      this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
+      // this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
+      this.$router.push({ name: this.$route.name, params: { id: this.tabs[Object.keys(this.tabs)[0]].id } })
     }
   },
   methods: {
-    ...mapActions(useBacktestStore, ['addTab']),
+    addTab () {
+      if (this.$route.name === 'Candles') {
+        const store = useCandlesStore()
+        return store.addTab()
+      } else if (this.$route.name === 'Backtest') {
+        const store = useBacktestStore()
+        return store.addTab()
+      }
+    },
 
     closeTab (tabId) {
       delete this.tabs[tabId]
 
       if (this.pageId === tabId) {
-        this.$router.push(`/backtest/${this.tabs[Object.keys(this.tabs)[0]].id}`)
+        this.$router.push({ name: this.$route.name, params: { id: this.tabs[Object.keys(this.tabs)[0]].id } })
       }
     },
   }

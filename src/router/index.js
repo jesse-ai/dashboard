@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useMainStore } from '@/stores/main'
 
 // Views
-import Test from '@/views/Test' // For debug purpose
+import Candles from '@/views/Candles'
 import Backtest from '@/views/Backtest'
+import Test from '@/views/Test' // For debug purpose
 import LiveTrade from '@/views/LiveTrade'
 import Optimization from '@/views/Optimization'
 import PaperTrade from '@/views/PaperTrade'
@@ -32,6 +33,13 @@ const isSocketConnected = (to, from, next) => {
 const routes = [
   { path: '/', redirect: '/backtest/1' },
   { path: '/backtest', redirect: '/backtest/1' },
+  { path: '/candles', redirect: '/candles/1' },
+  {
+    path: '/candles/:id',
+    component: Candles,
+    name: 'Candles',
+    beforeEnter: isSocketConnected,
+  },
   {
     path: '/backtest/:id',
     component: Backtest,
