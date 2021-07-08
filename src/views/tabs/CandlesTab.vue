@@ -1,113 +1,32 @@
 <template>
-  222
   <!-- Content -->
   <div v-if="!results.executing && !results.showResults"
        class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Routes :form="form" :results="results"/>
+    <Divider>Exchange</Divider>
+    <select
+      v-model="form.exchange"
+      class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
+      <option v-for="item in exchanges" :key="item">{{ item }}</option>
+    </select>
 
-    <Divider class="mt-16">Options</Divider>
+    <Divider class="mt-16">Symbol</Divider>
+    <input v-model="form.symbol"
+           placeholder="ex: BTC-USDT"
+           class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
 
-    <div class="grid grid-cols-2 gap-8">
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="debug_mode" v-model="form.debug_mode"
-                 name="debug_mode"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="export_chart" v-model="form.export_chart"
-                 name="export_chart"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="export_chart" class="font-medium text-gray-700 cursor-pointer">export_chart</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="export_tradingview" v-model="form.export_tradingview"
-                 name="export_tradingview"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="export_tradingview" class="font-medium text-gray-700 cursor-pointer">export_tradingview</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="export_full_reports" v-model="form.export_full_reports"
-                 name="export_full_reports"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="export_full_reports"
-                 class="font-medium text-gray-700 cursor-pointer">export_full_reports</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="export_csv" v-model="form.export_csv"
-                 name="export_csv"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="export_csv" class="font-medium text-gray-700 cursor-pointer">export_csv</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="export_json" v-model="form.export_json"
-                 name="export_json"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="export_json" class="font-medium text-gray-700 cursor-pointer">export_json</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
-      </div>
-    </div>
-
-    <Divider class="mt-16">Duration</Divider>
-
+    <Divider class="mt-16">Start Date</Divider>
     <div class="flex items-center select-none flex-1">
       <input id="start_date"
              v-model="form.start_date"
              type="date"
              name="start_date"
-             class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+             class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 rounded-md"
       >
-
-      <input id="finish_date"
-             v-model="form.finish_date"
-             type="date"
-             name="finish_date"
-             class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
     </div>
 
     <br>
     <!--    <pre>{{ activeTabIndex }}</pre>-->
-    <pre>{{ form }}</pre>
+    <!--    <pre>{{ form }}</pre>-->
   </div>
 
   <!-- Results -->
@@ -215,6 +134,11 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      exchanges: ['Binance', 'Bitfinex']
+    }
+  },
   methods: {
     ...mapActions(useCandlesStore, ['addTab']),
     cancel () {
@@ -232,18 +156,11 @@ export default {
       this.results.progressbar.current = 0
       this.results.executing = true
 
-      axios.post('http://127.0.0.1:8000/backtest', {
+      axios.post('http://127.0.0.1:8000/candles', {
         id: this.$route.params.id,
-        routes: this.form.routes,
-        extra_routes: this.form.extra_routes,
+        exchange: this.form.exchange,
+        symbol: this.form.symbol,
         start_date: this.form.start_date,
-        finish_date: this.form.finish_date,
-        debug_mode: this.form.debug_mode,
-        export_csv: this.form.export_csv,
-        export_chart: this.form.export_chart,
-        export_tradingview: this.form.export_tradingview,
-        export_full_reports: this.form.export_full_reports,
-        export_json: this.form.export_json,
       }).catch(() => this.notyf.error('Request failed'))
     },
     rerun () {

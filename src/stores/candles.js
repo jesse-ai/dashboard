@@ -10,15 +10,8 @@ function newTab () {
     name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
-      finish_date: '2021-06-02',
-      debug_mode: false,
-      export_chart: false,
-      export_tradingview: false,
-      export_full_reports: false,
-      export_csv: false,
-      export_json: false,
-      routes: [],
-      extra_routes: []
+      exchange: 'Binance',
+      symbol: 'BTC-USDT',
     },
     results: {
       showResults: false,
@@ -27,7 +20,6 @@ function newTab () {
         current: 0,
         estimated_remaining_seconds: 0
       },
-      routes_info: [],
       metrics: [],
       infoLogs: ''
     }

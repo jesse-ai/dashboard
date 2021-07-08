@@ -1,10 +1,13 @@
 import { useBacktestStore } from '@/stores/backtest'
+import { useCandlesStore } from '@/stores/candles'
 
 export default function () {
   const backtest = useBacktestStore()
+  const candles = useCandlesStore()
 
   // Prepare needed actions for each socket event
   return new Map([
+    // backtest
     ['backtest.candles_info', [
       backtest.candlesInfoEvent
     ]],
@@ -19,6 +22,11 @@ export default function () {
     ]],
     ['backtest.info_log', [
       backtest.infoLogEvent
+    ]],
+
+    // candles
+    ['candles.progressbar', [
+      candles.progressbarEvent
     ]],
   ])
 }
