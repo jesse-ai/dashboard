@@ -111,30 +111,18 @@
 
   <!-- Results -->
   <div v-if="results.showResults"
-       class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+       class="w-full mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
     <div>
-      <Divider>
-        Routes
-      </Divider>
+      <Divider>Routes</Divider>
       <MultipleValuesTable :data="results.routes_info"/>
 
-
-      <Divider class="mt-16">
-        Info
-      </Divider>
+      <Divider class="mt-16">Info</Divider>
       <KeyValueTable :data="results.info"/>
 
-      <Divider class="mt-16">
-        Equity Curve
-      </Divider>
+      <Divider class="mt-16">Equity Curve</Divider>
+      <EquityCurve :equity-curve="results.charts.equity_curve"/>
 
-      <!-- TODO: replace with actual chart -->
-      <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
-
-      <Divider class="mt-16">
-        Performance
-      </Divider>
-
+      <Divider class="mt-16">Performance</Divider>
       <KeyValueTable :data="results.metrics"/>
 
       <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
@@ -142,9 +130,9 @@
         <br>
       </div>
 
-      <pre>
-      {{ results }}
-    </pre>
+      <!--            <pre>-->
+      <!--      {{ results }}-->
+      <!--            </pre>-->
     </div>
   </div>
 

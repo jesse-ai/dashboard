@@ -23,6 +23,9 @@ export default function () {
     ['backtest.info_log', [
       backtest.infoLogEvent
     ]],
+    ['backtest.equity_curve', [
+      backtest.equityCurveEvent
+    ]],
 
     // candles
     ['candles.progressbar', [

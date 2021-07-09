@@ -29,7 +29,10 @@ function newTab () {
       },
       routes_info: [],
       metrics: [],
-      infoLogs: ''
+      infoLogs: '',
+      charts: {
+        equity_curve: []
+      }
     }
   })
 }
@@ -137,8 +140,16 @@ export const useBacktestStore = defineStore({
         ['Total Winning Trades', data.total_winning_trades],
         ['Total Losing Trades', data.total_losing_trades]
       ]
+    },
+    equityCurveEvent (id, data) {
+      data.forEach(item => {
+        this.tabs[id].results.charts.equity_curve.push({
+          value: item.balance,
+          time: item.timestamp
+        })
+      })
 
-      // backtest is finished:
+      // backtest is finished, time to show charts:
       this.tabs[id].results.executing = false
       this.tabs[id].results.showResults = true
     }
