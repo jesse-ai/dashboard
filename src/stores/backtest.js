@@ -74,7 +74,10 @@ export const useBacktestStore = defineStore({
         export_tradingview: this.tabs[id].form.export_tradingview,
         export_full_reports: this.tabs[id].form.export_full_reports,
         export_json: this.tabs[id].form.export_json,
-      }).catch(() => this.notyf.error('Request failed'))
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        this.tabs[id].results.executing = false
+      })
     },
     cancel (id) {
       this.tabs[id].results.executing = false
@@ -83,7 +86,7 @@ export const useBacktestStore = defineStore({
         data: {
           id
         }
-      })
+      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     rerun (id) {
       this.tabs[id].results.showResults = false

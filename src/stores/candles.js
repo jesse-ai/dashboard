@@ -55,7 +55,10 @@ export const useCandlesStore = defineStore({
         exchange: this.tabs[id].form.exchange,
         symbol: this.tabs[id].form.symbol,
         start_date: this.tabs[id].form.start_date,
-      }).catch(() => this.notyf.error('Request failed'))
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        this.tabs[id].results.executing = false
+      })
     },
     rerun (id) {
       this.tabs[id].results.showResults = false
@@ -71,7 +74,7 @@ export const useCandlesStore = defineStore({
         data: {
           id
         }
-      })
+      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
 
     candlesInfoEvent (id, data) {
