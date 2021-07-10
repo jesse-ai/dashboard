@@ -203,9 +203,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useBacktestStore, ['addTab']),
+    ...mapActions(useBacktestStore, ['addTab', 'resetResults']),
     cancel () {
       this.results.executing = false
+      axios.delete('http://127.0.0.1:8000/backtest', {
+        headers: {},
+        data: {
+          id: this.$route.params.id
+        }
+      })
     },
     startInNewTab () {
       // TODO: must duplicate current tab (with its routes, config, etc) and start a backtest there
@@ -218,6 +224,7 @@ export default {
     start () {
       this.results.progressbar.current = 0
       this.results.executing = true
+      this.results.infoLogs = ''
 
       axios.post('http://127.0.0.1:8000/backtest', {
         id: this.$route.params.id,

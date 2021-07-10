@@ -9,8 +9,8 @@ function newTab () {
     id: ++idCounter,
     name: 'Tab 0',
     form: {
-      start_date: '2021-06-01',
-      finish_date: '2021-06-02',
+      start_date: '2021-05-25',
+      finish_date: '2021-06-05',
       debug_mode: false,
       export_chart: false,
       export_tradingview: false,
@@ -142,6 +142,7 @@ export const useBacktestStore = defineStore({
       ]
     },
     equityCurveEvent (id, data) {
+      this.tabs[id].results.charts.equity_curve = []
       data.forEach(item => {
         this.tabs[id].results.charts.equity_curve.push({
           value: item.balance,
