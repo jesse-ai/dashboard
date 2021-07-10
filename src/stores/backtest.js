@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
+import axios from 'axios'
 
 let idCounter = 0
 
@@ -50,7 +51,48 @@ export const useBacktestStore = defineStore({
       this.tabs[tab.id] = tab
       return this.$router.push(`/backtest/${tab.id}`)
     },
-    duplicateTab () {},
+    startInNewTab (id) {
+      const tab = newTab()
+      tab.form = _.cloneDeep(this.tabs[id].form)
+      this.tabs[tab.id] = tab
+      this.start(tab.id)
+    },
+    start (id) {
+      this.tabs[id].results.progressbar.current = 0
+      this.tabs[id].results.executing = true
+      this.tabs[id].results.infoLogs = ''
+
+      axios.post('http://127.0.0.1:8000/backtest', {
+        id,
+        routes: this.tabs[id].form.routes,
+        extra_routes: this.tabs[id].form.extra_routes,
+        start_date: this.tabs[id].form.start_date,
+        finish_date: this.tabs[id].form.finish_date,
+        debug_mode: this.tabs[id].form.debug_mode,
+        export_csv: this.tabs[id].form.export_csv,
+        export_chart: this.tabs[id].form.export_chart,
+        export_tradingview: this.tabs[id].form.export_tradingview,
+        export_full_reports: this.tabs[id].form.export_full_reports,
+        export_json: this.tabs[id].form.export_json,
+      }).catch(() => this.notyf.error('Request failed'))
+    },
+    cancel (id) {
+      this.tabs[id].results.executing = false
+      axios.delete('http://127.0.0.1:8000/backtest', {
+        headers: {},
+        data: {
+          id
+        }
+      })
+    },
+    rerun (id) {
+      this.tabs[id].results.showResults = false
+      this.start(id)
+    },
+    newBacktest (id) {
+      this.tabs[id].results.showResults = false
+    },
+
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
