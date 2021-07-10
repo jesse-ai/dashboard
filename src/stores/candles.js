@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
+import axios from 'axios'
 
 let idCounter = 0
 
@@ -39,7 +40,40 @@ export const useCandlesStore = defineStore({
       this.tabs[tab.id] = tab
       return this.$router.push(`/candles/${tab.id}`)
     },
-    duplicateTab () {},
+    startInNewTab (id) {
+      const tab = newTab()
+      tab.form = _.cloneDeep(this.tabs[id].form)
+      this.tabs[tab.id] = tab
+      this.start(tab.id)
+    },
+    start (id) {
+      this.tabs[id].results.progressbar.current = 0
+      this.tabs[id].results.executing = true
+
+      axios.post('http://127.0.0.1:8000/candles', {
+        id,
+        exchange: this.tabs[id].form.exchange,
+        symbol: this.tabs[id].form.symbol,
+        start_date: this.tabs[id].form.start_date,
+      }).catch(() => this.notyf.error('Request failed'))
+    },
+    rerun (id) {
+      this.tabs[id].results.showResults = false
+      this.start(id)
+    },
+    newBacktest (id) {
+      this.tabs[id].results.showResults = false
+    },
+    cancel (id) {
+      this.tabs[id].results.executing = false
+      axios.delete('http://127.0.0.1:8000/candles', {
+        headers: {},
+        data: {
+          id
+        }
+      })
+    },
+
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],

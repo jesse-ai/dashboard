@@ -71,21 +71,21 @@
   <!-- Action Buttons -->
   <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
     <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="rerun">
+      <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
         Rerun
       </button>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="newBacktest">
+      <button class="btn-secondary text-center ml-2 flex-1" @click="newBacktest($route.params.id)">
         New backtest
       </button>
     </div>
 
     <div v-else class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="start">
+      <button class="btn-primary text-center mr-2 flex-1" @click="start($route.params.id)">
         Start
       </button>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab">
+      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab($route.params.id)">
         Start in a new tab
       </button>
     </div>
@@ -103,7 +103,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button class="btn-secondary w-64" @click="cancel">
+      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -116,7 +116,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import Logs from '@/components/Logs'
@@ -140,36 +139,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useCandlesStore, ['addTab']),
-    cancel () {
-      this.results.executing = false
-    },
-    startInNewTab () {
-      // TODO: must duplicate current tab (with its routes, config, etc) and start a backtest there
-      // TODO: so below code doesn't work
-      // this.addTab().then(() => {
-      //   this.start()
-      // })
-      alert('not implemented yet')
-    },
-    start () {
-      this.results.progressbar.current = 0
-      this.results.executing = true
-
-      axios.post('http://127.0.0.1:8000/candles', {
-        id: this.$route.params.id,
-        exchange: this.form.exchange,
-        symbol: this.form.symbol,
-        start_date: this.form.start_date,
-      }).catch(() => this.notyf.error('Request failed'))
-    },
-    rerun () {
-      this.results.showResults = false
-      this.start()
-    },
-    newBacktest () {
-      this.results.showResults = false
-    },
+    ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
   }
 }
 </script>
