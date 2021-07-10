@@ -103,10 +103,6 @@
              name="finish_date"
              class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
     </div>
-
-    <br>
-    <!--    <pre>{{ activeTabIndex }}</pre>-->
-    <pre>{{ form }}</pre>
   </div>
 
   <!-- Results -->
