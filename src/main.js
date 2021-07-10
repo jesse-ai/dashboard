@@ -9,11 +9,9 @@ import notyf from '@/plugins/notyf'
 import 'notyf/notyf.min.css'
 import './assets/styles/styles.css'
 
+
 import { createPinia } from 'pinia'
 const pinia = createPinia()
-pinia.use(({ store }) => {
-  store.$router = markRaw(router)
-})
 
 const app = createApp(App)
 app.use(pinia)
@@ -33,6 +31,10 @@ app.use(notyf, {
 })
 app.use(websocket, {
   socketPath: process.env.VUE_APP_SOCKET_PATH
+})
+pinia.use(({ store }) => {
+  store.$router = markRaw(router)
+  store.notyf = markRaw(app.notyf)
 })
 
 // import and register vue components globally
