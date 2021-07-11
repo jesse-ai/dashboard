@@ -34,6 +34,9 @@ export default function () {
     ['candles.progressbar', [
       candles.progressbarEvent
     ]],
+    ['candles.exception', [
+      candles.exceptionEvent
+    ]],
   ])
 }
 
