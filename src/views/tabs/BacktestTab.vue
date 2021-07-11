@@ -177,6 +177,12 @@
   <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
     <Logs :logs="results.infoLogs"/>
   </div>
+
+  <!-- exception  -->
+  <div v-if="results.exception.error && results.executing"
+       class="h-full overflow-auto mx-auto container">
+    <Exception :title="results.exception.error" :content="results.exception.traceback" />
+  </div>
 </template>
 
 <script>

@@ -31,6 +31,10 @@ function newTab () {
       routes_info: [],
       metrics: [],
       infoLogs: '',
+      exception: {
+        error: '',
+        traceback: ''
+      },
       charts: {
         equity_curve: []
       }
@@ -61,6 +65,8 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.progressbar.current = 0
       this.tabs[id].results.executing = true
       this.tabs[id].results.infoLogs = ''
+      this.tabs[id].results.exception.traceback = ''
+      this.tabs[id].results.exception.error = ''
 
       axios.post('http://127.0.0.1:8000/backtest', {
         id,
@@ -126,6 +132,10 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(
         data.time
       )}] ${data.message}\n`
+    },
+    exceptionEvent (id, data) {
+      this.tabs[id].results.exception.error = data.error
+      this.tabs[id].results.exception.traceback = data.traceback
     },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [

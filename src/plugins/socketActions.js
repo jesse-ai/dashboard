@@ -26,6 +26,9 @@ export default function () {
     ['backtest.equity_curve', [
       backtest.equityCurveEvent
     ]],
+    ['backtest.exception', [
+      backtest.exceptionEvent
+    ]],
 
     // candles
     ['candles.progressbar', [
