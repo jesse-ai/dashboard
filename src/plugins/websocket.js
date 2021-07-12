@@ -26,6 +26,10 @@ export default {
             clearInterval(openIntervalId)
           }
 
+          if (reopenAttempts < 3) {
+            app.notyf.success('WebSocket reconnected')
+          }
+
           // Reset reopen attempts after ws reopened
           reopenAttempts = 3
         })
