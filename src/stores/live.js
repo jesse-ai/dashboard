@@ -17,13 +17,15 @@ function newTab () {
     },
     results: {
       showResults: false,
-      executing: false,
+      booting: false,
+      monitoring: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0
       },
       routes_info: [],
       metrics: [],
+      positions: [],
       infoLogs: '',
       errorLogs: '',
       exception: {
@@ -58,7 +60,7 @@ export const useLiveStore = defineStore({
     },
     start (id) {
       this.tabs[id].results.progressbar.current = 0
-      this.tabs[id].results.executing = true
+      this.tabs[id].results.booting = true
       this.tabs[id].results.infoLogs = ''
       this.tabs[id].results.errorLogs = ''
       this.tabs[id].results.exception.traceback = ''
@@ -72,11 +74,11 @@ export const useLiveStore = defineStore({
         paper_mode: this.tabs[id].form.paper_mode,
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-        this.tabs[id].results.executing = false
+        this.tabs[id].results.booting = false
       })
     },
     cancel (id) {
-      this.tabs[id].results.executing = false
+      this.tabs[id].results.booting = false
       axios.delete('http://127.0.0.1:8000/live', {
         headers: {},
         data: {
@@ -128,6 +130,20 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
     },
+    positionsEvent (id, data) {
+      this.tabs[id].results.positions = []
+
+      for (const item of data) {
+        this.tabs[id].results.positions.push([
+          item.type, item.strategy_name, item.symbol, item.enry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+        ])
+      }
+
+      if (!this.tabs[id].results.monitoring) {
+        this.tabs[id].results.booting = false
+        this.tabs[id].results.monitoring = true
+      }
+    },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
@@ -167,7 +183,7 @@ export const useLiveStore = defineStore({
       })
 
       // live is finished, time to show charts:
-      this.tabs[id].results.executing = false
+      this.tabs[id].results.booting = false
       this.tabs[id].results.showResults = true
     }
   }

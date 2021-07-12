@@ -47,6 +47,12 @@ export default function () {
     ['livetrade.progressbar', [
       live.progressbarEvent
     ]],
+    ['papertrade.positions', [
+      live.positionsEvent
+    ]],
+    ['livetrade.positions', [
+      live.positionsEvent
+    ]],
   ])
 }
 

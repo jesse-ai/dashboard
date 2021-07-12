@@ -1,42 +1,42 @@
 <template>
   <!-- Content -->
-  <!--  <div v-if="!results.executing && !results.showResults"-->
-  <!--       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">-->
-  <!--    <Routes :form="form" :results="results"/>-->
+  <div v-if="!results.booting && !results.monitoring && !results.showResults"
+       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+    <Routes :form="form" :results="results"/>
 
-  <!--    <Divider class="mt-16">Options</Divider>-->
+    <Divider class="mt-16">Options</Divider>
 
-  <!--    <div class="grid grid-cols-2 gap-8">-->
-  <!--      <div class="flex items-start select-none">-->
-  <!--        <div class="h-5 flex items-center">-->
-  <!--          <input id="debug_mode" v-model="form.debug_mode"-->
-  <!--                 name="debug_mode"-->
-  <!--                 type="checkbox"-->
-  <!--                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">-->
-  <!--        </div>-->
-  <!--        <div class="ml-3 text-sm">-->
-  <!--          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>-->
-  <!--          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>-->
-  <!--        </div>-->
-  <!--      </div>-->
+    <div class="grid grid-cols-2 gap-8">
+      <div class="flex items-start select-none">
+        <div class="h-5 flex items-center">
+          <input id="debug_mode" v-model="form.debug_mode"
+                 name="debug_mode"
+                 type="checkbox"
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
+          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+        </div>
+      </div>
 
-  <!--      <div class="flex items-start select-none">-->
-  <!--        <div class="h-5 flex items-center">-->
-  <!--          <input id="paper_mode" v-model="form.paper_mode"-->
-  <!--                 name="paper_mode"-->
-  <!--                 type="checkbox"-->
-  <!--                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">-->
-  <!--        </div>-->
-  <!--        <div class="ml-3 text-sm">-->
-  <!--          <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>-->
-  <!--          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
+      <div class="flex items-start select-none">
+        <div class="h-5 flex items-center">
+          <input id="paper_mode" v-model="form.paper_mode"
+                 name="paper_mode"
+                 type="checkbox"
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>
+          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Monitoring Dashboard -->
-  <div class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+  <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
       <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">
@@ -84,10 +84,10 @@
 
     <!--tables-->
     <Divider class="mt-12">Positions</Divider>
-    <MultipleValuesTable :data="positions"/>
+    <MultipleValuesTable :data="results.positions"/>
 
     <Divider class="mt-12">Orders</Divider>
-    <MultipleValuesTable :data="positions"/>
+    <MultipleValuesTable :data="results.positions"/>
   </div>
 
   <!-- Results -->
@@ -114,7 +114,7 @@
   </div>
 
   <!-- Action Buttons -->
-  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
+  <div v-if="!results.booting" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
     <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
       <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
         Rerun
@@ -137,7 +137,7 @@
   </div>
 
   <!-- Execution -->
-  <div v-if="!form.debug_mode && results.executing && !results.showResults"
+  <div v-if="!form.debug_mode && results.booting && !results.showResults"
        class="flex flex-col items-center justify-center select-none"
        :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
   >
@@ -155,12 +155,12 @@
   </div>
 
   <!-- Logs while execution -->
-  <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
+  <div v-if="form.debug_mode && results.booting" class="h-full overflow-auto mx-auto container">
     <Logs :logs="results.infoLogs"/>
   </div>
 
   <!-- exception  -->
-  <div v-if="results.exception.error && results.executing"
+  <div v-if="results.exception.error && results.booting"
        class="h-full overflow-auto mx-auto container">
     <Exception :title="results.exception.error" :content="results.exception.traceback" />
   </div>
