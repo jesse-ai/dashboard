@@ -131,32 +131,17 @@ export const useLiveStore = defineStore({
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
-        [
-          'Total Net Profit',
-          `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)}%)`
-        ],
-        [
-          'Starting => Finishing Balance',
-          `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`
-        ],
+        ['Total Net Profit', `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)}%)`],
+        ['Starting => Finishing Balance', `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`],
         ['Open Trades', data.total_open_trades],
         ['Total Paid Fees', _.round(data.fee, 2)],
         ['Max Drawdown', _.round(data.max_drawdown, 2)],
         ['Annual Return', `${_.round(data.annual_return, 2)}%`],
-        [
-          'Expectancy',
-          `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`
-        ],
-        [
-          'Avg Win | Avg Loss',
-          `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`
-        ],
+        ['Expectancy', `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`],
+        ['Avg Win | Avg Loss', `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`],
         ['Ratio Avg Win / Avg Loss', _.round(data.open_pl, 2)],
         ['Win-rate', `${_.round(data.win_rate * 100, 2)}%`],
-        [
-          'Longs | Shorts',
-          `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`
-        ],
+        ['Longs | Shorts', `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`],
         ['Avg Holding Time', data.average_holding_period],
         ['Winning Trades Avg Holding Time', data.average_winning_holding_period],
         ['Losing Trades Avg Holding Time', data.average_losing_holding_period],
