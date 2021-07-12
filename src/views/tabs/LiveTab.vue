@@ -73,6 +73,24 @@
           True
         </dd>
       </div>
+
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          PNL
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          2000 USDT (1.5%)
+        </dd>
+      </div>
+
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          Trades
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          2
+        </dd>
+      </div>
     </dl>
 
     <Divider class="mt-12">
@@ -87,7 +105,7 @@
     <MultipleValuesTable :data="results.positions"/>
 
     <Divider class="mt-12">Orders</Divider>
-    <MultipleValuesTable :data="results.positions"/>
+    <MultipleValuesTable :data="results.orders"/>
   </div>
 
   <!-- Results -->

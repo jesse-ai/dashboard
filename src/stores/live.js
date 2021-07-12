@@ -26,6 +26,7 @@ function newTab () {
       routes_info: [],
       metrics: [],
       positions: [],
+      orders: [],
       infoLogs: '',
       errorLogs: '',
       exception: {
@@ -131,17 +132,53 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.exception.traceback = data.traceback
     },
     positionsEvent (id, data) {
+      // sample
+      // {
+      //   "type": "close",
+      //   "strategy_name": "TestLiveMode01",
+      //   "symbol": "BTC-USDT",
+      //   "leverage": 3,
+      //   "opened_at": 1626109441000,
+      //   "qty": 0,
+      //   "entry": null,
+      //   "current_price": 33228.3,
+      //   "liq_price": null,
+      //   "pnl": 0,
+      //   "pnl_perc": null
+      // }
       this.tabs[id].results.positions = []
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          item.type, item.strategy_name, item.symbol, item.enry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+          item.type, item.strategy_name, item.symbol, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
         ])
       }
 
       if (!this.tabs[id].results.monitoring) {
         this.tabs[id].results.booting = false
         this.tabs[id].results.monitoring = true
+      }
+    },
+    ordersEvent (id, data) {
+      // sample:
+      // {
+      //   "symbol": "BTC-USDT",
+      //   "side": "buy",
+      //   "type": "MARKET",
+      //   "qty": 0.884,
+      //   "price": 33217.1,
+      //   "flag": null,
+      //   "status": "EXECUTED",
+      //   "created_at": 1626109440000,
+      //   "canceled_at": null,
+      //   "executed_at": 1626109441000
+      // }
+      this.tabs[id].results.orders = []
+
+      for (const item of data) {
+        this.tabs[id].results.orders.push([
+          item.created_at, item.symbol, item.type, item.side, item.price, item.qty, item.status
+        ])
       }
     },
     metricsEvent (id, data) {
