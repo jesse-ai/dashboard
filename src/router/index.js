@@ -5,7 +5,7 @@ import { useMainStore } from '@/stores/main'
 import Candles from '@/views/Candles'
 import Backtest from '@/views/Backtest'
 import Test from '@/views/Test' // For debug purpose
-import LiveTrade from '@/views/LiveTrade'
+import Live from '@/views/Live'
 import Optimization from '@/views/Optimization'
 import PaperTrade from '@/views/PaperTrade'
 import PiniaTest from '@/views/PiniaTest'
@@ -34,6 +34,7 @@ const routes = [
   { path: '/', redirect: '/backtest/1' },
   { path: '/backtest', redirect: '/backtest/1' },
   { path: '/candles', redirect: '/candles/1' },
+  { path: '/live', redirect: '/live/1' },
   {
     path: '/candles/:id',
     component: Candles,
@@ -47,9 +48,9 @@ const routes = [
     beforeEnter: isSocketConnected,
   },
   {
-    path: '/live-trade',
-    component: LiveTrade,
-    name: 'LiveTrade',
+    path: '/live/:id',
+    component: Live,
+    name: 'Live',
     beforeEnter: isSocketConnected,
   },
   {
