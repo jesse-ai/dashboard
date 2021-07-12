@@ -1,38 +1,93 @@
 <template>
   <!-- Content -->
-  <div v-if="!results.executing && !results.showResults"
-       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Routes :form="form" :results="results"/>
+  <!--  <div v-if="!results.executing && !results.showResults"-->
+  <!--       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">-->
+  <!--    <Routes :form="form" :results="results"/>-->
 
-    <Divider class="mt-16">Options</Divider>
+  <!--    <Divider class="mt-16">Options</Divider>-->
 
-    <div class="grid grid-cols-2 gap-8">
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="debug_mode" v-model="form.debug_mode"
-                 name="debug_mode"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
+  <!--    <div class="grid grid-cols-2 gap-8">-->
+  <!--      <div class="flex items-start select-none">-->
+  <!--        <div class="h-5 flex items-center">-->
+  <!--          <input id="debug_mode" v-model="form.debug_mode"-->
+  <!--                 name="debug_mode"-->
+  <!--                 type="checkbox"-->
+  <!--                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">-->
+  <!--        </div>-->
+  <!--        <div class="ml-3 text-sm">-->
+  <!--          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>-->
+  <!--          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>-->
+  <!--        </div>-->
+  <!--      </div>-->
+
+  <!--      <div class="flex items-start select-none">-->
+  <!--        <div class="h-5 flex items-center">-->
+  <!--          <input id="paper_mode" v-model="form.paper_mode"-->
+  <!--                 name="paper_mode"-->
+  <!--                 type="checkbox"-->
+  <!--                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">-->
+  <!--        </div>-->
+  <!--        <div class="ml-3 text-sm">-->
+  <!--          <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>-->
+  <!--          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <!-- Monitoring Dashboard -->
+  <div class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          Started
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          3 hours ago
+        </dd>
       </div>
 
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="paper_mode" v-model="form.paper_mode"
-                 name="paper_mode"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-        </div>
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          Current Time
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          13:58:39
+        </dd>
       </div>
+
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          Started/Current Balance
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          968.91/968.67 USDT
+        </dd>
+      </div>
+
+      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">
+          Debug Mode
+        </dt>
+        <dd class="mt-1 text-base font-semibold text-gray-900">
+          True
+        </dd>
+      </div>
+    </dl>
+
+    <Divider class="mt-12">
+      Chart
+    </Divider>
+    <div class="my-4">
+      <img src="@/assets/imgs/realtime-candle-chart.png" alt="sample" class="h-64">
     </div>
+
+    <!--tables-->
+    <Divider class="mt-12">Positions</Divider>
+    <MultipleValuesTable :data="positions"/>
+
+    <Divider class="mt-12">Orders</Divider>
+    <MultipleValuesTable :data="positions"/>
   </div>
 
   <!-- Results -->
@@ -55,10 +110,6 @@
         <Logs :logs="results.infoLogs" :full="false"/>
         <br>
       </div>
-
-      <!--            <pre>-->
-      <!--      {{ results }}-->
-      <!--            </pre>-->
     </div>
   </div>
 
@@ -131,6 +182,14 @@ export default {
     results: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      positions: [
+        ['.', 'TrendFollowing', 'BTC-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
+        ['.', 'TrendFollowing', 'ETH-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
+      ]
     }
   },
   methods: {
