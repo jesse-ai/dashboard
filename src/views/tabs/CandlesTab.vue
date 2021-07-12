@@ -141,7 +141,7 @@ export default {
   },
   data () {
     return {
-      exchanges: ['Binance', 'Bitfinex']
+      exchanges: ['Binance', 'Bitfinex', 'Binance Futures']
     }
   },
   methods: {
