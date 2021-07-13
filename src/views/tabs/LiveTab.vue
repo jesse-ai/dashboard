@@ -54,8 +54,8 @@
     <Divider class="mt-12">
       Chart
     </Divider>
-    <div class="my-4">
-      <img src="@/assets/imgs/realtime-candle-chart.png" alt="sample" class="h-64">
+    <div class="my-4 rounded-md overflow-hidden">
+      <CandlesChart :candles="candles"/>
     </div>
 
     <!--tables-->
@@ -147,6 +147,7 @@ import { mapActions } from 'pinia'
 import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
+import { candles } from '@/components/Charts/ChartsFakeData'
 
 export default {
   name: 'LiveTab',
@@ -163,6 +164,7 @@ export default {
   },
   setup () {
     return {
+      candles,
       timestampToTime: helpers.timestampToTime
     }
   },
