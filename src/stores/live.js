@@ -173,7 +173,12 @@ export const useLiveStore = defineStore({
       //   "pnl": 0,
       //   "pnl_perc": null
       // }
-      this.tabs[id].results.positions = []
+
+      this.tabs[id].results.positions = [
+        [
+          'Type', 'Strategy', 'Symbol', 'Entry', 'Current Price', 'PNL'
+        ]
+      ]
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
@@ -195,11 +200,15 @@ export const useLiveStore = defineStore({
       //   "canceled_at": null,
       //   "executed_at": 1626109441000
       // }
-      this.tabs[id].results.orders = []
+      this.tabs[id].results.orders = [
+        [
+          'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status'
+        ]
+      ]
 
       for (const item of data) {
         this.tabs[id].results.orders.push([
-          item.created_at, item.symbol, item.type, item.side, item.price, item.qty, item.status
+          helpers.timestampToTime(item.created_at), item.symbol, item.type, item.side, item.price, item.qty, item.status
         ])
       }
     },

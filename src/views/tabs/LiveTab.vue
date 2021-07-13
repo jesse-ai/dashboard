@@ -60,10 +60,10 @@
 
     <!--tables-->
     <Divider class="mt-12">Positions</Divider>
-    <MultipleValuesTable :data="results.positions"/>
+    <MultipleValuesTable :data="results.positions" header />
 
     <Divider class="mt-12">Orders</Divider>
-    <MultipleValuesTable :data="results.orders"/>
+    <MultipleValuesTable :data="results.orders" header />
   </div>
 
   <!-- Results -->
