@@ -25,6 +25,7 @@ function newTab () {
       },
       routes_info: [],
       metrics: [],
+      generalInfo: {},
       positions: [],
       orders: [],
       infoLogs: '',
@@ -131,6 +132,32 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
     },
+    generalInfoEvent (id, data) {
+      // sample
+      // {
+      //   "started_at": 1626161855000,
+      //   "current_time": 1626161884000,
+      //   "started_balance": 10000,
+      //   "current_balance": 9991.2,
+      //   "debug_mode": false,
+      //   "count_error_logs": 0,
+      //   "count_info_logs": 4,
+      //   "count_active_orders": 0,
+      //   "open_positions": 1,
+      //   "pnl": 0,
+      //   "pnl_perc": 0,
+      //   "count_trades": 0,
+      //   "count_winning_trades": 0,
+      //   "count_losing_trades": 0
+      // }
+      this.tabs[id].results.generalInfo = data
+
+      // turn on monitoring dashboard if haven't yet
+      if (!this.tabs[id].results.monitoring) {
+        this.tabs[id].results.booting = false
+        this.tabs[id].results.monitoring = true
+      }
+    },
     positionsEvent (id, data) {
       // sample
       // {
@@ -152,11 +179,6 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.positions.push([
           item.type, item.strategy_name, item.symbol, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
         ])
-      }
-
-      if (!this.tabs[id].results.monitoring) {
-        this.tabs[id].results.booting = false
-        this.tabs[id].results.monitoring = true
       }
     },
     ordersEvent (id, data) {

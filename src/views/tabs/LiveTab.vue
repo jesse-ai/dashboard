@@ -43,7 +43,7 @@
           Started
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          3 hours ago
+          {{ timestampToTime(results.generalInfo.started_at) }}
         </dd>
       </div>
 
@@ -52,7 +52,7 @@
           Current Time
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          13:58:39
+          {{ timestampToTime(results.generalInfo.current_time) }}
         </dd>
       </div>
 
@@ -61,7 +61,7 @@
           Started/Current Balance
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          968.91/968.67 USDT
+          {{ `${results.generalInfo.started_balance}/${results.generalInfo.current_balance}` }} USDT
         </dd>
       </div>
 
@@ -70,7 +70,7 @@
           Debug Mode
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          True
+          {{ results.generalInfo.debug_mode }}
         </dd>
       </div>
 
@@ -79,7 +79,7 @@
           PNL
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          2000 USDT (1.5%)
+          {{ results.generalInfo.pnl }} USDT ({{ results.generalInfo.pnl_perc }}%)
         </dd>
       </div>
 
@@ -88,7 +88,7 @@
           Trades
         </dt>
         <dd class="mt-1 text-base font-semibold text-gray-900">
-          2
+          {{ results.generalInfo.count_trades }}
         </dd>
       </div>
     </dl>
@@ -188,6 +188,7 @@
 import { mapActions } from 'pinia'
 import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
+import helpers from '@/helpers'
 
 export default {
   name: 'LiveTab',
@@ -200,6 +201,11 @@ export default {
     results: {
       type: Object,
       required: true
+    }
+  },
+  setup () {
+    return {
+      timestampToTime: helpers.timestampToTime
     }
   },
   data () {
