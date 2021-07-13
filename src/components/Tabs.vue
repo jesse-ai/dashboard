@@ -8,7 +8,7 @@
     <!--        </select>-->
     <!--      </div>-->
     <div class="hidden sm:block">
-      <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
+      <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-500" aria-label="Tabs">
         <div v-for="(tab, name, index) in tabs" :key="tab.id"
              class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center "
         >
