@@ -5,14 +5,14 @@
     <Divider>Exchange</Divider>
     <select
       v-model="form.exchange"
-      class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
+      class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
       <option v-for="item in exchanges" :key="item">{{ item }}</option>
     </select>
 
     <Divider class="mt-16">Symbol</Divider>
     <input v-model="form.symbol"
            placeholder="ex: BTC-USDT"
-           class="hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
+           class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
 
     <Divider class="mt-16">Start Date</Divider>
     <div class="flex items-center select-none flex-1">
@@ -20,7 +20,7 @@
              v-model="form.start_date"
              type="date"
              name="start_date"
-             class="flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 rounded-md"
+             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 dark:border-gray-600 rounded-md"
       >
     </div>
 
@@ -69,7 +69,7 @@
   </div>
 
   <!-- Action Buttons -->
-  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
+  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t dark:border-gray-600">
     <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
       <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
         Rerun
