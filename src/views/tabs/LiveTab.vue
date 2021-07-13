@@ -37,60 +37,18 @@
 
   <!-- Monitoring Dashboard -->
   <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          Started
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ timestampToTime(results.generalInfo.started_at) }}
-        </dd>
-      </div>
+    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <StatsBox name="Started" :value="timestampToTime(results.generalInfo.started_at)" />
 
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          Current Time
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ timestampToTime(results.generalInfo.current_time) }}
-        </dd>
-      </div>
+      <StatsBox name="Current Time" :value="timestampToTime(results.generalInfo.current_time)" />
 
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          Started/Current Balance
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ `${results.generalInfo.started_balance}/${results.generalInfo.current_balance}` }} USDT
-        </dd>
-      </div>
+      <StatsBox name="Started/Current Balance" :value="`${results.generalInfo.started_balance}/${results.generalInfo.current_balance}`" />
 
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          Debug Mode
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ results.generalInfo.debug_mode }}
-        </dd>
-      </div>
+      <StatsBox name="Debug Mode" :value="results.generalInfo.debug_mode" />
 
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          PNL
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ results.generalInfo.pnl }} USDT ({{ results.generalInfo.pnl_perc }}%)
-        </dd>
-      </div>
+      <StatsBox name="PNL" :value="`${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)`" />
 
-      <div class="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6">
-        <dt class="text-sm font-medium text-gray-500 truncate">
-          Trades
-        </dt>
-        <dd class="mt-1 text-base font-semibold text-gray-900">
-          {{ results.generalInfo.count_trades }}
-        </dd>
-      </div>
+      <StatsBox name="Trades" :value="results.generalInfo.count_trades" />
     </dl>
 
     <Divider class="mt-12">
