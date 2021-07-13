@@ -94,14 +94,14 @@
              v-model="form.start_date"
              type="date"
              name="start_date"
-             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
+             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-l-md border-r-0"
       >
 
       <input id="finish_date"
              v-model="form.finish_date"
              type="date"
              name="finish_date"
-             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
+             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-r-md">
     </div>
   </div>
 
@@ -133,7 +133,7 @@
   </div>
 
   <!-- Action Buttons -->
-  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
+  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t dark:border-gray-600">
     <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
       <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
         Rerun
