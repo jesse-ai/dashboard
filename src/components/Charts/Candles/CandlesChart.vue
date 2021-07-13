@@ -34,12 +34,12 @@ export default {
         // },
         grid: {
           vertLines: {
-            color: 'rgba(42, 46, 57, 0.6)',
-            visible: false
+            color: '#f1f1f1',
+            // visible: false
           },
           horzLines: {
-            color: 'rgba(42, 46, 57, 0.6)',
-            visible: false
+            color: '#f1f1f1',
+            // visible: false
           }
         },
         crosshair: {

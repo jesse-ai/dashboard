@@ -40,17 +40,17 @@ export default {
           },
           grid: {
             vertLines: {
-              color: '#d6dcde'
+              color: '#f1f1f1',
             },
             horzLines: {
-              color: '#d6dcde'
+              color: '#f1f1f1',
             }
           },
           priceScale: {
-            borderColor: '#868b8c'
+            borderColor: 'rgba(197, 203, 206, 0.6)'
           },
           timeScale: {
-            borderColor: '#868b8c',
+            borderColor: 'rgba(197, 203, 206, 0.6)',
             timeVisible: true,
             secondsVisible: false
           }
