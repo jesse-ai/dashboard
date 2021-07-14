@@ -14,7 +14,7 @@
 
             <tbody v-if="dataItems.length">
               <tr v-for="(d, index) in dataItems" :key="index"
-                  :class="index % 2 === 0 ? 'bg-white bg-gray-700' : 'bg-gray-50 dark:bg-backdrop-dark'">
+                  :class="index % 2 === 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-50 dark:bg-backdrop-dark'">
                 <td v-for="(item, subIndex) in d" :key="item" class=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200"
                     v-text="d[subIndex]" />
               </tr>
