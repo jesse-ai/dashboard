@@ -57,7 +57,7 @@ export const useCandlesStore = defineStore({
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
 
-      axios.post('http://127.0.0.1:8000/candles', {
+      axios.post('http://127.0.0.1:8000/import-candles', {
         id,
         exchange: this.tabs[id].form.exchange,
         symbol: this.tabs[id].form.symbol,
@@ -76,7 +76,7 @@ export const useCandlesStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.executing = false
-      axios.delete('http://127.0.0.1:8000/candles', {
+      axios.delete('http://127.0.0.1:8000/import-candles', {
         headers: {},
         data: {
           id
