@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart"/>
+  <div ref="chart" class="rounded overflow-hidden border-2 border-gray-100"/>
 </template>
 
 <script>

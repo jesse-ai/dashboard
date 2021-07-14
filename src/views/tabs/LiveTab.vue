@@ -51,10 +51,7 @@
       <StatsBox name="Trades" :value="results.generalInfo.count_trades" />
     </dl>
 
-    <Divider class="mt-12">
-      Chart
-    </Divider>
-    <div class="my-4 rounded-md overflow-hidden">
+    <div class="mt-12">
       <CandlesChart :candles="candles"/>
     </div>
 
