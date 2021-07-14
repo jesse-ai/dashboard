@@ -9,6 +9,10 @@ const helpers = {
 
   timestampToDate (timestamp) {
     return dayjs(timestamp).utc().format('YYYY-MM-DD')
+  },
+
+  currentTime () {
+    return dayjs().utc().format('HH:mm:ss')
   }
 }
 

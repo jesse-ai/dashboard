@@ -1,9 +1,11 @@
 import { useBacktestStore } from '@/stores/backtest'
 import { useCandlesStore } from '@/stores/candles'
+import { useLiveStore } from '@/stores/live'
 
 export default function () {
   const backtest = useBacktestStore()
   const candles = useCandlesStore()
+  const live = useLiveStore()
 
   // Prepare needed actions for each socket event
   return new Map([
@@ -36,6 +38,32 @@ export default function () {
     ]],
     ['candles.exception', [
       candles.exceptionEvent
+    ]],
+
+    // live and paper
+    ['papertrade.progressbar', [
+      live.progressbarEvent
+    ]],
+    ['livetrade.progressbar', [
+      live.progressbarEvent
+    ]],
+    ['papertrade.positions', [
+      live.positionsEvent
+    ]],
+    ['livetrade.positions', [
+      live.positionsEvent
+    ]],
+    ['papertrade.orders', [
+      live.ordersEvent
+    ]],
+    ['livetrade.orders', [
+      live.ordersEvent
+    ]],
+    ['papertrade.general_info', [
+      live.generalInfoEvent
+    ]],
+    ['livetrade.general_info', [
+      live.generalInfoEvent
     ]],
   ])
 }

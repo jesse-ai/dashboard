@@ -9,7 +9,7 @@ let chart = null
 let candleSeries = null
 
 export default {
-  name: 'TheCandles',
+  name: 'CandlesChart',
   components: {},
   props: {
     candles: {
@@ -28,23 +28,26 @@ export default {
       settings: {
         width: 800,
         height: 380,
-        layout: {
-          backgroundColor: '#131722',
-          textColor: '#d1d4dc'
-        },
+        // layout: {
+        //   backgroundColor: '#131722',
+        //   textColor: '#d1d4dc'
+        // },
         grid: {
           vertLines: {
-            color: 'rgba(42, 46, 57, 0.6)'
+            color: '#f1f1f1',
+            // visible: false
           },
           horzLines: {
-            color: 'rgba(42, 46, 57, 0.6)'
+            color: '#f1f1f1',
+            // visible: false
           }
         },
         crosshair: {
           mode: CrosshairMode.Normal
         },
         priceScale: {
-          borderColor: 'rgba(197, 203, 206, 0.6)'
+          borderColor: 'rgba(197, 203, 206, 0.6)',
+          // borderVisible: false
         },
         timeScale: {
           borderColor: 'rgba(197, 203, 206, 0.6)',

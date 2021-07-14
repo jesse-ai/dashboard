@@ -16,9 +16,9 @@
 const navigation = [
   { name: 'Import Candles', to: '/candles' },
   { name: 'Backtest', to: '/backtest' },
+  { name: 'Live', to: '/live' },
   { name: 'Optimization', to: '/optimization' },
   { name: 'Paper Trade', to: '/paper-trade' },
-  { name: 'Live Trade', to: '/live-trade' },
   { name: 'Dev Test', to: '/test' },
   { name: 'Pinia Test', to: '/pinia-test' },
 ]
