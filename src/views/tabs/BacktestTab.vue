@@ -125,10 +125,6 @@
         <Logs :logs="results.infoLogs" :full="false"/>
         <br>
       </div>
-
-      <!--            <pre>-->
-      <!--      {{ results }}-->
-      <!--            </pre>-->
     </div>
   </div>
 
