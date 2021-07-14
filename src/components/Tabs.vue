@@ -8,12 +8,12 @@
     <!--        </select>-->
     <!--      </div>-->
     <div class="hidden sm:block">
-      <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 " aria-label="Tabs">
+      <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-700" aria-label="Tabs">
         <div v-for="(tab, name, index) in tabs" :key="tab.id"
-             class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center"
+             class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center "
         >
           <router-link
-            :class="[tab.id === pageId ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-700 bg-white', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none bg-white w-full text-sm font-medium hover:bg-gray-50 focus:z-10']"
+            :class="[tab.id === pageId ? 'text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 font-bold' : 'text-gray-500 dark:text-gray-300 hover:text-gray-700 bg-white dark:bg-gray-600 font-medium', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none  w-full text-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10']"
             :to="`${tab.id}`">
             <span>Tab {{ index + 1 }}</span>
             <span aria-hidden="true"
@@ -27,7 +27,7 @@
         </div>
 
         <!-- New Tab Button-->
-        <div class="select-none cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white py-4 px-4 font-medium hover:bg-gray-50 focus:z-10 flex items-center justify-center"
+        <div class="select-none cursor-pointer text-gray-400 dark:text-gray-100 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white dark:bg-gray-600 py-4 px-4 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10 flex items-center justify-center"
              @click="addTab">
           <button class="absolute right-[1em] focus:outline-none">
             <PlusSmIcon class="h-6 w-6 rounded-full" aria-hidden="true" />
