@@ -12,7 +12,7 @@
           <input id="debug_mode" v-model="form.debug_mode"
                  name="debug_mode"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="debug_mode" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">debug_mode</label>
@@ -25,7 +25,7 @@
           <input id="export_chart" v-model="form.export_chart"
                  name="export_chart"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="export_chart" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_chart</label>
@@ -38,7 +38,7 @@
           <input id="export_tradingview" v-model="form.export_tradingview"
                  name="export_tradingview"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="export_tradingview" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_tradingview</label>
@@ -51,7 +51,7 @@
           <input id="export_full_reports" v-model="form.export_full_reports"
                  name="export_full_reports"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="export_full_reports"
@@ -65,7 +65,7 @@
           <input id="export_csv" v-model="form.export_csv"
                  name="export_csv"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="export_csv" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_csv</label>
@@ -78,7 +78,7 @@
           <input id="export_json" v-model="form.export_json"
                  name="export_json"
                  type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                 class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
         </div>
         <div class="ml-3 text-sm">
           <label for="export_json" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_json</label>
