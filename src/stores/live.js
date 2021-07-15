@@ -28,6 +28,7 @@ function newTab () {
       generalInfo: {},
       positions: [],
       orders: [],
+      candles: [],
       infoLogs: '',
       errorLogs: '',
       exception: {
@@ -156,7 +157,21 @@ export const useLiveStore = defineStore({
       if (!this.tabs[id].results.monitoring) {
         this.tabs[id].results.booting = false
         this.tabs[id].results.monitoring = true
+        this.fetchCandles(id)
       }
+    },
+    fetchCandles (id) {
+      axios.post('http://127.0.0.1:8000/get-candles', {
+        id,
+        exchange: this.tabs[id].form.routes[0].exchange,
+        symbol: this.tabs[id].form.routes[0].symbol,
+        timeframe: this.tabs[id].form.routes[0].timeframe,
+      }).then(res => {
+        console.log(res.data.data)
+        this.tabs[id].results.candles = res.data.data
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
     },
     positionsEvent (id, data) {
       // sample
