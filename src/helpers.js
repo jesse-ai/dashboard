@@ -4,11 +4,11 @@ dayjs.extend(utc)
 
 const helpers = {
   timestampToTime (timestamp) {
-    return dayjs(timestamp).utc().format('YYYY-MM-DD HH:mm:ss')
+    return dayjs(parseInt(timestamp)).utc().format('YYYY-MM-DD HH:mm:ss')
   },
 
   timestampToDate (timestamp) {
-    return dayjs(timestamp).utc().format('YYYY-MM-DD')
+    return dayjs(parseInt(timestamp)).utc().format('YYYY-MM-DD')
   },
 
   currentTime () {

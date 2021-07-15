@@ -51,8 +51,9 @@
       <StatsBox name="Trades" :value="results.generalInfo.count_trades" />
     </dl>
 
+    <!-- Candlesticks chart-->
     <div class="mt-12">
-      <CandlesChart :candles="candles"/>
+      <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
     </div>
 
     <!--tables-->
@@ -144,7 +145,6 @@ import { mapActions } from 'pinia'
 import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
-import { candles } from '@/components/Charts/ChartsFakeData'
 
 export default {
   name: 'LiveTab',
@@ -161,7 +161,6 @@ export default {
   },
   setup () {
     return {
-      candles,
       timestampToTime: helpers.timestampToTime
     }
   },

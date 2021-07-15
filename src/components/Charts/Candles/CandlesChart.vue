@@ -12,16 +12,18 @@ export default {
   name: 'CandlesChart',
   components: {},
   props: {
-    candles: {
-      type: Array,
-      default: () => [],
+    form: {
+      type: Object,
       required: true
     },
-    orders: {
-      type: Array,
-      default: () => [],
+    results: {
+      type: Object,
       required: true
-    }
+    },
+    candles: {
+      type: Array,
+      required: true
+    },
   },
   data () {
     return {
@@ -57,7 +59,18 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    currentCandles () {
+      return this.results.currentCandles
+    }
+  },
+  watch: {
+    currentCandles (newValue, oldValue) {
+      const firstRoute = this.form.routes[0]
+      const key = `${firstRoute.exchange}-${firstRoute.symbol}-${firstRoute.timeframe}`
+      this.updateCurrentCandle(newValue[key])
+    }
+  },
   mounted () {
     this.settings.width = this.$refs.chart.clientWidth
 
@@ -67,12 +80,15 @@ export default {
     candleSeries.setData(this.candles)
 
     chart.timeScale().fitContent()
-
-    candleSeries.setMarkers(this.orders)
   },
   beforeUnmount () {
     chart = null
     candleSeries = null
+  },
+  methods: {
+    updateCurrentCandle (candle) {
+      candleSeries.update(candle)
+    }
   }
 }
 </script>
