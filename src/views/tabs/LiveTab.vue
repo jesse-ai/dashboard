@@ -51,8 +51,10 @@
       <StatsBox name="Trades" :value="results.generalInfo.count_trades" />
     </dl>
 
+    <pre>{{ results.currentCandles }}</pre>
+
     <div class="mt-12">
-      <CandlesChart v-if="results.candles.length" :candles="results.candles"/>
+      <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
     </div>
 
     <!--tables-->

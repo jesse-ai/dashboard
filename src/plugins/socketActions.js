@@ -65,6 +65,12 @@ export default function () {
     ['livetrade.general_info', [
       live.generalInfoEvent
     ]],
+    ['papertrade.current_candles', [
+      live.currentCandlesEvent
+    ]],
+    ['livetrade.current_candles', [
+      live.currentCandlesEvent
+    ]],
   ])
 }
 

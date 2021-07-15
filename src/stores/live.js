@@ -29,6 +29,7 @@ function newTab () {
       positions: [],
       orders: [],
       candles: [],
+      currentCandles: {},
       infoLogs: '',
       errorLogs: '',
       exception: {
@@ -101,12 +102,7 @@ export const useLiveStore = defineStore({
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
-        [
-          'Starting-Ending Date',
-          `${helpers.timestampToDate(
-            data.starting_time
-          )} => ${helpers.timestampToDate(data.finishing_time)}`
-        ]
+        ['Starting-Ending Date', `${helpers.timestampToDate(data.starting_time)} => ${helpers.timestampToDate(data.finishing_time)}`]
       ]
     },
     routesInfoEvent (id, data) {
@@ -172,6 +168,9 @@ export const useLiveStore = defineStore({
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
+    },
+    currentCandlesEvent (id, data) {
+      this.tabs[id].results.currentCandles = data
     },
     positionsEvent (id, data) {
       // sample
