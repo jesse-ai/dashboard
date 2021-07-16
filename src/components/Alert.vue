@@ -11,7 +11,7 @@
         <div class="-mx-1.5 -my-1.5">
           <button type="button"
                   class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none"
-                  @click="open = false">
+                  @click="close">
             <span class="sr-only">Dismiss</span>
             <XIcon class="h-5 w-5" aria-hidden="true" />
           </button>
@@ -38,6 +38,11 @@ export default {
   data () {
     return {
       open: true
+    }
+  },
+  methods: {
+    close () {
+      this.data.message = ''
     }
   }
 }
