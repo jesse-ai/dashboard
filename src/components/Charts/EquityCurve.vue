@@ -83,7 +83,7 @@ export default {
           }
         },
         series: {
-          color: '#6366F1'
+          color: '#818CF8'
         }
       }
     }

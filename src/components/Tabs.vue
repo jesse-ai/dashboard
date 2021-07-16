@@ -17,7 +17,7 @@
             :to="`${tab.id}`">
             <span>Tab {{ index + 1 }}</span>
             <span aria-hidden="true"
-                  :class="[tab.id === pageId ? 'bg-indigo-500' : 'bg-transparent dark:bg-gray-600', 'absolute inset-x-0 bottom-0 h-0.5']"/>
+                  :class="[tab.id === pageId ? 'bg-indigo-400' : 'bg-transparent dark:bg-gray-600', 'absolute inset-x-0 bottom-0 h-0.5']"/>
           </router-link>
 
           <!-- Tab close button -->
