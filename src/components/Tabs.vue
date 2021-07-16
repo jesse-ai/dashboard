@@ -13,7 +13,7 @@
              class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center "
         >
           <router-link
-            :class="[tab.id === pageId ? 'text-gray-900 dark:text-gray-100 bg-white font-bold ' : 'text-gray-500 dark:text-gray-300 hover:text-gray-700 bg-white font-medium ', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none  w-full text-sm dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10']"
+            :class="[tab.id === pageId ? 'text-gray-900 dark:text-gray-100 font-bold ' : 'text-gray-500 dark:text-gray-300 hover:text-gray-700 font-medium ', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none  w-full text-sm bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10']"
             :to="`${tab.id}`">
             <span>Tab {{ index + 1 }}</span>
             <span aria-hidden="true"
