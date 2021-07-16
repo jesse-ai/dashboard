@@ -27,6 +27,7 @@ function newTab () {
         error: '',
         traceback: ''
       },
+      alert: {}
     }
   })
 }
@@ -109,6 +110,15 @@ export const useCandlesStore = defineStore({
     },
     progressbarEvent (id, data) {
       this.tabs[id].results.progressbar = data
+    },
+    alertEvent (id, data) {
+      this.tabs[id].results.alert = data
+
+      // session is finished:
+      this.tabs[id].results.progressbar.current = 100
+      this.tabs[id].results.executing = false
+      this.tabs[id].results.exception.traceback = ''
+      this.tabs[id].results.exception.error = ''
     },
     infoLogEvent (id, data) {
       this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(

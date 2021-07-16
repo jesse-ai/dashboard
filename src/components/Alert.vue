@@ -5,7 +5,7 @@
         <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        <p class="text-sm font-medium text-green-800" v-text="message"/>
+        <p class="text-sm font-medium text-green-800" v-text="data.message"/>
       </div>
       <div class="ml-auto pl-3">
         <div class="-mx-1.5 -my-1.5">
@@ -30,8 +30,8 @@ export default {
     XIcon,
   },
   props: {
-    message: {
-      type: String,
+    data: {
+      type: Object,
       required: true
     }
   },
