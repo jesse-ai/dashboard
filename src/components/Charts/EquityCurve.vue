@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" class="rounded overflow-hidden border-2 border-gray-100"/>
+  <div ref="chart" class="rounded overflow-hidden border-2 border-gray-100 dark:border-gray-600"/>
 </template>
 
 <script>
@@ -58,6 +58,33 @@ export default {
         series: {
           color: '#4f46e5'
         }
+      },
+      darkTheme: {
+        chart: {
+          layout: {
+            backgroundColor: '#333333',
+            textColor: '#D1D5DB'
+          },
+          grid: {
+            vertLines: {
+              color: '#4B5563',
+            },
+            horzLines: {
+              color: '#4B5563',
+            }
+          },
+          priceScale: {
+            borderColor: '#6B7280'
+          },
+          timeScale: {
+            borderColor: '#6B7280',
+            timeVisible: true,
+            secondsVisible: false
+          }
+        },
+        series: {
+          color: '#6366F1'
+        }
       }
     }
   },
@@ -78,14 +105,29 @@ export default {
     chart.timeScale().fitContent()
     lineSeries.setData(this.equityCurve)
 
-    chart.applyOptions(this.lightTheme.chart)
-    lineSeries.applyOptions(this.lightTheme.series)
+    if (localStorage.theme === 'light') {
+      chart.applyOptions(this.lightTheme.chart)
+      lineSeries.applyOptions(this.lightTheme.series)
+    } else {
+      chart.applyOptions(this.darkTheme.chart)
+      lineSeries.applyOptions(this.darkTheme.series)
+    }
   },
   beforeUnmount () {
     chart = null
     lineSeries = null
   },
-  methods: {}
+  methods: {
+    checkTheme () {
+      if (localStorage.theme === 'light') {
+        chart.applyOptions(this.lightTheme.chart)
+        lineSeries.applyOptions(this.lightTheme.series)
+      } else {
+        chart.applyOptions(this.darkTheme.chart)
+        lineSeries.applyOptions(this.darkTheme.series)
+      }
+    }
+  }
 }
 </script>
 
