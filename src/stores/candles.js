@@ -27,7 +27,10 @@ function newTab () {
         error: '',
         traceback: ''
       },
-      alert: {}
+      alert: {
+        message: '',
+        type: ''
+      }
     }
   })
 }
@@ -57,6 +60,7 @@ export const useCandlesStore = defineStore({
       this.tabs[id].results.infoLogs = ''
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
+      this.tabs[id].results.alert.message = ''
 
       axios.post('http://127.0.0.1:8000/import-candles', {
         id,
