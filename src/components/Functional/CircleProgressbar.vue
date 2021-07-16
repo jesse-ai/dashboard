@@ -46,6 +46,7 @@ export default {
   background-color: #F2E9E1;
   border-radius: 50%;
   line-height: 5em;
+  @apply dark:bg-gray-600;
 }
 
 .progress-circle:after {
@@ -58,8 +59,8 @@ export default {
   border-radius: 50%;
   width: 4.3em;
   height: 4.3em;
-  background-color: white;
   content: " ";
+  @apply     bg-white dark:bg-backdrop-dark;
 }
 
 /* Text inside the control */
@@ -71,6 +72,7 @@ export default {
   display: block;
   color: #4f46e5;
   z-index: 2;
+  @apply dark:text-gray-100;
 }
 
 .left-half-clipper {
