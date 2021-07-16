@@ -27,7 +27,7 @@
 
 @layer components {
     .btn-primary {
-        @apply font-medium select-none items-center px-2.5 py-1.5 border border-transparent rounded shadow-sm text-white bg-indigo-600 dark:bg-indigo-400 hover:bg-indigo-700 focus:outline-none dark:text-black text-base tracking-wide;
+        @apply font-medium select-none items-center px-2.5 py-1.5 border border-transparent rounded shadow-sm text-white bg-indigo-600 dark:bg-indigo-400 hover:bg-indigo-700 dark:hover:bg-indigo-500 focus:outline-none dark:text-black text-base tracking-wide;
     }
 
     .btn-secondary {
