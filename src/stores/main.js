@@ -4,6 +4,7 @@ export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
     isConnected: false,
+    theme: localStorage.theme
   }),
   actions: {}
 })
