@@ -4,6 +4,8 @@
 
 <script>
 import { createChart } from 'lightweight-charts'
+import { useMainStore } from '@/stores/main'
+import { mapWritableState } from 'pinia'
 
 let chart = null
 let lineSeries = null
@@ -88,10 +90,18 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapWritableState(useMainStore, [
+      'theme'      
+    ])
+  },
   watch: {
     equityCurve (data) {
       // chart.removeSeries(lineSeries)
       lineSeries.setData(data)
+    },
+    theme (newVal) {
+      this.checkTheme(newVal)
     }
   },
   mounted () {
@@ -118,8 +128,8 @@ export default {
     lineSeries = null
   },
   methods: {
-    checkTheme () {
-      if (localStorage.theme === 'light') {
+    checkTheme (val) {
+      if (val === 'light') {
         chart.applyOptions(this.lightTheme.chart)
         lineSeries.applyOptions(this.lightTheme.series)
       } else {

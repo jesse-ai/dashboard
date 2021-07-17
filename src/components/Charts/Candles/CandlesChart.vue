@@ -4,6 +4,8 @@
 
 <script>
 import { createChart, CrosshairMode } from 'lightweight-charts'
+import { useMainStore } from '@/stores/main'
+import { mapWritableState } from 'pinia'
 
 let chart = null
 let candleSeries = null
@@ -97,13 +99,19 @@ export default {
   computed: {
     currentCandles () {
       return this.results.currentCandles
-    }
+    },
+    ...mapWritableState(useMainStore, [
+      'theme'      
+    ])
   },
   watch: {
     currentCandles (newValue, oldValue) {
       const firstRoute = this.form.routes[0]
       const key = `${firstRoute.exchange}-${firstRoute.symbol}-${firstRoute.timeframe}`
       this.updateCurrentCandle(newValue[key])
+    },
+    theme (newVal) {
+      this.checkTheme(newVal)
     }
   },
   mounted () {
@@ -131,6 +139,13 @@ export default {
   methods: {
     updateCurrentCandle (candle) {
       candleSeries.update(candle)
+    },
+    checkTheme (val) {
+      if (val === 'light') {
+        chart.applyOptions(this.lightTheme.chart)
+      } else {
+        chart.applyOptions(this.darkTheme.chart)
+      }
     }
   }
 }
