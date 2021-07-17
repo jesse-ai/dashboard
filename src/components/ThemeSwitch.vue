@@ -37,11 +37,6 @@ export default {
     MoonIcon,
     SunIcon
   },
-  data () {
-    return {
-      // theme: localStorage.theme
-    }
-  },
   computed: {
     ...mapWritableState(useMainStore, [
       'theme'      
@@ -55,17 +50,6 @@ export default {
     }
   },
   methods: {
-    toggleTheme () {
-      if (!this.theme || this.theme === 'light') {
-        document.documentElement.classList.add('dark')
-        localStorage.theme = 'dark'
-        this.theme = 'dark'
-      } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.theme = 'light'
-        this.theme = 'light'
-      }
-    },
     setTheme (theme) {
       if (theme === 'light') {
         document.documentElement.classList.remove('dark')
