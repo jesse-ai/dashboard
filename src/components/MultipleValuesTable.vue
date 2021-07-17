@@ -21,7 +21,7 @@
             </tbody>
           </table>
 
-          <div v-if="!dataItems.length" class="text-center text-xs dark:bg-gray-700 py-4 opacity-30 select-none">
+          <div v-if="!dataItems.length" class="text-center text-xs dark:bg-gray-700 py-4 opacity-30 dark:opacity-75 select-none">
             Empty List
           </div>
         </div>
