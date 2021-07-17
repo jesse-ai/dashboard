@@ -72,7 +72,7 @@ export default {
   display: block;
   color: #4f46e5;
   z-index: 2;
-  @apply dark:text-gray-100;
+  @apply dark:text-indigo-400;
 }
 
 .left-half-clipper {
@@ -101,7 +101,7 @@ export default {
   border: 0.45em solid #4f46e5; /*The border is 0.35 but making it larger removes visual artifacts */
   /*background-color: #4D642D;*/ /* for debug */
   box-sizing: border-box;
-
+  @apply dark:border-indigo-400;
 }
 
 /* Progress bar filling the whole right half for values above 50% */
@@ -113,6 +113,7 @@ export default {
   border-radius: 50%;
   width: 5em;
   height: 5em;
+  @apply dark:bg-indigo-400;
 }
 
 .progress-circle:not(.over50) .first50-bar {
