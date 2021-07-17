@@ -74,10 +74,10 @@ export default {
             }
           },
           priceScale: {
-            borderColor: '#6B7280'
+            borderColor: '#4B5563'
           },
           timeScale: {
-            borderColor: '#6B7280',
+            borderColor: '#4B5563',
             timeVisible: true,
             secondsVisible: false
           }
