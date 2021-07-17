@@ -37,15 +37,6 @@ export default {
         crosshair: {
           mode: CrosshairMode.Normal
         },
-        priceScale: {
-          borderColor: 'rgba(197, 203, 206, 0.6)',
-          // borderVisible: false
-        },
-        timeScale: {
-          borderColor: 'rgba(197, 203, 206, 0.6)',
-          timeVisible: true,
-          secondsVisible: false
-        }
       },
       lightTheme: {
         chart: {
@@ -82,17 +73,17 @@ export default {
           },
           grid: {
             vertLines: {
-              color: '#4B5563',
+              color: '#525252',
             },
             horzLines: {
-              color: '#4B5563',
+              color: '#525252',
             }
           },
           priceScale: {
-            borderColor: '#4B5563'
+            borderColor: '#525252'
           },
           timeScale: {
-            borderColor: '#4B5563',
+            borderColor: '#525252',
             timeVisible: true,
             secondsVisible: false
           }
