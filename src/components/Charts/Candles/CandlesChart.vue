@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" class="rounded overflow-hidden border-2 border-gray-100"/>
+  <div ref="chart" class="rounded overflow-hidden border-2 border-gray-100 dark:border-gray-600"/>
 </template>
 
 <script>
@@ -34,16 +34,6 @@ export default {
         //   backgroundColor: '#131722',
         //   textColor: '#d1d4dc'
         // },
-        grid: {
-          vertLines: {
-            color: '#f1f1f1',
-            // visible: false
-          },
-          horzLines: {
-            color: '#f1f1f1',
-            // visible: false
-          }
-        },
         crosshair: {
           mode: CrosshairMode.Normal
         },
@@ -55,6 +45,60 @@ export default {
           borderColor: 'rgba(197, 203, 206, 0.6)',
           timeVisible: true,
           secondsVisible: false
+        }
+      },
+      lightTheme: {
+        chart: {
+          layout: {
+            backgroundColor: '#ffffff',
+            textColor: 'rgba(33, 56, 77, 1)'
+          },
+          grid: {
+            vertLines: {
+              color: '#f1f1f1',
+            },
+            horzLines: {
+              color: '#f1f1f1',
+            }
+          },
+          priceScale: {
+            borderColor: 'rgba(197, 203, 206, 0.6)'
+          },
+          timeScale: {
+            borderColor: 'rgba(197, 203, 206, 0.6)',
+            timeVisible: true,
+            secondsVisible: false
+          }
+        },
+        series: {
+          color: '#4f46e5'
+        }
+      },
+      darkTheme: {
+        chart: {
+          layout: {
+            backgroundColor: '#333333',
+            textColor: '#D1D5DB'
+          },
+          grid: {
+            vertLines: {
+              color: '#4B5563',
+            },
+            horzLines: {
+              color: '#4B5563',
+            }
+          },
+          priceScale: {
+            borderColor: '#4B5563'
+          },
+          timeScale: {
+            borderColor: '#4B5563',
+            timeVisible: true,
+            secondsVisible: false
+          }
+        },
+        series: {
+          color: '#818CF8'
         }
       }
     }
@@ -80,6 +124,14 @@ export default {
     candleSeries.setData(this.candles)
 
     chart.timeScale().fitContent()
+
+    if (localStorage.theme === 'light') {
+      chart.applyOptions(this.lightTheme.chart)
+      // lineSeries.applyOptions(this.lightTheme.series)
+    } else {
+      chart.applyOptions(this.darkTheme.chart)
+      // lineSeries.applyOptions(this.darkTheme.series)
+    }
   },
   beforeUnmount () {
     chart = null
