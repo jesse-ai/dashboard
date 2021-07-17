@@ -28,6 +28,8 @@ import {
   MoonIcon,
   SunIcon
 } from '@heroicons/vue/outline'
+import { mapWritableState } from 'pinia'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'ThemeSwitch',
@@ -37,8 +39,13 @@ export default {
   },
   data () {
     return {
-      theme: localStorage.theme
+      // theme: localStorage.theme
     }
+  },
+  computed: {
+    ...mapWritableState(useMainStore, [
+      'theme'      
+    ])
   },
   beforeMount () {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
