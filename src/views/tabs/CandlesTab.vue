@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 sm:px-6 md:px-8 my-4">
-    <Alert :message="'Successfully imported candles for n days'"/>
+  <div v-if="results.alert.message" class="px-4 sm:px-6 md:px-8 my-4">
+    <Alert :data="results.alert"/>
   </div>
 
   <!-- Content -->

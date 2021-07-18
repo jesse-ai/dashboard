@@ -163,7 +163,6 @@ export const useLiveStore = defineStore({
         symbol: this.tabs[id].form.routes[0].symbol,
         timeframe: this.tabs[id].form.routes[0].timeframe,
       }).then(res => {
-        console.log(res.data.data)
         this.tabs[id].results.candles = res.data.data
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)

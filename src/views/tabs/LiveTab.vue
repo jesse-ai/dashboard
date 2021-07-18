@@ -62,6 +62,11 @@
 
     <Divider class="mt-12">Orders</Divider>
     <MultipleValuesTable :data="results.orders" header />
+
+    <!-- Logs while execution -->
+    <div v-if="form.debug_mode && results.monitoring" class="mt-12 h-full overflow-auto mx-auto">
+      <Logs :logs="results.infoLogs"/>
+    </div>
   </div>
 
   <!-- Results -->
@@ -79,11 +84,6 @@
 
       <Divider class="mt-16">Performance</Divider>
       <KeyValueTable :data="results.metrics"/>
-
-      <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs" :full="false"/>
-        <br>
-      </div>
     </div>
   </div>
 

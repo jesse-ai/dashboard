@@ -36,6 +36,9 @@ export default function () {
     ['candles.progressbar', [
       candles.progressbarEvent
     ]],
+    ['candles.alert', [
+      candles.alertEvent
+    ]],
     ['candles.exception', [
       candles.exceptionEvent
     ]],
@@ -70,6 +73,18 @@ export default function () {
     ]],
     ['livetrade.current_candles', [
       live.currentCandlesEvent
+    ]],
+    ['papertrade.info_log', [
+      live.infoLogEvent
+    ]],
+    ['livetrade.info_log', [
+      live.infoLogEvent
+    ]],
+    ['papertrade.error_log', [
+      live.errorLogEvent
+    ]],
+    ['livetrade.error_log', [
+      live.errorLogEvent
     ]],
   ])
 }
