@@ -68,7 +68,7 @@ export default {
       const data = message.data
       const id = message.id
       const actions = socketActions().get(event)
-      console.log(event, id, data)
+      // console.log(event, id, data)
 
 
       if (actions !== undefined) {

@@ -131,6 +131,17 @@ export default {
       chart.applyOptions(this.darkTheme.chart)
       // lineSeries.applyOptions(this.darkTheme.series)
     }
+
+    // TODO: show position entry and order prices lines on the chart. Example below:
+    // const entryPrice = {
+    //   price: 31900,
+    //   color: '#333',
+    //   lineWidth: 1,
+    //   lineStyle: 0,
+    //   axisLabelVisible: true,
+    //   title: 'Entry Price',
+    // }
+    // candleSeries.createPriceLine(entryPrice)
   },
   beforeUnmount () {
     chart = null
