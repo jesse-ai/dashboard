@@ -1,15 +1,17 @@
 <template>
-  <AppLayout />
+  <Nav />
+
+  <router-view />
 </template>
 
 
 <script>
-import AppLayout from '@/layouts/AppLayout'
+import Nav from '@/components/Nav'
 
 export default {
   name: 'App',
   components: {
-    AppLayout
+    Nav
   }
 }
 </script>

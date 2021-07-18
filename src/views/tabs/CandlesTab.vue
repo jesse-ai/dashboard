@@ -1,138 +1,145 @@
 <template>
-  <div v-if="results.alert.message" class="px-4 sm:px-6 md:px-8 my-4">
-    <Alert :data="results.alert"/>
-  </div>
-
-  <!-- Content -->
-  <div v-if="!results.executing && !results.showResults"
-       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Divider>Exchange</Divider>
-    <select
-      v-model="form.exchange"
-      class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
-      <option v-for="item in exchanges" :key="item">{{ item }}</option>
-    </select>
-
-    <Divider class="mt-16">Symbol</Divider>
-    <input v-model="form.symbol"
-           placeholder="ex: BTC-USDT"
-           class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
-
-    <Divider class="mt-16">Start Date</Divider>
-    <div class="flex items-center select-none flex-1">
-      <input id="start_date"
-             v-model="form.start_date"
-             type="date"
-             name="start_date"
-             class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 dark:border-gray-600 rounded-md"
-      >
-    </div>
-
-    <br>
-    <!--    <pre>{{ activeTabIndex }}</pre>-->
-    <!--    <pre>{{ form }}</pre>-->
-  </div>
-
-  <!-- Results -->
-  <div v-if="results.showResults"
-       class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <div>
-      <Divider>
-        Routes
-      </Divider>
-      <MultipleValuesTable :data="results.routes_info"/>
-
-
-      <Divider class="mt-16">
-        Info
-      </Divider>
-      <KeyValueTable :data="results.info"/>
-
-      <Divider class="mt-16">
-        Equity Curve
-      </Divider>
-
-      <!-- TODO: replace with actual chart -->
-      <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
-
-      <Divider class="mt-16">
-        Performance
-      </Divider>
-
-      <KeyValueTable :data="results.metrics"/>
-
-      <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs" :full="false"/>
-        <br>
+  <LayoutWithSidebar>
+    <template #left>
+      <div v-if="results.alert.message" class="px-6 mb-10">
+        <Alert :data="results.alert"/>
       </div>
 
-      <pre>
+      <!-- Content -->
+      <div v-if="!results.executing && !results.showResults"
+           class="px-6">
+        <Divider>Exchange</Divider>
+        <select
+          v-model="form.exchange"
+          class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
+          <option v-for="item in exchanges" :key="item">{{ item }}</option>
+        </select>
+
+        <Divider class="mt-16">Symbol</Divider>
+        <input v-model="form.symbol"
+               placeholder="ex: BTC-USDT"
+               class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
+
+        <Divider class="mt-16">Start Date</Divider>
+        <div class="flex items-center select-none flex-1">
+          <input id="start_date"
+                 v-model="form.start_date"
+                 type="date"
+                 name="start_date"
+                 class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 dark:border-gray-600 rounded-md"
+          >
+        </div>
+
+        <br>
+        <!--    <pre>{{ activeTabIndex }}</pre>-->
+        <!--    <pre>{{ form }}</pre>-->
+      </div>
+
+      <!-- Results -->
+      <div v-if="results.showResults"
+           class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+        <div>
+          <Divider>
+            Routes
+          </Divider>
+          <MultipleValuesTable :data="results.routes_info"/>
+
+
+          <Divider class="mt-16">
+            Info
+          </Divider>
+          <KeyValueTable :data="results.info"/>
+
+          <Divider class="mt-16">
+            Equity Curve
+          </Divider>
+
+          <!-- TODO: replace with actual chart -->
+          <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
+
+          <Divider class="mt-16">
+            Performance
+          </Divider>
+
+          <KeyValueTable :data="results.metrics"/>
+
+          <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
+            <Logs :logs="results.infoLogs" :full="false"/>
+            <br>
+          </div>
+
+          <pre>
       {{ results }}
     </pre>
-    </div>
-  </div>
+        </div>
+      </div>
 
-  <!-- Action Buttons -->
-  <div v-if="!results.executing" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t dark:border-gray-600">
-    <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
-        Rerun
-      </button>
+      <!-- Execution -->
+      <div v-if="!form.debug_mode && results.executing && !results.showResults"
+           class="flex flex-col items-center justify-center select-none"
+           :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
+      >
+        <div>
+          <CircleProgressbar :progress="results.progressbar.current"/>
+        </div>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="newBacktest($route.params.id)">
-        New backtest
-      </button>
-    </div>
+        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
-    <div v-else class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="start($route.params.id)">
-        Start
-      </button>
+        <div class="mt-8">
+          <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+            Cancel
+          </button>
+        </div>
+      </div>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab($route.params.id)">
-        Start in a new tab
-      </button>
-    </div>
-  </div>
+      <!-- Logs while execution -->
+      <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
+        <Logs :logs="results.infoLogs"/>
+      </div>
 
-  <!-- Execution -->
-  <div v-if="!form.debug_mode && results.executing && !results.showResults"
-       class="flex flex-col items-center justify-center select-none"
-       :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
-  >
-    <div>
-      <CircleProgressbar :progress="results.progressbar.current"/>
-    </div>
+      <!-- exception  -->
+      <div v-if="results.exception.error && results.executing"
+           class="h-full overflow-auto mx-auto container">
+        <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      </div>
+    </template>
 
-    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+    <template #right>
+      <!-- Action Buttons -->
+      <div v-if="!results.executing">
+        <div v-if="results.showResults">
+          <button class="btn-primary text-center block w-full mb-4" @click="rerun($route.params.id)">
+            Rerun
+          </button>
 
-    <div class="mt-8">
-      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
-        Cancel
-      </button>
-    </div>
-  </div>
+          <button class="btn-secondary text-center block w-full mb-4" @click="newBacktest($route.params.id)">
+            New backtest
+          </button>
+        </div>
 
-  <!-- Logs while execution -->
-  <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
-    <Logs :logs="results.infoLogs"/>
-  </div>
+        <div v-else>
+          <button class="btn-primary text-center block w-full mb-4" @click="start($route.params.id)">
+            Start
+          </button>
 
-  <!-- exception  -->
-  <div v-if="results.exception.error && results.executing"
-       class="h-full overflow-auto mx-auto container">
-    <Exception :title="results.exception.error" :content="results.exception.traceback" />
-  </div>
+          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">
+            Start in a new tab
+          </button>
+        </div>
+      </div>
+    </template>
+  </LayoutWithSidebar>
 </template>
 
 <script>
 import { mapActions } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import Logs from '@/components/Logs'
+import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 
 export default {
   name: 'CandlesTab',
-  components: { Logs },
+  components: { LayoutWithSidebar, Logs },
   props: {
     form: {
       type: Object,

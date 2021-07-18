@@ -1,143 +1,176 @@
 <template>
-  <!-- Content -->
-  <div v-if="!results.booting && !results.monitoring && !results.showResults"
-       class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <Routes :form="form" :results="results"/>
+  <LayoutWithSidebar>
+    <template #left>
+      <!-- form -->
+      <div v-if="!results.booting && !results.monitoring && !results.showResults"
+           class="px-4 sm:px-6 md:px-8">
+        <Routes :form="form" :results="results"/>
 
-    <Divider class="mt-16">Options</Divider>
+        <Divider class="mt-16">Options</Divider>
 
-    <div class="grid grid-cols-2 gap-8">
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="debug_mode" v-model="form.debug_mode"
-                 name="debug_mode"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+        <div class="grid grid-cols-2 gap-8">
+          <div class="flex items-start select-none">
+            <div class="h-5 flex items-center">
+              <input id="debug_mode" v-model="form.debug_mode"
+                     name="debug_mode"
+                     type="checkbox"
+                     class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
+              <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start select-none">
+            <div class="h-5 flex items-center">
+              <input id="paper_mode" v-model="form.paper_mode"
+                     name="paper_mode"
+                     type="checkbox"
+                     class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>
+              <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="flex items-start select-none">
-        <div class="h-5 flex items-center">
-          <input id="paper_mode" v-model="form.paper_mode"
-                 name="paper_mode"
-                 type="checkbox"
-                 class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+      <!-- Monitoring Dashboard -->
+      <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
+        <!-- Candlesticks chart-->
+        <div>
+          <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
         </div>
-        <div class="ml-3 text-sm">
-          <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>
-          <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+
+        <!--tables-->
+        <Divider class="mt-12">Positions</Divider>
+        <MultipleValuesTable :data="results.positions" header />
+
+        <Divider class="mt-12">Orders</Divider>
+        <MultipleValuesTable :data="results.orders" header />
+
+        <!-- Logs while execution -->
+        <div v-if="form.debug_mode && results.monitoring" class="mt-12 h-full overflow-auto mx-auto">
+          <Logs :logs="results.infoLogs"/>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Monitoring Dashboard -->
-  <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-      <StatsBox name="Started" :value="timestampToTime(results.generalInfo.started_at)" />
+      <!-- Results -->
+      <div v-if="results.showResults"
+           class="w-full mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
+        <div>
+          <Divider>Routes</Divider>
+          <MultipleValuesTable :data="results.routes_info"/>
 
-      <StatsBox name="Current Time" :value="timestampToTime(results.generalInfo.current_time)" />
+          <Divider class="mt-16">Info</Divider>
+          <KeyValueTable :data="results.info"/>
 
-      <StatsBox name="Started/Current Balance" :value="`${results.generalInfo.started_balance}/${results.generalInfo.current_balance}`" />
+          <Divider class="mt-16">Equity Curve</Divider>
+          <EquityCurve :equity-curve="results.charts.equity_curve"/>
 
-      <StatsBox name="Debug Mode" :value="results.generalInfo.debug_mode" />
+          <Divider class="mt-16">Performance</Divider>
+          <KeyValueTable :data="results.metrics"/>
+        </div>
+      </div>
 
-      <StatsBox name="PNL" :value="`${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)`" />
+      <!-- Execution -->
+      <div v-if="!form.debug_mode && results.booting && !results.showResults"
+           class="flex flex-col items-center justify-center select-none"
+           :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
+      >
+        <div>
+          <CircleProgressbar :progress="results.progressbar.current"/>
+        </div>
 
-      <StatsBox name="Trades" :value="results.generalInfo.count_trades" />
-    </dl>
+        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
-    <!-- Candlesticks chart-->
-    <div class="mt-12">
-      <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
-    </div>
+        <div class="mt-8">
+          <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+            Cancel
+          </button>
+        </div>
+      </div>
 
-    <!--tables-->
-    <Divider class="mt-12">Positions</Divider>
-    <MultipleValuesTable :data="results.positions" header />
+      <!-- Logs while execution -->
+      <div v-if="form.debug_mode && results.booting" class="h-full overflow-auto mx-auto container">
+        <Logs :logs="results.infoLogs"/>
+      </div>
 
-    <Divider class="mt-12">Orders</Divider>
-    <MultipleValuesTable :data="results.orders" header />
+      <!-- exception  -->
+      <div v-if="results.exception.error && results.booting"
+           class="h-full overflow-auto mx-auto container">
+        <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      </div>
+    </template>
 
-    <!-- Logs while execution -->
-    <div v-if="form.debug_mode && results.monitoring" class="mt-12 h-full overflow-auto mx-auto">
-      <Logs :logs="results.infoLogs"/>
-    </div>
-  </div>
+    <template #right>
+      <!-- Action Buttons -->
+      <div v-if="!results.booting">
+        <div v-if="results.monitoring">
+          <button class="btn-secondary text-center mr-2 block w-full mb-4" @click="stop($route.params.id)">
+            Stop
+          </button>
+        </div>
 
-  <!-- Results -->
-  <div v-if="results.showResults"
-       class="w-full mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-    <div>
-      <Divider>Routes</Divider>
-      <MultipleValuesTable :data="results.routes_info"/>
+        <div v-else>
+          <button class="btn-primary text-center mr-2 block w-full mb-4" @click="start($route.params.id)">
+            Start
+          </button>
 
-      <Divider class="mt-16">Info</Divider>
-      <KeyValueTable :data="results.info"/>
+          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">
+            Start in a new tab
+          </button>
+        </div>
+      </div>
 
-      <Divider class="mt-16">Equity Curve</Divider>
-      <EquityCurve :equity-curve="results.charts.equity_curve"/>
+      <hr class="my-8 border-2 dark:border-gray-600 rounded-full">
 
-      <Divider class="mt-16">Performance</Divider>
-      <KeyValueTable :data="results.metrics"/>
-    </div>
-  </div>
+      <!-- general info table-->
+      <dl v-if="results.monitoring" class="grid grid-cols-1 gap-6 border dark:border-gray-600 rounded py-4 px-6 select-none">
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Current Time:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ timestampToTime(results.generalInfo.current_time) }}</div>
+        </div>
 
-  <!-- Action Buttons -->
-  <div v-if="!results.booting" class="py-4 px-4 sm:px-6 md:px-8 w-full border-t">
-    <div v-if="results.showResults" class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="rerun($route.params.id)">
-        Rerun
-      </button>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Started:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ timestampToTime(results.generalInfo.started_at) }}</div>
+        </div>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="newLive($route.params.id)">
-        New Session
-      </button>
-    </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Started/Current Balance:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ `${results.generalInfo.started_balance}/${results.generalInfo.current_balance}` }}</div>
+        </div>
 
-    <div v-else class="max-w-7xl mx-auto flex">
-      <button class="btn-primary text-center mr-2 flex-1" @click="start($route.params.id)">
-        Start
-      </button>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Debug Mode:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.debug_mode }}</div>
+        </div>
 
-      <button class="btn-secondary text-center ml-2 flex-1" @click="startInNewTab($route.params.id)">
-        Start in a new tab
-      </button>
-    </div>
-  </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">PNL:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ `${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)` }}</div>
+        </div>
 
-  <!-- Execution -->
-  <div v-if="!form.debug_mode && results.booting && !results.showResults"
-       class="flex flex-col items-center justify-center select-none"
-       :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
-  >
-    <div>
-      <CircleProgressbar :progress="results.progressbar.current"/>
-    </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Trades:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_trades }}</div>
+        </div>
 
-    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Info Logs:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 underline cursor-pointer">{{ results.generalInfo.count_info_logs }}</div>
+        </div>
 
-    <div class="mt-8">
-      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
-        Cancel
-      </button>
-    </div>
-  </div>
-
-  <!-- Logs while execution -->
-  <div v-if="form.debug_mode && results.booting" class="h-full overflow-auto mx-auto container">
-    <Logs :logs="results.infoLogs"/>
-  </div>
-
-  <!-- exception  -->
-  <div v-if="results.exception.error && results.booting"
-       class="h-full overflow-auto mx-auto container">
-    <Exception :title="results.exception.error" :content="results.exception.traceback" />
-  </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Errors Logs:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 underline cursor-pointer">{{ results.generalInfo.count_error_logs }}</div>
+        </div>
+      </dl>
+    </template>
+  </LayoutWithSidebar>
 </template>
 
 <script>
@@ -145,10 +178,11 @@ import { mapActions } from 'pinia'
 import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
+import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 
 export default {
   name: 'LiveTab',
-  components: { Logs },
+  components: { LayoutWithSidebar, Logs },
   props: {
     form: {
       type: Object,
@@ -173,7 +207,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newLive']),
+    ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),
   }
 }
 </script>
