@@ -189,13 +189,13 @@ export const useLiveStore = defineStore({
 
       this.tabs[id].results.positions = [
         [
-          'Type', 'Strategy', 'Symbol', 'Entry', 'Current Price', 'PNL'
+          'Type', 'Strategy', 'Symbol', 'QTY', 'Entry', 'Current Price', 'PNL'
         ]
       ]
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          item.type, item.strategy_name, item.symbol, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+          item.type, item.strategy_name, item.symbol, item.qty, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
         ])
       }
     },
