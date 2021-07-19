@@ -19,6 +19,7 @@ function newTab () {
       showResults: false,
       booting: false,
       monitoring: false,
+      finished: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0
@@ -91,14 +92,20 @@ export const useLiveStore = defineStore({
         }
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
-    rerun (id) {
-      this.tabs[id].results.showResults = false
-      this.start(id)
+    stop (id) {
+      axios.delete('http://127.0.0.1:8000/live', {
+        headers: {},
+        data: {
+          id,
+          paper_mode: this.tabs[id].form.paper_mode
+        }
+      }).then(() => {
+        this.tabs[id].results.finished = true
+      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
       this.tabs[id].results.showResults = false
     },
-
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
         ['Period', data.duration],
@@ -189,13 +196,13 @@ export const useLiveStore = defineStore({
 
       this.tabs[id].results.positions = [
         [
-          'Type', 'Strategy', 'Symbol', 'Entry', 'Current Price', 'PNL'
+          'Type', 'Strategy', 'Symbol', 'QTY', 'Entry', 'Current Price', 'PNL'
         ]
       ]
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          item.type, item.strategy_name, item.symbol, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+          item.type, item.strategy_name, item.symbol, item.qty, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
         ])
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <Tabs :page-id="pageId" :tabs="tabs" />
+  <!--  <Tabs :page-id="pageId" :tabs="tabs" />-->
 
   <LiveTab v-if="tabs[pageId]" :form="tabs[pageId].form" :results="tabs[pageId].results" />
 </template>

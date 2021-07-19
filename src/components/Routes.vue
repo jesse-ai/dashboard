@@ -1,5 +1,5 @@
 <template>
-  <div class="my-6 select-none">
+  <div class="select-none">
     <div class="relative mb-4">
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
         <div class="w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600"/>

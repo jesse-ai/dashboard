@@ -1,5 +1,5 @@
 <template>
-  <span class="relative z-0 inline-flex shadow-sm rounded-md">
+  <span class="relative z-0 inline-flex shadow-sm rounded-md mr-2">
     <button
       type="button"
       :class="{ 'selected': theme === 'light' }"
@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     ...mapWritableState(useMainStore, [
-      'theme'      
+      'theme'
     ])
   },
   beforeMount () {
