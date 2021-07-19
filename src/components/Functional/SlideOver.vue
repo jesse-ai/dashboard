@@ -1,0 +1,75 @@
+<template>
+  <TransitionRoot as="template" :show="object[name]">
+    <Dialog as="div" static class="fixed inset-0 overflow-hidden z-40" :open="object[name]"
+            @close="object[name] = false">
+      <div class="absolute inset-0 overflow-hidden">
+        <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100"
+                         leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
+          <DialogOverlay class="absolute inset-0 bg-gray-500 bg-opacity-95 transition-opacity" />
+        </TransitionChild>
+
+        <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+          <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0"
+                           leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
+            <div class="w-screen max-w-4xl">
+              <div class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+                <div class="px-4 sm:px-6">
+                  <div class="flex items-start justify-between">
+                    <DialogTitle class="text-lg font-medium text-gray-900" v-text="title"/>
+
+                    <div class="ml-3 h-7 flex items-center">
+                      <button class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none" @click="object[name] = false">
+                        <span class="sr-only">Close panel</span>
+                        <XIcon class="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6 relative flex-1 px-4 sm:px-6">
+                  <!-- Replace with your content -->
+                  <slot>
+                    <div class="absolute inset-0 px-4 sm:px-6">
+                      <div class="h-full border-2 border-dashed border-gray-200" aria-hidden="true" />
+                    </div>
+                  </slot>
+                  <!-- /End replace -->
+                </div>
+              </div>
+            </div>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+</template>
+
+<script>
+import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { XIcon } from '@heroicons/vue/outline'
+
+export default {
+  components: {
+    Dialog,
+    DialogOverlay,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+    XIcon,
+  },
+  props: {
+    title: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    object: {
+      type: Object,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
+  },
+}
+</script>
