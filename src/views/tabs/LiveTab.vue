@@ -10,10 +10,10 @@
 
         <div class="grid grid-cols-2 gap-8">
           <!-- debug mode -->
-          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'debug_mode'" />
+          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
       
           <!-- paper mode -->
-          <CheckBox :title="'paper_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'paper_mode'" />
+          <CheckBox :title="'paper_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'paper_mode'" />
         </div>
       </div>
 

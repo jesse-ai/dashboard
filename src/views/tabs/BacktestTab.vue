@@ -10,22 +10,22 @@
 
         <div class="grid grid-cols-2 gap-8">
           <!-- debug mode -->
-          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'debug_mode'" />
+          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
 
           <!-- export chart -->
-          <CheckBox :title="'export_chart'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_chart'" />
+          <CheckBox :title="'export_chart'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_chart'" />
 
           <!-- export trading view -->
-          <CheckBox :title="'export_tradingview'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_tradingview'" />
+          <CheckBox :title="'export_tradingview'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_tradingview'" />
 
           <!-- export full reports -->
-          <CheckBox :title="'export_full_reports'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_full_reports'" />
+          <CheckBox :title="'export_full_reports'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_full_reports'" />
 
           <!-- export csv -->
-          <CheckBox :title="'export_csv'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_csv'" />
+          <CheckBox :title="'export_csv'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_csv'" />
 
           <!-- export json -->
-          <CheckBox :title="'export_json'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_json'" />
+          <CheckBox :title="'export_json'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_json'" />
         </div>
 
         <Divider class="mt-16">Duration</Divider>
