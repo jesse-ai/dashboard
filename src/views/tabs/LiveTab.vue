@@ -9,31 +9,11 @@
         <Divider class="mt-16">Options</Divider>
 
         <div class="grid grid-cols-2 gap-8">
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="debug_mode" v-model="form.debug_mode"
-                     name="debug_mode"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="debug_mode" class="font-medium text-gray-700 cursor-pointer">debug_mode</label>
-              <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
-
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="paper_mode" v-model="form.paper_mode"
-                     name="paper_mode"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="paper_mode" class="font-medium text-gray-700 cursor-pointer">paper_mode</label>
-              <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- debug mode -->
+          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'debug_mode'" />
+      
+          <!-- paper mode -->
+          <CheckBox :title="'paper_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'paper_mode'" />
         </div>
       </div>
 
@@ -179,10 +159,11 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
+import CheckBox from '@/components/CheckBox'
 
 export default {
   name: 'LiveTab',
-  components: { LayoutWithSidebar, Logs },
+  components: { LayoutWithSidebar, Logs, CheckBox },
   props: {
     form: {
       type: Object,
