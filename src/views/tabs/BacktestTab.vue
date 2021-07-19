@@ -9,84 +9,23 @@
         <Divider class="mt-16">Options</Divider>
 
         <div class="grid grid-cols-2 gap-8">
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="debug_mode" v-model="form.debug_mode"
-                     name="debug_mode"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="debug_mode" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">debug_mode</label>
-              <p class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- debug mode -->
+          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'debug_mode'" />
 
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="export_chart" v-model="form.export_chart"
-                     name="export_chart"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="export_chart" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_chart</label>
-              <p class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- export chart -->
+          <CheckBox :title="'export_chart'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_chart'" />
 
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="export_tradingview" v-model="form.export_tradingview"
-                     name="export_tradingview"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="export_tradingview" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_tradingview</label>
-              <p class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- export trading view -->
+          <CheckBox :title="'export_tradingview'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_tradingview'" />
 
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="export_full_reports" v-model="form.export_full_reports"
-                     name="export_full_reports"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="export_full_reports"
-                     class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_full_reports</label>
-              <p class="text-gray-500">Get n dark:text-gray-400otified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- export full reports -->
+          <CheckBox :title="'export_full_reports'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_full_reports'" />
 
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="export_csv" v-model="form.export_csv"
-                     name="export_csv"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="export_csv" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_csv</label>
-              <p class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- export csv -->
+          <CheckBox :title="'export_csv'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_csv'" />
 
-          <div class="flex items-start select-none">
-            <div class="h-5 flex items-center">
-              <input id="export_json" v-model="form.export_json"
-                     name="export_json"
-                     type="checkbox"
-                     class="focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 dark:border-gray-500 dark:focus:ring-offset-0 rounded">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="export_json" class="font-medium text-gray-700 dark:text-gray-200 cursor-pointer">export_json</label>
-              <p class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p>
-            </div>
-          </div>
+          <!-- export json -->
+          <CheckBox :title="'export_json'" :description="'Get notified when someones posts a comment on a posting.'" :form="form" :value="'export_json'" />
         </div>
 
         <Divider class="mt-16">Duration</Divider>
@@ -192,10 +131,11 @@ import { mapActions } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
+import CheckBox from '@/components/CheckBox'
 
 export default {
   name: 'BacktestTab',
-  components: { LayoutWithSidebar, Logs },
+  components: { LayoutWithSidebar, Logs, CheckBox },
   props: {
     form: {
       type: Object,
