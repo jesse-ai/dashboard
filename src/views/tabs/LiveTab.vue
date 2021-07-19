@@ -50,11 +50,6 @@
 
         <Divider class="mt-12">Orders</Divider>
         <MultipleValuesTable :data="results.orders" header />
-
-        <!-- Logs while execution -->
-        <div v-if="form.debug_mode && results.monitoring" class="mt-12 h-full overflow-auto mx-auto">
-          <Logs :logs="results.infoLogs"/>
-        </div>
       </div>
 
       <!-- Results -->
@@ -91,11 +86,6 @@
             Cancel
           </button>
         </div>
-      </div>
-
-      <!-- Logs while execution -->
-      <div v-if="form.debug_mode && results.booting" class="h-full overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs"/>
       </div>
 
       <!-- exception  -->
@@ -160,15 +150,32 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <button class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer">
-            <span>Info Logs:</span> <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+          <SlideOver name="infoLogsModal"
+                     :object="results"
+                     title="Info Logs">
+            <Logs :logs="results.infoLogs"/>
+          </SlideOver>
+
+          <button
+            class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+            @click="results.infoLogsModal = true">
+            <span>Info Logs:</span>
+
+            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
           </button>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_info_logs }}</div>
         </div>
 
         <div class="flex justify-between items-center">
-          <button class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer">
-            <span>Error Logs:</span> <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+          <SlideOver name="errorLogsModal"
+                     :object="results"
+                     title="Error Logs"/>
+
+          <button
+            class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+            @click="results.errorLogsModal = true">
+            <span>Error Logs:</span>
+            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
           </button>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_error_logs }}</div>
         </div>
