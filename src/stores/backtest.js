@@ -24,6 +24,7 @@ function newTab () {
     results: {
       showResults: false,
       executing: false,
+      logsModal: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0

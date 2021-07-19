@@ -11,10 +11,6 @@ import helpers from '@/helpers'
 export default {
   name: 'Logs',
   props: {
-    full: {
-      type: Boolean,
-      default: true
-    },
     logs: {
       type: String,
       required: true

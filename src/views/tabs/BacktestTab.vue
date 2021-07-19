@@ -1,6 +1,13 @@
 <template>
+  <SlideOver v-if="form.debug_mode"
+             name="logsModal"
+             :object="results"
+             title="Logs">
+    <Logs :logs="results.infoLogs"/>
+  </SlideOver>
+
   <!-- Execution -->
-  <div v-if="!form.debug_mode && results.executing && !results.showResults"
+  <div v-if="results.executing && !results.showResults"
        class="flex flex-col items-center justify-center select-none mt-[10%]"
   >
     <div>
@@ -10,7 +17,11 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="results.logsModal = true">
+        View Logs
+      </button>
+
+      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -78,17 +89,7 @@
 
           <Divider class="mt-16">Performance</Divider>
           <KeyValueTable :data="results.metrics"/>
-
-          <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
-            <Logs :logs="results.infoLogs" :full="false"/>
-            <br>
-          </div>
         </div>
-      </div>
-
-      <!-- Logs while execution -->
-      <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs"/>
       </div>
 
       <!-- exception  -->

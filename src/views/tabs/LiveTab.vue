@@ -1,6 +1,16 @@
 <template>
+  <SlideOver name="infoLogsModal"
+             :object="results"
+             title="Info Logs">
+    <Logs :logs="results.infoLogs"/>
+  </SlideOver>
+
+  <SlideOver name="errorLogsModal"
+             :object="results"
+             title="Error Logs"/>
+
   <!-- Execution -->
-  <div v-if="!form.debug_mode && results.booting && !results.showResults"
+  <div v-if="results.booting && !results.showResults"
        class="flex flex-col items-center justify-center select-none mt-[10%]"
   >
     <div>
@@ -10,6 +20,10 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
+      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="results.infoLogsModal = true">
+        View Logs
+      </button>
+
       <button class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
@@ -129,12 +143,6 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <SlideOver name="infoLogsModal"
-                     :object="results"
-                     title="Info Logs">
-            <Logs :logs="results.infoLogs"/>
-          </SlideOver>
-
           <button
             class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
             @click="results.infoLogsModal = true">
@@ -146,10 +154,6 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <SlideOver name="errorLogsModal"
-                     :object="results"
-                     title="Error Logs"/>
-
           <button
             class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
             @click="results.errorLogsModal = true">
