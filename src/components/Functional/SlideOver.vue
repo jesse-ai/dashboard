@@ -26,13 +26,11 @@
                   </div>
                 </div>
                 <div class="mt-6 relative flex-1 px-4 sm:px-6">
-                  <!-- Replace with your content -->
                   <slot>
                     <div class="absolute inset-0 px-4 sm:px-6">
                       <div class="h-full border-2 border-dashed border-gray-200" aria-hidden="true" />
                     </div>
                   </slot>
-                  <!-- /End replace -->
                 </div>
               </div>
             </div>
