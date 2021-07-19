@@ -160,13 +160,17 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Info Logs:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 underline cursor-pointer">{{ results.generalInfo.count_info_logs }}</div>
+          <button class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer">
+            <span>Info Logs:</span> <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+          </button>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_info_logs }}</div>
         </div>
 
         <div class="flex justify-between items-center">
-          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Errors Logs:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 underline cursor-pointer">{{ results.generalInfo.count_error_logs }}</div>
+          <button class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer">
+            <span>Error Logs:</span> <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+          </button>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_error_logs }}</div>
         </div>
       </dl>
     </template>
@@ -179,10 +183,15 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
+import { ClipboardListIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'LiveTab',
-  components: { LayoutWithSidebar, Logs },
+  components: {
+    LayoutWithSidebar,
+    Logs,
+    ClipboardListIcon
+  },
   props: {
     form: {
       type: Object,
