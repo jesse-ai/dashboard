@@ -1,5 +1,22 @@
 <template>
-  <LayoutWithSidebar>
+  <!-- Execution -->
+  <div v-if="!form.debug_mode && results.booting && !results.showResults"
+       class="flex flex-col items-center justify-center select-none mt-[10%]"
+  >
+    <div>
+      <CircleProgressbar :progress="results.progressbar.current"/>
+    </div>
+
+    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+
+    <div class="mt-8">
+      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <LayoutWithSidebar v-else>
     <template #left>
       <!-- form -->
       <div v-if="!results.booting && !results.monitoring && !results.showResults"
@@ -11,7 +28,7 @@
         <div class="grid grid-cols-2 gap-8">
           <!-- debug mode -->
           <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
-      
+
           <!-- paper mode -->
           <CheckBox :title="'paper_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'paper_mode'" />
         </div>
@@ -47,24 +64,6 @@
 
           <Divider class="mt-16">Performance</Divider>
           <KeyValueTable :data="results.metrics"/>
-        </div>
-      </div>
-
-      <!-- Execution -->
-      <div v-if="!form.debug_mode && results.booting && !results.showResults"
-           class="flex flex-col items-center justify-center select-none"
-           :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
-      >
-        <div>
-          <CircleProgressbar :progress="results.progressbar.current"/>
-        </div>
-
-        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
-
-        <div class="mt-8">
-          <button class="btn-secondary w-64" @click="cancel($route.params.id)">
-            Cancel
-          </button>
         </div>
       </div>
 
