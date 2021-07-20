@@ -79,7 +79,7 @@
                     Move Up
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="moveDown(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Down
@@ -264,6 +264,14 @@ export default {
         const lastItem = this.form.routes[itemIndex - 1]
         this.form.routes[itemIndex] = lastItem
         this.form.routes[itemIndex - 1] = item
+      }
+    },
+    moveDown (item) {
+      const itemIndex = this.form.routes.indexOf(item)
+      if (itemIndex !== (this.form.routes.length - 1)) {
+        const followingItem = this.form.routes[itemIndex + 1]
+        this.form.routes[itemIndex] = followingItem
+        this.form.routes[itemIndex + 1] = item
       }
     }
   }
