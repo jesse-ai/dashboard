@@ -59,9 +59,9 @@
                       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
             <MenuItems class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-backdrop-dark z-10 ring-1 ring-black dark:ring-gray-600 ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-500 focus:outline-none">
               <div class="py-1">
-                <MenuItem v-slot="{ active }" @click="deleteRoute(r)">
-                  <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
-                    <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                <MenuItem @click="deleteRoute(r)">
+                  <a :class="[(form.routes.length > 1) ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <TrashIcon :class="[(form.routes.length > 1) ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Delete
                   </a>
                 </MenuItem>
@@ -125,10 +125,9 @@
             <MenuItems
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-backdrop-dark z-10 ring-1 ring-black dark:ring-gray-500 ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-500 focus:outline-none">
               <div class="py-1">
-                <MenuItem v-slot="{ active }">
-                  <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']"
-                     @click="deleteExtraRoute(r)">
-                    <TrashIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
+                <MenuItem @click="deleteExtraRoute(r)">
+                  <a :class="[(form.extra_routes.length > 1) ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <TrashIcon :class="[(form.extra_routes.length > 1) ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Delete
                   </a>
                 </MenuItem>
