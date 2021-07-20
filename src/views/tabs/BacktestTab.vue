@@ -108,7 +108,7 @@
           </button>
 
           <button class="btn-secondary text-center block mb-4 w-full" @click="newBacktest($route.params.id)">
-            New backtest
+            New session
           </button>
         </div>
 
