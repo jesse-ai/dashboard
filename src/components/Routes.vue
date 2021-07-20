@@ -73,7 +73,7 @@
                 </MenuItem>
               </div>
               <div class="py-1">
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="moveUp(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Up
@@ -257,6 +257,14 @@ export default {
       this.form.extra_routes = this.form.extra_routes.filter((value, index, arr) => {
         return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
       })
+    },
+    moveUp (item) {
+      const itemIndex = this.form.routes.indexOf(item)
+      if (itemIndex !== 0) {
+        const lastItem = this.form.routes[itemIndex - 1]
+        this.form.routes[itemIndex] = lastItem
+        this.form.routes[itemIndex - 1] = item
+      }
     }
   }
 }
