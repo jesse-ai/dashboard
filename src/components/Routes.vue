@@ -65,7 +65,7 @@
                     Delete
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }" @click="duplicate(r)">
+                <MenuItem v-slot="{ active }" @click="duplicateRoutes(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Duplicate
@@ -73,13 +73,13 @@
                 </MenuItem>
               </div>
               <div class="py-1">
-                <MenuItem v-slot="{ active }" @click="moveUp(r)">
+                <MenuItem v-slot="{ active }" @click="moveUpRoutes(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Up
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }" @click="moveDown(r)">
+                <MenuItem v-slot="{ active }" @click="moveDownRoutes(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Move Down
@@ -132,7 +132,7 @@
                     Delete
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="duplicateExtraRoutes(r)">
                   <a
                     :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
@@ -141,14 +141,14 @@
                 </MenuItem>
               </div>
               <div class="py-1">
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="moveUpExtraRoutes(r)">
                   <a
                     :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
                     Move Up
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="moveDownExtraRoutes(r)">
                   <a
                     :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
@@ -258,11 +258,29 @@ export default {
         return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
       })
     },
-    duplicate (item) {
+    duplicateRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
-      this.form.routes.splice(itemIndex + 1, 0, item)
+      const newItem = {}
+      newItem.exchange = item.exchange
+      newItem.strategy = item.strategy
+      newItem.symbol = item.symbol
+      newItem.timeframe = item.timeframe
+
+
+      this.form.routes.splice(itemIndex + 1, 0, newItem)
     },
-    moveUp (item) {
+    duplicateExtraRoutes (item) {
+      const itemIndex = this.form.extra_routes.indexOf(item)
+      const newItem = {}
+      newItem.exchange = item.exchange
+      newItem.strategy = item.strategy
+      newItem.symbol = item.symbol
+      newItem.timeframe = item.timeframe
+
+
+      this.form.extra_routes.splice(itemIndex + 1, 0, newItem)
+    },
+    moveUpRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
       if (itemIndex !== 0) {
         const lastItem = this.form.routes[itemIndex - 1]
@@ -270,12 +288,28 @@ export default {
         this.form.routes[itemIndex - 1] = item
       }
     },
-    moveDown (item) {
+    moveUpExtraRoutes (item) {
+      const itemIndex = this.form.extra_routes.indexOf(item)
+      if (itemIndex !== 0) {
+        const lastItem = this.form.extra_routes[itemIndex - 1]
+        this.form.extra_routes[itemIndex] = lastItem
+        this.form.extra_routes[itemIndex - 1] = item
+      }
+    },
+    moveDownRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
       if (itemIndex !== (this.form.routes.length - 1)) {
         const followingItem = this.form.routes[itemIndex + 1]
         this.form.routes[itemIndex] = followingItem
         this.form.routes[itemIndex + 1] = item
+      }
+    },
+    moveDownExtraRoutes (item) {
+      const itemIndex = this.form.extra_routes.indexOf(item)
+      if (itemIndex !== (this.form.extra_routes.length - 1)) {
+        const followingItem = this.form.extra_routes[itemIndex + 1]
+        this.form.extra_routes[itemIndex] = followingItem
+        this.form.extra_routes[itemIndex + 1] = item
       }
     }
   }
