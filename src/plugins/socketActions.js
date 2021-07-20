@@ -86,6 +86,12 @@ export default function () {
     ['livetrade.error_log', [
       live.errorLogEvent
     ]],
+    ['papertrade.exception', [
+      live.exceptionEvent
+    ]],
+    ['livetrade.exception', [
+      live.exceptionEvent
+    ]],
   ])
 }
 

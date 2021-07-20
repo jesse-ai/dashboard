@@ -10,7 +10,7 @@
              title="Error Logs"/>
 
   <!-- Execution -->
-  <div v-if="results.booting && !results.showResults"
+  <div v-if="results.booting"
        class="flex flex-col items-center justify-center select-none mt-[10%]"
   >
     <div>
@@ -27,6 +27,11 @@
       <button class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
+    </div>
+
+    <!-- exception  -->
+    <div v-if="results.exception.error" class="mx-auto container mt-8">
+      <Exception :title="results.exception.error" :content="results.exception.traceback" />
     </div>
   </div>
 
