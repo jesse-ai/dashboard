@@ -249,13 +249,13 @@ export default {
     },
     deleteRoute (item) {
       const index = this.form.routes.indexOf(item)
-      if (index > -1) {
+      if ((this.form.routes.length !== 1) && index > -1) {
         this.form.routes.splice(index, 1)
       }
     },
     deleteExtraRoute (item) {
       const index = this.form.extra_routes.indexOf(item)
-      if (index > -1) {
+      if ((this.form.extra_routes.length !== 1) && index > -1) {
         this.form.extra_routes.splice(index, 1)
       }
     },
