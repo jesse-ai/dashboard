@@ -165,7 +165,6 @@
   </div>
 </template>
 
-
 <script>
 import {
   PlusSmIcon, DotsVerticalIcon,
@@ -249,14 +248,16 @@ export default {
       })
     },
     deleteRoute (item) {
-      this.form.routes = this.form.routes.filter((value, index, arr) => {
-        return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
-      })
+      const index = this.form.routes.indexOf(item)
+      if (index > -1) {
+        this.form.routes.splice(index, 1)
+      }
     },
     deleteExtraRoute (item) {
-      this.form.extra_routes = this.form.extra_routes.filter((value, index, arr) => {
-        return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
-      })
+      const index = this.form.extra_routes.indexOf(item)
+      if (index > -1) {
+        this.form.extra_routes.splice(index, 1)
+      }
     },
     duplicateRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
