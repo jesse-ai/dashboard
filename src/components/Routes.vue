@@ -65,7 +65,7 @@
                     Delete
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
+                <MenuItem v-slot="{ active }" @click="duplicate(r)">
                   <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Duplicate
@@ -257,6 +257,10 @@ export default {
       this.form.extra_routes = this.form.extra_routes.filter((value, index, arr) => {
         return item.exchange !== value.exchange || item.symbol !== value.symbol || item.timeframe !== value.timeframe || item.strategy !== value.strategy
       })
+    },
+    duplicate (item) {
+      const itemIndex = this.form.routes.indexOf(item)
+      this.form.routes.splice(itemIndex + 1, 0, item)
     },
     moveUp (item) {
       const itemIndex = this.form.routes.indexOf(item)
