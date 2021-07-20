@@ -92,7 +92,11 @@
       <!-- Action Buttons -->
       <div v-if="!results.booting">
         <div v-if="results.monitoring">
-          <button class="btn-secondary text-center mr-2 block w-full mb-4" @click="stop($route.params.id)">
+          <button v-if="results.finished" class="btn-primary text-center block mb-4 w-full" @click="newLive($route.params.id)">
+            New session
+          </button>
+
+          <button v-else class="btn-secondary text-center mr-2 block w-full mb-4" @click="stop($route.params.id)">
             Stop
           </button>
         </div>

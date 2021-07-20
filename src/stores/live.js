@@ -106,7 +106,8 @@ export const useLiveStore = defineStore({
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
-      this.tabs[id].results.showResults = false
+      this.tabs[id].results.monitoring = false
+      this.tabs[id].results.finished = false
     },
     candlesInfoEvent (id, data) {
       this.tabs[id].results.info = [
