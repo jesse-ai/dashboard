@@ -73,15 +73,15 @@
                 </MenuItem>
               </div>
               <div class="py-1">
-                <MenuItem v-slot="{ active }" @click="moveUpRoutes(r)">
-                  <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                <MenuItem @click="moveUpRoutes(r)">
+                  <a :class="[form.routes.indexOf(r) !== 0 ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleUpIcon :class="[form.routes.indexOf(r) !== 0 ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Move Up
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }" @click="moveDownRoutes(r)">
-                  <a :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                <MenuItem @click="moveDownRoutes(r)">
+                  <a :class="[form.routes.indexOf(r) !== (form.routes.length - 1) ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleDownIcon :class="[form.routes.indexOf(r) !== (form.routes.length - 1) ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Move Down
                   </a>
                 </MenuItem>
@@ -140,18 +140,15 @@
                 </MenuItem>
               </div>
               <div class="py-1">
-                <MenuItem v-slot="{ active }" @click="moveUpExtraRoutes(r)">
-                  <a
-                    :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleUpIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true"/>
+                <MenuItem @click="moveUpExtraRoutes(r)">
+                  <a :class="[form.extra_routes.indexOf(r) !== 0 ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleUpIcon :class="[form.extra_routes.indexOf(r) !== 0 ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Move Up
                   </a>
                 </MenuItem>
-                <MenuItem v-slot="{ active }" @click="moveDownExtraRoutes(r)">
-                  <a
-                    :class="[active ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
-                    <ArrowCircleDownIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                         aria-hidden="true"/>
+                <MenuItem @click="moveDownExtraRoutes(r)">
+                  <a :class="[form.extra_routes.indexOf(r) !== (form.extra_routes.length - 1) ? 'dark:hover:bg-gray-800' : 'text-gray-200 dark:text-gray-600 cursor-not-allowed', 'group flex items-center px-4 py-2 text-sm']">
+                    <ArrowCircleDownIcon :class="[form.extra_routes.indexOf(r) !== (form.extra_routes.length - 1) ? 'text-gray-400 group-hover:text-gray-500' : 'text-gray-200 group-hover:text-gray-200 dark:text-gray-600 dark:group-hover:text-gray-600' ,'mr-3 h-5 w-5']" aria-hidden="true" />
                     Move Down
                   </a>
                 </MenuItem>
