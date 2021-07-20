@@ -17,12 +17,11 @@
 <script>
 export default {
   name: 'CheckBox',
-  components: {},
   props: {
     description: {
       type: String,
       required: false,
-      default: '' 
+      default: ''
     },
     title: {
       type: String,
@@ -33,7 +32,7 @@ export default {
       required: true
     },
     name: {
-      type: Object,
+      type: String,
       required: true
     },
   },

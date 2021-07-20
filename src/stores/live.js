@@ -20,6 +20,8 @@ function newTab () {
       booting: false,
       monitoring: false,
       finished: false,
+      infoLogsModal: false,
+      errorLogsModal: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0

@@ -1,5 +1,33 @@
 <template>
-  <LayoutWithSidebar>
+  <SlideOver v-if="form.debug_mode"
+             name="logsModal"
+             :object="results"
+             title="Logs">
+    <Logs :logs="results.infoLogs"/>
+  </SlideOver>
+
+  <!-- Execution -->
+  <div v-if="results.executing && !results.showResults"
+       class="flex flex-col items-center justify-center select-none mt-[10%]"
+  >
+    <div>
+      <CircleProgressbar :progress="results.progressbar.current"/>
+    </div>
+
+    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+
+    <div class="mt-8">
+      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="results.logsModal = true">
+        View Logs
+      </button>
+
+      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <LayoutWithSidebar else>
     <template #left>
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults"
@@ -61,35 +89,7 @@
 
           <Divider class="mt-16">Performance</Divider>
           <KeyValueTable :data="results.metrics"/>
-
-          <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
-            <Logs :logs="results.infoLogs" :full="false"/>
-            <br>
-          </div>
         </div>
-      </div>
-
-      <!-- Execution -->
-      <div v-if="!form.debug_mode && results.executing && !results.showResults"
-           class="flex flex-col items-center justify-center select-none"
-           :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
-      >
-        <div>
-          <CircleProgressbar :progress="results.progressbar.current"/>
-        </div>
-
-        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
-
-        <div class="mt-8">
-          <button class="btn-secondary w-64" @click="cancel($route.params.id)">
-            Cancel
-          </button>
-        </div>
-      </div>
-
-      <!-- Logs while execution -->
-      <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs"/>
       </div>
 
       <!-- exception  -->

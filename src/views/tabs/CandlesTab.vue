@@ -1,5 +1,22 @@
 <template>
-  <LayoutWithSidebar>
+  <!-- Execution -->
+  <div v-if="!form.debug_mode && results.executing && !results.showResults"
+       class="flex flex-col items-center justify-center select-none mt-[10%]"
+  >
+    <div>
+      <CircleProgressbar :progress="results.progressbar.current"/>
+    </div>
+
+    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+
+    <div class="mt-8">
+      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <LayoutWithSidebar v-else>
     <template #left>
       <div v-if="results.alert.message" class="px-6 mb-10">
         <Alert :data="results.alert"/>
@@ -71,24 +88,6 @@
           <pre>
       {{ results }}
     </pre>
-        </div>
-      </div>
-
-      <!-- Execution -->
-      <div v-if="!form.debug_mode && results.executing && !results.showResults"
-           class="flex flex-col items-center justify-center select-none"
-           :class="form.debug_mode ? 'h-[60%]' : 'h-full'"
-      >
-        <div>
-          <CircleProgressbar :progress="results.progressbar.current"/>
-        </div>
-
-        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
-
-        <div class="mt-8">
-          <button class="btn-secondary w-64" @click="cancel($route.params.id)">
-            Cancel
-          </button>
         </div>
       </div>
 
