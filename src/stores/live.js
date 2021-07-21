@@ -135,6 +135,11 @@ export const useLiveStore = defineStore({
         data.time
       )}] ${data.message}\n`
     },
+    errorLogEvent (id, data) {
+      this.tabs[id].results.errorLogs += `[${helpers.timestampToTime(
+        data.time
+      )}] ${data.message}\n`
+    },
     exceptionEvent (id, data) {
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback

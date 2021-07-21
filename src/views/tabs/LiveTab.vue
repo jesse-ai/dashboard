@@ -7,7 +7,9 @@
 
   <SlideOver name="errorLogsModal"
              :object="results"
-             title="Error Logs"/>
+             title="Error Logs">
+    <Logs :logs="results.errorLogs"/>
+  </SlideOver>
 
   <!-- Execution -->
   <div v-if="results.booting"
