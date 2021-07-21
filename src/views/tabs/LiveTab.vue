@@ -55,6 +55,11 @@
 
       <!-- Monitoring Dashboard -->
       <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
+        <!-- exception  -->
+        <div v-if="results.exception.error" class="mb-8">
+          <Exception :title="results.exception.error" :content="results.exception.traceback" />
+        </div>
+
         <!-- Candlesticks chart-->
         <div>
           <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
