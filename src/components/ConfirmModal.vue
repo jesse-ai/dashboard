@@ -115,7 +115,7 @@ export default {
           color.text = 'text-gray-600 dark:text-gray-200'
           return color
         case 'warning':
-          color.text = 'text-yellow-400 dark:text-yellow-600'
+          color.text = 'text-yellow-600 dark:text-yellow-400'
           return color
         case 'success':
           color.text = 'text-green-400 dark:text-green-600'
