@@ -68,6 +68,7 @@ export const useLiveStore = defineStore({
     start (id) {
       this.tabs[id].results.progressbar.current = 0
       this.tabs[id].results.booting = true
+      this.tabs[id].results.finished = false
       this.tabs[id].results.infoLogs = ''
       this.tabs[id].results.errorLogs = ''
       this.tabs[id].results.exception.traceback = ''
@@ -136,6 +137,8 @@ export const useLiveStore = defineStore({
       )}] ${data.message}\n`
     },
     errorLogEvent (id, data) {
+      this.notyf.error(data.message)
+
       this.tabs[id].results.errorLogs += `[${helpers.timestampToTime(
         data.time
       )}] ${data.message}\n`
@@ -281,6 +284,9 @@ export const useLiveStore = defineStore({
       // live is finished, time to show charts:
       this.tabs[id].results.booting = false
       this.tabs[id].results.showResults = true
+    },
+    terminationEvent (id, data) {
+      this.tabs[id].results.finished = true
     }
   }
 })

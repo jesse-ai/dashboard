@@ -98,6 +98,12 @@ export default function () {
     ['livetrade.exception', [
       live.exceptionEvent
     ]],
+    ['papertrade.termination', [
+      live.terminationEvent
+    ]],
+    ['livetrade.termination', [
+      live.terminationEvent
+    ]],
   ])
 }
 
