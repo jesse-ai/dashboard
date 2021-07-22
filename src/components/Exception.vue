@@ -3,7 +3,7 @@
     Exception
   </Divider>
 
-  <div class="rounded-md bg-red-50  p-4 my-4">
+  <div class="rounded-md bg-red-50 p-4 my-4 select-text">
     <div class="flex">
       <div class="flex-shrink-0">
         <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
