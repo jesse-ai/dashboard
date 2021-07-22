@@ -53,7 +53,7 @@
               <!-- action button which must insert in main component -->
               <slot />
               <button ref="cancelButtonRef" type="button" class="btn-secondary" @click="object[name] = false">
-                {{ isDanger ? 'Cancel' : 'Close' }}
+                {{ type === 'danger' ? 'Cancel' : 'Close' }}
               </button>
             </div>
           </div>
