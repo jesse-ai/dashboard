@@ -7,10 +7,12 @@
 
   <SlideOver name="errorLogsModal"
              :object="results"
-             title="Error Logs"/>
+             title="Error Logs">
+    <Logs :logs="results.errorLogs"/>
+  </SlideOver>
 
   <!-- Execution -->
-  <div v-if="results.booting && !results.showResults"
+  <div v-if="results.booting"
        class="flex flex-col items-center justify-center select-none mt-[10%]"
   >
     <div>
@@ -27,6 +29,11 @@
       <button class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
+    </div>
+
+    <!-- exception  -->
+    <div v-if="results.exception.error" class="mx-auto container mt-8">
+      <Exception :title="results.exception.error" :content="results.exception.traceback" />
     </div>
   </div>
 
@@ -50,6 +57,11 @@
 
       <!-- Monitoring Dashboard -->
       <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
+        <!-- exception  -->
+        <div v-if="results.exception.error" class="mb-8">
+          <Exception :title="results.exception.error" :content="results.exception.traceback" />
+        </div>
+
         <!-- Candlesticks chart-->
         <div>
           <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />

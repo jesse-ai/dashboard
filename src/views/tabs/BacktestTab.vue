@@ -25,6 +25,11 @@
         Cancel
       </button>
     </div>
+
+    <!-- exception  -->
+    <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
+      <Exception :title="results.exception.error" :content="results.exception.traceback" />
+    </div>
   </div>
 
   <LayoutWithSidebar else>
@@ -90,12 +95,6 @@
           <Divider class="mt-16">Performance</Divider>
           <KeyValueTable :data="results.metrics"/>
         </div>
-      </div>
-
-      <!-- exception  -->
-      <div v-if="results.exception.error && results.executing"
-           class="h-full overflow-auto mx-auto container">
-        <Exception :title="results.exception.error" :content="results.exception.traceback" />
       </div>
     </template>
 

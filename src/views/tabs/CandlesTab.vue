@@ -14,6 +14,11 @@
         Cancel
       </button>
     </div>
+
+    <!-- exception  -->
+    <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
+      <Exception :title="results.exception.error" :content="results.exception.traceback" />
+    </div>
   </div>
 
   <LayoutWithSidebar v-else>
@@ -46,60 +51,6 @@
                  class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 dark:border-gray-600 rounded-md"
           >
         </div>
-
-        <br>
-        <!--    <pre>{{ activeTabIndex }}</pre>-->
-        <!--    <pre>{{ form }}</pre>-->
-      </div>
-
-      <!-- Results -->
-      <div v-if="results.showResults"
-           class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-        <div>
-          <Divider>
-            Routes
-          </Divider>
-          <MultipleValuesTable :data="results.routes_info"/>
-
-
-          <Divider class="mt-16">
-            Info
-          </Divider>
-          <KeyValueTable :data="results.info"/>
-
-          <Divider class="mt-16">
-            Equity Curve
-          </Divider>
-
-          <!-- TODO: replace with actual chart -->
-          <img src="@/assets/imgs/equity-curve.png" alt="equity-curve">
-
-          <Divider class="mt-16">
-            Performance
-          </Divider>
-
-          <KeyValueTable :data="results.metrics"/>
-
-          <div v-if="form.debug_mode" class="mt-16 overflow-auto mx-auto container">
-            <Logs :logs="results.infoLogs" :full="false"/>
-            <br>
-          </div>
-
-          <pre>
-      {{ results }}
-    </pre>
-        </div>
-      </div>
-
-      <!-- Logs while execution -->
-      <div v-if="form.debug_mode && results.executing" class="h-full overflow-auto mx-auto container">
-        <Logs :logs="results.infoLogs"/>
-      </div>
-
-      <!-- exception  -->
-      <div v-if="results.exception.error && results.executing"
-           class="h-full overflow-auto mx-auto container">
-        <Exception :title="results.exception.error" :content="results.exception.traceback" />
       </div>
     </template>
 
@@ -133,12 +84,11 @@
 <script>
 import { mapActions } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
-import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 
 export default {
   name: 'CandlesTab',
-  components: { LayoutWithSidebar, Logs },
+  components: { LayoutWithSidebar },
   props: {
     form: {
       type: Object,
