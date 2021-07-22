@@ -46,12 +46,18 @@
 
         <Divider class="mt-16">Options</Divider>
 
-        <div class="grid grid-cols-2 gap-8">
-          <!-- debug mode -->
-          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
+        <div class="grid grid-cols-1 gap-6">
+          <ToggleButton
+            :object="form"
+            name="debug_mode"
+            title="Debug Mode"
+            description="Logs more details, helpful for debugging. Not recommended for beginners."/>
 
-          <!-- paper mode -->
-          <CheckBox :title="'paper_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'paper_mode'" />
+          <ToggleButton
+            :object="form"
+            name="paper_mode"
+            title="Paper Trade"
+            description="Trade in real-time using actual exchange data with PAPER money."/>
         </div>
       </div>
 
@@ -191,10 +197,12 @@ import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { ClipboardListIcon } from '@heroicons/vue/outline'
 import CheckBox from '@/components/CheckBox'
+import ToggleButton from '@/components/ToggleButton'
 
 export default {
   name: 'LiveTab',
   components: {
+    ToggleButton,
     LayoutWithSidebar,
     Logs,
     ClipboardListIcon,
