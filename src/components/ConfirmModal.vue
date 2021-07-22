@@ -17,16 +17,16 @@
             <div class="w-full flex justify-between items-center">
               <div class="flex items-center">
                 <div v-if="type === 'info'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  <InformationCircleIcon check-icon class="h-9 w-9 text-gray-600 dark:text-gray-200" aria-hidden="true" />
+                  <InformationCircleIcon check-icon :class="colors.text" class="h-9 w-9" aria-hidden="true" />
                 </div>
                 <div v-else-if="type === 'danger'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  <BanIcon check-icon class="h-9 w-9 text-red-600 dark:text-red-400" aria-hidden="true" />
+                  <BanIcon check-icon :class="colors.text" class="h-9 w-9" aria-hidden="true" />
                 </div>
                 <div v-else-if="type === 'success'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <CheckIcon class="h-6 w-6 text-green-600" aria-hidden="true" />
+                  <CheckIcon :class="colors.text" class="h-6 w-6" aria-hidden="true" />
                 </div>
-                <div v-else class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-50 sm:mx-0 sm:h-10 sm:w-10">
-                  <ExclamationIcon check-icon class="h-6 w-6 text-yellow-600 dark:text-yellow-400 " aria-hidden="true" />
+                <div v-else class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                  <ExclamationIcon :class="colors.text" check-icon class="h-9 w-9 " aria-hidden="true" />
                 </div>
 
                 <!-- title -->
@@ -103,7 +103,7 @@ export default {
       type: String,
       required: true,
       validator (value) {
-        return ['success', 'danger', 'info'].includes(value)
+        return ['success', 'danger', 'info', 'warning'].includes(value)
       },
     }
   },
