@@ -36,7 +36,7 @@
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 export default {
-  name: 'ConfirmModal',
+  name: 'CustomModal',
   components: {
     Dialog,
     DialogOverlay,
