@@ -155,6 +155,11 @@
         </div>
 
         <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Paper Trade:</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.paper_mode }}</div>
+        </div>
+
+        <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">PNL:</div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ `${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)` }}</div>
         </div>
