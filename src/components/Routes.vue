@@ -45,12 +45,12 @@
 
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
 
       <select v-model="r.strategy"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in strategies" :key="item">{{ item }}</option>
+        <option v-for="item in routes.strategies" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -117,7 +117,7 @@
 
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -181,6 +181,8 @@ import {
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
 import axios from 'axios'
+import { mapState } from 'pinia'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'Routes',
@@ -207,37 +209,45 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
-      timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
-      strategies: ['TestLiveMode01'],
+  computed: {
+    ...mapState(useMainStore, ['routes']),
+    exchanges () {
+      const isLive = this.$route.name === 'Live'
+      return isLive ? this.routes.liveExchanges : this.routes.exchanges
     }
   },
   watch: {
     form () {
-      this.fillEmptyRoutes()
+      this.initiate()
     }
   },
   created () {
-    this.fillEmptyRoutes()
+    this.initiate()
   },
   methods: {
-    async fillEmptyRoutes () {
-      if (this.form.routes.length) return
+    initiate () {
+      if (this.form.routes.length) {
+        return
+      }
+
+      const isLive = this.$route.name === 'Live'
 
       axios.post('http://127.0.0.1:8000/routes-info', {
         id: this.$route.params.id,
-        is_live: this.$route.name === 'Live'
+        is_live: isLive
       }).then(res => {
-        this.exchanges = res.data.data.exchanges
-        this.strategies = res.data.data.strategies
+        if (isLive) {
+          this.routes.liveExchanges = res.data.data.exchanges
+        } else {
+          this.routes.exchanges = res.data.data.exchanges
+        }
+        this.routes.strategies = res.data.data.strategies
 
         this.form.routes.push({
           exchange: this.exchanges[0],
           symbol: '',
-          timeframe: this.timeframes[0],
-          strategy: this.strategies[0]
+          timeframe: this.routes.timeframes[0],
+          strategy: this.routes.strategies[0]
         })
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
@@ -248,8 +258,8 @@ export default {
       this.form.routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: '',
-        timeframe: this.timeframes[0],
-        strategy: this.strategies[0]
+        timeframe: this.routes.timeframes[0],
+        strategy: this.routes.strategies[0]
       })
     },
     addExtraRoute () {
@@ -257,7 +267,7 @@ export default {
       this.form.extra_routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: this.form.routes[this.form.routes.length - 1].symbol,
-        timeframe: this.timeframes[0]
+        timeframe: this.routes.timeframes[0]
       })
     },
     deleteRoute (item) {

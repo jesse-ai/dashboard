@@ -29,18 +29,19 @@
 
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults"
-           class="px-6">
+           class="px-6 pb-4">
         <Divider>Exchange</Divider>
         <select
           v-model="form.exchange"
-          class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
-          <option v-for="item in exchanges" :key="item">{{ item }}</option>
+          class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full px-6 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:border-indigo-500 rounded-md">
+          <option v-for="item in routes.exchanges" :key="item">{{ item }}</option>
         </select>
 
         <Divider class="mt-16">Symbol</Divider>
         <input v-model="form.symbol"
                placeholder="ex: BTC-USDT"
-               class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full pl-3 pr-10 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" >
+               class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 w-full px-6 py-6 border border-gray-200 focus:outline-none focus:border-indigo-500 dark:border-gray-600 rounded-md"
+               @input="form.symbol = $event.target.value.toUpperCase()">
 
         <Divider class="mt-16">Start Date</Divider>
         <div class="flex items-center select-none flex-1">
@@ -48,7 +49,7 @@
                  v-model="form.start_date"
                  type="date"
                  name="start_date"
-                 class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-200 dark:border-gray-600 rounded-md"
+                 class="dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer dark:bg-backdrop-dark flex-1 focus:outline-none focus:border-indigo-500 flex justify-center items-center py-6 text-center sm:text-sm border border-gray-200 dark:border-gray-600 rounded-md"
           >
         </div>
       </div>
@@ -82,10 +83,11 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import axios from 'axios'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'CandlesTab',
@@ -100,23 +102,30 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      exchanges: ['Binance', 'Bitfinex', 'Binance Futures']
+  computed: {
+    ...mapState(useMainStore, ['routes'])
+  },
+  watch: {
+    form () {
+      this.initiate()
     }
   },
   created () {
-    axios.post('http://127.0.0.1:8000/routes-info', {
-      id: this.$route.params.id,
-      is_live: false
-    }).then(res => {
-      this.exchanges = res.data.data.exchanges
-    }).catch(error => {
-      this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-    })
+    this.initiate()
   },
   methods: {
     ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
+    initiate () {
+      axios.post('http://127.0.0.1:8000/routes-info', {
+        id: this.$route.params.id,
+        is_live: false
+      }).then(res => {
+        this.routes.exchanges = res.data.data.exchanges
+        this.form.exchange = this.routes.exchanges[0]
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+    }
   }
 }
 </script>

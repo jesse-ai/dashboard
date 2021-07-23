@@ -11,8 +11,8 @@ function newTab () {
     name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
-      exchange: 'Binance',
-      symbol: 'BTC-USDT',
+      exchange: '',
+      symbol: '',
     },
     results: {
       showResults: false,

@@ -68,14 +68,14 @@
                  v-model="form.start_date"
                  type="date"
                  name="start_date"
-                 class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-l-md border-r-0"
+                 class="dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-l-md border-r-0"
           >
 
           <input id="finish_date"
                  v-model="form.finish_date"
                  type="date"
                  name="finish_date"
-                 class="dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-r-md">
+                 class="dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 dark:border-gray-600 rounded-r-md">
         </div>
       </div>
 
