@@ -245,7 +245,7 @@ export default {
 
         this.form.routes.push({
           exchange: this.exchanges[0],
-          symbol: '',
+          symbol: 'BTC-USDT',
           timeframe: this.routes.timeframes[0],
           strategy: this.routes.strategies[0]
         })
