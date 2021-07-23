@@ -171,6 +171,7 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
+import axios from 'axios'
 
 export default {
   name: 'Routes',
@@ -199,7 +200,6 @@ export default {
   },
   data () {
     return {
-      // TODO: must be only existing candles?
       exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
       symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
@@ -214,16 +214,25 @@ export default {
   created () {
     this.fillEmptyRoutes()
   },
-
   methods: {
-    fillEmptyRoutes () {
+    async fillEmptyRoutes () {
       if (this.form.routes.length) return
 
-      this.form.routes.push({
-        exchange: this.exchanges[0],
-        symbol: this.symbols[0],
-        timeframe: this.timeframes[0],
-        strategy: this.strategies[0]
+      axios.post('http://127.0.0.1:8000/routes-info', {
+        id: this.$route.params.id,
+        is_live: this.$route.name === 'Live'
+      }).then(res => {
+        this.exchanges = res.data.data.exchanges
+        this.strategies = res.data.data.strategies
+
+        this.form.routes.push({
+          exchange: this.exchanges[0],
+          symbol: this.symbols[0],
+          timeframe: this.timeframes[0],
+          strategy: this.strategies[0]
+        })
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
     addRoute () {

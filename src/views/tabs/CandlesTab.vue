@@ -85,6 +85,7 @@
 import { mapActions } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
+import axios from 'axios'
 
 export default {
   name: 'CandlesTab',
@@ -103,6 +104,16 @@ export default {
     return {
       exchanges: ['Binance', 'Bitfinex', 'Binance Futures']
     }
+  },
+  created () {
+    axios.post('http://127.0.0.1:8000/routes-info', {
+      id: this.$route.params.id,
+      is_live: false
+    }).then(res => {
+      this.exchanges = res.data.data.exchanges
+    }).catch(error => {
+      this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+    })
   },
   methods: {
     ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
