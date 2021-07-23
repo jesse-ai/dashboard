@@ -84,7 +84,7 @@
            class="w-full mx-auto px-6">
         <div>
           <Divider>Routes</Divider>
-          <MultipleValuesTable :data="results.routes_info"/>
+          <MultipleValuesTable :data="results.routes_info" header />
 
           <Divider class="mt-16">Info</Divider>
           <KeyValueTable :data="results.info"/>
@@ -137,10 +137,11 @@ import { useBacktestStore } from '@/stores/backtest'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import CheckBox from '@/components/CheckBox'
+import MultipleValuesTable from '@/components/MultipleValuesTable'
 
 export default {
   name: 'BacktestTab',
-  components: { LayoutWithSidebar, Logs, CheckBox },
+  components: { LayoutWithSidebar, Logs, CheckBox, MultipleValuesTable },
   props: {
     form: {
       type: Object,

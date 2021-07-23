@@ -115,7 +115,7 @@ export const useBacktestStore = defineStore({
       ]
     },
     routesInfoEvent (id, data) {
-      const arr = []
+      const arr = [['Exchange', 'Symbol', 'Timeframe', 'Strategy']]
       data.forEach(item => {
         arr.push([
           item.exchange,
