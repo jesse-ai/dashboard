@@ -139,6 +139,12 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.exception.traceback = data.traceback
     },
     metricsEvent (id, data) {
+      // no trades were executed
+      if (data === null) {
+        this.tabs[id].results.metrics = []
+        return
+      }
+
       this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
         [
@@ -183,13 +189,18 @@ export const useBacktestStore = defineStore({
       ]
     },
     equityCurveEvent (id, data) {
-      this.tabs[id].results.charts.equity_curve = []
-      data.forEach(item => {
-        this.tabs[id].results.charts.equity_curve.push({
-          value: item.balance,
-          time: item.timestamp
+      // no trades were executed
+      if (data === null) {
+        this.tabs[id].results.charts.equity_curve = []
+      } else {
+        this.tabs[id].results.charts.equity_curve = []
+        data.forEach(item => {
+          this.tabs[id].results.charts.equity_curve.push({
+            value: item.balance,
+            time: item.timestamp
+          })
         })
-      })
+      }
 
       // backtest is finished, time to show charts:
       this.tabs[id].results.executing = false

@@ -89,11 +89,17 @@
           <Divider class="mt-16">Info</Divider>
           <KeyValueTable :data="results.info"/>
 
-          <Divider class="mt-16">Equity Curve</Divider>
-          <EquityCurve :equity-curve="results.charts.equity_curve"/>
+          <Divider v-if="hasExecutedTrades" class="mt-16">Equity Curve</Divider>
+          <EquityCurve v-if="hasExecutedTrades" :equity-curve="results.charts.equity_curve"/>
 
-          <Divider class="mt-16">Performance</Divider>
-          <KeyValueTable :data="results.metrics"/>
+          <Divider v-if="hasExecutedTrades" class="mt-16">Performance</Divider>
+          <KeyValueTable v-if="hasExecutedTrades" :data="results.metrics"/>
+
+          <div v-if="!hasExecutedTrades"
+               class="text-yellow-600 border-yellow-200 bg-gray-700 dark:text-yellow-400 mt-16 text-center text-2xl rounded border-2 border-dashed dark:border-gray-800 py-16 select-none"
+          >
+            No trades were executed via this strategy!
+          </div>
         </div>
       </div>
     </template>
@@ -143,6 +149,11 @@ export default {
     results: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    hasExecutedTrades () {
+      return this.results.metrics.length > 0
     }
   },
   methods: {
