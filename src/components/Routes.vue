@@ -28,21 +28,26 @@
     </div>
 
     <!-- Trading Routes -->
-    <div v-for="r in form.routes"
-         :key="r.exchange + r.symbol"
+    <div v-for="(r, i) in form.routes"
+         :key="r.exchange + i"
          class="flex border dark:border-gray-600 rounded-lg mb-4">
       <select v-model="r.exchange"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select v-model="r.symbol"
-              class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in symbols" :key="item">{{ item }}</option>
-      </select>
+
+      <input v-model="r.symbol"
+             type="text"
+             class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+             placeholder="ex: BTC-USDT"
+             @input="r.symbol = $event.target.value.toUpperCase()"
+      >
+
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
         <option v-for="item in timeframes" :key="item">{{ item }}</option>
       </select>
+
       <select v-model="r.strategy"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
         <option v-for="item in strategies" :key="item">{{ item }}</option>
@@ -95,17 +100,21 @@
     <!-- Extra Routes-->
     <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
 
-    <div v-for="r in form.extra_routes"
-         :key="r.exchange + r.symbol + r.timeframe"
+    <div v-for="(r, i) in form.extra_routes"
+         :key="r.exchange + i + r.timeframe"
          class="flex border dark:border-gray-600 rounded-lg mb-4">
       <select v-model="r.exchange"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select v-model="r.symbol"
-              class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in symbols" :key="item">{{ item }}</option>
-      </select>
+
+      <input v-model="r.symbol"
+             type="text"
+             class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+             placeholder="ex: BTC-USDT"
+             @input="r.symbol = $event.target.value.toUpperCase()"
+      >
+
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
         <option v-for="item in timeframes" :key="item">{{ item }}</option>
@@ -201,7 +210,6 @@ export default {
   data () {
     return {
       exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
-      symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
       strategies: ['TestLiveMode01'],
     }
@@ -227,7 +235,7 @@ export default {
 
         this.form.routes.push({
           exchange: this.exchanges[0],
-          symbol: this.symbols[0],
+          symbol: '',
           timeframe: this.timeframes[0],
           strategy: this.strategies[0]
         })
@@ -239,7 +247,7 @@ export default {
       // duplicate the last one
       this.form.routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
-        symbol: this.symbols[0],
+        symbol: '',
         timeframe: this.timeframes[0],
         strategy: this.strategies[0]
       })
