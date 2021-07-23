@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="object[name]">
     <Dialog as="div" static class="fixed z-10 inset-0 overflow-y-auto" :open="object[name]"
@@ -78,7 +77,7 @@ export default {
     ExclamationIcon,
     CheckIcon,
     BanIcon,
-    XIcon, 
+    XIcon,
     InformationCircleIcon
   },
   props: {

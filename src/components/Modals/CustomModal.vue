@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="object[name]">
     <Dialog as="div" static class="fixed z-10 inset-0 overflow-y-auto" :open="object[name]"
@@ -18,7 +17,7 @@
               <!-- head section -->
               <slot name="head" />
             </div>
-            
+
             <!-- main section -->
             <slot name="main" />
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

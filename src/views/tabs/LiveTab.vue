@@ -201,7 +201,6 @@ import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { ClipboardListIcon } from '@heroicons/vue/outline'
-import CheckBox from '@/components/CheckBox'
 import ToggleButton from '@/components/ToggleButton'
 
 export default {
@@ -210,8 +209,7 @@ export default {
     ToggleButton,
     LayoutWithSidebar,
     Logs,
-    ClipboardListIcon,
-    CheckBox
+    ClipboardListIcon
   },
   props: {
     form: {
