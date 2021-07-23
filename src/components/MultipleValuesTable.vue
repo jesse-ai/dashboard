@@ -4,7 +4,7 @@
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="border dark:border-gray-600 overflow-hidden sm:rounded">
           <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-            <thead v-if="header" class="bg-gray-50 dark:bg-backdrop-dark select-none">
+            <thead v-if="header" class="bg-gray-100 dark:bg-gray-800 select-none">
               <tr>
                 <th v-for="item in headerItems" :key="item" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400">
                   {{ item }}
@@ -14,8 +14,8 @@
 
             <tbody v-if="dataItems.length">
               <tr v-for="(d, index) in dataItems" :key="index"
-                  :class="index % 2 === 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-50 dark:bg-backdrop-dark'">
-                <td v-for="(item, subIndex) in d" :key="item" class=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200"
+                  :class="index % 2 === 0 ? 'bg-white dark:bg-backdrop-dark' : 'bg-gray-50 dark:bg-gray-700'">
+                <td v-for="(item, subIndex) in d" :key="item" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200"
                     v-text="d[subIndex]" />
               </tr>
             </tbody>
