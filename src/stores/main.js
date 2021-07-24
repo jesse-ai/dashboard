@@ -5,6 +5,25 @@ export const useMainStore = defineStore({
   state: () => ({
     isConnected: false,
     theme: localStorage.theme,
+    modals: {
+      settings: false,
+    },
+    settings: {
+      backtest: {
+        logging: {
+          order_submission: true,
+          order_cancellation: true,
+          order_execution: true,
+          position_opened: true,
+          position_increased: true,
+          position_reduced: true,
+          position_closed: true,
+          shorter_period_candles: false,
+          trading_candles: true,
+          balance_update: true,
+        },
+      }
+    },
     routes: {
       exchanges: [],
       liveExchanges: [],
