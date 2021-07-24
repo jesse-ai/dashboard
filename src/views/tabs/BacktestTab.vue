@@ -96,7 +96,7 @@
           <KeyValueTable v-if="hasExecutedTrades" :data="results.metrics"/>
 
           <div v-if="!hasExecutedTrades"
-               class="text-yellow-600 border-yellow-200 bg-gray-700 dark:text-yellow-400 mt-16 text-center text-2xl rounded border-2 border-dashed dark:border-gray-800 py-16 select-none"
+               class="text-yellow-500 border-yellow-400 bg-yellow-50 dark:bg-gray-700 dark:text-yellow-400 mt-16 text-center text-2xl rounded border-2 border-dashed dark:border-gray-800 py-16 select-none"
           >
             No trades were executed via this strategy!
           </div>
