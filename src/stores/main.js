@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
 
 export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
     isConnected: false,
+    isInitiated: false,
     theme: localStorage.theme,
     modals: {
       settings: false,
@@ -44,4 +46,24 @@ export const useMainStore = defineStore({
       strategies: [],
     }
   }),
+
+  actions: {
+    initiate () {
+      axios.post('http://127.0.0.1:8000/routes-info').then(res => {
+        const data = res.data.data
+        this.routes.exchanges = data.exchanges
+        this.routes.liveExchanges = data.live_exchanges
+        this.routes.strategies = data.strategies
+        this.isInitiated = true
+        this.routes.exchanges.forEach(item => {
+          console.log(item)
+          this.settings.backtest.exchanges[item] = {
+            test: 1
+          }
+        })
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+    }
+  }
 })

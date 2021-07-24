@@ -180,7 +180,6 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
-import axios from 'axios'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 
@@ -230,27 +229,11 @@ export default {
         return
       }
 
-      const isLive = this.$route.name === 'Live'
-
-      axios.post('http://127.0.0.1:8000/routes-info', {
-        id: this.$route.params.id,
-        is_live: isLive
-      }).then(res => {
-        if (isLive) {
-          this.routes.liveExchanges = res.data.data.exchanges
-        } else {
-          this.routes.exchanges = res.data.data.exchanges
-        }
-        this.routes.strategies = res.data.data.strategies
-
-        this.form.routes.push({
-          exchange: this.exchanges[0],
-          symbol: 'BTC-USDT',
-          timeframe: this.routes.timeframes[0],
-          strategy: this.routes.strategies[0]
-        })
-      }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      this.form.routes.push({
+        exchange: this.exchanges[0],
+        symbol: 'BTC-USDT',
+        timeframe: this.routes.timeframes[0],
+        strategy: this.routes.strategies[0]
       })
     },
     addRoute () {

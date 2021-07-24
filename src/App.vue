@@ -7,11 +7,22 @@
 
 <script>
 import Nav from '@/components/Nav'
+import { mapActions, mapState } from 'pinia'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'App',
   components: {
     Nav
+  },
+  computed: {
+    ...mapState(useMainStore, ['routes', 'settings'])
+  },
+  created () {
+    this.initiate()
+  },
+  methods: {
+    ...mapActions(useMainStore, ['initiate'])
   }
 }
 </script>

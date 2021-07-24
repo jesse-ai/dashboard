@@ -86,7 +86,6 @@
 import { mapActions, mapState } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import axios from 'axios'
 import { useMainStore } from '@/stores/main'
 
 export default {
@@ -103,10 +102,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['routes'])
+    ...mapState(useMainStore, ['routes', 'isInitiated'])
   },
   watch: {
     form () {
+      this.initiate()
+    },
+    isInitiated (newValue, oldValue) {
       this.initiate()
     }
   },
@@ -116,15 +118,9 @@ export default {
   methods: {
     ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
     initiate () {
-      axios.post('http://127.0.0.1:8000/routes-info', {
-        id: this.$route.params.id,
-        is_live: false
-      }).then(res => {
-        this.routes.exchanges = res.data.data.exchanges
+      if (this.isInitiated === true && this.form.exchange === '') {
         this.form.exchange = this.routes.exchanges[0]
-      }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-      })
+      }
     }
   }
 }

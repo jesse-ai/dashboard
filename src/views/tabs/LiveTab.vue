@@ -33,7 +33,7 @@
 
     <!-- exception  -->
     <div v-if="results.exception.error" class="mx-auto container mt-8">
-      <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      <Exception :title="results.exception.error" :content="results.exception.traceback"/>
     </div>
   </div>
 
@@ -42,7 +42,7 @@
       <!-- form -->
       <div v-if="!results.booting && !results.monitoring && !results.showResults"
            class="px-4 sm:px-6 md:px-8">
-        <Routes :form="form" :results="results"/>
+        <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>
 
@@ -65,20 +65,20 @@
       <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
         <!-- exception  -->
         <div v-if="results.exception.error" class="mb-8">
-          <Exception :title="results.exception.error" :content="results.exception.traceback" />
+          <Exception :title="results.exception.error" :content="results.exception.traceback"/>
         </div>
 
         <!-- Candlesticks chart-->
         <div>
-          <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form" />
+          <CandlesChart v-if="results.candles.length" :candles="results.candles" :results="results" :form="form"/>
         </div>
 
         <!--tables-->
         <Divider class="mt-12">Positions</Divider>
-        <MultipleValuesTable :data="results.positions" header />
+        <MultipleValuesTable :data="results.positions" header/>
 
         <Divider class="mt-12">Orders</Divider>
-        <MultipleValuesTable :data="results.orders" header />
+        <MultipleValuesTable :data="results.orders" header/>
       </div>
 
       <!-- Results -->
@@ -102,7 +102,7 @@
       <!-- exception  -->
       <div v-if="results.exception.error && results.booting"
            class="h-full overflow-auto mx-auto container">
-        <Exception :title="results.exception.error" :content="results.exception.traceback" />
+        <Exception :title="results.exception.error" :content="results.exception.traceback"/>
       </div>
     </template>
 
@@ -110,7 +110,8 @@
       <!-- Action Buttons -->
       <div v-if="!results.booting">
         <div v-if="results.monitoring">
-          <button v-if="results.finished" class="btn-primary text-center block mb-4 w-full" @click="newLive($route.params.id)">
+          <button v-if="results.finished" class="btn-primary text-center block mb-4 w-full"
+                  @click="newLive($route.params.id)">
             New session
           </button>
 
@@ -133,20 +134,27 @@
       <hr class="my-8 border-2 dark:border-gray-600 rounded-full">
 
       <!-- general info table-->
-      <dl v-if="results.monitoring" class="grid grid-cols-1 gap-6 border dark:border-gray-600 rounded py-4 px-6 select-none">
+      <dl v-if="results.monitoring"
+          class="grid grid-cols-1 gap-6 border dark:border-gray-600 rounded py-4 px-6 select-none">
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Current Time:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ timestampToTime(results.generalInfo.current_time) }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{ timestampToTime(results.generalInfo.current_time) }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Started:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ timestampToTime(results.generalInfo.started_at) }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{ timestampToTime(results.generalInfo.started_at) }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Started/Current Balance:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ `${results.generalInfo.started_balance}/${results.generalInfo.current_balance}` }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{ `${results.generalInfo.started_balance}/${results.generalInfo.current_balance}` }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
@@ -161,12 +169,18 @@
 
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">PNL:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ `${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)` }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{ `${results.generalInfo.pnl} USDT (${results.generalInfo.pnl_perc}%)` }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Trades:</div>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_trades }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{
+              results.generalInfo.count_trades
+            }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
@@ -175,9 +189,13 @@
             @click="results.infoLogsModal = true">
             <span>Info Logs:</span>
 
-            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
           </button>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_info_logs }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{
+              results.generalInfo.count_info_logs
+            }}
+          </div>
         </div>
 
         <div class="flex justify-between items-center">
@@ -185,9 +203,13 @@
             class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
             @click="results.errorLogsModal = true">
             <span>Error Logs:</span>
-            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer" />
+            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
           </button>
-          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ results.generalInfo.count_error_logs }}</div>
+          <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            {{
+              results.generalInfo.count_error_logs
+            }}
+          </div>
         </div>
       </dl>
     </template>
@@ -195,13 +217,14 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { ClipboardListIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'LiveTab',
@@ -233,6 +256,9 @@ export default {
         ['.', 'TrendFollowing', 'ETH-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
       ]
     }
+  },
+  computed: {
+    ...mapState(useMainStore, ['isInitiated'])
   },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),

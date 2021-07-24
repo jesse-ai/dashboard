@@ -37,7 +37,7 @@
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults"
            class="px-6">
-        <Routes :form="form" :results="results"/>
+        <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>
 
@@ -132,12 +132,13 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import CheckBox from '@/components/CheckBox'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'BacktestTab',
@@ -155,7 +156,8 @@ export default {
   computed: {
     hasExecutedTrades () {
       return this.results.metrics.length > 0
-    }
+    },
+    ...mapState(useMainStore, ['isInitiated'])
   },
   methods: {
     ...mapActions(useBacktestStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
