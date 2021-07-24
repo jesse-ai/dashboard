@@ -31,13 +31,13 @@
           <div class="flex items-center">
             <ThemeSwitch/>
 
-            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none"
+            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
                     @click="modals.settings = true">
               <span class="sr-only">Settings</span>
               <CogIcon class="h-6 w-6" aria-hidden="true" />
             </button>
 
-            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none">
+            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
               <span class="sr-only">View notifications</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
             </button>
