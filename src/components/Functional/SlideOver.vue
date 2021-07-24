@@ -13,9 +13,9 @@
                            leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
             <div class="w-screen max-w-4xl">
               <div class="h-full flex flex-col py-6 bg-white dark:bg-backdrop-dark shadow-xl overflow-y-scroll">
-                <div class="px-4 sm:px-6">
+                <div class="px-4 sm:px-6 border-b-2 dark:border-gray-800 pb-6">
                   <div class="flex items-start justify-between">
-                    <DialogTitle class="text-lg font-medium text-gray-900 dark:text-gray-100" v-text="title"/>
+                    <DialogTitle class="text-lg font-medium text-gray-900 dark:text-gray-100 select-none" v-text="title"/>
 
                     <div class="ml-3 h-7 flex items-center">
                       <button class="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
