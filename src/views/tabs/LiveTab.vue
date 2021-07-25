@@ -80,30 +80,6 @@
         <Divider class="mt-12">Orders</Divider>
         <MultipleValuesTable :data="results.orders" header/>
       </div>
-
-      <!-- Results -->
-      <div v-if="results.showResults"
-           class="w-full mx-auto px-4 sm:px-6 md:px-8 h-full max-h-screen overflow-y-auto">
-        <div>
-          <Divider>Routes</Divider>
-          <MultipleValuesTable :data="results.routes_info"/>
-
-          <Divider class="mt-16">Info</Divider>
-          <KeyValueTable :data="results.info"/>
-
-          <Divider class="mt-16">Equity Curve</Divider>
-          <EquityCurve :equity-curve="results.charts.equity_curve"/>
-
-          <Divider class="mt-16">Performance</Divider>
-          <KeyValueTable :data="results.metrics"/>
-        </div>
-      </div>
-
-      <!-- exception  -->
-      <div v-if="results.exception.error && results.booting"
-           class="h-full overflow-auto mx-auto container">
-        <Exception :title="results.exception.error" :content="results.exception.traceback"/>
-      </div>
     </template>
 
     <template #right>
