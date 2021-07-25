@@ -118,10 +118,10 @@ export const useBacktestStore = defineStore({
       const arr = [['Exchange', 'Symbol', 'Timeframe', 'Strategy']]
       data.forEach(item => {
         arr.push([
-          item.exchange,
-          item.symbol,
-          item.timeframe,
-          item.strategy_name
+          { value: item.exchange, style: '' },
+          { value: item.symbol, style: '' },
+          { value: item.timeframe, style: '' },
+          { value: item.strategy_name, style: '' },
         ])
       })
       this.tabs[id].results.routes_info = arr

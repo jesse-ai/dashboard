@@ -13,10 +13,13 @@
             </thead>
 
             <tbody v-if="dataItems.length">
-              <tr v-for="(d, index) in dataItems" :key="index"
+              <tr v-for="(d, index) in dataItems" :key="index" class="text-gray-900 dark:text-gray-200"
                   :class="index % 2 === 0 ? 'bg-white dark:bg-backdrop-dark' : 'bg-gray-50 dark:bg-gray-700'">
-                <td v-for="(item, subIndex) in d" :key="item" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200"
-                    v-text="d[subIndex]" />
+                <td
+                  v-for="(item, subIndex) in d" :key="item"
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                  :class="d[subIndex].style"
+                  v-text="d[subIndex].value == 0 ? '' : d[subIndex].value" />
               </tr>
             </tbody>
           </table>

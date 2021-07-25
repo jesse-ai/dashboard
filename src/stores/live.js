@@ -205,15 +205,40 @@ export const useLiveStore = defineStore({
       //   "pnl_perc": null
       // }
 
+      function colorBasedOnType (positionType) {
+        if (positionType === 'long') {
+          return 'text-green-600 dark:text-green-400'
+        } else if (positionType === 'short') {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
+      function colorBasedOnNumber (num) {
+        if (num > 0) {
+          return 'text-green-600 dark:text-green-400'
+        } else if (num < 0) {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
       this.tabs[id].results.positions = [
         [
-          'Type', 'Strategy', 'Symbol', 'QTY', 'Entry', 'Current Price', 'PNL'
+          'Symbol', 'Strategy', 'QTY', 'Entry', 'Price', 'PNL'
         ]
       ]
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          item.type, item.strategy_name, item.symbol, item.qty, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+          { value: item.symbol, style: colorBasedOnType(item.type) },
+          { value: item.strategy_name, style: '' },
+          { value: item.qty, style: '' },
+          { value: item.entry, style: '' },
+          { value: item.current_price, style: '' },
+          { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: colorBasedOnNumber(item.pnl) },
         ])
       }
     },
@@ -231,6 +256,16 @@ export const useLiveStore = defineStore({
       //   "canceled_at": null,
       //   "executed_at": 1626109441000
       // }
+      function colorBasedOnSide (orderSide) {
+        if (orderSide === 'buy') {
+          return 'text-green-600 dark:text-green-400'
+        } else if (orderSide === 'sell') {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
       this.tabs[id].results.orders = [
         [
           'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status'
@@ -239,7 +274,13 @@ export const useLiveStore = defineStore({
 
       for (const item of data) {
         this.tabs[id].results.orders.push([
-          helpers.timestampToTime(item.created_at), item.symbol, item.type, item.side, item.price, item.qty, item.status
+          { value: helpers.timestampToTimeOnly(item.created_at), style: '' },
+          { value: item.symbol, style: '' },
+          { value: item.type, style: '' },
+          { value: item.side, style: colorBasedOnSide(item.side) },
+          { value: item.price, style: '' },
+          { value: item.qty, style: colorBasedOnSide(item.side) },
+          { value: item.status, style: '' },
         ])
       }
     },
