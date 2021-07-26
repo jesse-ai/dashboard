@@ -12,7 +12,8 @@ export const useMainStore = defineStore({
     },
     settings: {
       backtest: {
-        exchanges: {},
+        warm_up_candles: 210,
+        exchanges: [],
         logging: {
           order_submission: true,
           order_cancellation: true,
@@ -56,10 +57,13 @@ export const useMainStore = defineStore({
         this.routes.strategies = data.strategies
         this.isInitiated = true
         this.routes.exchanges.forEach(item => {
-          console.log(item)
-          this.settings.backtest.exchanges[item] = {
-            test: 1
-          }
+          this.settings.backtest.exchanges.push({
+            name: item,
+            fee: 0.001,
+            futures_leverage_mode: 'isolated',
+            futures_leverage: 2,
+            balance: 10_000
+          })
         })
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
