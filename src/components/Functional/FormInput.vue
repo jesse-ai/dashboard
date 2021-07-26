@@ -1,10 +1,9 @@
 <template>
   <div class="col-span-6 sm:col-span-3">
-    <label :for="name"
-           class="block text-sm font-medium text-gray-700">{{ title }}</label>
+    <label 
+      class="block text-sm font-medium text-gray-700">{{ title }}</label>
 
-    <input :id="name"
-           v-model="object[name]"
+    <input v-model="object[name]"
            :name="name"
            :type="inputType"
            :autocomplete="name"
