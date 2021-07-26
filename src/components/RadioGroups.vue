@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 
 export default {
