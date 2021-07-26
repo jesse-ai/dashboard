@@ -1,6 +1,6 @@
 <template>
   <div class="col-span-6 sm:col-span-3">
-    <label 
+    <label
       class="block text-sm font-medium text-gray-700">{{ title }}</label>
 
     <input v-model="object[name]"
