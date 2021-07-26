@@ -17,13 +17,9 @@
 
     <!-- backtest -->
     <div v-if="currentTab === 'Backtest'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      <Divider>Exchanges</Divider>
-
-      <br>
-
       <Divider>Logs</Divider>
       <p>
-        Below configurations are used to filter out the extra logging info that are displayed when the "--debug" flag is enabled.
+        Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <CheckBox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
@@ -60,17 +56,35 @@
 
       <Divider>Data</Divider>
       <div>
-        <div>
-          <label for="warm_up_candles" class="block text-sm font-medium text-gray-700">Warmup candles</label>
-          <div class="mt-1">
-            <input id="warm_up_candles" min="0" type="number" name="warm_up_candles"
-                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                   placeholder="ex: 210" aria-describedby="warm_up_candles-description" >
-          </div>
-          <p id="email-description" class="mt-2 text-sm text-gray-500">
-            Number of warmup candles that is loaded before starting each session
-          </p>
+        <FormInput placeholder="ex: 210"
+                   title="Warmup Candles"
+                   :object="settings.backtest"
+                   description="Number of warmup candles that is loaded before starting each session"
+                   name="warm_up_candles" input-type="number" />
+      </div>
+
+      <br>
+
+      <div v-for="(e, index) in settings.backtest.exchanges" :key="index">
+        <Divider>{{ e.name }}</Divider>
+
+        <div class="grid grid-cols-6 gap-6">
+          <FormInput title="Capital" :object="e" name="balance" input-type="number"
+                     :step="1000" />
+
+          <FormInput :title="`Fees (${e.fee * 100}%)`" :object="e" name="fee" input-type="number"
+                     :step="0.0001" />
         </div>
+
+        <br>
+
+        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+
+        <br>
+
+        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
+
+        <br>
       </div>
     </div>
 
@@ -90,14 +104,20 @@
 import { CalculatorIcon, ChipIcon, CurrencyDollarIcon } from '@heroicons/vue/outline'
 import CheckBox from '@/components/CheckBox'
 import Divider from '@/components/Divider'
+import RadioGroups from '@/components/RadioGroups'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import FormInput from '@/components/Functional/FormInput'
+import NumberInput from '@/components/Functional/NumberInput'
 
 
 export default {
   components: {
     CheckBox,
-    Divider
+    Divider,
+    RadioGroups,
+    FormInput,
+    NumberInput
   },
   data () {
     return {
@@ -107,6 +127,10 @@ export default {
         { name: 'Optimization', icon: ChipIcon },
       ],
       currentTab: 'Backtest',
+      plans: [
+        { name: 'Cross', priceMonthly: 29, priceYearly: 290, limit: 'Up to 5 active job postings' },
+        { name: 'Isolated', priceMonthly: 99, priceYearly: 990, limit: 'Up to 25 active job postings' },
+      ]
     }
   },
   computed: {
