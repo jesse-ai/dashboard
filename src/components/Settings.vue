@@ -72,7 +72,7 @@
           <FormInput title="Capital" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
-          <FormInput :title="`Fees (${e.fee * 100}%)`" :object="e" name="fee" input-type="number"
+          <FormInput :title="`Fees (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
                      :step="0.0001" />
         </div>
 
@@ -109,6 +109,7 @@ import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import FormInput from '@/components/Functional/FormInput'
 import NumberInput from '@/components/Functional/NumberInput'
+import _ from 'lodash'
 
 
 export default {
@@ -135,6 +136,9 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ['settings'])
+  },
+  methods: {
+    round: _.round
   }
 }
 </script>
