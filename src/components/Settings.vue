@@ -69,10 +69,10 @@
         <Divider>{{ e.name }}</Divider>
 
         <div class="grid grid-cols-6 gap-6">
-          <FormInput title="Capital" :object="e" name="balance" input-type="number"
+          <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
-          <FormInput :title="`Fees (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
+          <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
                      :step="0.0001" />
         </div>
 
