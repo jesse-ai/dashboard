@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <SwitchGroup as="div" class="w-full flex items-center justify-between mb-3">
     <span class="flex-grow flex flex-col">
