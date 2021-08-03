@@ -17,7 +17,7 @@
                 <span class="rounded-full bg-white w-1.5 h-1.5" />
               </span>
               <div class="ml-3 flex flex-col">
-                <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'block text-sm font-medium']">
+                <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'capitalize block text-sm font-medium']">
                   {{ setting }}
                 </RadioGroupLabel>
               </div>
