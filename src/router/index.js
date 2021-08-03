@@ -19,9 +19,10 @@ const isSocketConnected = (to, from, next) => {
   if (store.isConnected) {
     next()
   } else {
-    watch(store,
+    const unwatch = watch(store,
       (state) => {
         if (state.isConnected) {
+          unwatch()
           next()
         }
       },
