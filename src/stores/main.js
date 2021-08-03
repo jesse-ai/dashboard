@@ -38,6 +38,28 @@ export const useMainStore = defineStore({
           total_winning_trades: false,
           total_losing_trades: false,
         }
+      },
+      live: {
+        logging: {
+          order_submission: true,
+          order_cancellation: true,
+          order_execution: true,
+          position_opened: true,
+          position_increased: true,
+          position_reduced: true,
+          position_closed: true,
+          shorter_period_candles: false,
+          trading_candles: true,
+          balance_update: true,
+        },
+        warm_up_candles: 210,
+        exchanges: [],
+      },
+      optimization: {
+        // sharpe, calmar, sortino, omega
+        ratio: 'sharpe',
+        warm_up_candles: 210,
+        exchanges: [],
       }
     },
     routes: {
