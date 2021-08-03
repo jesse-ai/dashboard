@@ -35,25 +35,6 @@
 
       <br>
 
-      <Divider>Metrics</Divider>
-      <p>
-        Below configurations are used to set the metrics that are displayed after a backtest.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CheckBox name="sharpe_ratio" title="Sharpe Ratio" :object="settings.backtest.metrics"/>
-        <CheckBox name="calmar_ratio" title="Calmar Ratio" :object="settings.backtest.metrics"/>
-        <CheckBox name="sortino_ratio" title="Sortino Ratio" :object="settings.backtest.metrics"/>
-        <CheckBox name="omega_ratio" title="Omega Ratio" :object="settings.backtest.metrics"/>
-        <CheckBox name="winning_streak" title="Winning Streak" :object="settings.backtest.metrics"/>
-        <CheckBox name="losing_streak" title="Losing Streak" :object="settings.backtest.metrics"/>
-        <CheckBox name="largest_losing_trade" title="Largest Losing Trade" :object="settings.backtest.metrics"/>
-        <CheckBox name="largest_winning_trade" title="Largest Winning Trade" :object="settings.backtest.metrics"/>
-        <CheckBox name="total_winning_trades" title="Total Winning Trades" :object="settings.backtest.metrics"/>
-        <CheckBox name="total_losing_trades" title="Total Losing Trades" :object="settings.backtest.metrics"/>
-      </div>
-
-      <br>
-
       <Divider>Data</Divider>
       <div>
         <FormInput placeholder="ex: 210"
@@ -90,7 +71,56 @@
 
     <!-- live -->
     <div v-if="currentTab === 'Live'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      live
+      <Divider>Logs</Divider>
+      <p>
+        Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CheckBox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
+        <CheckBox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
+        <CheckBox name="order_execution" title="Order Execution" :object="settings.live.logging"/>
+        <CheckBox name="position_opened" title="Position Opened" :object="settings.live.logging"/>
+        <CheckBox name="position_increased" title="Position Increased" :object="settings.live.logging"/>
+        <CheckBox name="position_reduced" title="Position Reduced" :object="settings.live.logging"/>
+        <CheckBox name="position_closed" title="Position Closed" :object="settings.live.logging"/>
+        <CheckBox name="shorter_period_candles" title="1m candles" :object="settings.live.logging"/>
+        <CheckBox name="trading_candles" title="Trading Candles" :object="settings.live.logging"/>
+      </div>
+
+      <br>
+
+      <Divider>Data</Divider>
+      <div>
+        <FormInput placeholder="ex: 210"
+                   title="Warmup Candles"
+                   :object="settings.live"
+                   description="Number of warmup candles that is loaded before starting each session"
+                   name="warm_up_candles" input-type="number" />
+      </div>
+
+      <br>
+
+      <div v-for="(e, index) in settings.live.exchanges" :key="index">
+        <Divider>{{ e.name }}</Divider>
+
+        <div class="grid grid-cols-6 gap-6">
+          <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
+                     :step="1000" />
+
+          <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
+                     :step="0.0001" />
+        </div>
+
+        <br>
+
+        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+
+        <br>
+
+        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
+
+        <br>
+      </div>
     </div>
 
     <!-- optimization -->
@@ -160,8 +190,8 @@ export default {
     return {
       navigation: [
         { name: 'Backtest', icon: CalculatorIcon },
-        { name: 'Live', icon: CurrencyDollarIcon },
         { name: 'Optimization', icon: ChipIcon },
+        { name: 'Live', icon: CurrencyDollarIcon },
       ],
       currentTab: 'Backtest',
       plans: [

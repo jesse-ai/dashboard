@@ -12,8 +12,6 @@ export const useMainStore = defineStore({
     },
     settings: {
       backtest: {
-        warm_up_candles: 210,
-        exchanges: [],
         logging: {
           order_submission: true,
           order_cancellation: true,
@@ -26,18 +24,8 @@ export const useMainStore = defineStore({
           trading_candles: true,
           balance_update: true,
         },
-        metrics: {
-          sharpe_ratio: true,
-          calmar_ratio: false,
-          sortino_ratio: false,
-          omega_ratio: false,
-          winning_streak: false,
-          losing_streak: false,
-          largest_losing_trade: false,
-          largest_winning_trade: false,
-          total_winning_trades: false,
-          total_losing_trades: false,
-        }
+        warm_up_candles: 210,
+        exchanges: [],
       },
       live: {
         logging: {
@@ -79,13 +67,15 @@ export const useMainStore = defineStore({
         this.routes.strategies = data.strategies
         this.isInitiated = true
         this.routes.exchanges.forEach(item => {
-          this.settings.backtest.exchanges.push({
+          const template = {
             name: item,
             fee: 0.001,
             futures_leverage_mode: 'isolated',
             futures_leverage: 2,
             balance: 10_000
-          })
+          }
+          this.settings.backtest.exchanges.push(template)
+          this.settings.live.exchanges.push(template)
         })
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)

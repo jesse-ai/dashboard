@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
 import axios from 'axios'
+import { useMainStore } from '@/stores/main'
 
 let idCounter = 0
 
@@ -74,10 +75,13 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
 
+      const mainStore = useMainStore()
+
       axios.post('http://127.0.0.1:8000/live', {
         id,
         routes: this.tabs[id].form.routes,
         extra_routes: this.tabs[id].form.extra_routes,
+        config: mainStore.settings.backtest,
         debug_mode: this.tabs[id].form.debug_mode,
         paper_mode: this.tabs[id].form.paper_mode,
       }).catch(error => {
