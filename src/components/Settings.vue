@@ -73,8 +73,10 @@
     <div v-if="currentTab === 'Live'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Logs</Divider>
       <p>
-        Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
+        You can filter the types of events that you want to be logged. Logging is often useful for debugging
+        and recommended. Hence, it doesn't hurt to enable them all:
       </p>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <CheckBox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
         <CheckBox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
@@ -100,8 +102,61 @@
 
       <br>
 
+      <Divider>Notifications</Divider>
+      <p>
+        Jesse can notify every time something interesting happens so you don't have to monitor your bots 24/7. Currently, Telegram and Discord drivers are supported. <br><br>
+        To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CheckBox name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
+      </div>
+
+      <div v-if="settings.live.notifications.enabled">
+        <p>
+          You can choose for which events you want to receive notifications:
+        </p>
+        <br>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CheckBox name="errors" title="Errors" :object="settings.live.notifications.events"/>
+          <CheckBox name="started_session" title="Session Start" :object="settings.live.notifications.events"/>
+          <CheckBox name="terminated_session" title="Session Termination" :object="settings.live.notifications.events"/>
+          <CheckBox name="submitted_orders" title="Order Submission" :object="settings.live.notifications.events"/>
+          <CheckBox name="cancelled_orders" title="Order Cancellation" :object="settings.live.notifications.events"/>
+          <CheckBox name="executed_orders" title="Order Execution" :object="settings.live.notifications.events"/>
+          <CheckBox name="opened_position" title="Opened Positions" :object="settings.live.notifications.events"/>
+          <CheckBox name="updated_position" title="Updated Position" :object="settings.live.notifications.events"/>
+        </div>
+
+        <br>
+
+        <p>
+          You will also receive recurring reports as notifications which are helpful when
+          you have open positions and want to know about latest status of them. You can
+          choose the timeframe for how frequently you want to receive them:
+        </p>
+
+        <select v-model="settings.live.notifications.position_report_timeframe"
+                class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          <option v-for="item in timeframes" :key="item">{{ item }}</option>
+        </select>
+
+        <br>
+      </div>
+
       <div v-for="(e, index) in settings.live.exchanges" :key="index">
         <Divider>{{ e.name }}</Divider>
+
+        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+
+        <br>
+
+        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
+
+        <br>
+
+        <p>Balances and fees will be fetched from the exchange in live trading. But for paper trading you can set them here:</p>
+
+        <br>
 
         <div class="grid grid-cols-6 gap-6">
           <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
@@ -110,14 +165,6 @@
           <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
                      :step="0.0001" />
         </div>
-
-        <br>
-
-        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
-
-        <br>
-
-        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
 
         <br>
       </div>
@@ -188,6 +235,7 @@ export default {
   },
   data () {
     return {
+      timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
       navigation: [
         { name: 'Backtest', icon: CalculatorIcon },
         { name: 'Optimization', icon: ChipIcon },
