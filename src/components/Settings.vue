@@ -22,15 +22,15 @@
         Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CheckBox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
-        <CheckBox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
-        <CheckBox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
-        <CheckBox name="position_opened" title="Position Opened" :object="settings.backtest.logging"/>
-        <CheckBox name="position_increased" title="Position Increased" :object="settings.backtest.logging"/>
-        <CheckBox name="position_reduced" title="Position Reduced" :object="settings.backtest.logging"/>
-        <CheckBox name="position_closed" title="Position Closed" :object="settings.backtest.logging"/>
-        <CheckBox name="shorter_period_candles" title="1m candles" :object="settings.backtest.logging"/>
-        <CheckBox name="trading_candles" title="Trading Candles" :object="settings.backtest.logging"/>
+        <Checkbox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
+        <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
+        <Checkbox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
+        <Checkbox name="position_opened" title="Position Opened" :object="settings.backtest.logging"/>
+        <Checkbox name="position_increased" title="Position Increased" :object="settings.backtest.logging"/>
+        <Checkbox name="position_reduced" title="Position Reduced" :object="settings.backtest.logging"/>
+        <Checkbox name="position_closed" title="Position Closed" :object="settings.backtest.logging"/>
+        <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.backtest.logging"/>
+        <Checkbox name="trading_candles" title="Trading Candles" :object="settings.backtest.logging"/>
       </div>
 
       <br>
@@ -78,15 +78,15 @@
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CheckBox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
-        <CheckBox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
-        <CheckBox name="order_execution" title="Order Execution" :object="settings.live.logging"/>
-        <CheckBox name="position_opened" title="Position Opened" :object="settings.live.logging"/>
-        <CheckBox name="position_increased" title="Position Increased" :object="settings.live.logging"/>
-        <CheckBox name="position_reduced" title="Position Reduced" :object="settings.live.logging"/>
-        <CheckBox name="position_closed" title="Position Closed" :object="settings.live.logging"/>
-        <CheckBox name="shorter_period_candles" title="1m candles" :object="settings.live.logging"/>
-        <CheckBox name="trading_candles" title="Trading Candles" :object="settings.live.logging"/>
+        <Checkbox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
+        <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
+        <Checkbox name="order_execution" title="Order Execution" :object="settings.live.logging"/>
+        <Checkbox name="position_opened" title="Position Opened" :object="settings.live.logging"/>
+        <Checkbox name="position_increased" title="Position Increased" :object="settings.live.logging"/>
+        <Checkbox name="position_reduced" title="Position Reduced" :object="settings.live.logging"/>
+        <Checkbox name="position_closed" title="Position Closed" :object="settings.live.logging"/>
+        <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.live.logging"/>
+        <Checkbox name="trading_candles" title="Trading Candles" :object="settings.live.logging"/>
       </div>
 
       <br>
@@ -108,7 +108,7 @@
         To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CheckBox name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
+        <Checkbox name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
       </div>
 
       <div v-if="settings.live.notifications.enabled">
@@ -117,14 +117,14 @@
         </p>
         <br>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <CheckBox name="errors" title="Errors" :object="settings.live.notifications.events"/>
-          <CheckBox name="started_session" title="Session Start" :object="settings.live.notifications.events"/>
-          <CheckBox name="terminated_session" title="Session Termination" :object="settings.live.notifications.events"/>
-          <CheckBox name="submitted_orders" title="Order Submission" :object="settings.live.notifications.events"/>
-          <CheckBox name="cancelled_orders" title="Order Cancellation" :object="settings.live.notifications.events"/>
-          <CheckBox name="executed_orders" title="Order Execution" :object="settings.live.notifications.events"/>
-          <CheckBox name="opened_position" title="Opened Positions" :object="settings.live.notifications.events"/>
-          <CheckBox name="updated_position" title="Updated Position" :object="settings.live.notifications.events"/>
+          <Checkbox name="errors" title="Errors" :object="settings.live.notifications.events"/>
+          <Checkbox name="started_session" title="Session Start" :object="settings.live.notifications.events"/>
+          <Checkbox name="terminated_session" title="Session Termination" :object="settings.live.notifications.events"/>
+          <Checkbox name="submitted_orders" title="Order Submission" :object="settings.live.notifications.events"/>
+          <Checkbox name="cancelled_orders" title="Order Cancellation" :object="settings.live.notifications.events"/>
+          <Checkbox name="executed_orders" title="Order Execution" :object="settings.live.notifications.events"/>
+          <Checkbox name="opened_position" title="Opened Positions" :object="settings.live.notifications.events"/>
+          <Checkbox name="updated_position" title="Updated Position" :object="settings.live.notifications.events"/>
         </div>
 
         <br>
@@ -215,7 +215,7 @@
 
 <script>
 import { CalculatorIcon, ChipIcon, CurrencyDollarIcon } from '@heroicons/vue/outline'
-import CheckBox from '@/components/CheckBox'
+import Checkbox from '@/components/Checkbox'
 import Divider from '@/components/Divider'
 import RadioGroups from '@/components/RadioGroups'
 import { mapState } from 'pinia'
@@ -227,7 +227,7 @@ import _ from 'lodash'
 
 export default {
   components: {
-    CheckBox,
+    Checkbox,
     Divider,
     RadioGroups,
     FormInput,

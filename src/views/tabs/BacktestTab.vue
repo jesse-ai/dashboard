@@ -43,22 +43,22 @@
 
         <div class="grid grid-cols-2 gap-8">
           <!-- debug mode -->
-          <CheckBox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
+          <Checkbox :title="'debug_mode'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'debug_mode'" />
 
           <!-- export chart -->
-          <CheckBox :title="'export_chart'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_chart'" />
+          <Checkbox :title="'export_chart'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_chart'" />
 
           <!-- export trading view -->
-          <CheckBox :title="'export_tradingview'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_tradingview'" />
+          <Checkbox :title="'export_tradingview'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_tradingview'" />
 
           <!-- export full reports -->
-          <CheckBox :title="'export_full_reports'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_full_reports'" />
+          <Checkbox :title="'export_full_reports'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_full_reports'" />
 
           <!-- export csv -->
-          <CheckBox :title="'export_csv'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_csv'" />
+          <Checkbox :title="'export_csv'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_csv'" />
 
           <!-- export json -->
-          <CheckBox :title="'export_json'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_json'" />
+          <Checkbox :title="'export_json'" :description="'Get notified when someones posts a comment on a posting.'" :object="form" :name="'export_json'" />
         </div>
 
         <Divider class="mt-16">Duration</Divider>
@@ -136,13 +136,13 @@ import { mapActions, mapState } from 'pinia'
 import { useBacktestStore } from '@/stores/backtest'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import CheckBox from '@/components/CheckBox'
+import Checkbox from '@/components/Checkbox'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'BacktestTab',
-  components: { LayoutWithSidebar, Logs, CheckBox, MultipleValuesTable },
+  components: { LayoutWithSidebar, Logs, Checkbox, MultipleValuesTable },
   props: {
     form: {
       type: Object,
