@@ -1,31 +1,18 @@
 <template>
   <div class="select-none">
-    <div class="relative mb-4">
-      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600"/>
-      </div>
-
-      <!-- Trading Routes-->
-      <div class="relative flex items-center justify-between">
-        <span class="pr-3 bg-white dark:bg-backdrop-dark text-lg font-medium text-gray-900 dark:text-gray-200">
-          Routes
-        </span>
-
-        <span>
-          <button type="button"
-                  class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
-                  @click="addRoute">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-            <span>Trading Route</span>
-          </button>
-          <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
-                  @click="addExtraRoute">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-            <span>Extra Route</span>
-          </button>
-        </span>
-      </div>
-    </div>
+    <DividerWithButtons title="Routes">
+      <button type="button"
+              class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
+              @click="addRoute">
+        <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+        <span>Trading Route</span>
+      </button>
+      <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
+              @click="addExtraRoute">
+        <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+        <span>Extra Route</span>
+      </button>
+    </DividerWithButtons>
 
     <!-- Trading Routes -->
     <div v-for="(r, i) in form.routes"
@@ -182,6 +169,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import DividerWithButtons from '@/components/DividerWithButtons'
 
 export default {
   name: 'Routes',
@@ -196,7 +184,8 @@ export default {
     DuplicateIcon,
     TrashIcon,
     ArrowCircleUpIcon,
-    ArrowCircleDownIcon
+    ArrowCircleDownIcon,
+    DividerWithButtons
   },
   props: {
     form: {
