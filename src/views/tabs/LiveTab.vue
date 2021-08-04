@@ -1,16 +1,19 @@
 <template>
+  <!-- general logs modal -->
   <SlideOver name="infoLogs"
              :object="modals"
              title="Info Logs">
     <Logs :logs="results.infoLogs"/>
   </SlideOver>
 
+  <!-- error logs modal -->
   <SlideOver name="errorLogs"
              :object="modals"
              title="Error Logs">
     <Logs :logs="results.errorLogs"/>
   </SlideOver>
 
+  <!-- session termination modal -->
   <ConfirmModal
     title="Termination Confirm"
     description="Are you sure you want to terminate this session?"
@@ -210,6 +213,9 @@ import { ClipboardListIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
+import SlideOver from '@/components/Functional/SlideOver'
+import CircleProgressbar from '@/components/Functional/CircleProgressbar'
+import Exception from '@/components/Exception'
 
 export default {
   name: 'LiveTab',
@@ -218,7 +224,10 @@ export default {
     LayoutWithSidebar,
     Logs,
     ClipboardListIcon,
-    ConfirmModal
+    ConfirmModal,
+    SlideOver,
+    CircleProgressbar,
+    Exception
   },
   props: {
     form: {

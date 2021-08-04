@@ -9,6 +9,7 @@ export const useMainStore = defineStore({
     theme: localStorage.theme,
     modals: {
       settings: false,
+      exceptionReport: false
     },
     settings: {
       backtest: {
