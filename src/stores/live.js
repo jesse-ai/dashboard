@@ -16,13 +16,16 @@ function newTab () {
       routes: [],
       extra_routes: []
     },
+    modals: {
+      infoLogs: false,
+      errorLogs: false,
+      terminationConfirm: false
+    },
     results: {
       showResults: false,
       booting: false,
       monitoring: false,
       finished: false,
-      infoLogsModal: false,
-      errorLogsModal: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0
@@ -108,6 +111,7 @@ export const useLiveStore = defineStore({
         }
       }).then(() => {
         this.tabs[id].results.finished = true
+        this.tabs[id].modals.terminationConfirm = false
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {

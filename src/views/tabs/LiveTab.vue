@@ -1,15 +1,23 @@
 <template>
-  <SlideOver name="infoLogsModal"
-             :object="results"
+  <SlideOver name="infoLogs"
+             :object="modals"
              title="Info Logs">
     <Logs :logs="results.infoLogs"/>
   </SlideOver>
 
-  <SlideOver name="errorLogsModal"
-             :object="results"
+  <SlideOver name="errorLogs"
+             :object="modals"
              title="Error Logs">
     <Logs :logs="results.errorLogs"/>
   </SlideOver>
+
+  <ConfirmModal
+    title="Termination Confirm"
+    description="Are you sure you want to terminate this session?"
+    type="info" :object="modals" name="terminationConfirm"
+  >
+    <button class="btn-danger ml-2" @click="stop($route.params.id)">Terminate</button>
+  </ConfirmModal>
 
   <!-- Execution -->
   <div v-if="results.booting"
@@ -91,7 +99,7 @@
             New session
           </button>
 
-          <button v-else class="btn-secondary text-center mr-2 block w-full mb-4" @click="stop($route.params.id)">
+          <button v-else class="btn-secondary text-center mr-2 block w-full mb-4" @click="modals.terminationConfirm = true">
             Stop
           </button>
         </div>
@@ -101,9 +109,9 @@
             Start
           </button>
 
-          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">
-            Start in a new tab
-          </button>
+          <!--          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">-->
+          <!--            Start in a new tab-->
+          <!--          </button>-->
         </div>
       </div>
 
@@ -201,6 +209,7 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { ClipboardListIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
+import ConfirmModal from '@/components/Modals/ConfirmModal'
 
 export default {
   name: 'LiveTab',
@@ -208,7 +217,8 @@ export default {
     ToggleButton,
     LayoutWithSidebar,
     Logs,
-    ClipboardListIcon
+    ClipboardListIcon,
+    ConfirmModal
   },
   props: {
     form: {
@@ -218,7 +228,11 @@ export default {
     results: {
       type: Object,
       required: true
-    }
+    },
+    modals: {
+      type: Object,
+      required: true
+    },
   },
   setup () {
     return {
@@ -234,7 +248,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['isInitiated'])
+    ...mapState(useMainStore, ['isInitiated']),
   },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),
