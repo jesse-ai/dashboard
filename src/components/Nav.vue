@@ -18,6 +18,10 @@
               >
                 {{ item.name }}
               </router-link>
+
+              <button class="btn-primary" @click="feed_back_object.open = true">
+                Feed Back
+              </button>
             </div>
           </div>
         </div>
@@ -96,12 +100,42 @@
       </div>
     </DisclosurePanel>
   </Disclosure>
+
+  <CustomModal :object="feed_back_object" :name="'open'" >
+    <template #head>
+      <div class="w-full flex justify-between">
+        <h3 class="text-lg text-gray-600 dark:text-gray-200">
+          Feed Back
+        </h3>
+        <button class="flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="feed_back_object.open = false">
+          <XIcon class="h-5 w-5 text-gray-400 rounded-full
+                       hover:text-gray-600 hover:bg-gray-200" />
+        </button>
+      </div>
+    </template>
+
+    <template #main>
+      some content
+    </template>
+
+    <template #footer>
+      <div class="w-full flex justify-end">
+        <button class="btn-secondary mr-2" @click="feed_back_object.open = false">
+          Close
+        </button>
+        <button class="btn-primary">
+          Submit
+        </button>
+      </div>
+    </template>
+  </CustomModal>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
+import CustomModal from '@/components/Modals/CustomModal'
 
 export default {
   name: 'Nav',
@@ -116,6 +150,7 @@ export default {
     BellIcon,
     MenuIcon,
     XIcon,
+    CustomModal
   },
   setup () {
     const open = ref(false)
@@ -126,6 +161,7 @@ export default {
   },
   data () {
     return {
+      feed_back_object: { open: false },
       navigation: [
         { name: 'Import Candles', to: '/candles/' },
         { name: 'Backtest', to: '/backtest/' },
