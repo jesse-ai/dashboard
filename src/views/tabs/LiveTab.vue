@@ -33,7 +33,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="results.infoLogsModal = true">
+      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="modals.infoLogs = true">
         View Logs
       </button>
 
@@ -173,7 +173,7 @@
         <div class="flex justify-between items-center">
           <button
             class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
-            @click="results.infoLogsModal = true">
+            @click="modals.infoLogs = true">
             <span>Info Logs:</span>
 
             <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
@@ -188,7 +188,7 @@
         <div class="flex justify-between items-center">
           <button
             class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
-            @click="results.errorLogsModal = true">
+            @click="modals.errorLogs = true">
             <span>Error Logs:</span>
             <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
           </button>
