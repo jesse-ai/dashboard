@@ -164,9 +164,7 @@
         <div class="flex justify-between items-center">
           <div class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Trades:</div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-            {{
-              results.generalInfo.count_trades
-            }}
+            {{ results.generalInfo.count_trades }}
           </div>
         </div>
 
@@ -179,9 +177,7 @@
             <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
           </button>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-            {{
-              results.generalInfo.count_info_logs
-            }}
+            {{ results.generalInfo.count_info_logs }}
           </div>
         </div>
 
@@ -216,6 +212,7 @@ import ConfirmModal from '@/components/Modals/ConfirmModal'
 import SlideOver from '@/components/Functional/SlideOver'
 import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Exception from '@/components/Exception'
+import MultipleValuesTable from '@/components/MultipleValuesTable'
 
 export default {
   name: 'LiveTab',
@@ -227,7 +224,8 @@ export default {
     ConfirmModal,
     SlideOver,
     CircleProgressbar,
-    Exception
+    Exception,
+    MultipleValuesTable,
   },
   props: {
     form: {

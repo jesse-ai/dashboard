@@ -34,6 +34,7 @@ function newTab () {
       metrics: [],
       generalInfo: {},
       positions: [],
+      rawOrders: [],
       orders: [],
       candles: [],
       currentCandles: {},
@@ -268,20 +269,22 @@ export const useLiveStore = defineStore({
         ])
       }
     },
-    ordersEvent (id, data) {
+    orderEvent (id, data) {
       // sample:
       // {
+      //   "id": "141fc2f6-0871-44f2-90cf-891e7e130042",
       //   "symbol": "BTC-USDT",
       //   "side": "buy",
       //   "type": "MARKET",
-      //   "qty": 0.884,
-      //   "price": 33217.1,
+      //   "qty": 0.497,
+      //   "price": 38826.4,
       //   "flag": null,
       //   "status": "EXECUTED",
-      //   "created_at": 1626109440000,
+      //   "created_at": 1628148960000,
       //   "canceled_at": null,
-      //   "executed_at": 1626109441000
+      //   "executed_at": 1628148961000
       // }
+
       function colorBasedOnSide (orderSide) {
         if (orderSide === 'buy') {
           return 'text-green-600 dark:text-green-400'
@@ -292,13 +295,26 @@ export const useLiveStore = defineStore({
         }
       }
 
+      // look for order in rawOrders, if exists, update, else, add
+      const newOrder = data
+      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
+      if (orderIndex === -1) {
+        this.tabs[id].results.rawOrders.push(newOrder)
+      } else {
+        this.tabs[id].results.rawOrders[orderIndex] = newOrder
+      }
+
       this.tabs[id].results.orders = [
         [
           'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status'
         ]
       ]
 
-      for (const item of data) {
+      const limitCount = 5
+      const len = this.tabs[id].results.rawOrders.length
+      for (let i = len - 1; i >= len - limitCount; i--) {
+        const item = this.tabs[id].results.rawOrders[i]
+
         this.tabs[id].results.orders.push([
           {
             value: helpers.timestampToTimeOnly(item.created_at),
