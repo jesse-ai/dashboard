@@ -19,8 +19,8 @@
                 {{ item.name }}
               </router-link>
 
-              <button class="btn-primary" @click="feed_back_object.open = true">
-                Feed Back
+              <button class="btn-primary" @click="feedback_object.open = true">
+                Feedback
               </button>
             </div>
           </div>
@@ -101,13 +101,13 @@
     </DisclosurePanel>
   </Disclosure>
 
-  <CustomModal :object="feed_back_object" :name="'open'" >
+  <CustomModal :object="feedback_object" :name="'open'" >
     <template #head>
       <div class="w-full flex justify-between">
         <h3 class="text-lg text-gray-600 dark:text-gray-200">
-          Feed Back
+          Feedback
         </h3>
-        <button class="flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="feed_back_object.open = false">
+        <button class="flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="feedback_object.open = false">
           <XIcon class="h-5 w-5 text-gray-400 rounded-full
                        hover:text-gray-600 hover:bg-gray-200" />
         </button>
@@ -149,7 +149,7 @@
 
     <template #footer>
       <div class="w-full flex justify-end">
-        <button class="btn-secondary mr-2" @click="feed_back_object.open = false">
+        <button class="btn-secondary mr-2" @click="feedback_object.open = false">
           Close
         </button>
         <button class="btn-primary" @click="send_feedback">
@@ -194,7 +194,7 @@ export default {
         email: [],
         description: []
       },
-      feed_back_object: { open: false },
+      feedback_object: { open: false },
       form: {
         email: '',
         description: ''
