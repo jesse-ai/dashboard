@@ -115,7 +115,36 @@
     </template>
 
     <template #main>
-      some content
+      <div class="w-full py-4">
+        <div class="col-span-6 sm:col-span-4">
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
+          <input id="email" v-model="form.email" type="text" name="email"
+                 placeholder="you@example.com"
+                 autocomplete="email"
+                 class="dark:bg-backdrop-dark mt-1 focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md" >
+
+          <div v-if="feedback_error.email">
+            <div v-for="(item, index) in feedback_error.email" :key="index">
+              <p class="text-red-500 text-sm mt-1">{{ item }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Description
+          </label>
+          <div class="mt-1">
+            <textarea id="description" v-model="form.description" name="description" rows="3"
+                      class="dark:bg-backdrop-dark shadow-sm focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 mt-1 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
+                      placeholder="Type your feed back" />
+          </div>
+          <div v-if="feedback_error.description">
+            <div v-for="(item, index) in feedback_error.description" :key="index">
+              <p class="text-red-500 text-sm mt-1">{{ item }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
 
     <template #footer>
@@ -123,7 +152,7 @@
         <button class="btn-secondary mr-2" @click="feed_back_object.open = false">
           Close
         </button>
-        <button class="btn-primary">
+        <button class="btn-primary" @click="send_feedback">
           Submit
         </button>
       </div>
@@ -161,7 +190,15 @@ export default {
   },
   data () {
     return {
+      feedback_error: {
+        email: [],
+        description: []
+      },
       feed_back_object: { open: false },
+      form: {
+        email: '',
+        description: ''
+      },
       navigation: [
         { name: 'Import Candles', to: '/candles/' },
         { name: 'Backtest', to: '/backtest/' },
@@ -171,5 +208,25 @@ export default {
       ]
     }
   },
+  methods: {
+    send_feedback () {
+      this.feedback_error = {
+        email: [],
+        description: []
+      }
+      if (!this.form.description) {
+        this.feedback_error.description.push('Description required')
+      } 
+      if (!this.form.email) {
+        this.feedback_error.email.push('Email required.')
+      } else if (!this.validEmail(this.form.email)) {
+        this.feedback_error.email.push('Valid email required.')
+      }
+    },
+    validEmail: function (email) {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    }
+  }
 }
 </script>
