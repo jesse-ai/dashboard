@@ -101,70 +101,51 @@
     </DisclosurePanel>
   </Disclosure>
 
-  <CustomModal :object="feedback_object" :name="'open'" >
-    <template #head>
-      <div class="w-full flex justify-between">
-        <h3 class="text-lg text-gray-600 dark:text-gray-200">
-          Feedback
-        </h3>
-        <button class="flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="feedback_object.open = false">
-          <XIcon class="h-5 w-5 text-gray-400 rounded-full
-                       hover:text-gray-600 hover:bg-gray-200" />
-        </button>
-      </div>
-    </template>
+  <SlideOver :object="feedback_object" :name="'open'" :title="'Feedback'" >
+    <div class="w-full py-4">
+      <div class="col-span-6 sm:col-span-4">
+        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
+        <input id="email" v-model="form.email" type="text" name="email"
+               placeholder="you@example.com"
+               autocomplete="email"
+               class="dark:bg-backdrop-dark mt-1 focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md" >
 
-    <template #main>
-      <div class="w-full py-4">
-        <div class="col-span-6 sm:col-span-4">
-          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
-          <input id="email" v-model="form.email" type="text" name="email"
-                 placeholder="you@example.com"
-                 autocomplete="email"
-                 class="dark:bg-backdrop-dark mt-1 focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md" >
-
-          <div v-if="feedback_error.email">
-            <div v-for="(item, index) in feedback_error.email" :key="index">
-              <p class="text-red-500 text-sm mt-1">{{ item }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="mt-2">
-          <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Description
-          </label>
-          <div class="mt-1">
-            <textarea id="description" v-model="form.description" name="description" rows="3"
-                      class="dark:bg-backdrop-dark shadow-sm focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 mt-1 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
-                      placeholder="Type your feed back" />
-          </div>
-          <div v-if="feedback_error.description">
-            <div v-for="(item, index) in feedback_error.description" :key="index">
-              <p class="text-red-500 text-sm mt-1">{{ item }}</p>
-            </div>
+        <div v-if="feedback_error.email">
+          <div v-for="(item, index) in feedback_error.email" :key="index">
+            <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ item }}</p>
           </div>
         </div>
       </div>
-    </template>
-
-    <template #footer>
-      <div class="w-full flex justify-end">
-        <button class="btn-secondary mr-2" @click="feedback_object.open = false">
-          Close
-        </button>
-        <button class="btn-primary" @click="send_feedback">
-          Submit
-        </button>
+      <div class="mt-2">
+        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Description
+        </label>
+        <div class="mt-1">
+          <textarea id="description" v-model="form.description" name="description" rows="3"
+                    class="dark:bg-backdrop-dark shadow-sm focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 mt-1 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
+                    placeholder="Type your feed back" />
+        </div>
+        <div v-if="feedback_error.description">
+          <div v-for="(item, index) in feedback_error.description" :key="index">
+            <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ item }}</p>
+          </div>
+        </div>
       </div>
-    </template>
-  </CustomModal>
+
+      <div class="w-full flex justify-between mt-2">
+        <button class="w-1/4 btn-secondary" @click="feedback_object.open = false">Cancel</button>
+        <button class="w-2/3 btn-primary" @click="send_feedback()">Submit</button>
+      </div>
+    </div>
+  </SlideOver>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
-import CustomModal from '@/components/Modals/CustomModal'
+import SlideOver from '@/components/Functional/SlideOver'
+import axios from 'axios'
 
 export default {
   name: 'Nav',
@@ -179,7 +160,7 @@ export default {
     BellIcon,
     MenuIcon,
     XIcon,
-    CustomModal
+    SlideOver
   },
   setup () {
     const open = ref(false)
