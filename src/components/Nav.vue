@@ -102,20 +102,7 @@
   </Disclosure>
 
   <SlideOver :object="feedback_object" :name="'open'" :title="'Feedback'" >
-    <div class="w-full py-4">
-      <div class="col-span-6 sm:col-span-4">
-        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
-        <input id="email" v-model="form.email" type="text" name="email"
-               placeholder="you@example.com"
-               autocomplete="email"
-               class="dark:bg-backdrop-dark mt-1 focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 dark:border-gray-600 rounded-md" >
-
-        <div v-if="feedback_error.email">
-          <div v-for="(item, index) in feedback_error.email" :key="index">
-            <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ item }}</p>
-          </div>
-        </div>
-      </div>
+    <div class="w-full">
       <div class="mt-2">
         <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Description
@@ -125,14 +112,12 @@
                     class="dark:bg-backdrop-dark shadow-sm focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 mt-1 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
                     placeholder="Type your feed back" />
         </div>
-        <div v-if="feedback_error.description">
-          <div v-for="(item, index) in feedback_error.description" :key="index">
-            <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ item }}</p>
-          </div>
+        <div v-if="feedback_error.length != 0">
+          <p class="text-red-500 dark:text-red-400 text-sm mt-1" v-html="feedback_error" />
         </div>
       </div>
 
-      <div class="w-full flex justify-between mt-2">
+      <div class="w-full flex justify-between mt-4">
         <button class="w-1/4 btn-secondary" @click="feedback_object.open = false">Cancel</button>
         <button class="w-2/3 btn-primary" @click="send_feedback()">Submit</button>
       </div>
@@ -171,13 +156,9 @@ export default {
   },
   data () {
     return {
-      feedback_error: {
-        email: [],
-        description: []
-      },
+      feedback_error: [],
       feedback_object: { open: false },
       form: {
-        email: '',
         description: ''
       },
       navigation: [
@@ -191,22 +172,25 @@ export default {
   },
   methods: {
     send_feedback () {
-      this.feedback_error = {
-        email: [],
-        description: []
-      }
+      this.feedback_error = []
+
       if (!this.form.description) {
-        this.feedback_error.description.push('Description required')
+        this.feedback_error.push('Description required')
       } 
-      if (!this.form.email) {
-        this.feedback_error.email.push('Email required.')
-      } else if (!this.validEmail(this.form.email)) {
-        this.feedback_error.email.push('Valid email required.')
+
+      if (this.feedback_error.length === 0) {
+        const payload = new FormData()
+        payload.append('description', this.form.description)
+        
+        axios.post('http://jesse-trade.test/api/feedback', payload, {
+          headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
+        }).then((res) => {
+          if (res.data === 'done') {
+            this.feedback_error = []
+            this.form.description = ''
+          }
+        })
       }
-    },
-    validEmail: function (email) {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
     }
   }
 }
