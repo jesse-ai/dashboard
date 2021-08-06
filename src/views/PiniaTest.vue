@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue'
 import { useBacktestStore } from '@/stores/backtest'
 import { mapState } from 'pinia'
-import axios from 'axios'
+import axios from '@/http'
 
 export default defineComponent({
   name: 'App',
@@ -48,7 +48,7 @@ export default defineComponent({
       }
 
       await axios
-        .post('http://127.0.0.1:8000/backtest', data)
+        .post('/backtest', data)
         .catch((err) => {
           console.log(err)
           this.notyf.error('Request failed')

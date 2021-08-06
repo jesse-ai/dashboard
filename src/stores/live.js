@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
-import axios from 'axios'
+import axios from '@/http'
 import { useMainStore } from '@/stores/main'
 
 let idCounter = 0
@@ -81,7 +81,7 @@ export const useLiveStore = defineStore({
 
       const mainStore = useMainStore()
 
-      axios.post('http://127.0.0.1:8000/live', {
+      axios.post('/live', {
         id,
         routes: this.tabs[id].form.routes,
         extra_routes: this.tabs[id].form.extra_routes,
@@ -95,7 +95,7 @@ export const useLiveStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.booting = false
-      axios.delete('http://127.0.0.1:8000/live', {
+      axios.delete('/live', {
         headers: {},
         data: {
           id,
@@ -104,7 +104,7 @@ export const useLiveStore = defineStore({
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     stop (id) {
-      axios.delete('http://127.0.0.1:8000/live', {
+      axios.delete('/live', {
         headers: {},
         data: {
           id,
@@ -184,7 +184,7 @@ export const useLiveStore = defineStore({
       }
     },
     fetchCandles (id) {
-      axios.post('http://127.0.0.1:8000/get-candles', {
+      axios.post('/get-candles', {
         id,
         exchange: this.tabs[id].form.routes[0].exchange,
         symbol: this.tabs[id].form.routes[0].symbol,

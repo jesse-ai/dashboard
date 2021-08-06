@@ -1,7 +1,6 @@
 import { createApp, markRaw } from 'vue'
 import App from './App.vue'
 import router from './router'
-
 // Plugins
 import websocket from './plugins/websocket'
 import notyf from '@/plugins/notyf'

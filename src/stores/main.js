@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axios from '@/http'
 
 export const useMainStore = defineStore({
   id: 'main',
@@ -75,7 +75,7 @@ export const useMainStore = defineStore({
 
   actions: {
     initiate () {
-      axios.post('http://127.0.0.1:8000/routes-info').then(res => {
+      axios.post('/routes-info').then(res => {
         const data = res.data.data
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges

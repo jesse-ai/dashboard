@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
-import axios from 'axios'
+import axios from '@/http'
 import { useMainStore } from '@/stores/main'
 
 let idCounter = 0
@@ -72,7 +72,7 @@ export const useBacktestStore = defineStore({
 
       const mainStore = useMainStore()
 
-      axios.post('http://127.0.0.1:8000/backtest', {
+      axios.post('/backtest', {
         id,
         routes: this.tabs[id].form.routes,
         extra_routes: this.tabs[id].form.extra_routes,
@@ -92,7 +92,7 @@ export const useBacktestStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.executing = false
-      axios.delete('http://127.0.0.1:8000/backtest', {
+      axios.delete('/backtest', {
         headers: {},
         data: {
           id
