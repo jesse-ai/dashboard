@@ -28,8 +28,9 @@ app.use(notyf, {
     }
   ]
 })
+
 app.use(websocket, {
-  socketPath: process.env.VUE_APP_SOCKET_PATH
+  socketPath: `${process.env.VUE_APP_SOCKET_PATH}?token=${sessionStorage.auth_key}`
 })
 pinia.use(({ store }) => {
   store.$router = markRaw(router)
