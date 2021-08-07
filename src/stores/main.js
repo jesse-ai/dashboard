@@ -6,6 +6,7 @@ export const useMainStore = defineStore({
   state: () => ({
     isConnected: false,
     isInitiated: false,
+    isAuthenticated: false,
     theme: localStorage.theme,
     modals: {
       settings: false,

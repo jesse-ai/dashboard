@@ -1,17 +1,19 @@
 <template>
-  <Login />
+  <Nav v-if="isAuthenticated"/>
 
-  <Nav />
+  <router-view v-if="isAuthenticated"/>
 
-  <router-view />
+  <Login v-else/>
 </template>
 
 
 <script>
 import Nav from '@/components/Nav'
-import { mapActions, mapState } from 'pinia'
+import { mapActions, mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Login from '@/views/Login'
+import axios from '@/http'
+
 
 export default {
   name: 'App',
@@ -19,13 +21,28 @@ export default {
     Nav, Login
   },
   computed: {
-    ...mapState(useMainStore, ['routes', 'settings'])
+    ...mapState(useMainStore, ['routes', 'settings']),
+    ...mapWritableState(useMainStore, ['isAuthenticated']),
+  },
+  watch: {
+    isAuthenticated (newValue, oldValue) {
+      if (newValue === true) {
+        this.initiate()
+      }
+    }
   },
   created () {
-    this.initiate()
+    if (sessionStorage.getItem('auth_key') !== null) {
+      this.setAuth()
+    }
   },
   methods: {
+    setAuth () {
+      axios.defaults.headers.common.Authorization = sessionStorage.auth_key
+
+      this.isAuthenticated = true
+    },
     ...mapActions(useMainStore, ['initiate'])
-  }
+  },
 }
 </script>

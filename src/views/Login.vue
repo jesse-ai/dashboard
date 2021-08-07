@@ -44,6 +44,8 @@
 <script>
 import { ArrowNarrowRightIcon, LockClosedIcon } from '@heroicons/vue/outline/esm'
 import axios from '@/http'
+import { useMainStore } from '@/stores/main'
+import { mapActions, mapWritableState } from 'pinia'
 
 export default {
   name: 'Login',
@@ -57,22 +59,29 @@ export default {
       password: '',
     }
   },
+  computed: {
+    ...mapWritableState(useMainStore, ['isAuthenticated'])
+  },
   created () {
     if (sessionStorage.getItem('auth_key') !== null) {
-      axios.defaults.headers.common.Authorization = sessionStorage.auth_key
-      this.open = false
+      this.setAuth()
     }
   },
   methods: {
+    ...mapActions(useMainStore, ['initiate']),
+
+    setAuth () {
+      axios.defaults.headers.common.Authorization = sessionStorage.auth_key
+      this.isAuthenticated = true
+      this.initiate()
+      this.open = false
+    },
     login () {
       axios.post('/auth', {
         password: this.password,
       }).then(res => {
         sessionStorage.auth_key = res.data.auth_token
-
-        axios.defaults.headers.common.Authorization = sessionStorage.auth_key
-
-        this.open = false
+        this.setAuth()
       }).catch(error => {
         if (error.response.status === 401) {
           this.notyf.error('Incorrect password')
