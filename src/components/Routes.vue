@@ -199,7 +199,9 @@ export default {
   },
   data () {
     return {
+      routes_error: [],
       // TODO: must be only existing candles?
+      routes: { routes: this.form.routes },
       exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
       symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
@@ -209,6 +211,12 @@ export default {
   watch: {
     form () {
       this.fillEmptyRoutes()
+    },
+    routes: {
+      handler (val) {
+        this.checkRoutes(val)
+      },
+      deep: true
     }
   },
   created () {
@@ -216,6 +224,15 @@ export default {
   },
 
   methods: {
+    checkRoutes (value) {
+      for (const item in value) {
+        for (const item1 in value) {
+          if (item === item1) {
+            this.routes_error.push('Routes cannot be equal.')
+          }
+        }
+      }
+    },
     fillEmptyRoutes () {
       if (this.form.routes.length) return
 
