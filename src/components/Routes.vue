@@ -1,51 +1,43 @@
 <template>
   <div class="select-none">
-    <div class="relative mb-4">
-      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600"/>
-      </div>
-
-      <!-- Trading Routes-->
-      <div class="relative flex items-center justify-between">
-        <span class="pr-3 bg-white dark:bg-backdrop-dark text-lg font-medium text-gray-900 dark:text-gray-200">
-          Routes
-        </span>
-
-        <span>
-          <button type="button"
-                  class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
-                  @click="addRoute">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-            <span>Trading Route</span>
-          </button>
-          <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
-                  @click="addExtraRoute">
-            <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-            <span>Extra Route</span>
-          </button>
-        </span>
-      </div>
-    </div>
+    <DividerWithButtons title="Routes">
+      <button type="button"
+              class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
+              @click="addRoute">
+        <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+        <span>Trading Route</span>
+      </button>
+      <button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
+              @click="addExtraRoute">
+        <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+        <span>Extra Route</span>
+      </button>
+    </DividerWithButtons>
 
     <!-- Trading Routes -->
-    <div v-for="r in form.routes"
-         :key="r.exchange + r.symbol"
+    <div v-for="(r, i) in form.routes"
+         :key="r.exchange + i"
          class="flex border dark:border-gray-600 rounded-lg mb-4">
       <select v-model="r.exchange"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select v-model="r.symbol"
-              class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in symbols" :key="item">{{ item }}</option>
-      </select>
+
+      <input v-model="r.symbol"
+             type="text"
+             class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+             placeholder="ex: BTC-USDT"
+             @input="r.symbol = $event.target.value.toUpperCase()"
+      >
+
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
+
       <select v-model="r.strategy"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in strategies" :key="item">{{ item }}</option>
+        <option v-for="item in routes.strategies" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -95,20 +87,24 @@
     <!-- Extra Routes-->
     <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
 
-    <div v-for="r in form.extra_routes"
-         :key="r.exchange + r.symbol + r.timeframe"
+    <div v-for="(r, i) in form.extra_routes"
+         :key="r.exchange + i + r.timeframe"
          class="flex border dark:border-gray-600 rounded-lg mb-4">
       <select v-model="r.exchange"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
-      <select v-model="r.symbol"
-              class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in symbols" :key="item">{{ item }}</option>
-      </select>
+
+      <input v-model="r.symbol"
+             type="text"
+             class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+             placeholder="ex: BTC-USDT"
+             @input="r.symbol = $event.target.value.toUpperCase()"
+      >
+
       <select v-model="r.timeframe"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-        <option v-for="item in timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -171,6 +167,9 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
+import { mapState } from 'pinia'
+import { useMainStore } from '@/stores/main'
+import DividerWithButtons from '@/components/DividerWithButtons'
 
 export default {
   name: 'Routes',
@@ -185,7 +184,8 @@ export default {
     DuplicateIcon,
     TrashIcon,
     ArrowCircleUpIcon,
-    ArrowCircleDownIcon
+    ArrowCircleDownIcon,
+    DividerWithButtons
   },
   props: {
     form: {
@@ -197,42 +197,41 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      // TODO: must be only existing candles?
-      exchanges: ['Binance Futures', 'Bitfinex', 'Binance'],
-      symbols: ['BTC-USDT', 'ETH-USDT', 'XRP-USDT'],
-      timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D', '3D', '1W'],
-      strategies: ['TestLiveMode01'],
+  computed: {
+    ...mapState(useMainStore, ['routes']),
+    exchanges () {
+      const isLive = this.$route.name === 'Live'
+      return isLive ? this.routes.liveExchanges : this.routes.exchanges
     }
   },
   watch: {
     form () {
-      this.fillEmptyRoutes()
+      this.initiate()
     }
   },
   created () {
-    this.fillEmptyRoutes()
+    this.initiate()
   },
-
   methods: {
-    fillEmptyRoutes () {
-      if (this.form.routes.length) return
+    initiate () {
+      if (this.form.routes.length) {
+        return
+      }
 
       this.form.routes.push({
         exchange: this.exchanges[0],
-        symbol: this.symbols[0],
-        timeframe: this.timeframes[0],
-        strategy: this.strategies[0]
+        symbol: 'BTC-USDT',
+        timeframe: this.routes.timeframes[0],
+        strategy: this.routes.strategies[0]
       })
     },
     addRoute () {
       // duplicate the last one
       this.form.routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
-        symbol: this.symbols[0],
-        timeframe: this.timeframes[0],
-        strategy: this.strategies[0]
+        symbol: '',
+        timeframe: this.routes.timeframes[0],
+        strategy: this.routes.strategies[0]
       })
     },
     addExtraRoute () {
@@ -240,7 +239,7 @@ export default {
       this.form.extra_routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: this.form.routes[this.form.routes.length - 1].symbol,
-        timeframe: this.timeframes[0]
+        timeframe: this.routes.timeframes[0]
       })
     },
     deleteRoute (item) {

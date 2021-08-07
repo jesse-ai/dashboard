@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'CheckBox',
+  name: 'Checkbox',
   props: {
     description: {
       type: String,

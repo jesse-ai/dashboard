@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
-import axios from 'axios'
+import axios from '@/http'
 
 let idCounter = 0
 
@@ -11,8 +11,8 @@ function newTab () {
     name: 'Tab 0',
     form: {
       start_date: '2021-06-01',
-      exchange: 'Binance',
-      symbol: 'BTC-USDT',
+      exchange: '',
+      symbol: '',
     },
     results: {
       showResults: false,
@@ -62,7 +62,7 @@ export const useCandlesStore = defineStore({
       this.tabs[id].results.exception.error = ''
       this.tabs[id].results.alert.message = ''
 
-      axios.post('http://127.0.0.1:8000/import-candles', {
+      axios.post('/import-candles', {
         id,
         exchange: this.tabs[id].form.exchange,
         symbol: this.tabs[id].form.symbol,
@@ -74,7 +74,7 @@ export const useCandlesStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.executing = false
-      axios.delete('http://127.0.0.1:8000/import-candles', {
+      axios.delete('/import-candles', {
         headers: {},
         data: {
           id

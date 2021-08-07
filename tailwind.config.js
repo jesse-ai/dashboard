@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   mode: 'jit',
-  purge: ['./index.html', './src/**/*.vue'],
+  purge: ['./index.html', './src/**/*.vue', './src/**/*.js'],
   darkMode: 'class',
   theme: {
     container: {
@@ -13,12 +13,12 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
-      green: colors.green,
+      green: colors.teal,
       red: colors.red,
       white: colors.white,
       gray: colors.trueGray,
       indigo: colors.indigo,
-      yellow: colors.yellow,
+      yellow: colors.amber,
       'cool-gray': colors.coolGray,
       primary: {
         DEFAULT: '#4f46e5',

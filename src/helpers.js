@@ -7,6 +7,10 @@ const helpers = {
     return dayjs(parseInt(timestamp)).utc().format('YYYY-MM-DD HH:mm:ss')
   },
 
+  timestampToTimeOnly (timestamp) {
+    return dayjs(parseInt(timestamp)).utc().format('HH:mm:ss')
+  },
+
   timestampToDate (timestamp) {
     return dayjs(parseInt(timestamp)).utc().format('YYYY-MM-DD')
   },

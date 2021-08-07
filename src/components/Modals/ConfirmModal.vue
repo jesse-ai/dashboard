@@ -2,7 +2,7 @@
   <TransitionRoot as="template" :show="object[name]">
     <Dialog as="div" static class="fixed z-10 inset-0 overflow-y-auto" :open="object[name]"
             @close="object[name] = false">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 select-none">
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
                          leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
@@ -15,27 +15,26 @@
             <div class="w-full flex justify-between items-center">
               <div class="flex items-center">
                 <div v-if="type === 'info'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  <InformationCircleIcon check-icon :class="colors.text" class="h-9 w-9" aria-hidden="true" />
+                  <InformationCircleIcon check-icon :class="colors.text" class="h-7 w-7" aria-hidden="true" />
                 </div>
                 <div v-else-if="type === 'danger'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  <BanIcon check-icon :class="colors.text" class="h-9 w-9" aria-hidden="true" />
+                  <BanIcon check-icon :class="colors.text" class="h-7 w-7" aria-hidden="true" />
                 </div>
                 <div v-else-if="type === 'success'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <CheckIcon :class="colors.text" class="h-6 w-6" aria-hidden="true" />
+                  <CheckIcon :class="colors.text" class="h-7 w-7" aria-hidden="true" />
                 </div>
                 <div v-else class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  <ExclamationIcon :class="colors.text" check-icon class="h-9 w-9 " aria-hidden="true" />
+                  <ExclamationIcon :class="colors.text" check-icon class="h-7 w-7 " aria-hidden="true" />
                 </div>
 
                 <!-- title -->
-                <DialogTitle as="h3" :class="colors.text" class="text-lg font-semibold ml-4">
+                <DialogTitle as="h3" :class="colors.text" class="font-semibold ml-2">
                   {{ title }}
                 </DialogTitle>
               </div>
 
-              <button class="flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="object[name] = false">
-                <XIcon class="h-5 w-5 text-gray-400 rounded-full
-                       hover:text-gray-600 hover:bg-gray-200" />
+              <button class="p-2 hover:text-gray-600 hover:bg-gray-200 flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="object[name] = false">
+                <XIcon class="h-5 w-5 text-gray-400 rounded-full" />
               </button>
             </div>
             <div :class="[description ? '' : 'items-center', 'sm:flex sm:items-start']">
@@ -76,7 +75,7 @@ export default {
     ExclamationIcon,
     CheckIcon,
     BanIcon,
-    XIcon, 
+    XIcon,
     InformationCircleIcon
   },
   props: {
@@ -93,7 +92,7 @@ export default {
       required: true
     },
     description: {
-      type: Text,
+      type: String,
       required: false,
       default: ''
     },

@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
-import axios from 'axios'
+import axios from '@/http'
+import { useMainStore } from '@/stores/main'
 
 let idCounter = 0
 
@@ -69,10 +70,13 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
 
-      axios.post('http://127.0.0.1:8000/backtest', {
+      const mainStore = useMainStore()
+
+      axios.post('/backtest', {
         id,
         routes: this.tabs[id].form.routes,
         extra_routes: this.tabs[id].form.extra_routes,
+        config: mainStore.settings.backtest,
         start_date: this.tabs[id].form.start_date,
         finish_date: this.tabs[id].form.finish_date,
         debug_mode: this.tabs[id].form.debug_mode,
@@ -88,7 +92,7 @@ export const useBacktestStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.executing = false
-      axios.delete('http://127.0.0.1:8000/backtest', {
+      axios.delete('/backtest', {
         headers: {},
         data: {
           id
@@ -115,13 +119,13 @@ export const useBacktestStore = defineStore({
       ]
     },
     routesInfoEvent (id, data) {
-      const arr = []
+      const arr = [['Exchange', 'Symbol', 'Timeframe', 'Strategy']]
       data.forEach(item => {
         arr.push([
-          item.exchange,
-          item.symbol,
-          item.timeframe,
-          item.strategy_name
+          { value: item.exchange, style: '' },
+          { value: item.symbol, style: '' },
+          { value: item.timeframe, style: '' },
+          { value: item.strategy_name, style: '' },
         ])
       })
       this.tabs[id].results.routes_info = arr
@@ -139,34 +143,25 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.exception.traceback = data.traceback
     },
     metricsEvent (id, data) {
+      // no trades were executed
+      if (data === null) {
+        this.tabs[id].results.metrics = []
+        return
+      }
+
       this.tabs[id].results.metrics = [
         ['Total Closed Trades', data.total],
-        [
-          'Total Net Profit',
-          `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)}%)`
-        ],
-        [
-          'Starting => Finishing Balance',
-          `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`
-        ],
+        ['Total Net Profit', `${_.round(data.net_profit, 2)} (${_.round(data.net_profit_percentage, 2)}%)`],
+        ['Starting => Finishing Balance', `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`],
         ['Open Trades', data.total_open_trades],
         ['Total Paid Fees', _.round(data.fee, 2)],
         ['Max Drawdown', _.round(data.max_drawdown, 2)],
         ['Annual Return', `${_.round(data.annual_return, 2)}%`],
-        [
-          'Expectancy',
-          `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`
-        ],
-        [
-          'Avg Win | Avg Loss',
-          `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`
-        ],
+        ['Expectancy', `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`],
+        ['Avg Win | Avg Loss', `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`],
         ['Ratio Avg Win / Avg Loss', _.round(data.open_pl, 2)],
         ['Win-rate', `${_.round(data.win_rate * 100, 2)}%`],
-        [
-          'Longs | Shorts',
-          `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`
-        ],
+        ['Longs | Shorts', `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`],
         ['Avg Holding Time', data.average_holding_period],
         ['Winning Trades Avg Holding Time', data.average_winning_holding_period],
         ['Losing Trades Avg Holding Time', data.average_losing_holding_period],
@@ -183,13 +178,18 @@ export const useBacktestStore = defineStore({
       ]
     },
     equityCurveEvent (id, data) {
-      this.tabs[id].results.charts.equity_curve = []
-      data.forEach(item => {
-        this.tabs[id].results.charts.equity_curve.push({
-          value: item.balance,
-          time: item.timestamp
+      // no trades were executed
+      if (data === null) {
+        this.tabs[id].results.charts.equity_curve = []
+      } else {
+        this.tabs[id].results.charts.equity_curve = []
+        data.forEach(item => {
+          this.tabs[id].results.charts.equity_curve.push({
+            value: item.balance,
+            time: item.timestamp
+          })
         })
-      })
+      }
 
       // backtest is finished, time to show charts:
       this.tabs[id].results.executing = false

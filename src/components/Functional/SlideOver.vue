@@ -3,19 +3,19 @@
     <Dialog as="div" static class="fixed inset-0 overflow-hidden z-40" :open="object[name]"
             @close="object[name] = false">
       <div class="absolute inset-0 overflow-hidden">
-        <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100"
-                         leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
+        <TransitionChild as="template" enter="ease-in-out duration-400" enter-from="opacity-0" enter-to="opacity-100"
+                         leave="ease-in-out duration-400" leave-from="opacity-100" leave-to="opacity-0">
           <DialogOverlay class="absolute inset-0 bg-gray-500 bg-opacity-95 transition-opacity" />
         </TransitionChild>
 
         <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
-          <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0"
-                           leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
+          <TransitionChild as="template" enter="transform transition ease-in-out duration-400 sm:duration-400" enter-from="translate-x-full" enter-to="translate-x-0"
+                           leave="transform transition ease-in-out duration-400 sm:duration-400" leave-from="translate-x-0" leave-to="translate-x-full">
             <div class="w-screen max-w-4xl">
               <div class="h-full flex flex-col py-6 bg-white dark:bg-backdrop-dark shadow-xl overflow-y-scroll">
-                <div class="px-4 sm:px-6">
+                <div class="px-4 sm:px-6 border-b-2 dark:border-gray-800 pb-6">
                   <div class="flex items-start justify-between">
-                    <DialogTitle class="text-lg font-medium text-gray-900 dark:text-gray-100" v-text="title"/>
+                    <DialogTitle class="text-lg font-medium text-gray-900 dark:text-gray-100 select-none" v-text="title"/>
 
                     <div class="ml-3 h-7 flex items-center">
                       <button class="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
