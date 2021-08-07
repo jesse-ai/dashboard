@@ -1,7 +1,6 @@
 import { createApp, markRaw } from 'vue'
 import App from './App.vue'
 import router from './router'
-
 // Plugins
 import websocket from './plugins/websocket'
 import notyf from '@/plugins/notyf'
@@ -29,8 +28,9 @@ app.use(notyf, {
     }
   ]
 })
+
 app.use(websocket, {
-  socketPath: process.env.VUE_APP_SOCKET_PATH
+  socketPath: `${process.env.VUE_APP_SOCKET_PATH}`
 })
 pinia.use(({ store }) => {
   store.$router = markRaw(router)

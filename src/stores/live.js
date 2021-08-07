@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
-import axios from 'axios'
+import axios from '@/http'
+import { useMainStore } from '@/stores/main'
 
 let idCounter = 0
 
@@ -15,13 +16,16 @@ function newTab () {
       routes: [],
       extra_routes: []
     },
+    modals: {
+      infoLogs: false,
+      errorLogs: false,
+      terminationConfirm: false
+    },
     results: {
       showResults: false,
       booting: false,
       monitoring: false,
       finished: false,
-      infoLogsModal: false,
-      errorLogsModal: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0
@@ -30,6 +34,7 @@ function newTab () {
       metrics: [],
       generalInfo: {},
       positions: [],
+      rawOrders: [],
       orders: [],
       candles: [],
       currentCandles: {},
@@ -74,10 +79,13 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
 
-      axios.post('http://127.0.0.1:8000/live', {
+      const mainStore = useMainStore()
+
+      axios.post('/live', {
         id,
         routes: this.tabs[id].form.routes,
         extra_routes: this.tabs[id].form.extra_routes,
+        config: mainStore.settings.live,
         debug_mode: this.tabs[id].form.debug_mode,
         paper_mode: this.tabs[id].form.paper_mode,
       }).catch(error => {
@@ -87,7 +95,7 @@ export const useLiveStore = defineStore({
     },
     cancel (id) {
       this.tabs[id].results.booting = false
-      axios.delete('http://127.0.0.1:8000/live', {
+      axios.delete('/live', {
         headers: {},
         data: {
           id,
@@ -96,7 +104,7 @@ export const useLiveStore = defineStore({
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     stop (id) {
-      axios.delete('http://127.0.0.1:8000/live', {
+      axios.delete('/live', {
         headers: {},
         data: {
           id,
@@ -104,6 +112,7 @@ export const useLiveStore = defineStore({
         }
       }).then(() => {
         this.tabs[id].results.finished = true
+        this.tabs[id].modals.terminationConfirm = false
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
@@ -175,7 +184,7 @@ export const useLiveStore = defineStore({
       }
     },
     fetchCandles (id) {
-      axios.post('http://127.0.0.1:8000/get-candles', {
+      axios.post('/get-candles', {
         id,
         exchange: this.tabs[id].form.routes[0].exchange,
         symbol: this.tabs[id].form.routes[0].symbol,
@@ -205,41 +214,136 @@ export const useLiveStore = defineStore({
       //   "pnl_perc": null
       // }
 
+      function colorBasedOnType (positionType) {
+        if (positionType === 'long') {
+          return 'text-green-600 dark:text-green-400'
+        } else if (positionType === 'short') {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
+      function colorBasedOnNumber (num) {
+        if (num > 0) {
+          return 'text-green-600 dark:text-green-400'
+        } else if (num < 0) {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
       this.tabs[id].results.positions = [
         [
-          'Type', 'Strategy', 'Symbol', 'QTY', 'Entry', 'Current Price', 'PNL'
+          'Symbol', 'Strategy', 'QTY', 'Entry', 'Price', 'PNL'
         ]
       ]
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          item.type, item.strategy_name, item.symbol, item.qty, item.entry, item.current_price, `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`
+          {
+            value: item.symbol,
+            style: colorBasedOnType(item.type)
+          },
+          {
+            value: item.strategy_name,
+            style: ''
+          },
+          {
+            value: item.qty,
+            style: ''
+          },
+          {
+            value: item.entry,
+            style: ''
+          },
+          {
+            value: item.current_price,
+            style: ''
+          },
+          {
+            value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`,
+            style: colorBasedOnNumber(item.pnl)
+          },
         ])
       }
     },
-    ordersEvent (id, data) {
+    orderEvent (id, data) {
       // sample:
       // {
+      //   "id": "141fc2f6-0871-44f2-90cf-891e7e130042",
       //   "symbol": "BTC-USDT",
       //   "side": "buy",
       //   "type": "MARKET",
-      //   "qty": 0.884,
-      //   "price": 33217.1,
+      //   "qty": 0.497,
+      //   "price": 38826.4,
       //   "flag": null,
       //   "status": "EXECUTED",
-      //   "created_at": 1626109440000,
+      //   "created_at": 1628148960000,
       //   "canceled_at": null,
-      //   "executed_at": 1626109441000
+      //   "executed_at": 1628148961000
       // }
+
+      function colorBasedOnSide (orderSide) {
+        if (orderSide === 'buy') {
+          return 'text-green-600 dark:text-green-400'
+        } else if (orderSide === 'sell') {
+          return 'text-red-500 dark:text-red-400'
+        } else {
+          return 'text-gray-900 dark:text-gray-200'
+        }
+      }
+
+      // look for order in rawOrders, if exists, update, else, add
+      const newOrder = data
+      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
+      if (orderIndex === -1) {
+        this.tabs[id].results.rawOrders.push(newOrder)
+      } else {
+        this.tabs[id].results.rawOrders[orderIndex] = newOrder
+      }
+
       this.tabs[id].results.orders = [
         [
           'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status'
         ]
       ]
 
-      for (const item of data) {
+      const limitCount = 5
+      const len = this.tabs[id].results.rawOrders.length
+      for (let i = len - 1; i >= len - limitCount; i--) {
+        const item = this.tabs[id].results.rawOrders[i]
+
         this.tabs[id].results.orders.push([
-          helpers.timestampToTime(item.created_at), item.symbol, item.type, item.side, item.price, item.qty, item.status
+          {
+            value: helpers.timestampToTimeOnly(item.created_at),
+            style: ''
+          },
+          {
+            value: item.symbol,
+            style: ''
+          },
+          {
+            value: item.type,
+            style: ''
+          },
+          {
+            value: item.side,
+            style: colorBasedOnSide(item.side)
+          },
+          {
+            value: item.price,
+            style: ''
+          },
+          {
+            value: item.qty,
+            style: colorBasedOnSide(item.side)
+          },
+          {
+            value: item.status,
+            style: ''
+          },
         ])
       }
     },

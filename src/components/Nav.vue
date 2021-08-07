@@ -1,5 +1,11 @@
 <template>
-  <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900">
+  <SlideOver name="settings"
+             :object="modals"
+             title="Settings">
+    <Settings />
+  </SlideOver>
+
+  <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
@@ -18,18 +24,24 @@
               >
                 {{ item.name }}
               </router-link>
-
-              <button class="btn-primary" @click="feedback_object.open = true">
-                Feedback
-              </button>
             </div>
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
+            <button class="btn-primary mr-4" @click="feedback_object.open = true">
+              Feedback
+            </button>
+
             <ThemeSwitch/>
 
-            <button class="p-1 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+                    @click="modals.settings = true">
+              <span class="sr-only">Settings</span>
+              <CogIcon class="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
               <span class="sr-only">View notifications</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
             </button>
@@ -128,9 +140,11 @@
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
+import { BellIcon, MenuIcon, XIcon, CogIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import axios from 'axios'
+import { mapState } from 'pinia'
+import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'Nav',
@@ -145,7 +159,8 @@ export default {
     BellIcon,
     MenuIcon,
     XIcon,
-    SlideOver
+    SlideOver,
+    CogIcon
   },
   setup () {
     const open = ref(false)
@@ -162,13 +177,27 @@ export default {
         description: ''
       },
       navigation: [
-        { name: 'Import Candles', to: '/candles/' },
-        { name: 'Backtest', to: '/backtest/' },
-        { name: 'Live', to: '/live/' },
-        { name: 'Optimization', to: '/optimization/' },
-        { name: 'Dev Test', to: '/test/' },
+        {
+          name: 'Import Candles',
+          to: '/candles/'
+        },
+        {
+          name: 'Backtest',
+          to: '/backtest/'
+        },
+        {
+          name: 'Live',
+          to: '/live/'
+        },
+        // {
+        //   name: 'Optimization',
+        //   to: '/optimization/'
+        // },
       ]
     }
+  },
+  computed: {
+    ...mapState(useMainStore, ['modals'])
   },
   methods: {
     send_feedback () {
@@ -176,12 +205,12 @@ export default {
 
       if (!this.form.description) {
         this.feedback_error.push('Description required')
-      } 
+      }
 
       if (this.feedback_error.length === 0) {
         const payload = new FormData()
         payload.append('description', this.form.description)
-        
+
         axios.post('http://jesse-trade.test/api/feedback', payload, {
           headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
         }).then((res) => {
@@ -191,7 +220,7 @@ export default {
           }
         })
       }
-    }
+    },
   }
 }
 </script>

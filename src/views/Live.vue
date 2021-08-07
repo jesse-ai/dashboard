@@ -1,7 +1,7 @@
 <template>
   <Tabs v-if="false" :page-id="pageId" :tabs="tabs" />
 
-  <LiveTab v-if="tabs[pageId]" :form="tabs[pageId].form" :results="tabs[pageId].results" />
+  <LiveTab v-if="tabs[pageId]" :form="tabs[pageId].form" :results="tabs[pageId].results" :modals="tabs[pageId].modals" />
 </template>
 
 <script>
