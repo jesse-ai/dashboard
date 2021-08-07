@@ -18,8 +18,7 @@
                     <DialogTitle class="text-lg font-medium text-gray-900 dark:text-gray-100 select-none" v-text="title"/>
 
                     <div class="ml-3 h-7 flex items-center">
-                      <button class="rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
-                        <span class="sr-only">Close panel</span>
+                      <button class="p-2 hover:text-gray-600 hover:bg-gray-200 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
                         <XIcon class="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
