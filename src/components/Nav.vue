@@ -24,15 +24,15 @@
               >
                 {{ item.name }}
               </router-link>
-
-              <button class="btn-primary" @click="feedback_object.open = true">
-                Feedback
-              </button>
             </div>
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
+            <button class="btn-primary mr-4" @click="feedback_object.open = true">
+              Feedback
+            </button>
+
             <ThemeSwitch/>
 
             <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
@@ -177,13 +177,27 @@ export default {
         description: ''
       },
       navigation: [
-        { name: 'Import Candles', to: '/candles/' },
-        { name: 'Backtest', to: '/backtest/' },
-        { name: 'Live', to: '/live/' },
-        { name: 'Optimization', to: '/optimization/' },
-        { name: 'Dev Test', to: '/test/' },
+        {
+          name: 'Import Candles',
+          to: '/candles/'
+        },
+        {
+          name: 'Backtest',
+          to: '/backtest/'
+        },
+        {
+          name: 'Live',
+          to: '/live/'
+        },
+        // {
+        //   name: 'Optimization',
+        //   to: '/optimization/'
+        // },
       ]
     }
+  },
+  computed: {
+    ...mapState(useMainStore, ['modals'])
   },
   methods: {
     send_feedback () {
@@ -191,12 +205,12 @@ export default {
 
       if (!this.form.description) {
         this.feedback_error.push('Description required')
-      } 
+      }
 
       if (this.feedback_error.length === 0) {
         const payload = new FormData()
         payload.append('description', this.form.description)
-        
+
         axios.post('http://jesse-trade.test/api/feedback', payload, {
           headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
         }).then((res) => {
@@ -207,8 +221,6 @@ export default {
         })
       }
     },
-    computed: {
-      ...mapState(useMainStore, ['modals'])
-    }
   }
+}
 </script>
