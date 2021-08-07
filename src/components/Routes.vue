@@ -197,6 +197,12 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      copiedRoutes: { routes: this.form.routes },
+      routes_error: []
+    }
+  },
   computed: {
     ...mapState(useMainStore, ['routes']),
     exchanges () {
@@ -207,12 +213,30 @@ export default {
   watch: {
     form () {
       this.initiate()
+    },
+    copiedRoutes: {
+      handler (val) {
+        this.checkRoutes(val)
+      },
+      deep: true
     }
   },
   created () {
     this.initiate()
   },
   methods: {
+    checkRoutes (value) {
+      this.routes_error = []
+      const tempRoutes = value.routes
+      for (const item of tempRoutes.slice(0, -1)) {
+        for (const item1 of tempRoutes.slice(tempRoutes.indexOf(item) + 1,)) {
+          if (item.exchange === item1.exchange && item.strategy === item1.strategy && item.symbol === item1.symbol && item.symbol.length !== 0) {
+            this.routes_error.push('Routes parameters (exchange, strategy and symbol) must be unique.')
+            return
+          }
+        }
+      }
+    },
     initiate () {
       if (this.form.routes.length) {
         return
