@@ -83,6 +83,10 @@
         </Menu>
       </div>
     </div>
+    <!-- error button -->
+    <div v-if="routes_error.length != 0" >
+      <p class="bg-red-50 text-sm text-red-700 p-2 rounded-lg" v-html="routes_error"/>
+    </div>
 
     <!-- Extra Routes-->
     <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
