@@ -142,14 +142,14 @@ export const useLiveStore = defineStore({
     },
     infoLogEvent (id, data) {
       this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(
-        data.time
+        data.timestamp
       )}] ${data.message}\n`
     },
     errorLogEvent (id, data) {
       this.notyf.error(data.message)
 
       this.tabs[id].results.errorLogs += `[${helpers.timestampToTime(
-        data.time
+        data.timestamp
       )}] ${data.message}\n`
     },
     exceptionEvent (id, data) {
@@ -312,7 +312,8 @@ export const useLiveStore = defineStore({
 
       const limitCount = 5
       const len = this.tabs[id].results.rawOrders.length
-      for (let i = len - 1; i >= len - limitCount; i--) {
+      const loopLength = (len - limitCount) >= 0 ? (len - limitCount) : 0
+      for (let i = len - 1; i >= loopLength; i--) {
         const item = this.tabs[id].results.rawOrders[i]
 
         this.tabs[id].results.orders.push([

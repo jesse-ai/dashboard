@@ -135,7 +135,7 @@ export const useBacktestStore = defineStore({
     },
     infoLogEvent (id, data) {
       this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(
-        data.time
+        data.timestamp
       )}] ${data.message}\n`
     },
     exceptionEvent (id, data) {
