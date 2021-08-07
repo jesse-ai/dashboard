@@ -49,7 +49,8 @@
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <!-- action button which must insert in main component -->
               <slot />
-              <button ref="cancelButtonRef" type="button" class="btn-secondary" @click="object[name] = false">
+
+              <button ref="cancelButtonRef" type="button" class="font-medium select-none items-center text-gray-700 hover:underline focus:outline-none text-base tracking-wide mr-4" @click="object[name] = false">
                 {{ type === 'danger' ? 'Cancel' : 'Close' }}
               </button>
             </div>
