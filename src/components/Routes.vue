@@ -84,11 +84,11 @@
       </div>
     </div>
     <!-- error button -->
-    <div v-if="routes_error.length != 0" >
-      <p class="bg-red-50 text-sm text-red-700 p-2 rounded-lg" v-html="routes_error"/>
+    <div v-if="routes_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
+      <p v-html="routes_error"/>
     </div>
 
-    <div v-if="symbol_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mt-2" >
+    <div v-if="symbol_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
       <div v-for="item in symbol_error" :key="item">
         {{ item }}
       </div>
