@@ -50,11 +50,11 @@
         <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
       </div>
 
-      <div class="ml-3">
+      <div class="ml-3 overflow-hidden">
         <h3 class="text-base font-medium text-red-800 mb-6" v-text="title"/>
 
         <pre v-if="content"
-             class="mt-2 text-sm text-red-700 whitespace-pre-line px-6 py-6 rounded-md border-2 border-dashed border-red-200 "
+             class="mt-2 text-sm text-red-700 whitespace-pre-line px-6 py-6 rounded-md border-2 border-dashed border-red-200"
              v-html="content"/>
       </div>
     </div>
