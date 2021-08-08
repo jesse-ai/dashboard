@@ -88,6 +88,12 @@
       <p class="bg-red-50 text-sm text-red-700 p-2 rounded-lg" v-html="routes_error"/>
     </div>
 
+    <div v-if="symbol_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mt-2" >
+      <div v-for="item in symbol_error" :key="item">
+        {{ item }}
+      </div>
+    </div>
+
     <!-- Extra Routes-->
     <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
 
@@ -204,7 +210,8 @@ export default {
   data () {
     return {
       copiedRoutes: { routes: this.form.routes },
-      routes_error: []
+      routes_error: [],
+      symbol_error: []
     }
   },
   computed: {
@@ -223,13 +230,35 @@ export default {
         this.checkRoutes(val)
       },
       deep: true
-    }
+    },
   },
   created () {
     this.initiate()
   },
   methods: {
     checkRoutes (value) {
+      this.symbol_error = []
+      for (const item of value.routes) {
+        if (!this.symbol_error.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
+          this.symbol_error.push('Symbol parameter length is exceeded.')
+        }
+        const hasNumber = /\d/ 
+        if (!this.symbol_error.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
+          this.symbol_error.push('Symbol parameter cannot have number character.')
+        }
+
+        if (!this.symbol_error.includes('Symbol parameter must contain "-" character.') && item.symbol.length >= 5) {
+          let checkDash = false
+          for (const item1 of item.symbol.substring(3, 5)) {
+            if (item1 === '-') {
+              checkDash = true
+            }
+          }
+          if (!checkDash) {
+            this.symbol_error.push('Symbol parameter must contain "-" character.')
+          }
+        }
+      }
       this.routes_error = []
       const tempRoutes = value.routes
       for (const item of tempRoutes.slice(0, -1)) {
