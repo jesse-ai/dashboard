@@ -9,6 +9,7 @@ let idCounter = 0
 function newTab () {
   return _.cloneDeep({
     id: ++idCounter,
+    session_id: '',
     name: 'Tab 0',
     form: {
       debug_mode: false,
@@ -181,6 +182,7 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.booting = false
         this.tabs[id].results.monitoring = true
         this.fetchCandles(id)
+        this.fetchLogs(id)
       }
     },
     fetchCandles (id) {
@@ -191,6 +193,45 @@ export const useLiveStore = defineStore({
         timeframe: this.tabs[id].form.routes[0].timeframe,
       }).then(res => {
         this.tabs[id].results.candles = res.data.data
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+    },
+    fetchLogs (id) {
+      console.log('fetching baby')
+
+      // info logs
+      axios.post('/get-logs', {
+        id,
+        session_id: this.tabs[id].results.generalInfo.session_id,
+        type: 'info',
+      }).then(res => {
+        const arr = res.data.data
+        this.tabs[id].results.infoLogs = ''
+
+        arr.forEach(data => {
+          this.tabs[id].results.infoLogs += `[${helpers.timestampToTime(
+            data.timestamp
+          )}] ${data.message}\n`
+        })
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+
+      // error logs
+      axios.post('/get-logs', {
+        id,
+        session_id: this.tabs[id].results.generalInfo.session_id,
+        type: 'error',
+      }).then(res => {
+        const arr = res.data.data
+        this.tabs[id].results.errorLogs = ''
+
+        arr.forEach(data => {
+          this.tabs[id].results.errorLogs += `[${helpers.timestampToTime(
+            data.timestamp
+          )}] ${data.message}\n`
+        })
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
