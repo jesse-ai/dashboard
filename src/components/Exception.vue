@@ -40,7 +40,7 @@
     </button><button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
                      @click="copy">
       <ClipboardIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-      <span>Copy</span>
+      <span>{{ copy_message ? 'Copied' : 'Copy' }}</span>
     </button>
   </DividerWithButtons>
 
@@ -58,6 +58,8 @@
              v-html="content"/>
       </div>
     </div>
+
+    <input id="copy-exception" type="hidden" :value="content" >
   </div>
 </template>
 
@@ -86,7 +88,8 @@ export default {
   },
   data () {
     return {
-      description: ''
+      description: '',
+      copy_message: false,
     }
   },
   computed: {
@@ -97,7 +100,19 @@ export default {
       alert('not implemented yet')
     },
     copy () {
-      alert('not implemented yet')
+      const exceptionToCopy = document.querySelector('#copy-exception')
+      exceptionToCopy.setAttribute('type', 'text')
+      exceptionToCopy.select()
+      document.execCommand('copy')
+      this.copy_message = true
+
+      /* unselect the range */
+      exceptionToCopy.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+
+      setTimeout(() => {
+        this.copy_message = false
+      }, 3000)
     }
   },
 
