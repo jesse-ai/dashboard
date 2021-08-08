@@ -318,7 +318,7 @@ export default {
       const newItem = {}
       newItem.exchange = item.exchange
       newItem.strategy = item.strategy
-      newItem.symbol = item.symbol
+      newItem.symbol = ''
       newItem.timeframe = item.timeframe
 
 
