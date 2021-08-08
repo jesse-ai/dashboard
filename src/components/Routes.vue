@@ -288,8 +288,8 @@ export default {
       const tempRoutes = value.extra_routes
       for (const item of tempRoutes.slice(0, -1)) {
         for (const item1 of tempRoutes.slice(tempRoutes.indexOf(item) + 1,)) {
-          if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.symbol.length !== 0) {
-            this.extra_routes_error.push('Extra routes parameters (exchange, strategy and symbol) must be unique.')
+          if (item.exchange === item1.exchange && item.timeframe === item1.timeframe && item.symbol === item1.symbol && item.symbol.length !== 0) {
+            this.extra_routes_error.push('Extra routes parameters (exchange, time frame and symbol) must be unique.')
             checkBreakLoop = true
             break
           }
@@ -299,11 +299,13 @@ export default {
         }
       }
 
-      for (const item of tempRoutes) {
-        for (const item1 of this.form.routes) {
-          if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.timeframe === item1.timeframe && item.symbol.length !== 0) {
-            this.extra_routes_error.push('Extra routes time frame and routes time frame must be deferent.')
-            return
+      if (this.form.extra_routes.length > 0) {
+        for (const item of tempRoutes) {
+          for (const item1 of this.form.routes) {
+            if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.timeframe === item1.timeframe && item.symbol.length !== 0) {
+              this.extra_routes_error.push('Extra routes time frame and routes time frame must be deferent.')
+              return
+            }
           }
         }
       }
@@ -379,11 +381,9 @@ export default {
     },
     deleteExtraRoute (item) {
       const index = this.form.extra_routes.indexOf(item)
-      if ((this.form.extra_routes.length !== 1) && index > -1) {
+      if ((this.form.extra_routes.length !== 0) && index > -1) {
         this.form.extra_routes.splice(index, 1)
-      } else {
-        this.form.extra_routes = []
-      }
+      } 
     },
     duplicateRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
