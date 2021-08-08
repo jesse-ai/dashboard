@@ -83,7 +83,7 @@
         </Menu>
       </div>
     </div>
-    <!-- error button -->
+    <!-- error section -->
     <div v-if="routes_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
       <p v-html="routes_error"/>
     </div>
@@ -164,6 +164,19 @@
         </Menu>
       </div>
     </div>
+
+    <!-- error section -->
+    <div v-if="extra_routes_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
+      <div v-for="item in extra_routes_error" :key="item">
+        {{ item }}
+      </div>
+    </div>
+
+    <div v-if="extra_symbol_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
+      <div v-for="item in extra_symbol_error" :key="item">
+        {{ item }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -209,9 +222,13 @@ export default {
   },
   data () {
     return {
+
+      copiedExtraRoutes: { extra_routes: this.form.extra_routes },
       copiedRoutes: { routes: this.form.routes },
       routes_error: [],
-      symbol_error: []
+      extra_routes_error: [],
+      symbol_error: [],
+      extra_symbol_error: []
     }
   },
   computed: {
@@ -231,11 +248,66 @@ export default {
       },
       deep: true
     },
+    copiedExtraRoutes: {
+      handler (val) {
+        this.checkExtraRoutes(val)
+      },
+      deep: true
+    }
   },
   created () {
     this.initiate()
   },
   methods: {
+    checkExtraRoutes (value) {
+      this.extra_symbol_error = []
+      for (const item of value.extra_routes) {
+        if (!this.extra_symbol_error.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
+          this.extra_symbol_error.push('Symbol parameter length is exceeded.')
+        }
+        const hasNumber = /\d/ 
+        if (!this.extra_symbol_error.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
+          this.extra_symbol_error.push('Symbol parameter cannot have number character.')
+        }
+
+        if (!this.extra_symbol_error.includes('Symbol parameter must contain "-" character.') && item.symbol.length >= 5) {
+          let checkDash = false
+          for (const item1 of item.symbol.substring(3, 5)) {
+            if (item1 === '-') {
+              checkDash = true
+            }
+          }
+          if (!checkDash) {
+            this.extra_symbol_error.push('Symbol parameter must contain "-" character.')
+          }
+        }
+      }
+
+      this.extra_routes_error = []
+      let checkBreakLoop = false
+      const tempRoutes = value.extra_routes
+      for (const item of tempRoutes.slice(0, -1)) {
+        for (const item1 of tempRoutes.slice(tempRoutes.indexOf(item) + 1,)) {
+          if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.symbol.length !== 0) {
+            this.extra_routes_error.push('Extra routes parameters (exchange, strategy and symbol) must be unique.')
+            checkBreakLoop = true
+            break
+          }
+        }
+        if (checkBreakLoop) {
+          break
+        }
+      }
+
+      for (const item of tempRoutes) {
+        for (const item1 of this.form.routes) {
+          if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.timeframe === item1.timeframe && item.symbol.length !== 0) {
+            this.extra_routes_error.push('Extra routes time frame and routes time frame must be deferent.')
+            return
+          }
+        }
+      }
+    },
     checkRoutes (value) {
       this.symbol_error = []
       for (const item of value.routes) {
