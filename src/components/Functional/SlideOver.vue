@@ -20,7 +20,7 @@
                     <div class="ml-3 h-7 flex items-center">
                       <slot name="buttons"/>
 
-                      <button class="ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
+                      <button class="ml-2 p-2 hover:text-gray-600  hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none" @click="object[name] = false">
                         <XIcon class="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
