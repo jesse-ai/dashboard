@@ -11,7 +11,7 @@
 
     <label class="font-semibold">Exception:</label>
     <pre
-      class="mt-2 text-sm text-gray-700 whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 border border-gray-200 "
+      class="mt-2 text-sm whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 dark:border-gray-800 border border-gray-200 "
       v-html="content"/>
 
     <br>
@@ -21,13 +21,13 @@
               placeholder="Describe how the exception occurred..."
               name="content"
               rows="10"
-              class="mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded" />
+              class="dark:bg-gray-800 dark:border-gray-900 mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300 rounded" />
 
     <br>
 
     <div>
       <button class="btn-primary mr-4">Submit</button>
-      <button class="btn-link" @click="modals.exceptionReport = false">Cancel</button>
+      <button class="btn-link text-indigo-600 dark:text-indigo-400" @click="modals.exceptionReport = false">Cancel</button>
     </div>
   </SlideOver>
 
