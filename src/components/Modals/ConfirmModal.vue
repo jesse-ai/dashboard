@@ -37,6 +37,7 @@
                 <XIcon class="h-5 w-5 text-gray-400 rounded-full" />
               </button>
             </div>
+
             <div :class="[description ? '' : 'items-center', 'sm:flex sm:items-start']">
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <div v-if="description" class="my-4 ml-8">
@@ -46,10 +47,12 @@
                 </div>
               </div>
             </div>
+
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <!-- action button which must insert in main component -->
               <slot />
-              <button ref="cancelButtonRef" type="button" class="btn-secondary" @click="object[name] = false">
+
+              <button ref="cancelButtonRef" type="button" class="font-medium select-none items-center text-gray-700 dark:text-gray-300 hover:underline focus:outline-none text-base tracking-wide mr-4" @click="object[name] = false">
                 {{ type === 'danger' ? 'Cancel' : 'Close' }}
               </button>
             </div>

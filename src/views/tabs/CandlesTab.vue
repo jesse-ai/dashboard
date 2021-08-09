@@ -33,14 +33,14 @@
         <Divider>Exchange</Divider>
         <select
           v-model="form.exchange"
-          class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full px-6 py-6 border border-gray-200 dark:border-gray-600 focus:outline-none focus:border-indigo-500 rounded-md">
+          class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full px-6 py-6 border border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 rounded-md">
           <option v-for="item in routes.exchanges" :key="item">{{ item }}</option>
         </select>
 
         <Divider class="mt-16">Symbol</Divider>
         <input v-model="form.symbol"
                placeholder="ex: BTC-USDT"
-               class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 w-full px-6 py-6 border border-gray-200 focus:outline-none focus:border-indigo-500 dark:border-gray-600 rounded-md"
+               class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 w-full px-6 py-6 border border-gray-200 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 dark:border-gray-900 rounded-md"
                @input="form.symbol = $event.target.value.toUpperCase()">
 
         <Divider class="mt-16">Start Date</Divider>
@@ -49,7 +49,7 @@
                  v-model="form.start_date"
                  type="date"
                  name="start_date"
-                 class="dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer dark:bg-backdrop-dark flex-1 focus:outline-none focus:border-indigo-500 flex justify-center items-center py-6 text-center sm:text-sm border border-gray-200 dark:border-gray-600 rounded-md"
+                 class="dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer dark:bg-backdrop-dark flex-1 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 flex justify-center items-center py-6 text-center sm:text-sm border border-gray-200 dark:border-gray-900 rounded-md"
           >
         </div>
       </div>

@@ -29,7 +29,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
-            <button class="btn-primary mr-4 text-sm" @click="feedback_object.open = true">
+            <button class="btn-success mr-4 text-sm" @click="feedback_object.open = true">
               Feedback
             </button>
 

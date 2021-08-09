@@ -3,14 +3,34 @@
   <SlideOver name="infoLogs"
              :object="modals"
              title="Info Logs">
-    <Logs :logs="results.infoLogs"/>
+    <template #default>
+      <Logs :logs="results.infoLogs"/>
+    </template>
+
+    <template #buttons>
+      <button
+        class="ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
+        @click="copyInfoLogs">
+        <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
+      </button>
+    </template>
   </SlideOver>
 
   <!-- error logs modal -->
   <SlideOver name="errorLogs"
              :object="modals"
              title="Error Logs">
-    <Logs :logs="results.errorLogs"/>
+    <template #default>
+      <Logs :logs="results.errorLogs"/>
+    </template>
+
+    <template #buttons>
+      <button
+        class="ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
+        @click="copyErrorLogs">
+        <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
+      </button>
+    </template>
   </SlideOver>
 
   <!-- session termination modal -->
@@ -198,9 +218,7 @@
             </button>
           </div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-            {{
-              results.generalInfo.count_error_logs
-            }}
+            {{ results.generalInfo.count_error_logs }}
           </div>
         </div>
       </dl>
@@ -216,7 +234,7 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardListIcon } from '@heroicons/vue/outline'
+import { ClipboardIcon, ClipboardListIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -237,6 +255,7 @@ export default {
     CircleProgressbar,
     Exception,
     MultipleValuesTable,
+    ClipboardIcon
   },
   props: {
     form: {
