@@ -169,25 +169,34 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <button
-            class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
-            @click="modals.infoLogs = true">
-            <span>Info Logs:</span>
-
-            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
-          </button>
+          <div class="flex justify-start items-center">
+            <button
+              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+              @click="modals.infoLogs = true">
+              <span>Info Logs:</span>
+            </button>
+            <button class="focus:outline-none flex justify-start items-center" @click="copyInfoLogs">
+              <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
+              <span v-if="copy_info_logs" class="ml-1 text-xs">copied</span>
+            </button>
+          </div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
             {{ results.generalInfo.count_info_logs }}
           </div>
         </div>
 
         <div class="flex justify-between items-center">
-          <button
-            class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
-            @click="modals.errorLogs = true">
-            <span>Error Logs:</span>
-            <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
-          </button>
+          <div class="flex justify-start items-center">
+            <button
+              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+              @click="modals.errorLogs = true">
+              <span>Error Logs:</span>
+            </button>
+            <button class="focus:outline-none flex justify-start items-center" @click="copyErrorLogs">
+              <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
+              <span v-if="copy_error_logs" class="ml-1 text-xs">copied</span>
+            </button>
+          </div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
             {{
               results.generalInfo.count_error_logs
@@ -195,6 +204,8 @@
           </div>
         </div>
       </dl>
+      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
+      <input id="copy-error-logs" type="hidden" :value="results.errorLogs" >
     </template>
   </LayoutWithSidebar>
 </template>
@@ -251,7 +262,9 @@ export default {
       positions: [
         ['.', 'TrendFollowing', 'BTC-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
         ['.', 'TrendFollowing', 'ETH-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
-      ]
+      ],
+      copy_info_logs: false,
+      copy_error_logs: false
     }
   },
   computed: {
@@ -259,6 +272,36 @@ export default {
   },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),
+    copyInfoLogs () {
+      const infoLogsToCopy = document.querySelector('#copy-info-logs')
+      infoLogsToCopy.setAttribute('type', 'text')
+      infoLogsToCopy.select()
+      document.execCommand('copy')
+      this.copy_info_logs = true
+
+      /* unselect the range */
+      infoLogsToCopy.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+
+      setTimeout(() => {
+        this.copy_info_logs = false
+      }, 3000)
+    },
+    copyErrorLogs () {
+      const infoErrorToCopy = document.querySelector('#copy-error-logs')
+      infoErrorToCopy.setAttribute('type', 'text')
+      infoErrorToCopy.select()
+      document.execCommand('copy')
+      this.copy_error_logs = true
+
+      /* unselect the range */
+      infoErrorToCopy.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+
+      setTimeout(() => {
+        this.copy_error_logs = false
+      }, 3000)
+    }
   }
 }
 </script>
