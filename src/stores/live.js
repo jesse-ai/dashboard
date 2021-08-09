@@ -183,6 +183,7 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.monitoring = true
         this.fetchCandles(id)
         this.fetchLogs(id)
+        this.fetchOrders(id)
       }
     },
     fetchCandles (id) {
@@ -198,8 +199,6 @@ export const useLiveStore = defineStore({
       })
     },
     fetchLogs (id) {
-      console.log('fetching baby')
-
       // info logs
       axios.post('/get-logs', {
         id,
@@ -232,6 +231,23 @@ export const useLiveStore = defineStore({
             data.timestamp
           )}] ${data.message}\n`
         })
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+    },
+    fetchOrders (id) {
+      // info logs
+      axios.post('/get-orders', {
+        id,
+        session_id: this.tabs[id].results.generalInfo.session_id,
+      }).then(res => {
+        const arr = res.data.data
+
+        arr.forEach(data => {
+          this.tabs[id].results.rawOrders.push(data)
+        })
+
+        this.updateOrders(id)
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
@@ -283,30 +299,12 @@ export const useLiveStore = defineStore({
 
       for (const item of data) {
         this.tabs[id].results.positions.push([
-          {
-            value: item.symbol,
-            style: colorBasedOnType(item.type)
-          },
-          {
-            value: item.strategy_name,
-            style: ''
-          },
-          {
-            value: item.qty,
-            style: ''
-          },
-          {
-            value: item.entry,
-            style: ''
-          },
-          {
-            value: item.current_price,
-            style: ''
-          },
-          {
-            value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`,
-            style: colorBasedOnNumber(item.pnl)
-          },
+          { value: item.symbol, style: colorBasedOnType(item.type) },
+          { value: item.strategy_name, style: '' },
+          { value: item.qty, style: '' },
+          { value: item.entry, style: '' },
+          { value: item.current_price, style: '' },
+          { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: colorBasedOnNumber(item.pnl) },
         ])
       }
     },
@@ -326,6 +324,18 @@ export const useLiveStore = defineStore({
       //   "executed_at": 1628148961000
       // }
 
+      // look for order in rawOrders, if exists, update, else, add
+      const newOrder = data
+      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
+      if (orderIndex === -1) {
+        this.tabs[id].results.rawOrders.push(newOrder)
+      } else {
+        this.tabs[id].results.rawOrders[orderIndex] = newOrder
+      }
+
+      this.updateOrders(id)
+    },
+    updateOrders (id) {
       function colorBasedOnSide (orderSide) {
         if (orderSide === 'buy') {
           return 'text-green-600 dark:text-green-400'
@@ -336,19 +346,8 @@ export const useLiveStore = defineStore({
         }
       }
 
-      // look for order in rawOrders, if exists, update, else, add
-      const newOrder = data
-      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
-      if (orderIndex === -1) {
-        this.tabs[id].results.rawOrders.push(newOrder)
-      } else {
-        this.tabs[id].results.rawOrders[orderIndex] = newOrder
-      }
-
       this.tabs[id].results.orders = [
-        [
-          'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status'
-        ]
+        ['Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
       ]
 
       const limitCount = 5
@@ -358,34 +357,13 @@ export const useLiveStore = defineStore({
         const item = this.tabs[id].results.rawOrders[i]
 
         this.tabs[id].results.orders.push([
-          {
-            value: helpers.timestampToTimeOnly(item.created_at),
-            style: ''
-          },
-          {
-            value: item.symbol,
-            style: ''
-          },
-          {
-            value: item.type,
-            style: ''
-          },
-          {
-            value: item.side,
-            style: colorBasedOnSide(item.side)
-          },
-          {
-            value: item.price,
-            style: ''
-          },
-          {
-            value: item.qty,
-            style: colorBasedOnSide(item.side)
-          },
-          {
-            value: item.status,
-            style: ''
-          },
+          { value: helpers.timestampToTimeOnly(item.created_at), style: '' },
+          { value: item.symbol, style: '' },
+          { value: item.type, style: '' },
+          { value: item.side, style: colorBasedOnSide(item.side) },
+          { value: item.price, style: '' },
+          { value: item.qty, style: colorBasedOnSide(item.side) },
+          { value: item.status, style: '' },
         ])
       }
     },
