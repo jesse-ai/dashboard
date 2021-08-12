@@ -47,7 +47,7 @@
             <!--            </button>-->
 
             <!-- Profile dropdown -->
-            <Menu as="div" class="ml-3 relative">
+            <Menu as="div" class="relative">
               <MenuButton class="btn-nav">
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
