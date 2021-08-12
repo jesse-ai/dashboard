@@ -1,5 +1,5 @@
 <template>
-  <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+  <button class="btn-nav"
           @click="toggle">
     <MoonIcon v-if="theme === 'light'"
               class="h-6 w-6"

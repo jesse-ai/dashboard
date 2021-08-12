@@ -9,7 +9,7 @@
 
     <template #buttons>
       <button
-        class="ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
+        class="btn-nav"
         @click="copyInfoLogs">
         <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
       </button>
@@ -26,7 +26,7 @@
 
     <template #buttons>
       <button
-        class="ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
+        class="btn-nav"
         @click="copyErrorLogs">
         <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
       </button>
