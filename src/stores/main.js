@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from '@/http'
+import _ from 'lodash'
 
 export const useMainStore = defineStore({
   id: 'main',
@@ -81,7 +82,6 @@ export const useMainStore = defineStore({
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
-        this.isInitiated = true
         this.routes.exchanges.forEach(item => {
           this.settings.backtest.exchanges.push({
             name: item,
@@ -100,9 +100,32 @@ export const useMainStore = defineStore({
             balance: 10_000
           })
         })
+
+        axios.post('/get-config', {
+          current_config: this.settings
+        }).then(res => {
+          this.settings = res.data.data.data
+          this.isInitiated = true
+        }).catch(error => {
+          this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        })
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
-    }
+    },
+
+    updateConfig: _.throttle(
+      function () {
+        if (!this.isInitiated) return
+
+        axios.post('/update-config', {
+          current_config: this.settings
+        }).catch(error => {
+          this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        })
+      },
+      1000,
+      { leading: true, trailing: true }
+    )
   }
 })
