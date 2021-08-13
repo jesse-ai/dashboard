@@ -29,7 +29,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
-            <button class="btn-success mr-4 text-sm" @click="feedback_object.open = true">
+            <button class="btn-success mr-4 text-sm" @click="modals.feedback = true">
               Feedback
             </button>
 
@@ -109,27 +109,8 @@
     </DisclosurePanel>
   </Disclosure>
 
-  <SlideOver :object="feedback_object" :name="'open'" :title="'Feedback'" >
-    <div class="w-full">
-      <div class="mt-2">
-        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Description
-        </label>
-        <div class="mt-1">
-          <textarea id="description" v-model="form.description" name="description" rows="3"
-                    class="dark:bg-backdrop-dark shadow-sm focus:ring-indigo-500 dark:ring-0 focus:border-indigo-500 dark:focus:border-gray-500 mt-1 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md"
-                    placeholder="Type your feed back" />
-        </div>
-        <div v-if="feedback_error.length != 0">
-          <p class="text-red-500 dark:text-red-400 text-sm mt-1" v-html="feedback_error" />
-        </div>
-      </div>
-
-      <div class="w-full flex justify-between mt-4">
-        <button class="w-1/4 btn-secondary" @click="feedback_object.open = false">Cancel</button>
-        <button class="w-2/3 btn-primary" @click="send_feedback()">Submit</button>
-      </div>
-    </div>
+  <SlideOver :object="modals" name="feedback" title="Feedback" >
+    <Feedback/>
   </SlideOver>
 </template>
 
@@ -138,13 +119,14 @@ import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
-import axios from 'axios'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import Feedback from '@/views/Feedback'
 
 export default {
   name: 'Nav',
   components: {
+    Feedback,
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
@@ -168,11 +150,6 @@ export default {
   },
   data () {
     return {
-      feedback_error: [],
-      feedback_object: { open: false },
-      form: {
-        description: ''
-      },
       navigation: [
         {
           name: 'Import Candles',
@@ -196,28 +173,5 @@ export default {
   computed: {
     ...mapState(useMainStore, ['modals'])
   },
-  methods: {
-    send_feedback () {
-      this.feedback_error = []
-
-      if (!this.form.description) {
-        this.feedback_error.push('Description required')
-      }
-
-      if (this.feedback_error.length === 0) {
-        const payload = new FormData()
-        payload.append('description', this.form.description)
-
-        axios.post('http://jesse-trade.test/api/feedback', payload, {
-          headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
-        }).then((res) => {
-          if (res.data === 'done') {
-            this.feedback_error = []
-            this.form.description = ''
-          }
-        })
-      }
-    },
-  }
 }
 </script>
