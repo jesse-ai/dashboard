@@ -10,7 +10,7 @@
            :autocomplete="name"
            :placeholder="placeholder"
            :step="step"
-           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-800 dark:border-gray-900" >
+           class="mt-1 input" >
 
     <input v-else
            v-model="object[name]"
@@ -18,7 +18,7 @@
            :type="inputType"
            :autocomplete="name"
            :placeholder="placeholder"
-           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-800 dark:border-gray-900" >
+           class="mt-1 input" >
 
     <p v-if="description" class="mt-2 text-sm text-gray-500">{{ description }}</p>
   </div>
