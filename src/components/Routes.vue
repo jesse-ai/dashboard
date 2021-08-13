@@ -83,12 +83,16 @@
         </Menu>
       </div>
     </div>
+
     <!-- error section -->
-    <div v-if="routes_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
+    <div v-if="routes_error.length != 0" class="text-sm text-red-400 p-2 rounded-lg mb-4 flex items-center" >
+      <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
       <p v-html="routes_error"/>
     </div>
+    
+    <div v-if="symbol_error.length != 0" class="text-sm text-red-400 p-2 rounded-lg mb-4 flex items-center" >
+      <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
 
-    <div v-if="symbol_error.length != 0" class="bg-red-50 text-sm text-red-700 p-2 rounded-lg mb-4" >
       <div v-for="item in symbol_error" :key="item">
         {{ item }}
       </div>
@@ -186,7 +190,8 @@ import {
   DuplicateIcon,
   TrashIcon,
   ArrowCircleUpIcon,
-  ArrowCircleDownIcon
+  ArrowCircleDownIcon,
+  ExclamationIcon
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
@@ -208,7 +213,8 @@ export default {
     TrashIcon,
     ArrowCircleUpIcon,
     ArrowCircleDownIcon,
-    DividerWithButtons
+    DividerWithButtons,
+    ExclamationIcon
   },
   props: {
     form: {
@@ -265,7 +271,7 @@ export default {
         if (!this.extra_symbol_error.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
           this.extra_symbol_error.push('Symbol parameter length is exceeded.')
         }
-        const hasNumber = /\d/ 
+        const hasNumber = /\d/
         if (!this.extra_symbol_error.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
           this.extra_symbol_error.push('Symbol parameter cannot have number character.')
         }
@@ -316,7 +322,7 @@ export default {
         if (!this.symbol_error.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
           this.symbol_error.push('Symbol parameter length is exceeded.')
         }
-        const hasNumber = /\d/ 
+        const hasNumber = /\d/
         if (!this.symbol_error.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
           this.symbol_error.push('Symbol parameter cannot have number character.')
         }
@@ -383,7 +389,7 @@ export default {
       const index = this.form.extra_routes.indexOf(item)
       if ((this.form.extra_routes.length !== 0) && index > -1) {
         this.form.extra_routes.splice(index, 1)
-      } 
+      }
     },
     duplicateRoutes (item) {
       const itemIndex = this.form.routes.indexOf(item)
