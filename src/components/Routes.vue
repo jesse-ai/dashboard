@@ -58,7 +58,7 @@
                   </a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }" @click="duplicateRoutes(r)">
-                  <a :class="[active ? 'bg-gray-100 dark:bg-backdrop-dark text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
+                  <a :class="[active ? 'bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300', 'group flex items-center px-4 py-2 text-sm']">
                     <DuplicateIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                     Duplicate
                   </a>
