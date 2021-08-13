@@ -29,6 +29,12 @@ export default {
       if (newValue === true) {
         this.initiate()
       }
+    },
+    settings: {
+      handler: function (newValue, oldValue) {
+        this.updateConfig()
+      },
+      deep: true
     }
   },
   created () {
@@ -42,7 +48,7 @@ export default {
 
       this.isAuthenticated = true
     },
-    ...mapActions(useMainStore, ['initiate'])
+    ...mapActions(useMainStore, ['initiate', 'updateConfig'])
   },
 }
 </script>

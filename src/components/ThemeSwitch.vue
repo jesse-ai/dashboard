@@ -1,25 +1,14 @@
 <template>
-  <span class="relative z-0 inline-flex shadow-sm rounded-md mr-2">
-    <button
-      type="button"
-      :class="{ 'selected': theme === 'light' }"
-      class="switch-btn rounded-l-md"
-      @click="setTheme('light')">
-      <SunIcon class="w-4 h-4 mr-1"/>
+  <button class="btn-nav"
+          @click="toggle">
+    <MoonIcon v-if="theme === 'light'"
+              class="h-6 w-6"
+              aria-hidden="true"/>
 
-      Light
-    </button>
-
-    <button
-      type="button"
-      :class="{ 'selected': theme === 'dark' }"
-      class="-ml-px switch-btn rounded-r-md"
-      @click="setTheme('dark')">
-      <MoonIcon class="w-4 h-4 mr-1"/>
-
-      Dark
-    </button>
-  </span>
+    <SunIcon v-if="theme === 'dark'"
+             class="h-6 w-6"
+             aria-hidden="true"/>
+  </button>
 </template>
 
 <script>
@@ -50,7 +39,8 @@ export default {
     }
   },
   methods: {
-    setTheme (theme) {
+    toggle () {
+      const theme = this.theme === 'light' ? 'dark' : 'light'
       if (theme === 'light') {
         document.documentElement.classList.remove('dark')
         localStorage.theme = 'light'
@@ -64,16 +54,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .switch-btn {
-    @apply relative inline-flex items-center px-4 py-1 text-sm font-medium focus:z-10;
-    @apply border border-gray-200 dark:border-gray-600;
-    @apply bg-transparent;
-    @apply text-gray-600 dark:text-gray-500;
-    @apply focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary dark:focus:ring-primary-dark dark:focus:border-primary-dark;
-  }
-  .switch-btn.selected {
-    @apply bg-gray-100 dark:bg-backdrop-secondary-dark;
-  }
-</style>

@@ -11,7 +11,7 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100"
                          leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-          <div class="inline-block align-bottom bg-white dark:bg-gray-700 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+          <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
             <div class="w-full flex justify-between items-center">
               <div class="flex items-center">
                 <div v-if="type === 'info'" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
@@ -33,7 +33,7 @@
                 </DialogTitle>
               </div>
 
-              <button class="p-2 hover:text-gray-600 hover:bg-gray-200 flex justify-center items-center rounded-full focus:outline-none focus:ring-0" @click="object[name] = false">
+              <button class="btn-nav" @click="object[name] = false">
                 <XIcon class="h-5 w-5 text-gray-400 rounded-full" />
               </button>
             </div>
@@ -41,7 +41,7 @@
             <div :class="[description ? '' : 'items-center', 'sm:flex sm:items-start']">
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <div v-if="description" class="my-4 ml-8">
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                  <p class="text-sm text-gray-500 dark:text-gray-300">
                     {{ description }}
                   </p>
                 </div>

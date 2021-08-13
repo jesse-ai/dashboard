@@ -84,7 +84,9 @@ export default {
         sessionStorage.auth_key = res.data.auth_token
         this.setAuth()
       }).catch(error => {
-        if (error.response.status === 401) {
+        if (!error.response) {
+          this.notyf.error(`${error}`)
+        } else if (error.response.status === 401) {
           this.notyf.error('Incorrect password')
         } else {
           this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
