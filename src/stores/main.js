@@ -13,6 +13,7 @@ export const useMainStore = defineStore({
       settings: false,
       exceptionReport: false,
       feedback: false,
+      jesseTradeLogin: false,
     },
     settings: {
       backtest: {

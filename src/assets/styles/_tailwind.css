@@ -53,4 +53,8 @@
     .input {
         @apply block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-400 focus:border-indigo-400 sm:text-sm dark:bg-gray-800 dark:border-gray-900
     }
+
+    .input-label {
+        @apply block text-sm font-medium text-gray-700 dark:text-gray-300
+    }
 }

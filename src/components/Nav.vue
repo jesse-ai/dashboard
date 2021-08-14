@@ -1,8 +1,19 @@
 <template>
+  <!-- Settings -->
   <SlideOver name="settings"
              :object="modals"
              title="Settings">
     <Settings />
+  </SlideOver>
+
+  <!-- Feedback -->
+  <SlideOver :object="modals" name="feedback" title="Feedback" >
+    <Feedback/>
+  </SlideOver>
+
+  <!-- Jesse.Trade Login -->
+  <SlideOver :object="modals" name="jesseTradeLogin" title="Login to your Jesse account" width="max-w-lg">
+    <JesseTradeLogin />
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
@@ -47,7 +58,7 @@
             <!--            </button>-->
 
             <!-- Profile dropdown -->
-            <Menu as="div" class="relative">
+            <Menu as="div" class="relative z-40">
               <MenuButton class="btn-nav">
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
@@ -57,10 +68,16 @@
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-slot="{ active }">
-                    <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Login</a>
+                    <button :class="[active ? 'bg-gray-100' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700']"
+                            @click="modals.jesseTradeLogin = true">
+                      Login
+                    </button>
                   </MenuItem>
+
                   <MenuItem v-slot="{ active }">
-                    <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">New Strategy</a>
+                    <button :class="[active ? 'bg-gray-100' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700']">
+                      New Strategy
+                    </button>
                   </MenuItem>
                 </MenuItems>
               </transition>
@@ -108,10 +125,6 @@
       </div>
     </DisclosurePanel>
   </Disclosure>
-
-  <SlideOver :object="modals" name="feedback" title="Feedback" >
-    <Feedback/>
-  </SlideOver>
 </template>
 
 <script>
@@ -122,10 +135,14 @@ import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Feedback from '@/views/Feedback'
+import Settings from '@/components/Settings'
+import JesseTradeLogin from '@/views/JesseTradeLogin'
 
 export default {
   name: 'Nav',
   components: {
+    JesseTradeLogin,
+    Settings,
     Feedback,
     Disclosure,
     DisclosureButton,
