@@ -156,8 +156,8 @@
     </div>
 
     <!-- error section -->
-    <div v-if="routes_error.length != 0" class="text-sm text-red-400 p-2 rounded-lg mb-4" >
-      <div v-for="item in routes_error" :key="item" class="flex justify-start items-center mb-2">
+    <div v-if="totalRoutesError.length != 0" class="text-sm text-red-400 p-2 rounded-lg mb-4" >
+      <div v-for="item in totalRoutesError" :key="item" class="flex justify-start items-center mb-2">
         <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
 
         <div>
@@ -212,10 +212,9 @@ export default {
   },
   data () {
     return {
-
       copiedExtraRoutes: { extra_routes: this.form.extra_routes },
       copiedRoutes: { routes: this.form.routes },
-      routes_error: [],
+      totalRoutesError: [],
     }
   },
   computed: {
@@ -247,7 +246,7 @@ export default {
   },
   methods: {
     checkRoutes () {
-      this.routes_error = []
+      this.totalRoutesError = []
       const symbolErrors = []
 
       if (this.form.extra_routes.length > 0) {
@@ -353,10 +352,10 @@ export default {
       }
 
       for (const item of symbolErrors) {
-        this.routes_error.push(item)
+        this.totalRoutesError.push(item)
       }
       for (const item of routesError) {
-        this.routes_error.push(item)
+        this.totalRoutesError.push(item)
       }
     },
     initiate () {
