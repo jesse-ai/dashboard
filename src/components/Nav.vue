@@ -66,16 +66,16 @@
 
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-48 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700']"
+                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                             @click="modals.jesseTradeLogin = true">
                       Login
                     </button>
                   </MenuItem>
 
                   <MenuItem v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700']">
+                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']">
                       New Strategy
                     </button>
                   </MenuItem>
