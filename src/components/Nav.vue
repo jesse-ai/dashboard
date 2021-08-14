@@ -1,8 +1,14 @@
 <template>
+  <!-- Settings -->
   <SlideOver name="settings"
              :object="modals"
              title="Settings">
     <Settings />
+  </SlideOver>
+
+  <!-- Feedback -->
+  <SlideOver :object="modals" name="feedback" title="Feedback" >
+    <Feedback/>
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
@@ -108,10 +114,6 @@
       </div>
     </DisclosurePanel>
   </Disclosure>
-
-  <SlideOver :object="modals" name="feedback" title="Feedback" >
-    <Feedback/>
-  </SlideOver>
 </template>
 
 <script>
@@ -122,10 +124,12 @@ import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Feedback from '@/views/Feedback'
+import Settings from '@/components/Settings'
 
 export default {
   name: 'Nav',
   components: {
+    Settings,
     Feedback,
     Disclosure,
     DisclosureButton,
