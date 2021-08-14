@@ -249,17 +249,20 @@ export default {
       this.totalRoutesError = []
       const symbolErrors = []
 
+      const ERRORS = {
+        uniqueRoutesErrorMessage: 'each exchange-symbol pair can be traded only once! \\nMore info: https://docs.jesse.trade/docs/routes.html#trading-multiple-routes',
+        maxSymbolLengthErrorMessage: 'Maximum symbol length is exceeded!',
+        mustContainDashErrorMessage: 'Symbol parameter must contain "-" character!',
+        timeframeMustBeDifferentErrorMessage: 'Extra routes timeframe and routes timeframe must be different',
+      }
+
       if (this.form.extra_routes.length > 0) {
         for (const item of this.form.extra_routes) {
-          if (!symbolErrors.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
-            symbolErrors.push('Symbol parameter length is exceeded.')
-          }
-          const hasNumber = /\d/
-          if (!symbolErrors.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
-            symbolErrors.push('Symbol parameter cannot have number character.')
+          if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && item.symbol.length > 9) {
+            symbolErrors.push(ERRORS.maxSymbolLengthErrorMessage)
           }
 
-          if (!symbolErrors.includes('Symbol parameter must contain "-" character.') && item.symbol.length >= 5) {
+          if (!symbolErrors.includes(ERRORS.mustContainDashErrorMessage) && item.symbol.length >= 5) {
             let checkDash = false
             for (const item1 of item.symbol.substring(3, 5)) {
               if (item1 === '-') {
@@ -267,22 +270,18 @@ export default {
               }
             }
             if (!checkDash) {
-              symbolErrors.push('Symbol parameter must contain "-" character.')
+              symbolErrors.push(ERRORS.mustContainDashErrorMessage)
             }
           }
         }
       }
 
       for (const item of this.form.routes) {
-        if (!symbolErrors.includes('Symbol parameter length is exceeded.') && item.symbol.length > 9) {
-          symbolErrors.push('Symbol parameter length is exceeded.')
-        }
-        const hasNumber = /\d/
-        if (!symbolErrors.includes('Symbol parameter cannot have number character.') && hasNumber.test(item.symbol)) {
-          symbolErrors.push('Symbol parameter cannot have number character.')
+        if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && item.symbol.length > 9) {
+          symbolErrors.push(ERRORS.maxSymbolLengthErrorMessage)
         }
 
-        if (!symbolErrors.includes('Symbol parameter must contain "-" character.') && item.symbol.length >= 5) {
+        if (!symbolErrors.includes(ERRORS.mustContainDashErrorMessage) && item.symbol.length >= 5) {
           let checkDash = false
           for (const item1 of item.symbol.substring(3, 5)) {
             if (item1 === '-') {
@@ -290,7 +289,7 @@ export default {
             }
           }
           if (!checkDash) {
-            symbolErrors.push('Symbol parameter must contain "-" character.')
+            symbolErrors.push(ERRORS.mustContainDashErrorMessage)
           }
         }
       }
@@ -299,12 +298,12 @@ export default {
       let checkBreakLoop = false
       const tempRoutes = this.form.routes
       for (const item of tempRoutes.slice(0, -1)) {
-        if (routesError.includes('Routes parameters (exchange, strategy and symbol) must be unique.')) {
+        if (routesError.includes(ERRORS.uniqueRoutesErrorMessage)) {
           break
         }
         for (const item1 of tempRoutes.slice(tempRoutes.indexOf(item) + 1,)) {
           if (item.exchange === item1.exchange && item.strategy === item1.strategy && item.symbol === item1.symbol && item.symbol.length !== 0) {
-            routesError.push('Routes parameters (exchange, strategy and symbol) must be unique.')
+            routesError.push(ERRORS.uniqueRoutesErrorMessage)
             checkBreakLoop = false
             break
           }
@@ -317,12 +316,12 @@ export default {
       let checkBreakExtraLoop = false
       const tempExtraRoutes = this.form.extra_routes
       for (const item of tempExtraRoutes.slice(0, -1)) {
-        if (routesError.includes('Extra routes parameters (exchange, time frame and symbol) must be unique.')) {
+        if (routesError.includes(ERRORS.uniqueRoutesErrorMessage)) {
           break
         }
         for (const item1 of tempExtraRoutes.slice(tempExtraRoutes.indexOf(item) + 1,)) {
           if (item.exchange === item1.exchange && item.timeframe === item1.timeframe && item.symbol === item1.symbol && item.symbol.length !== 0) {
-            routesError.push('Extra routes parameters (exchange, time frame and symbol) must be unique.')
+            routesError.push(ERRORS.uniqueRoutesErrorMessage)
             checkBreakExtraLoop = true
             break
           }
@@ -335,12 +334,12 @@ export default {
       checkBreakExtraLoop = false
       if (this.form.extra_routes.length > 0) {
         for (const item of tempExtraRoutes) {
-          if (routesError.includes('Extra routes time frame and routes time frame must be deferent.')) {
+          if (routesError.includes(ERRORS.timeframeMustBeDifferentErrorMessage)) {
             break
           }
           for (const item1 of this.form.routes) {
             if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.timeframe === item1.timeframe && item.symbol.length !== 0) {
-              routesError.push('Extra routes time frame and routes time frame must be deferent.')
+              routesError.push(ERRORS.timeframeMustBeDifferentErrorMessage)
               checkBreakExtraLoop = true
               break
             }
