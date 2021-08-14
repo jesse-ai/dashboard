@@ -300,6 +300,9 @@ export default {
       let checkBreakLoop = false
       const tempRoutes = this.form.routes
       for (const item of tempRoutes.slice(0, -1)) {
+        if (routesError.includes('Routes parameters (exchange, strategy and symbol) must be unique.')) {
+          break
+        }
         for (const item1 of tempRoutes.slice(tempRoutes.indexOf(item) + 1,)) {
           if (item.exchange === item1.exchange && item.strategy === item1.strategy && item.symbol === item1.symbol && item.symbol.length !== 0) {
             routesError.push('Routes parameters (exchange, strategy and symbol) must be unique.')
@@ -315,6 +318,9 @@ export default {
       let checkBreakExtraLoop = false
       const tempExtraRoutes = this.form.extra_routes
       for (const item of tempExtraRoutes.slice(0, -1)) {
+        if (routesError.includes('Extra routes parameters (exchange, time frame and symbol) must be unique.')) {
+          break
+        }
         for (const item1 of tempExtraRoutes.slice(tempExtraRoutes.indexOf(item) + 1,)) {
           if (item.exchange === item1.exchange && item.timeframe === item1.timeframe && item.symbol === item1.symbol && item.symbol.length !== 0) {
             routesError.push('Extra routes parameters (exchange, time frame and symbol) must be unique.')
@@ -330,6 +336,9 @@ export default {
       checkBreakExtraLoop = false
       if (this.form.extra_routes.length > 0) {
         for (const item of tempExtraRoutes) {
+          if (routesError.includes('Extra routes time frame and routes time frame must be deferent.')) {
+            break
+          }
           for (const item1 of this.form.routes) {
             if (item.exchange === item1.exchange && item.symbol === item1.symbol && item.timeframe === item1.timeframe && item.symbol.length !== 0) {
               routesError.push('Extra routes time frame and routes time frame must be deferent.')
