@@ -11,7 +11,7 @@
         <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
           <TransitionChild as="template" enter="transform transition ease-in-out duration-400 sm:duration-400" enter-from="translate-x-full" enter-to="translate-x-0"
                            leave="transform transition ease-in-out duration-400 sm:duration-400" leave-from="translate-x-0" leave-to="translate-x-full">
-            <div class="w-screen max-w-4xl">
+            <div class="w-screen" :class="width">
               <div class="h-full flex flex-col py-6 bg-white dark:bg-backdrop-dark shadow-xl overflow-y-scroll">
                 <div class="px-4 sm:px-6 border-b-2 dark:border-gray-800 pb-6">
                   <div class="flex items-start justify-between">
@@ -68,6 +68,11 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    width: {
+      type: String,
+      default: 'max-w-4xl'
+      // max-w-lg
     }
   },
 }
