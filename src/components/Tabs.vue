@@ -8,12 +8,12 @@
     <!--        </select>-->
     <!--      </div>-->
     <div class="hidden sm:block">
-      <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-700" aria-label="Tabs">
+      <nav class="relative rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-700" aria-label="Tabs">
         <div v-for="(tab, name, index) in tabs" :key="tab.id"
              class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center "
         >
           <router-link
-            :class="[tab.id === pageId ? 'text-gray-900 dark:text-gray-100 font-bold ' : 'text-gray-500 dark:text-gray-300 hover:text-gray-700 font-medium ', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none  w-full text-sm bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10']"
+            :class="[tab.id === pageId ? 'text-gray-900 dark:text-gray-100 font-bold ' : 'text-gray-500 dark:text-gray-300 hover:text-gray-700 font-medium ', 'py-4 px-4 inline-block select-none cursor-pointer focus:outline-none  w-full text-sm bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800']"
             :to="`${tab.id}`">
             <span>Tab {{ index + 1 }} {{ tab.results.executing && !tab.results.showResults ? ' - ' + tab.results.progressbar.current + '%' : '' }} {{ tab.results.showResults ? ' - Results' : '' }}</span>
             <span aria-hidden="true"
@@ -21,13 +21,13 @@
           </router-link>
 
           <!-- Tab close button -->
-          <button v-show="Object.keys(tabs).length > 1" class="absolute right-[1em] focus:outline-none z-40" @click="closeTab(tab.id)">
+          <button v-show="Object.keys(tabs).length > 1" class="absolute right-[1em] focus:outline-none" @click="closeTab(tab.id)">
             <XIcon class="h-5 w-5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full" aria-hidden="true" />
           </button>
         </div>
 
         <!-- New Tab Button-->
-        <div class="select-none cursor-pointer text-gray-400 dark:text-gray-100 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white dark:bg-backdrop-dark py-4 px-4 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10 flex items-center justify-center "
+        <div class="select-none cursor-pointer text-gray-400 dark:text-gray-100 hover:text-gray-600 focus:outline-none group relative w-14 overflow-hidden bg-white dark:bg-backdrop-dark py-4 px-4 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-center "
              @click="addTab">
           <button class="absolute right-[1em] focus:outline-none ">
             <PlusSmIcon class="h-6 w-6 rounded-full" aria-hidden="true" />
