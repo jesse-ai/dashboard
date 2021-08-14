@@ -384,7 +384,7 @@ export default {
       // duplicate the last one
       this.form.extra_routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
-        symbol: this.form.routes[this.form.routes.length - 1].symbol,
+        symbol: '',
         timeframe: this.routes.timeframes[0]
       })
     },
