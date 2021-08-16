@@ -128,8 +128,16 @@
         </div>
 
         <div v-else>
-          <button class="btn-primary text-center mr-2 block w-full mb-4" @click="start($route.params.id)">
+          <button v-if="isLoggedInToJesseTrade"
+                  class="btn-primary text-center mr-2 block w-full mb-4"
+                  @click="start($route.params.id)">
             Start
+          </button>
+
+          <button v-else
+                  class="btn-primary text-center mr-2 block w-full mb-4"
+                  @click="navModals.jesseTradeLogin = true">
+            Login to Jesse.Trade
           </button>
 
           <!--          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">-->
@@ -278,16 +286,15 @@ export default {
   },
   data () {
     return {
-      positions: [
-        ['.', 'TrendFollowing', 'BTC-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
-        ['.', 'TrendFollowing', 'ETH-USDT', '3', '1 hour, 56 minutes, 9 seconds ago', 0.1, 60458, '-0.09 (-0.0424%)'],
-      ],
       copy_info_logs: false,
       copy_error_logs: false
     }
   },
   computed: {
-    ...mapState(useMainStore, ['isInitiated']),
+    ...mapState(useMainStore, ['isInitiated', 'isLoggedInToJesseTrade']),
+    ...mapState(useMainStore, {
+      navModals: 'modals'
+    })
   },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),

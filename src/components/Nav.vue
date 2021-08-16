@@ -16,6 +16,15 @@
     <JesseTradeLogin />
   </SlideOver>
 
+  <!-- Jesse.Trade Logout -->
+  <ConfirmModal
+    title="Logout Confirm"
+    description="Are you sure you want to log out from your Jesse account?"
+    type="info" :object="modals" name="jesseTradeLogout"
+  >
+    <button class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
+  </ConfirmModal>
+
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -40,7 +49,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
-            <button class="btn-success mr-4 text-sm" @click="modals.feedback = true">
+            <button class="btn-secondary mr-4 text-sm" @click="modals.feedback = true">
               Feedback
             </button>
 
@@ -66,17 +75,24 @@
 
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-48 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <MenuItem v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                            @click="modals.jesseTradeLogin = true">
-                      Login
-                    </button>
-                  </MenuItem>
-
+                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-slot="{ active }">
                     <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']">
                       New Strategy
+                    </button>
+                  </MenuItem>
+
+                  <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
+                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                            @click="modals.jesseTradeLogin = true">
+                      Login to Jesse.Trade
+                    </button>
+                  </MenuItem>
+
+                  <MenuItem v-else v-slot="{ active }">
+                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                            @click="modals.jesseTradeLogout = true">
+                      Logout from Jesse.Trade
                     </button>
                   </MenuItem>
                 </MenuItems>
@@ -132,16 +148,19 @@ import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
-import { mapState } from 'pinia'
+import { mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Feedback from '@/views/Feedback'
 import Settings from '@/components/Settings'
 import JesseTradeLogin from '@/views/JesseTradeLogin'
+import ConfirmModal from '@/components/Modals/ConfirmModal'
+import axios from 'axios'
 
 export default {
   name: 'Nav',
   components: {
     JesseTradeLogin,
+    ConfirmModal,
     Settings,
     Feedback,
     Disclosure,
@@ -188,7 +207,19 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals'])
+    ...mapState(useMainStore, ['modals']),
+    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade'])
   },
+  methods: {
+    logoutFromJesseTrade () {
+      axios.post('/logout-jesse-trade').then(res => {
+        this.isLoggedInToJesseTrade = false
+        this.modals.jesseTradeLogout = false
+        this.notyf.success(res.data.message)
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
+    }
+  }
 }
 </script>

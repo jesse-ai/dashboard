@@ -8,12 +8,15 @@ export const useMainStore = defineStore({
     isConnected: false,
     isInitiated: false,
     isAuthenticated: false,
+    isLoggedInToJesseTrade: false,
+    hasLivePluginInstalled: false,
     theme: localStorage.theme,
     modals: {
       settings: false,
       exceptionReport: false,
       feedback: false,
       jesseTradeLogin: false,
+      jesseTradeLogout: false
     },
     settings: {
       backtest: {
@@ -79,11 +82,13 @@ export const useMainStore = defineStore({
 
   actions: {
     initiate () {
-      axios.post('/routes-info').then(res => {
-        const data = res.data.data
+      axios.post('/general-info').then(res => {
+        const data = res.data
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
+        this.isLoggedInToJesseTrade = data.is_logged_in_to_jesse_trade
+        this.hasLivePluginInstalled = data.has_live_plugin_installed
         this.routes.exchanges.forEach(item => {
           this.settings.backtest.exchanges.push({
             name: item,
