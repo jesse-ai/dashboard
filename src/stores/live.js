@@ -111,9 +111,10 @@ export const useLiveStore = defineStore({
           id,
           paper_mode: this.tabs[id].form.paper_mode
         }
-      }).then(() => {
+      }).then(res => {
         this.tabs[id].results.finished = true
         this.tabs[id].modals.terminationConfirm = false
+        this.notyf.success('Live session terminated')
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
