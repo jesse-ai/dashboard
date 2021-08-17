@@ -83,6 +83,7 @@ export default {
       }).then(res => {
         sessionStorage.auth_key = res.data.auth_token
         this.setAuth()
+        this.notyf.success('Logged in successfully')
       }).catch(error => {
         if (!error.response) {
           this.notyf.error(`${error}`)
