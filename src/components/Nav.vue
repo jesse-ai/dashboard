@@ -54,7 +54,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
-            <button class="btn-secondary mr-4 text-sm" @click="modals.feedback = true">
+            <button class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
             </button>
 
@@ -227,6 +227,15 @@ export default {
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
+    },
+    openFeedback () {
+      if (!this.isLoggedInToJesseTrade) {
+        this.notyf.error('You need to login to your Jesse account to be able to send a feedback')
+        this.modals.jesseTradeLogin = true
+        return
+      }
+
+      this.modals.feedback = true
     }
   }
 }

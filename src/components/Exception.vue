@@ -34,7 +34,7 @@
   <DividerWithButtons title="Exception">
     <button type="button"
             class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
-            @click="modals.exceptionReport = true">
+            @click="openReport">
       <FlagIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
       <span>Report</span>
     </button><button type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals']),
+    ...mapState(useMainStore, ['modals', 'isLoggedInToJesseTrade']),
   },
   methods: {
     report () {
@@ -113,8 +113,17 @@ export default {
       setTimeout(() => {
         this.copy_message = false
       }, 3000)
-    }
-  },
+    },
+    openReport () {
+      if (!this.isLoggedInToJesseTrade) {
+        this.notyf.error('You need to login to your Jesse account to be able to send a report')
+        this.modals.jesseTradeLogin = true
+        return
+      }
 
+      this.modals.exceptionReport = true
+    }
+
+  },
 }
 </script>
