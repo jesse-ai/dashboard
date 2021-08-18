@@ -11,8 +11,10 @@
       <button
         class="btn-nav"
         @click="copyInfoLogs">
-        <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
+        <CheckIcon v-if="copiedLogsInfo" class="h-6 w-6" aria-hidden="true" />
+        <ClipboardIcon v-if="!copiedLogsInfo && results.infoLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
       </button>
+      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
     </template>
   </SlideOver>
 
@@ -28,8 +30,10 @@
       <button
         class="btn-nav"
         @click="copyErrorLogs">
-        <ClipboardIcon class="h-6 w-6" aria-hidden="true" />
+        <CheckIcon v-if="copiedErrorLogs" class="h-6 w-6" aria-hidden="true" />
+        <ClipboardIcon v-if="!copiedErrorLogs && results.errorLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
       </button>
+      <input id="copy-error-logs" type="hidden" :value="results.errorLogs" >
     </template>
   </SlideOver>
 
@@ -199,13 +203,12 @@
         <div class="flex justify-between items-center">
           <div class="flex justify-start items-center">
             <button
-              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer focus:outline-none"
               @click="modals.infoLogs = true">
               <span>Info Logs:</span>
-            </button>
-            <button class="focus:outline-none flex justify-start items-center" @click="copyInfoLogs">
-              <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
-              <span v-if="copy_info_logs" class="ml-1 text-xs">copied</span>
+              <div class="focus:outline-none flex justify-start items-center" >
+                <ClipboardListIcon class="w-6 h-6 ml-2"/>
+              </div>
             </button>
           </div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -216,13 +219,12 @@
         <div class="flex justify-between items-center">
           <div class="flex justify-start items-center">
             <button
-              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer"
+              class="text-sm font-medium text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 truncate flex items-center hover:underline cursor-pointer focus:outline-none"
               @click="modals.errorLogs = true">
               <span>Error Logs:</span>
-            </button>
-            <button class="focus:outline-none flex justify-start items-center" @click="copyErrorLogs">
-              <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
-              <span v-if="copy_error_logs" class="ml-1 text-xs">copied</span>
+              <div class="focus:outline-none flex justify-start items-center">
+                <ClipboardListIcon class="w-6 h-6 ml-2 cursor-pointer"/>
+              </div>
             </button>
           </div>
           <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -230,8 +232,6 @@
           </div>
         </div>
       </dl>
-      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
-      <input id="copy-error-logs" type="hidden" :value="results.errorLogs" >
     </template>
   </LayoutWithSidebar>
 </template>
@@ -242,7 +242,7 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardIcon, ClipboardListIcon } from '@heroicons/vue/outline'
+import { ClipboardIcon, ClipboardListIcon, CheckIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -263,7 +263,8 @@ export default {
     CircleProgressbar,
     Exception,
     MultipleValuesTable,
-    ClipboardIcon
+    ClipboardIcon,
+    CheckIcon
   },
   props: {
     form: {
@@ -286,8 +287,8 @@ export default {
   },
   data () {
     return {
-      copy_info_logs: false,
-      copy_error_logs: false
+      copiedLogsInfo: false,
+      copiedErrorLogs: false
     }
   },
   computed: {
@@ -303,14 +304,14 @@ export default {
       infoLogsToCopy.setAttribute('type', 'text')
       infoLogsToCopy.select()
       document.execCommand('copy')
-      this.copy_info_logs = true
+      this.copiedLogsInfo = true
 
       /* unselect the range */
       infoLogsToCopy.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
 
       setTimeout(() => {
-        this.copy_info_logs = false
+        this.copiedLogsInfo = false
       }, 3000)
     },
     copyErrorLogs () {
@@ -318,14 +319,14 @@ export default {
       infoErrorToCopy.setAttribute('type', 'text')
       infoErrorToCopy.select()
       document.execCommand('copy')
-      this.copy_error_logs = true
+      this.copiedErrorLogs = true
 
       /* unselect the range */
       infoErrorToCopy.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
 
       setTimeout(() => {
-        this.copy_error_logs = false
+        this.copiedErrorLogs = false
       }, 3000)
     }
   }
