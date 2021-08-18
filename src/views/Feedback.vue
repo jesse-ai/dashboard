@@ -43,7 +43,7 @@ export default {
   name: 'Feedback',
   data () {
     return {
-      description: ''
+      description: '',
     }
   },
   computed: {
@@ -51,19 +51,16 @@ export default {
   },
   methods: {
     submit () {
-      if (this.feedback_error.length === 0) {
-        const payload = new FormData()
-        payload.append('description', this.description)
+      const payload = new FormData()
+      payload.append('description', this.description)
 
-        axios.post('http://jesse-trade.test/api/feedback', payload, {
-          headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
-        }).then((res) => {
-          if (res.data === 'done') {
-            this.feedback_error = []
-            this.description = ''
-          }
-        })
-      }
+      axios.post('http://jesse-trade.test/api/feedback', payload, {
+        headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
+      }).then((res) => {
+        if (res.data === 'done') {
+          this.description = ''
+        }
+      })
     }
   }
 }
