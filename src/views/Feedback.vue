@@ -51,15 +51,18 @@ export default {
   },
   methods: {
     submit () {
-      const payload = new FormData()
-      payload.append('description', this.description)
-
-      axios.post('http://jesse-trade.test/api/feedback', payload, {
-        headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
+      // headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
+      axios.post('/feedback', {
+        description: this.description
       }).then((res) => {
-        if (res.data === 'done') {
+        if (res.data.status === 'success') {
           this.description = ''
+          this.notyf.success(res.data.message)
+        } else if (res.data.status === 'error') {
+          this.notyf.error(res.data.message)
         }
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     }
   }
