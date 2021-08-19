@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     submit () {
-      // headers: 'Authorization:Bearer bFS0KX2eWvpxRMi1J1a2akTp9TtGAri6DoTWKM1b'
       axios.post('/feedback', {
         description: this.description
       }).then((res) => {
