@@ -26,7 +26,7 @@
     <br>
 
     <div>
-      <button class="btn-primary mr-4">Submit</button>
+      <button class="btn-primary mr-4" @click="report">Submit</button>
       <button class="btn-link text-indigo-600 dark:text-indigo-400" @click="modals.exceptionReport = false">Cancel</button>
     </div>
   </SlideOver>
@@ -71,6 +71,7 @@ import DividerWithButtons from '@/components/DividerWithButtons'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import axios from 'axios'
 
 export default {
   name: 'Exception',
@@ -99,6 +100,19 @@ export default {
   methods: {
     report () {
       alert('not implemented yet')
+
+      axios.post('/report-exception', {
+        description: this.description
+      }).then((res) => {
+        if (res.data.status === 'success') {
+          this.description = ''
+          this.notyf.success(res.data.message)
+        } else if (res.data.status === 'error') {
+          this.notyf.error(res.data.message)
+        }
+      }).catch(error => {
+        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+      })
     },
     copy () {
       const exceptionToCopy = document.querySelector('#copy-exception')
