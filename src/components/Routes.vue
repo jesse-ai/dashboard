@@ -160,9 +160,7 @@
       <div v-for="item in totalRoutesError" :key="item" class="flex justify-start items-center mb-2">
         <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
 
-        <div>
-          {{ item }}
-        </div>
+        <div v-html="item" />
       </div>
     </div>
   </div>
@@ -250,7 +248,7 @@ export default {
       const symbolErrors = []
 
       const ERRORS = {
-        uniqueRoutesErrorMessage: 'each exchange-symbol pair can be traded only once! \\nMore info: https://docs.jesse.trade/docs/routes.html#trading-multiple-routes',
+        uniqueRoutesErrorMessage: 'each exchange-symbol pair can be traded only once! <br> More info: https://docs.jesse.trade/docs/routes.html#trading-multiple-routes',
         maxSymbolLengthErrorMessage: 'Maximum symbol length is exceeded!',
         mustContainDashErrorMessage: 'Symbol parameter must contain "-" character!',
         timeframeMustBeDifferentErrorMessage: 'Extra routes timeframe and routes timeframe must be different',
