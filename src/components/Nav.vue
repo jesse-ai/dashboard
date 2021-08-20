@@ -157,7 +157,7 @@
       </div>
 
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300']"
+        <button class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
                 @click="modals.makeStrategy = true">
           New Strategy
         </button>
@@ -185,15 +185,20 @@
       </div>
 
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300']"
+        <button v-if="!isLoggedInToJesseTrade" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
                 @click="modals.jesseTradeLogin = true">
           Login to Jesse.Trade
+        </button>
+
+        <button v-else class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
+                @click="modals.jesseTradeLogout = true">
+          Logout from Jesse.Trade
         </button>
       </div>
 
       <!-- options and feedback button -->
       <div class="flex justify-between items-center px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button class="btn-nav"
+        <button class="btn-nav ml-0"
                 @click="modals.settings = true">
           <span class="sr-only">Settings</span>
           <CogIcon class="h-6 w-6" aria-hidden="true" />
