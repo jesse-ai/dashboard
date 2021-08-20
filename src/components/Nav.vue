@@ -80,27 +80,51 @@
 
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <MenuItem v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                            @click="modals.makeStrategy = true">
-                      New Strategy
-                    </button>
-                  </MenuItem>
+                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
+                  <div class="py-1">
+                    <MenuItem v-slot="{ active }">
+                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                              @click="modals.makeStrategy = true">
+                        New Strategy
+                      </button>
+                    </MenuItem>
+                  </div>
 
-                  <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                            @click="modals.jesseTradeLogin = true">
-                      Login to Jesse.Trade
-                    </button>
-                  </MenuItem>
+                  <div class="py-1">
+                    <MenuItem v-slot="{ active }">
+                      <a href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        Documentation
+                      </a>
+                    </MenuItem>
 
-                  <MenuItem v-else v-slot="{ active }">
-                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                            @click="modals.jesseTradeLogout = true">
-                      Logout from Jesse.Trade
-                    </button>
-                  </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <a href="https://jesse.trade/strategies" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        Strategies
+                      </a>
+                    </MenuItem>
+
+                    <MenuItem v-slot="{ active }">
+                      <a href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        Help Center
+                      </a>
+                    </MenuItem>
+                  </div>
+
+                  <div class="py-1">
+                    <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
+                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                              @click="modals.jesseTradeLogin = true">
+                        Login to Jesse.Trade
+                      </button>
+                    </MenuItem>
+
+                    <MenuItem v-else v-slot="{ active }">
+                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                              @click="modals.jesseTradeLogout = true">
+                        Logout from Jesse.Trade
+                      </button>
+                    </MenuItem>
+                  </div>
                 </MenuItems>
               </transition>
             </Menu>
