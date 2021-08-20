@@ -47,7 +47,7 @@
     }
 
     .btn-nav {
-        @apply ml-2 p-2 hover:text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none
+        @apply ml-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none
     }
 
     .input {
