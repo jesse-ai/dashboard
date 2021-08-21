@@ -99,14 +99,14 @@ export default {
   },
   methods: {
     report () {
-      alert('not implemented yet')
-
       axios.post('/report-exception', {
-        description: this.description
+        description: this.description,
+        traceback: this.content,
       }).then((res) => {
         if (res.data.status === 'success') {
           this.description = ''
           this.notyf.success(res.data.message)
+          this.modals.exceptionReport = false
         } else if (res.data.status === 'error') {
           this.notyf.error(res.data.message)
         }
