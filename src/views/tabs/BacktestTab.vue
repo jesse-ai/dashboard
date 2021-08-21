@@ -1,9 +1,22 @@
 <template>
+  <!-- Debugger Logs -->
   <SlideOver v-if="form.debug_mode"
              name="logsModal"
              :object="results"
              title="Logs">
-    <Logs :logs="results.infoLogs"/>
+    <template #default>
+      <Logs :logs="results.infoLogs"/>
+    </template>
+
+    <template #buttons>
+      <button
+        class="btn-nav"
+        @click="copyInfoLogs">
+        <CheckIcon v-if="copiedLogsInfo" class="h-6 w-6" aria-hidden="true" />
+        <ClipboardIcon v-if="!copiedLogsInfo && results.infoLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
+      </button>
+      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
+    </template>
   </SlideOver>
 
   <!-- Execution -->
@@ -17,8 +30,8 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="results.logsModal = true">
-        View Logs
+      <button v-if="form.debug_mode" class="btn-success block mb-4 w-64" @click="results.logsModal = true">
+        Debugger Logs
       </button>
 
       <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
@@ -108,6 +121,10 @@
       <!-- Action Buttons -->
       <div v-if="!results.executing">
         <div v-if="results.showResults">
+          <button v-if="form.debug_mode" class="btn-success text-center block mb-4 w-full" @click="results.logsModal = true">
+            Debugger Logs
+          </button>
+
           <button class="btn-primary text-center block mb-4 w-full" @click="rerun($route.params.id)">
             Rerun
           </button>
@@ -139,10 +156,20 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import Checkbox from '@/components/Checkbox'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
+import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
+import SlideOver from '@/components/Functional/SlideOver'
 
 export default {
   name: 'BacktestTab',
-  components: { LayoutWithSidebar, Logs, Checkbox, MultipleValuesTable },
+  components: {
+    LayoutWithSidebar,
+    Logs,
+    Checkbox,
+    MultipleValuesTable,
+    ClipboardIcon,
+    CheckIcon,
+    SlideOver
+  },
   props: {
     form: {
       type: Object,
@@ -153,6 +180,11 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      copiedLogsInfo: false,
+    }
+  },
   computed: {
     hasExecutedTrades () {
       return this.results.metrics.length > 0
@@ -161,6 +193,21 @@ export default {
   },
   methods: {
     ...mapActions(useBacktestStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
+    copyInfoLogs () {
+      const infoLogsToCopy = document.querySelector('#copy-info-logs')
+      infoLogsToCopy.setAttribute('type', 'text')
+      infoLogsToCopy.select()
+      document.execCommand('copy')
+      this.copiedLogsInfo = true
+
+      /* unselect the range */
+      infoLogsToCopy.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+
+      setTimeout(() => {
+        this.copiedLogsInfo = false
+      }, 3000)
+    }
   }
 }
 </script>
