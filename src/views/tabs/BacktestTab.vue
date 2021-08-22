@@ -186,7 +186,6 @@ import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
-import axios from 'axios'
 
 export default {
   name: 'BacktestTab',
