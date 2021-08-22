@@ -31,6 +31,9 @@ export default function () {
     ['backtest.exception', [
       backtest.exceptionEvent
     ]],
+    ['backtest.general_info', [
+      backtest.generalInfoEvent
+    ]],
 
     // candles
     ['candles.progressbar', [

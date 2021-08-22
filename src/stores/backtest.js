@@ -32,6 +32,7 @@ function newTab () {
       },
       routes_info: [],
       metrics: [],
+      generalInfo: {},
       infoLogs: '',
       exception: {
         error: '',
@@ -141,6 +142,9 @@ export const useBacktestStore = defineStore({
     exceptionEvent (id, data) {
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
+    },
+    generalInfoEvent (id, data) {
+      this.tabs[id].results.generalInfo = data
     },
     metricsEvent (id, data) {
       // no trades were executed

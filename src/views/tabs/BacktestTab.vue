@@ -30,10 +30,6 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button v-if="form.debug_mode" class="btn-success block mb-4 w-64" @click="results.logsModal = true">
-        Debugger Logs
-      </button>
-
       <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
@@ -121,17 +117,49 @@
       <!-- Action Buttons -->
       <div v-if="!results.executing">
         <div v-if="results.showResults">
-          <button v-if="form.debug_mode" class="btn-success text-center block mb-4 w-full" @click="results.logsModal = true">
-            Debugger Logs
-          </button>
-
           <button class="btn-primary text-center block mb-4 w-full" @click="rerun($route.params.id)">
             Rerun
           </button>
 
-          <button class="btn-secondary text-center block mb-4 w-full" @click="newBacktest($route.params.id)">
+          <button class="btn-success text-center block mb-4 w-full" @click="newBacktest($route.params.id)">
             New session
           </button>
+
+          <a v-if="form.debug_mode"
+             :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            Debugging Logs
+          </a>
+
+          <a v-if="form.export_chart"
+             :href="`http://127.0.0.1:8000/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            Legacy Chart
+          </a>
+
+          <a v-if="form.export_full_reports"
+             :href="`http://127.0.0.1:8000/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            QuantStats Report
+          </a>
+
+          <a v-if="form.export_csv"
+             :href="`http://127.0.0.1:8000/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            CSV
+          </a>
+
+          <a v-if="form.export_json"
+             :href="`http://127.0.0.1:8000/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            JSON
+          </a>
+
+          <a v-if="form.export_tradingview"
+             :href="`http://127.0.0.1:8000/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
+             class="btn-secondary text-center block mb-4 w-full">
+            TradingView Pine Editor
+          </a>
         </div>
 
         <div v-else>
@@ -158,6 +186,7 @@ import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
+import axios from 'axios'
 
 export default {
   name: 'BacktestTab',
@@ -189,7 +218,10 @@ export default {
     hasExecutedTrades () {
       return this.results.metrics.length > 0
     },
-    ...mapState(useMainStore, ['isInitiated'])
+    ...mapState(useMainStore, ['isInitiated']),
+    auth_key () {
+      return sessionStorage.auth_key
+    }
   },
   methods: {
     ...mapActions(useBacktestStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
@@ -207,7 +239,7 @@ export default {
       setTimeout(() => {
         this.copiedLogsInfo = false
       }, 3000)
-    }
+    },
   }
 }
 </script>
