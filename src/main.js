@@ -29,8 +29,14 @@ app.use(notyf, {
   ]
 })
 
+let wsPath = ''
+if (process.env.VUE_APP_SOCKET_PATH === '/') {
+  wsPath = ((window.location.protocol === 'https:') ? 'wss://' : 'ws://') + window.location.host + '/ws'
+} else {
+  wsPath = `${process.env.VUE_APP_SOCKET_PATH}`
+}
 app.use(websocket, {
-  socketPath: `${process.env.VUE_APP_SOCKET_PATH}`
+  socketPath: wsPath
 })
 pinia.use(({ store }) => {
   store.$router = markRaw(router)
