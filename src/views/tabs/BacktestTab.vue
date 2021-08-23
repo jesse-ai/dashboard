@@ -131,31 +131,31 @@
             Debugging Logs
           </a>
 
-          <a v-if="form.export_chart"
+          <a v-if="form.export_chart && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
              class="btn-secondary text-center block mb-4 w-full">
             Legacy Chart
           </a>
 
-          <a v-if="form.export_full_reports"
+          <a v-if="form.export_full_reports && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
              class="btn-secondary text-center block mb-4 w-full">
             QuantStats Report
           </a>
 
-          <a v-if="form.export_csv"
+          <a v-if="form.export_csv && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
              class="btn-secondary text-center block mb-4 w-full">
             CSV
           </a>
 
-          <a v-if="form.export_json"
+          <a v-if="form.export_json && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
              class="btn-secondary text-center block mb-4 w-full">
             JSON
           </a>
 
-          <a v-if="form.export_tradingview"
+          <a v-if="form.export_tradingview && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
              class="btn-secondary text-center block mb-4 w-full">
             TradingView Pine Editor
@@ -231,7 +231,7 @@ export default {
       document.execCommand('copy')
       this.copiedLogsInfo = true
 
-      /* unselect the range */
+      // unselect the range
       infoLogsToCopy.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
 
