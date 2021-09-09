@@ -19,6 +19,10 @@
 
     <br>
 
+    <CheckBox title="Send feedback as ticket" :object="ticket" name="send_ticket" />
+
+    <br>
+
     <div class="flex justify-end">
       <button class="btn-link mr-8"
               @click="modals.feedback = false">
@@ -38,11 +42,14 @@
 import axios from 'axios'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import CheckBox from '@/components/Checkbox'
 
 export default {
   name: 'Feedback',
+  components: { CheckBox },
   data () {
     return {
+      ticket: { send_ticket: false },
       description: '',
     }
   },
@@ -52,7 +59,8 @@ export default {
   methods: {
     submit () {
       axios.post('/feedback', {
-        description: this.description
+        description: this.description,
+        ticket: this.ticket.send_ticket,
       }).then((res) => {
         if (res.data.status === 'success') {
           this.description = ''

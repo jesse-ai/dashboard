@@ -25,6 +25,10 @@
 
     <br>
 
+    <CheckBox title="Send report as ticket" :object="ticket" name="send_ticket" />
+
+    <br>
+
     <div>
       <button class="btn-primary mr-4" @click="report">Submit</button>
       <button class="btn-link text-indigo-600 dark:text-indigo-400" @click="modals.exceptionReport = false">Cancel</button>
@@ -69,6 +73,7 @@ import { FlagIcon, ClipboardIcon, CheckIcon } from '@heroicons/vue/outline'
 import { XCircleIcon } from '@heroicons/vue/solid'
 import DividerWithButtons from '@/components/DividerWithButtons'
 import SlideOver from '@/components/Functional/SlideOver'
+import CheckBox from '@/components/Checkbox'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import axios from 'axios'
@@ -76,7 +81,7 @@ import axios from 'axios'
 export default {
   name: 'Exception',
   components: {
-    DividerWithButtons, FlagIcon, ClipboardIcon, XCircleIcon, SlideOver, CheckIcon
+    DividerWithButtons, FlagIcon, ClipboardIcon, XCircleIcon, SlideOver, CheckIcon, CheckBox
   },
   props: {
     title: {
@@ -90,6 +95,7 @@ export default {
   },
   data () {
     return {
+      ticket: { send_ticket: false },
       description: '',
       copied: false,
     }
@@ -100,6 +106,7 @@ export default {
   methods: {
     report () {
       axios.post('/report-exception', {
+        ticket: this.ticket.send_ticket,
         description: this.description,
         traceback: this.content,
       }).then((res) => {
