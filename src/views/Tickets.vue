@@ -1,32 +1,55 @@
 <template>
   <div class="p-6 mt-4">
     <div class="px-6">
-      <h1>
-        Tickets
-      </h1>
+      <div class="flex justify-between items-center">
+        <h1>
+          Tickets
+        </h1>
+      
+        <button v-if="tickets.length > 0" class="flex items-center focus:outline-none lg:ml-20">
+          <div class="mr-1 text-sm text-indigo-600 dark:text-indigo-400">
+            Create new ticket 
+          </div>
+          <PlusCircleIcon class="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+        </button>
+      </div>
 
       <br>
 
-      <div v-if="tickets && tickets.length > 0" class="w-full">
-        <router-link v-for="item in tickets" :key="item.id" to="#" class="p-2">
-          <div class="w-full p-2 hover:bg-gray-50 dark:hover:bg-gray-700 border dark:border-gray-900 rounded-md">
-            <div class="flex justify-between items-center">
-              <div class="">
-                {{ item.title }}
+      <div v-if="tickets && tickets.length > 0">
+        <div class="w-full grid grid-cols-1 gap-4">
+          <router-link v-for="item in tickets" :key="item.id" to="#"
+                       class="py-2">
+            <div class="w-full relative p-2 hover:bg-gray-50 dark:hover:bg-gray-700 border dark:border-gray-900 rounded-md">
+              <div class="flex justify-between items-center">
+                <div class="">
+                  # {{ item.title }}
+                </div>
+                <div class="text-xs text-gray-400">
+                  {{ createTime(item.messages[item.messages.length-1].created_at) }}
+                </div>
               </div>
-              <div v-if="newMessage(item.messages)">
-                New Message
-              </div>
-              <div class="text-xs text-gray-400">
-                {{ createTime(item.messages[item.messages.length-1].created_at) }}
+              <div v-if="newMessage(item.messages)" class=" absolute right-0 bottom-8">
+                <div class="w-4 h-4 bg-green-400 dark:bg-green-500 rounded-full" />
               </div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
 
-      <div v-else>
-        You have'nt create any ticket.
+      <div v-else class="px-2 mt-8">
+        <div class="w-full">
+          <div class="text-base">
+            You have not created any tickets.
+          </div>
+
+          <button class="flex items-center focus:outline-none mt-6">
+            <div class="mr-1 text-indigo-600 hover:underline dark:text-indigo-400">
+              Create new ticket 
+            </div>
+            <PlusCircleIcon class="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -35,11 +58,15 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { PlusCircleIcon } from '@heroicons/vue/solid'
 
 export default {
+  components: {
+    PlusCircleIcon,
+  },
   data () {
     return {
-      tickets: []
+      tickets: [],
     }
   },
   created () {
