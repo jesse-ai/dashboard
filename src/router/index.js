@@ -9,6 +9,7 @@ import Live from '@/views/Live'
 import Optimization from '@/views/Optimization'
 import PaperTrade from '@/views/PaperTrade'
 import PiniaTest from '@/views/PiniaTest'
+import Tickets from '@/views/Tickets'
 
 import { watch } from 'vue'
 
@@ -76,6 +77,12 @@ const routes = [
     path: '/pinia-test',
     component: PiniaTest,
     name: 'PiniaTest',
+    beforeEnter: isSocketConnected,
+  },
+  {
+    path: '/tickets',
+    component: Tickets,
+    name: 'Tickets',
     beforeEnter: isSocketConnected,
   }
 ]
