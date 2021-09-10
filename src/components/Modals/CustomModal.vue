@@ -18,7 +18,9 @@
             </div>
 
             <!-- main section -->
-            <slot name="main" />
+            <div class="mt-4">
+              <slot name="main" />
+            </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <!-- footer section -->
               <slot name="footer" />
