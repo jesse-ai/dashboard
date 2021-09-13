@@ -48,7 +48,6 @@
       </div>
 
       <br>
-
       <div v-if="tickets && tickets.length > 0">
         <div class="w-full grid grid-cols-1 gap-4">
           <router-link v-for="item in tickets" :key="item.id" to="#"
@@ -56,10 +55,10 @@
             <div class="w-full relative p-2 hover:bg-gray-50 dark:hover:bg-gray-700 border dark:border-gray-900 rounded-md">
               <div class="flex justify-between items-center">
                 <div class="">
-                  # {{ item.title }}
+                  {{ isNaN(parseInt(item.title)) ? '' : '#' }}{{ item.title }}
                 </div>
                 <div class="text-xs text-gray-400">
-                  {{ createTime(item.messages[item.messages.length-1].created_at) }}
+                  {{ item.created_at == 'now' ? 'now' : createTime(item.messages[item.messages.length-1].created_at) }}
                 </div>
               </div>
               <div v-if="newMessage(item.messages)" class=" absolute right-0 bottom-8">
@@ -104,7 +103,7 @@ export default {
       title: '',
       description: '',
       tickets: [],
-      openNewTicket: { open: true }
+      openNewTicket: { open: false }
     }
   },
   created () {
@@ -118,12 +117,12 @@ export default {
   },
   methods: {
     createTime (time) {
-      const msTime = moment(this.time).valueOf()
-      
+      const msTime = moment(time).valueOf()
+
       if (msTime > moment().subtract(1, 'days').valueOf()) {
-        return moment(this.time).format('hh:mm')
+        return moment(time).format('hh:mm')
       } else {
-        return moment(this.time).format('MMM Do YY')
+        return moment(time).format('MMM Do YY')
       }
     },
     newMessage (messages) {
@@ -145,8 +144,27 @@ export default {
         title: this.title,
       }).then((res) => {
         if (res.data.status === 'success') {
+          const newTicket = {}
+          newTicket.title = this.title
+          newTicket.description = this.description
+          newTicket.created_at = 'now'
+          newTicket.id = this.tickets[0].id + 1
+          newTicket.messages = []
+
+          const message = {}
+          message.id = 1
+          message.seen = true
+          message.ticket = newTicket.id
+          message.description = this.description
+
+          newTicket.messages.push(message)
+
           this.description = ''
           this.title = ''
+          this.openNewTicket.open = false
+          
+          this.tickets.unshift(newTicket)
+
           this.notyf.success(res.data.message)
         } else if (res.data.status === 'error') {
           this.notyf.error(res.data.message)
