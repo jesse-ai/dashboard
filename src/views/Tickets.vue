@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import { mapActions, mapWritableState } from 'pinia'
+import { useTicketsStore } from '@/stores/ticket'
 import axios from 'axios'
 import moment from 'moment'
 import { PlusCircleIcon } from '@heroicons/vue/solid'
@@ -106,10 +108,14 @@ export default {
       ticketMessage: { open: false },
       title: '',
       description: '',
-      tickets: [],
       openNewTicket: { open: false },
       selectedTicket: {}
     }
+  },
+  computed: {
+    ...mapWritableState(useTicketsStore, [
+      'tickets'
+    ]),
   },
   watch: {
     ticketMessage: {
@@ -120,15 +126,10 @@ export default {
     },
   },
   created () {
-    axios.get('/get-tickets').then(res => {
-      if (res.data.status === 'success') {
-        this.tickets = res.data.data
-      }
-    }).catch(error => {
-      this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-    })
+    this.getTickets()
   },
   methods: {
+    ...mapActions(useTicketsStore, ['getTickets']),
     ticketMessageCheck () {
       if (this.ticketMessage.open === false) {
         setTimeout(() => {
