@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-import _ from 'lodash'
-import helpers from '@/helpers'
 import axios from '@/http'
 
 export const useTicketsStore = defineStore({
