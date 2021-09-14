@@ -1,5 +1,6 @@
 <template>
   <div class="p-6 mt-4">
+    <TicketMessages :object="ticketMessage" :name="'open'" :ticket="selectedTicket"/>
     <CustomModal :object="openNewTicket" name="open">
       <template #head>
         Create New Ticket
@@ -50,8 +51,8 @@
       <br>
       <div v-if="tickets && tickets.length > 0">
         <div class="w-full grid grid-cols-1 gap-4">
-          <router-link v-for="item in tickets" :key="item.id" to="#"
-                       class="py-2">
+          <button v-for="item in tickets" :key="item.id" class="py-2"
+                  @click="selectedTicket = item; ticketMessage.open = true">
             <div class="w-full relative p-2 hover:bg-gray-50 dark:hover:bg-gray-700 border dark:border-gray-900 rounded-md">
               <div class="flex justify-between items-center">
                 <div class="">
@@ -65,7 +66,7 @@
                 <div class="w-4 h-4 bg-green-400 dark:bg-green-500 rounded-full" />
               </div>
             </div>
-          </router-link>
+          </button>
         </div>
       </div>
 
@@ -92,18 +93,22 @@ import axios from 'axios'
 import moment from 'moment'
 import { PlusCircleIcon } from '@heroicons/vue/solid'
 import CustomModal from '@/components/Modals/CustomModal'
+import TicketMessages from '@/components/TicketMessages'
 
 export default {
   components: {
     PlusCircleIcon,
-    CustomModal
+    CustomModal,
+    TicketMessages
   },
   data () {
     return {
+      ticketMessage: { open: false },
       title: '',
       description: '',
       tickets: [],
-      openNewTicket: { open: false }
+      openNewTicket: { open: false },
+      selectedTicket: {}
     }
   },
   created () {
