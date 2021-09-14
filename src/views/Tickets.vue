@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 mt-4">
+  <div class="w-full p-6 mt-4">
     <TicketMessages :object="ticketMessage" :name="'open'" :ticket="selectedTicket"/>
     <CustomModal :object="openNewTicket" name="open">
       <template #head>
@@ -51,20 +51,20 @@
       <br>
       <div v-if="tickets && tickets.length > 0">
         <div class="w-full grid grid-cols-1 gap-4">
-          <button v-for="item in tickets" :key="item.id" class="py-2"
+          <button v-for="item in tickets" :key="item.id" class="border dark:border-gray-900 hover:shadow-sm flex justify-between items-center rounded-md"
                   @click="selectedTicket = item; ticketMessage.open = true">
-            <div class="w-full relative p-2 hover:bg-gray-50 dark:hover:bg-gray-700 border dark:border-gray-900 rounded-md">
-              <div class="flex justify-between items-center">
-                <div class="">
-                  {{ isNaN(parseInt(item.title)) ? '' : '#' }}{{ item.title }}
-                </div>
-                <div class="text-xs text-gray-400">
-                  {{ item.created_at == 'now' ? 'now' : createTime(item.messages[item.messages.length-1].created_at) }}
-                </div>
+            <div class="w-full flex items-center justify-between h-12 px-2">
+              <div>
+                {{ isNaN(parseInt(item.title)) ? '' : '#' }}{{ item.title }}
               </div>
-              <div v-if="newMessage(item.messages)" class=" absolute right-0 bottom-8">
-                <div class="w-4 h-4 bg-green-400 dark:bg-green-500 rounded-full" />
+              <div class="text-xs text-gray-400">
+                {{ item.created_at == 'now' ? 'now' : createTime(item.messages[item.messages.length-1].created_at) }}
               </div>
+            </div>
+            <div v-if="newMessage(item.messages)" class="flex items-center justify-center h-12 w-40 text-green-700 dark:text-green-200 bg-green-200 dark:bg-green-700
+                 rounded-r text-xs
+                 select-none">
+              New Message
             </div>
           </button>
         </div>
@@ -99,7 +99,7 @@ export default {
   components: {
     PlusCircleIcon,
     CustomModal,
-    TicketMessages
+    TicketMessages,
   },
   data () {
     return {
@@ -149,7 +149,7 @@ export default {
       // this method check last ten messages of tickets for find unseen message
       let lastTen = messages
       if (messages.length > 10) {
-        lastTen = messages.slice(messages.length - 11, messages.length - 1)
+        lastTen = messages.slice(messages.length - 11, messages.length)
       }
 
       for (const item of lastTen) {
