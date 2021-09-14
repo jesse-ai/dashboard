@@ -118,8 +118,10 @@ export default {
     checkTickets () {
       setTimeout(() => {
         // got to end of page when page create
-        const container = document.getElementById('chat')
-        container.scrollIntoView(false)
+        if (this.ticket.messages) {
+          const container = document.getElementById('chat')
+          container.scrollIntoView(false)
+        }
       }, 20)
     },
     checkSeen (item) {

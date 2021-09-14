@@ -111,6 +111,14 @@ export default {
       selectedTicket: {}
     }
   },
+  watch: {
+    ticketMessage: {
+      handler () {
+        this.ticketMessageCheck()
+      },
+      deep: true
+    },
+  },
   created () {
     axios.get('/get-tickets').then(res => {
       if (res.data.status === 'success') {
@@ -121,6 +129,13 @@ export default {
     })
   },
   methods: {
+    ticketMessageCheck () {
+      if (this.ticketMessage.open === false) {
+        setTimeout(() => {
+          this.selectedTicket = {}
+        }, 200)
+      }
+    },
     createTime (time) {
       const msTime = moment(time).valueOf()
 
