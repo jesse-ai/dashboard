@@ -37,7 +37,7 @@
                     </div>
                     <div :class="item.user_id === ticket.user_id ? 'justify-end' : 'justify-start'" class="w-full flex mb-2">
                       <div class="w-2/3 p-2 bg-gray-100 dark:bg-gray-600 text-sm rounded-md">
-                        <div>
+                        <div class=" break-words">
                           {{ item.description }}
                         </div>
                         <div class="w-full flex justify-end text-xs border-t dark:border-gray-900 mt-2 py-1">
