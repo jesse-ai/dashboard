@@ -165,7 +165,10 @@ export default {
           newTicket.title = this.title
           newTicket.description = this.description
           newTicket.created_at = 'now'
-          newTicket.id = this.tickets[0].id + 1
+          newTicket.id = 1
+          if (this.tickets.length > 0) {
+            newTicket.id = this.tickets[0].id + 1
+          }
           newTicket.messages = []
 
           const message = {}
