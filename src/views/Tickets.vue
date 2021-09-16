@@ -1,39 +1,35 @@
 <template>
   <div class="w-full p-6 mt-4">
     <TicketMessages :object="ticketMessage" :name="'open'" :new-message="newMessage" :ticket="selectedTicket"/>
-    <CustomModal :object="openNewTicket" name="open">
-      <template #head>
-        Create New Ticket
-      </template>
+    <SlideOver :object="openNewTicket" name="open" title="Create New Ticket" width="max-w-2xl">
+      <label class="font-semibold">Title:</label>
+      <input id="content" v-model="title"
+             placeholder="Title"
+             required
+             name="content"
+             class="input mt-2 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300" >
+      <br>
+      <label class="font-semibold">Description:</label>
+      <textarea id="content" v-model="description"
+                placeholder="Inert your ticket..."
+                required
+                name="content"
+                rows="10"
+                class="dark:bg-gray-800 dark:border-gray-900 mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300 rounded" />
+      <br>
 
-      <template #main>
-        <label class="font-semibold">Title:</label>
-        <input id="content" v-model="title"
-               placeholder="Title"
-               required
-               name="content"
-               class="input mt-2 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300" >
-        <br>
-        <label class="font-semibold">Description:</label>
-        <textarea id="content" v-model="description"
-                  placeholder="Inert your ticket..."
-                  required
-                  name="content"
-                  rows="10"
-                  class="dark:bg-gray-800 dark:border-gray-900 mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300 rounded" />
-
-        <br>
-      </template>
-
-      <template #footer>
-        <button type="button" class="btn-primary" :disabled="!description.length || !title.length" @click="createTicket()">
-          Create
-        </button>
+      <br>
+      
+      <div class="flex justify-end">
         <button type="button" class="font-medium select-none items-center text-gray-700 dark:text-gray-300 hover:underline focus:outline-none text-base tracking-wide mr-4" @click="openNewTicket.open = false">
           Cancel
         </button>
-      </template>
-    </CustomModal>
+
+        <button type="button" class="btn-primary w-48" :disabled="!description.length || !title.length" @click="createTicket()">
+          Create
+        </button>
+      </div>
+    </SlideOver>
     <div class="px-6">
       <div class="flex justify-between items-center">
         <h1>
@@ -94,14 +90,14 @@ import { useTicketsStore } from '@/stores/ticket'
 import axios from 'axios'
 import moment from 'moment'
 import { PlusCircleIcon } from '@heroicons/vue/solid'
-import CustomModal from '@/components/Modals/CustomModal'
+import SlideOver from '@/components/Functional/SlideOver'
 import TicketMessages from '@/components/TicketMessages'
 
 export default {
   components: {
     PlusCircleIcon,
-    CustomModal,
     TicketMessages,
+    SlideOver
   },
   data () {
     return {
