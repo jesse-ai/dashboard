@@ -165,16 +165,13 @@ export default {
           newTicket.title = this.title
           newTicket.description = this.description
           newTicket.created_at = 'now'
-          newTicket.id = 1
-          if (this.tickets.length > 0) {
-            newTicket.id = this.tickets[0].id + 1
-          }
+          newTicket.id = res.data.ticket_id
           newTicket.messages = []
 
           const message = {}
-          message.id = 1
+          message.id = Math.floor(Math.random() * (9999 - 1111) + 1111)
           message.seen = true
-          message.ticket = newTicket.id
+          message.ticket_id = newTicket.id
           message.description = this.description
 
           newTicket.messages.push(message)

@@ -170,10 +170,9 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           const tempMessage = {}
-          tempMessage.id = this.ticket.messages[this.ticket.messages.length - 1].id + 1
+          tempMessage.id = Math.floor(Math.random() * (9999 - 1111) + 1111)
           tempMessage.ticket_id = this.ticket.id
           tempMessage.description = this.message
-          tempMessage.user_id = this.ticket.user_id
           tempMessage.created_at = 'now'
           tempMessage.seen = true
 
