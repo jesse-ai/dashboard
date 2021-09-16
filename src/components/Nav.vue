@@ -74,6 +74,7 @@
             <!-- Profile dropdown -->
             <Menu as="div" class="relative z-40">
               <MenuButton class="btn-nav">
+                <div v-if="newMessage.haveMessage" class="absolute top-1 p-1 bg-green-200 dark:bg-green-700 rounded-full" />
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
               </MenuButton>
@@ -92,9 +93,10 @@
                     <MenuItem v-slot="{ active }">
                       <router-link
                         to="/Tickets"
-                        :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                        :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full flex items-center justify-between text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                       >
                         Tickets
+                        <div v-if="newMessage.haveMessage" class="p-1 h-1 bg-green-200 dark:bg-green-700 rounded-full" />
                       </router-link>
                     </MenuItem>
                   </div>
@@ -228,8 +230,9 @@ import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
-import { mapState, mapWritableState } from 'pinia'
+import { mapState, mapWritableState, mapActions } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import { useTicketsStore } from '@/stores/ticket'
 import Feedback from '@/views/Feedback'
 import Settings from '@/components/Settings'
 import JesseTradeLogin from '@/views/JesseTradeLogin'
@@ -289,9 +292,16 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ['modals']),
+    ...mapWritableState(useTicketsStore, [
+      'newMessage'
+    ]),
     ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade'])
   },
+  created () {
+    this.ticketHasNewMessage()
+  },
   methods: {
+    ...mapActions(useTicketsStore, ['ticketHasNewMessage']),
     logoutFromJesseTrade () {
       axios.post('/logout-jesse-trade').then(res => {
         this.isLoggedInToJesseTrade = false

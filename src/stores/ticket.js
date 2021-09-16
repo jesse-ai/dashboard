@@ -4,7 +4,8 @@ import axios from '@/http'
 export const useTicketsStore = defineStore({
   id: 'ticket',
   state: () => ({
-    tickets: []
+    tickets: [],
+    newMessage: { haveMessage: false }
   }),
   actions: {
     getTickets () {
@@ -17,11 +18,17 @@ export const useTicketsStore = defineStore({
       })
     },
     ticketHasNewMessage () {
-      for (const item of this.tickets.messages) {
-        if (!item.seen) {
-          return true
+      this.getTickets()
+      setTimeout(() => {
+        for (const item of this.tickets) {
+          for (const item2 of item.messages) {
+            if (!item2.seen) {
+              this.newMessage.haveMessage = true
+              return
+            }
+          }
         }
-      }
+      }, 1000)
     }
   }
 })
