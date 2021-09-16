@@ -97,6 +97,10 @@ export default {
     ticket: {
       type: Object,
       required: true
+    },
+    newMessage: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -153,6 +157,7 @@ export default {
           for (const item of this.ticket.messages) {
             if (!item.seen) {
               item.seen = true
+              this.newMessage.haveMessage = false
             }
           }
         }

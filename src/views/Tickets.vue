@@ -1,6 +1,6 @@
 <template>
   <div class="w-full p-6 mt-4">
-    <TicketMessages :object="ticketMessage" :name="'open'" :ticket="selectedTicket"/>
+    <TicketMessages :object="ticketMessage" :name="'open'" :new-message="newMessage" :ticket="selectedTicket"/>
     <CustomModal :object="openNewTicket" name="open">
       <template #head>
         Create New Ticket
@@ -61,7 +61,7 @@
                 {{ item.created_at == 'now' ? 'now' : createTime(item.messages[item.messages.length-1].created_at) }}
               </div>
             </div>
-            <div v-if="newMessage(item.messages)" class="flex items-center justify-center h-12 w-40 text-green-700 dark:text-green-200 bg-green-200 dark:bg-green-700
+            <div v-if="newMessageFun(item.messages)" class="flex items-center justify-center h-12 w-40 text-green-700 dark:text-green-200 bg-green-200 dark:bg-green-700
                  rounded-r text-xs
                  select-none">
               New Message
@@ -114,7 +114,7 @@ export default {
   },
   computed: {
     ...mapWritableState(useTicketsStore, [
-      'tickets'
+      'tickets', 'newMessage'
     ]),
   },
   watch: {
@@ -126,10 +126,10 @@ export default {
     },
   },
   created () {
-    this.getTickets()
+    this.ticketHasNewMessage()
   },
   methods: {
-    ...mapActions(useTicketsStore, ['getTickets']),
+    ...mapActions(useTicketsStore, ['ticketHasNewMessage']),
     ticketMessageCheck () {
       if (this.ticketMessage.open === false) {
         setTimeout(() => {
@@ -146,7 +146,7 @@ export default {
         return moment(time).format('MMM Do YY')
       }
     },
-    newMessage (messages) {
+    newMessageFun (messages) {
       // this method check last ten messages of tickets for find unseen message
       let lastTen = messages
       if (messages.length > 10) {
