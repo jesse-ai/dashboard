@@ -28,6 +28,7 @@ export const useTicketsStore = defineStore({
             }
           }
         }
+        this.newMessage.haveMessage = false
       }, 1000)
     }
   }
