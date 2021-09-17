@@ -37,8 +37,34 @@
                     </div>
                     <div :class="item.user_id === ticket.user_id ? 'justify-end' : 'justify-start'" class="w-full flex mb-2">
                       <div class="w-2/3 p-2 bg-gray-100 dark:bg-gray-600 text-sm rounded-md">
-                        <div class=" break-words">
-                          {{ item.description }}
+                        <div class="relative w-full flex justify-between items-start">
+                          <div :class="((item.user_id === ticket.user_id) && messageEdit(item)) ? 'w-11/12' : 'w-full'" class="break-words">
+                            {{ item.description }}
+                          </div>
+
+                          <!-- <button v-if="(item.user_id === ticket.user_id) && messageEdit(item)" class="w-6 p-1 focus:outline-none rounded-full dark:hover:bg-gray-700">
+                            
+                          </button> -->
+                          <Menu v-if="(item.user_id === ticket.user_id) && messageEdit(item)" as="div" class="relative z-40">
+                            <MenuButton class="w-6 p-1 focus:outline-none rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                              <span class="sr-only">Settings</span>
+                              <DotsVerticalIcon class="w-4 h-4" />
+                            </MenuButton>
+
+                            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+                                        leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                              <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border border-gray-200 dark:border-gray-500 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
+                                <div class="py-1">
+                                  <MenuItem v-slot="{ active }">
+                                    <button :class="[active ? 'bg-gray-100 dark:bg-gray-600' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                                            @click="edit(item)">
+                                      Edit
+                                    </button>
+                                  </MenuItem>
+                                </div>
+                              </MenuItems>
+                            </transition>
+                          </Menu>
                         </div>
                         <div class="w-full flex justify-end text-xs border-t dark:border-gray-900 mt-2 py-1">
                           {{ item.created_at === 'now' ? 'now' : createTime(item.created_at) }}
@@ -49,15 +75,36 @@
                 </div>
               </div>
 
-              <div class="mt-6 flex items-center bg-gray-300 dark:bg-gray-800 rounded-b-lg">
+              <!-- edit message  -->
+              <div v-if="editMode" class="w-full flex justify-between mt-6 bg-gray-300 dark:bg-gray-800 p-2 border-b border-gray-500 text-gray-500 dark:text-gray-400">
+                <div class="bg-indigo-500 dark:bg-indigo-400 pr-1 mr-2" />
+                <div class="w-full ">
+                  <div class="text-xs font-semibold">
+                    Edit Ticket
+                  </div>
+                  <div class="text-xs mt-1">
+                    {{ editItem.description.length > 30 ? editItem.description.substring(0, 30) + '...' : editItem.description }}
+                  </div>
+                </div>
+                <button class="hover:bg-gray-200 dark:hover:bg-gray-600 p-2 rounded-full" @click="message = ''; editMode = false">
+                  <XIcon class="h-5 w-5" />
+                </button>
+              </div>
+
+              <!-- send or edit message -->
+              <div :class="editMode ? '' : 'mt-6'" class="flex items-center bg-gray-300 dark:bg-gray-800 rounded-b-lg">
                 <textarea id="content" v-model="message"
                           placeholder="Inert your message..."
                           required
                           name="content"
-                          rows="2"
+                          rows="3"
                           class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-0 focus:border-gray-300 dark:focus:border-gray-800 sm:text-sm bg-gray-300 dark:bg-gray-800 dark:border-gray-800 rounded-b-lg" />
 
-                <button class="h-full rounded-b-lg rounded-l-none px-2" :disabled="message.length == 0" @click="sendMessage()">
+                <button v-if="editMode" class="h-full rounded-b-lg rounded-l-none px-2" :disabled="message.length == 0 || message == editItem.description" @click="editMessage()">
+                  <CheckCircleIcon class="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
+                </button>
+
+                <button v-else class="h-full rounded-b-lg rounded-l-none px-2" :disabled="message.length == 0" @click="sendMessage()">
                   <PaperAirplaneIcon class="w-6 h-6 rotate-90 text-indigo-500 dark:text-indigo-400" />
                 </button>
               </div>
@@ -70,8 +117,8 @@
 </template>
 
 <script>
-import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { XIcon, PaperAirplaneIcon } from '@heroicons/vue/outline'
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { XIcon, PaperAirplaneIcon, DotsVerticalIcon, CheckCircleIcon } from '@heroicons/vue/outline'
 import { mapActions } from 'pinia'
 import { useTicketsStore } from '@/stores/ticket'
 import moment from 'moment'
@@ -80,12 +127,18 @@ import axios from 'axios'
 export default {
   name: 'TicketMessages',
   components: {
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
     Dialog,
     DialogOverlay,
     TransitionChild,
     TransitionRoot,
     XIcon,
-    PaperAirplaneIcon
+    PaperAirplaneIcon,
+    DotsVerticalIcon,
+    CheckCircleIcon
   },
   props: {
     object: {
@@ -111,6 +164,8 @@ export default {
   },
   data () {
     return {
+      editItem: {},
+      editMode: false,
       message: '',
       firstUnReadMessageID: null,
       displayUnRead: false
@@ -126,6 +181,36 @@ export default {
   },
   methods: {
     ...mapActions(useTicketsStore, ['ticketHasNewMessage']),
+    editMessage () {
+      axios.post('/edit-message', {
+        ticket_id: this.ticket.id,
+        message_id: this.editItem.id,
+        description: this.message
+      }).then(res => {
+        if (res.data.status === 'success') {
+          const editItem = this.ticket.messages.find(element => element === this.editItem)
+          editItem.description = this.message
+
+          this.editItem = {}
+          this.editMode = false
+          this.message = ''
+        }
+      })
+    },
+    edit (item) {
+      this.editMode = true
+      this.message = item.description
+      this.editItem = item
+      this.checkTickets()
+    },
+    messageEdit (item) {
+      const msTime = moment(item.created_at).valueOf()
+
+      if (msTime > moment().subtract(1, 'days').valueOf()) {
+        return true
+      }
+      return false
+    },
     checkTickets () {
       // got to end of page when page create
       setTimeout(() => {
