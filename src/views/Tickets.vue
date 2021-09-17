@@ -118,6 +118,10 @@ export default {
           newTicket.created_at = 'now'
           newTicket.id = res.data.ticket_id
           newTicket.messages = []
+          newTicket.user_id = Math.floor(Math.random() * (9999 - 1111) + 1111)
+          if (this.tickets.length > 0) {
+            newTicket.user_id = this.tickets[0].user_id
+          }
 
           // create temp message for created ticket
           const message = {}
@@ -125,6 +129,7 @@ export default {
           message.seen = true
           message.ticket_id = newTicket.id
           message.description = this.description
+          message.user_id = newTicket.user_id
 
           newTicket.messages.push(message)
 

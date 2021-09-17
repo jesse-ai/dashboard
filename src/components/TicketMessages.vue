@@ -267,6 +267,7 @@ export default {
           tempMessage.description = this.message
           tempMessage.created_at = 'now'
           tempMessage.seen = true
+          tempMessage.user_id = this.ticket.user_id
 
           this.ticket.messages.push(tempMessage)
           this.message = ''
@@ -276,6 +277,7 @@ export default {
           this.notyf.error(res.data.message)
         }
       }).catch(error => {
+        console.log(error)
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     }
