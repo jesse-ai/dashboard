@@ -72,6 +72,8 @@
 <script>
 import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XIcon, PaperAirplaneIcon } from '@heroicons/vue/outline'
+import { mapActions } from 'pinia'
+import { useTicketsStore } from '@/stores/ticket'
 import moment from 'moment'
 import axios from 'axios'
 
@@ -101,6 +103,10 @@ export default {
     newMessage: {
       type: Object,
       required: true
+    },
+    opened: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -111,18 +117,19 @@ export default {
     }
   },
   watch: {
-    ticket: {
+    opened: {
       handler () {
         this.checkTickets()
       },
       deep: true
-    },
+    }
   },
   methods: {
+    ...mapActions(useTicketsStore, ['ticketHasNewMessage']),
     checkTickets () {
+      // got to end of page when page create
       setTimeout(() => {
-        // got to end of page when page create
-        if (this.ticket.messages) {
+        if (this.ticket.messages && this.opened) {
           const container = document.getElementById('chat')
           container.scrollIntoView(false)
         }
@@ -157,7 +164,7 @@ export default {
           for (const item of this.ticket.messages) {
             if (!item.seen) {
               item.seen = true
-              this.newMessage.haveMessage = false
+              this.ticketHasNewMessage()
             }
           }
         }
