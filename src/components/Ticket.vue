@@ -9,7 +9,7 @@
         {{ ticket.created_at == 'now' ? 'now' : createTime(ticket.messages[ticket.messages.length-1].created_at) }}
       </div>
     </div>
-    <div v-if="newMessageFun(ticket.messages)" class="flex tickets-center justify-center h-12 w-40 text-green-700 dark:text-green-200 bg-green-200 dark:bg-green-700
+    <div v-if="newMessageFun(ticket.messages)" class="flex items-center tickets-center justify-center h-12 w-40 text-green-700 dark:text-green-200 bg-green-200 dark:bg-green-700
                  rounded-r text-xs
                  select-none">
       New Message
