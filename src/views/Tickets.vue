@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-6 mt-4">
+  <div class="max-w-7xl mx-auto p-6 mt-4">
     <!-- create ticket slide over -->
     <SlideOver :object="openNewTicket" name="open" title="Create New Ticket" width="max-w-2xl">
       <label class="font-semibold">Title:</label>
