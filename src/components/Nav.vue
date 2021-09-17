@@ -74,7 +74,6 @@
             <!-- Profile dropdown -->
             <Menu as="div" class="relative z-40">
               <MenuButton class="btn-nav">
-                <div v-if="newMessage.haveMessage" class="absolute top-1 p-1 bg-green-200 dark:bg-green-700 rounded-full" />
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
               </MenuButton>
