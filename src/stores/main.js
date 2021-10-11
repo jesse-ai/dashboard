@@ -34,7 +34,7 @@ export const useMainStore = defineStore({
           balance_update: true,
         },
         warm_up_candles: 210,
-        exchanges: [],
+        exchanges: {},
       },
       live: {
         logging: {
@@ -50,7 +50,7 @@ export const useMainStore = defineStore({
           balance_update: true,
         },
         warm_up_candles: 210,
-        exchanges: [],
+        exchanges: {},
         notifications: {
           enabled: true,
           position_report_timeframe: '1h',
@@ -70,7 +70,7 @@ export const useMainStore = defineStore({
         // sharpe, calmar, sortino, omega
         ratio: 'sharpe',
         warm_up_candles: 210,
-        exchanges: [],
+        exchanges: {},
       }
     },
     routes: {
@@ -91,22 +91,22 @@ export const useMainStore = defineStore({
         this.isLoggedInToJesseTrade = data.is_logged_in_to_jesse_trade
         this.hasLivePluginInstalled = data.has_live_plugin_installed
         this.routes.exchanges.forEach(item => {
-          this.settings.backtest.exchanges.push({
+          this.settings.backtest.exchanges[item] = {
             name: item,
             fee: 0.001,
             futures_leverage_mode: 'isolated',
             futures_leverage: 2,
             balance: 10_000
-          })
+          }
         })
         this.routes.liveExchanges.forEach(item => {
-          this.settings.live.exchanges.push({
+          this.settings.live.exchanges[item] = {
             name: item,
             fee: 0.001,
             futures_leverage_mode: 'cross',
             futures_leverage: 2,
             balance: 10_000
-          })
+          }
         })
 
         axios.post('/get-config', {
