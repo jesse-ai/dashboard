@@ -4,6 +4,7 @@ import router from './router'
 // Plugins
 import websocket from './plugins/websocket'
 import notyf from '@/plugins/notyf'
+import VueClipboard from 'vue-clipboard2'
 
 import 'notyf/notyf.min.css'
 import './assets/styles/styles.css'
@@ -16,6 +17,7 @@ const app = createApp(App)
 app.use(pinia)
 
 app.use(router)
+app.use(VueClipboard)
 app.use(notyf, {
   duration: 5000,
   dismissible: true,
