@@ -59,8 +59,6 @@
              v-html="content"/>
       </div>
     </div>
-
-    <input id="copy-exception" type="hidden" :value="content" >
   </div>
 </template>
 
@@ -115,19 +113,12 @@ export default {
       })
     },
     copy () {
-      const exceptionToCopy = document.querySelector('#copy-exception')
-      exceptionToCopy.setAttribute('type', 'text')
-      exceptionToCopy.select()
-      document.execCommand('copy')
-      this.copied = true
-
-      // unselect the range
-      exceptionToCopy.setAttribute('type', 'hidden')
-      window.getSelection().removeAllRanges()
-
-      setTimeout(() => {
-        this.copied = false
-      }, 3000)
+      this.$copyText(this.content).then(() => {
+        this.copied = true
+        setTimeout(() => {
+          this.copied = false
+        }, 3000)
+      })
     },
     openReport () {
       if (!this.isLoggedInToJesseTrade) {
