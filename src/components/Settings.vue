@@ -50,7 +50,7 @@
         <Divider>{{ e.name }}</Divider>
 
         <div class="grid grid-cols-6 gap-6">
-          <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
+          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
           <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
@@ -159,7 +159,7 @@
         <br>
 
         <div class="grid grid-cols-6 gap-6">
-          <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
+          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
           <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
@@ -192,7 +192,7 @@
         <Divider>{{ e.name }}</Divider>
 
         <div class="grid grid-cols-6 gap-6">
-          <FormInput title="Starting Capital" :object="e" name="balance" input-type="number"
+          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
           <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
