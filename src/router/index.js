@@ -8,7 +8,6 @@ import Test from '@/views/Test' // For debug purpose
 import Live from '@/views/Live'
 import Optimization from '@/views/Optimization'
 import PaperTrade from '@/views/PaperTrade'
-import PiniaTest from '@/views/PiniaTest'
 
 import { watch } from 'vue'
 
@@ -72,12 +71,6 @@ const routes = [
     name: 'Test',
     beforeEnter: isSocketConnected,
   },
-  {
-    path: '/pinia-test',
-    component: PiniaTest,
-    name: 'PiniaTest',
-    beforeEnter: isSocketConnected,
-  }
 ]
 
 const router = createRouter({
