@@ -35,8 +35,8 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="block lg:hidden h-8 w-auto" src="@/assets/imgs/jesse-logo.svg" alt="Jesse Logo" >
-            <img class="hidden lg:block h-8 w-auto" src="@/assets/imgs/jesse-logo.svg" alt="Jesse Logo" >
+            <img class="block lg:hidden h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
+            <img class="hidden lg:block h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
           </div>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
