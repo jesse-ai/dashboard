@@ -32,6 +32,7 @@ function newTab () {
         estimated_remaining_seconds: 0
       },
       routes_info: [],
+      routes: [],
       metrics: [],
       generalInfo: {},
       positions: [],
@@ -178,7 +179,21 @@ export const useLiveStore = defineStore({
       //   "routes": [...Array]
       // }
       this.tabs[id].results.generalInfo = data
+
+      // set routes in both form.routes (maybe page was refreshed)
       this.tabs[id].form.routes = this.tabs[id].results.generalInfo.routes
+      // and results.routes which is where the table is read from
+      this.tabs[id].results.routes = [
+        ['Exchange', 'Symbol', 'Timeframe', 'Strategy']
+      ]
+      for (const item of this.tabs[id].form.routes) {
+        this.tabs[id].results.routes.push([
+          { value: item.exchange, style: '' },
+          { value: item.symbol, style: '' },
+          { value: item.timeframe, style: '' },
+          { value: item.strategy, style: '' },
+        ])
+      }
 
       // turn on monitoring dashboard if haven't yet
       if (!this.tabs[id].results.monitoring) {

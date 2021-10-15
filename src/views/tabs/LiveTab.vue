@@ -109,6 +109,9 @@
         </div>
 
         <!--tables-->
+        <Divider class="mt-12">Routes</Divider>
+        <MultipleValuesTable :data="results.routes" header/>
+
         <Divider class="mt-12">Positions</Divider>
         <MultipleValuesTable :data="results.positions" header/>
 
