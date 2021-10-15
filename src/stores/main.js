@@ -96,7 +96,8 @@ export const useMainStore = defineStore({
             fee: 0.001,
             futures_leverage_mode: 'isolated',
             futures_leverage: 2,
-            balance: 10_000
+            balance: 10_000,
+            settlement_currency: 'USDT'
           }
         })
         this.routes.liveExchanges.forEach(item => {
@@ -105,7 +106,8 @@ export const useMainStore = defineStore({
             fee: 0.001,
             futures_leverage_mode: 'cross',
             futures_leverage: 2,
-            balance: 10_000
+            balance: 10_000,
+            settlement_currency: 'USDT'
           }
         })
 
