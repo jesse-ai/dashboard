@@ -99,7 +99,7 @@
 
                     <MenuItem v-slot="{ active }">
                       <a href="https://jesse.trade/strategies" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
-                        Strategies
+                        Sample Strategies
                       </a>
                     </MenuItem>
 
@@ -173,7 +173,7 @@
 
         <div class="w-full">
           <a href="https://jesse.trade/strategies" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
-            Strategies
+            Sample Strategies
           </a>
         </div>
 
