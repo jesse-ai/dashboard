@@ -174,9 +174,11 @@ export const useLiveStore = defineStore({
       //   "pnl_perc": 0,
       //   "count_trades": 0,
       //   "count_winning_trades": 0,
-      //   "count_losing_trades": 0
+      //   "count_losing_trades": 0,
+      //   "routes": [...Array]
       // }
       this.tabs[id].results.generalInfo = data
+      this.tabs[id].form.routes = this.tabs[id].results.generalInfo.routes
 
       // turn on monitoring dashboard if haven't yet
       if (!this.tabs[id].results.monitoring) {
@@ -195,6 +197,11 @@ export const useLiveStore = defineStore({
         timeframe: this.tabs[id].form.routes[0].timeframe,
       }).then(res => {
         this.tabs[id].results.candles = res.data.data
+
+        if (!res.data.data.length) {
+          this.notyf.error('Could not load candles')
+          console.error('Candles array for the "/get-candles" endpoint response cannot be empty')
+        }
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })

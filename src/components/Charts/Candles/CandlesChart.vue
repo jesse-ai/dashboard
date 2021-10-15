@@ -101,7 +101,7 @@ export default {
       return this.results.currentCandles
     },
     ...mapWritableState(useMainStore, [
-      'theme'      
+      'theme'
     ])
   },
   watch: {
@@ -149,6 +149,10 @@ export default {
   },
   methods: {
     updateCurrentCandle (candle) {
+      if (candle === undefined) {
+        throw new TypeError('candle is undefined!')
+      }
+
       candleSeries.update(candle)
     },
     checkTheme (val) {
