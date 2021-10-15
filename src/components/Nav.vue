@@ -268,13 +268,14 @@ export default {
           to: '/backtest/'
         },
         {
+          name: 'Optimization',
+          to: '/optimization/'
+        },
+        {
           name: 'Live',
           to: '/live/'
         },
-        // {
-        //   name: 'Optimization',
-        //   to: '/optimization/'
-        // },
+
       ]
     }
   },

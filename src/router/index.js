@@ -7,7 +7,6 @@ import Backtest from '@/views/Backtest'
 import Test from '@/views/Test' // For debug purpose
 import Live from '@/views/Live'
 import Optimization from '@/views/Optimization'
-import PaperTrade from '@/views/PaperTrade'
 
 import { watch } from 'vue'
 
@@ -35,6 +34,7 @@ const routes = [
   { path: '/backtest', redirect: '/backtest/1' },
   { path: '/candles', redirect: '/candles/1' },
   { path: '/live', redirect: '/live/1' },
+  { path: '/optimization', redirect: '/optimization/1' },
   {
     path: '/candles/:id',
     component: Candles,
@@ -54,15 +54,9 @@ const routes = [
     beforeEnter: isSocketConnected,
   },
   {
-    path: '/optimization',
+    path: '/optimization/:id',
     component: Optimization,
     name: 'Optimization',
-    beforeEnter: isSocketConnected,
-  },
-  {
-    path: '/paper-trade',
-    component: PaperTrade,
-    name: 'PaperTrade',
     beforeEnter: isSocketConnected,
   },
   {
