@@ -59,6 +59,7 @@
              v-html="content"/>
       </div>
     </div>
+    <textarea v-show="showException" id="exception-info" :value="content" class="fixed left-0 bottom-0 opacity-0"/>?
   </div>
 </template>
 
@@ -88,6 +89,7 @@ export default {
   },
   data () {
     return {
+      showException: '',
       description: '',
       copied: false,
     }
@@ -113,12 +115,23 @@ export default {
       })
     },
     copy () {
-      this.$copyText(this.content).then(() => {
+      this.showException = true
+      setTimeout(() => {
+        const infoErrorToCopy = document.querySelector('#exception-info')
+        infoErrorToCopy.setAttribute('type', 'text')
+        infoErrorToCopy.select()
+        document.execCommand('copy')
         this.copied = true
-        setTimeout(() => {
-          this.copied = false
-        }, 3000)
-      })
+
+        /* unselect the range */
+        infoErrorToCopy.setAttribute('type', 'hidden')
+        window.getSelection().removeAllRanges()
+        this.showException = false
+      }, 10)
+
+      setTimeout(() => {
+        this.copied = false
+      }, 3000)
     },
     openReport () {
       if (!this.isLoggedInToJesseTrade) {
