@@ -1,0 +1,22 @@
+{
+    "exchanges": [
+        "Binance",
+        "Binance Futures",
+        "Binance Inverse Futures",
+        "Bitfinex",
+        "Coinbase",
+        "OKEX",
+        "Testnet Binance Futures"
+    ],
+    "has_live_plugin_installed": true,
+    "is_logged_in_to_jesse_trade": true,
+    "live_exchanges": [
+        "Binance Futures",
+        "FTX Futures",
+        "Testnet Binance Futures"
+    ],
+    "strategies": [
+        "ExampleStrategy",
+        "TestLiveMode01"
+    ]
+}

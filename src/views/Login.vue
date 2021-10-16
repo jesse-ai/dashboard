@@ -81,7 +81,6 @@ export default {
       axios.post('/auth', {
         password: this.password,
       }).then(res => {
-        console.log(res)
         sessionStorage.auth_key = res.data.auth_token
         this.setAuth()
         this.notyf.success('Logged in successfully')
