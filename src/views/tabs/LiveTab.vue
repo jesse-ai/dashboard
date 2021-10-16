@@ -14,7 +14,9 @@
         <CheckIcon v-if="copiedLogsInfo" class="h-6 w-6" aria-hidden="true" />
         <ClipboardIcon v-if="!copiedLogsInfo && results.infoLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
       </button>
-      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
+
+      <!-- for making copy with breaks -->
+      <textarea v-if="displayInfo" id="copy-info-logs" class="fixed left-0 opacity-0" :value="results.infoLogs" />
     </template>
   </SlideOver>
 
@@ -33,7 +35,10 @@
         <CheckIcon v-if="copiedErrorLogs" class="h-6 w-6" aria-hidden="true" />
         <ClipboardIcon v-if="!copiedErrorLogs && results.errorLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
       </button>
-      <input id="copy-error-logs" type="hidden" :value="results.errorLogs" >
+
+      <!-- for making copy with breaks -->
+      <textarea v-if="displayErrors" id="copy-error-logs" type="hidden" :value="results.errorLogs"
+                class="fixed left-0 opacity-0" />
     </template>
   </SlideOver>
 
@@ -287,6 +292,8 @@ export default {
   },
   data () {
     return {
+      displayInfo: false,
+      displayErrors: false,
       copiedLogsInfo: false,
       copiedErrorLogs: false
     }
@@ -300,30 +307,37 @@ export default {
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),
     copyInfoLogs () {
-      const infoLogsToCopy = document.querySelector('#copy-info-logs')
-      infoLogsToCopy.setAttribute('type', 'text')
-      infoLogsToCopy.select()
-      document.execCommand('copy')
-      this.copiedLogsInfo = true
+      this.displayInfo = true
+      setTimeout(() => {
+        const infoLogsToCopy = document.querySelector('#copy-info-logs')
+        infoLogsToCopy.setAttribute('type', 'text')
+        infoLogsToCopy.select()
+        document.execCommand('copy')
+        this.copiedLogsInfo = true
 
-      /* unselect the range */
-      infoLogsToCopy.setAttribute('type', 'hidden')
-      window.getSelection().removeAllRanges()
-
+        /* unselect the range */
+        infoLogsToCopy.setAttribute('type', 'hidden')
+        window.getSelection().removeAllRanges()
+        this.displayInfo = false
+      }, 10)
       setTimeout(() => {
         this.copiedLogsInfo = false
       }, 3000)
     },
     copyErrorLogs () {
-      const infoErrorToCopy = document.querySelector('#copy-error-logs')
-      infoErrorToCopy.setAttribute('type', 'text')
-      infoErrorToCopy.select()
-      document.execCommand('copy')
-      this.copiedErrorLogs = true
+      this.displayErrors = true
+      setTimeout(() => {
+        const infoErrorToCopy = document.querySelector('#copy-error-logs')
+        infoErrorToCopy.setAttribute('type', 'text')
+        infoErrorToCopy.select()
+        document.execCommand('copy')
+        this.copiedErrorLogs = true
 
-      /* unselect the range */
-      infoErrorToCopy.setAttribute('type', 'hidden')
-      window.getSelection().removeAllRanges()
+        /* unselect the range */
+        infoErrorToCopy.setAttribute('type', 'hidden')
+        window.getSelection().removeAllRanges()
+        this.displayErrors = false
+      }, 10)
 
       setTimeout(() => {
         this.copiedErrorLogs = false
