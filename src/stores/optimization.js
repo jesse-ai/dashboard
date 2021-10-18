@@ -142,7 +142,20 @@ export const useOptimizationStore = defineStore({
       this.tabs[id].results.exception.traceback = data.traceback
     },
     generalInfoEvent (id, data) {
-      this.tabs[id].results.generalInfo = data
+      this.tabs[id].results.generalInfo = [
+        ['Started At', data.started_at],
+        ['Index', data.index],
+        ['Trading Route', data.trading_route],
+      ]
+      if ('population_size' in data) {
+        this.tabs[id].results.generalInfo.push(['Population Size', data.population_size])
+      }
+      if ('iterations' in data) {
+        this.tabs[id].results.generalInfo.push(['Iterations', data.iterations])
+      }
+      if ('solution_length' in data) {
+        this.tabs[id].results.generalInfo.push(['Solution Length', data.solution_length])
+      }
     },
     metricsEvent (id, data) {
       // no trades were executed

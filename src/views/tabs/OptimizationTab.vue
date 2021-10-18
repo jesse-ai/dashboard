@@ -19,30 +19,14 @@
     </template>
   </SlideOver>
 
-  <!-- Execution -->
-  <div v-if="results.executing && !results.showResults"
-       class="flex flex-col items-center justify-center select-none mt-[10%]"
-  >
-    <div>
-      <CircleProgressbar :progress="results.progressbar.current"/>
-    </div>
-
-    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
-
-    <div class="mt-8">
-      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
-        Cancel
-      </button>
-    </div>
-
-    <!-- exception  -->
-    <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
-      <Exception :title="results.exception.error" :content="results.exception.traceback" />
-    </div>
-  </div>
-
-  <LayoutWithSidebar else>
+  <LayoutWithSidebar>
     <template #left>
+      <!-- Execution -->
+      <div v-if="results.executing">
+        <Divider>Info</Divider>
+        <KeyValueTable :data="results.generalInfo"/>
+      </div>
+
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults"
            class="px-6">
@@ -173,6 +157,28 @@
           </button>
         </div>
       </div>
+
+      <!-- Execution -->
+      <div v-if="results.executing && !results.showResults"
+           class="flex flex-col items-center justify-center select-none"
+      >
+        <div class="mb-8 w-full">
+          <button class="btn-secondary block mb-4 w-full" @click="cancel($route.params.id)">
+            Cancel
+          </button>
+        </div>
+
+        <div>
+          <CircleProgressbar :progress="results.progressbar.current"/>
+        </div>
+
+        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+
+        <!-- exception  -->
+        <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
+          <Exception :title="results.exception.error" :content="results.exception.traceback" />
+        </div>
+      </div>
     </template>
   </LayoutWithSidebar>
 </template>
@@ -187,6 +193,10 @@ import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
+import Routes from '@/components/Routes'
+import Divider from '@/components/Divider'
+import CircleProgressbar from '@/components/Functional/CircleProgressbar'
+import Exception from '@/components/Exception'
 
 export default {
   name: 'OptimizationTab',
@@ -198,6 +208,10 @@ export default {
     ClipboardIcon,
     CheckIcon,
     SlideOver,
+    Routes,
+    Divider,
+    CircleProgressbar,
+    Exception
   },
   props: {
     form: {

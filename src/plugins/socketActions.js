@@ -1,11 +1,13 @@
 import { useBacktestStore } from '@/stores/backtest'
 import { useCandlesStore } from '@/stores/candles'
 import { useLiveStore } from '@/stores/live'
+import { useOptimizationStore } from '@/stores/optimization'
 
 export default function () {
   const backtest = useBacktestStore()
   const candles = useCandlesStore()
   const live = useLiveStore()
+  const optimize = useOptimizationStore()
 
   // Prepare needed actions for each socket event
   return new Map([
@@ -106,6 +108,13 @@ export default function () {
     ]],
     ['livetrade.termination', [
       live.terminationEvent
+    ]],
+
+    ['optimize.progressbar', [
+      optimize.progressbarEvent
+    ]],
+    ['optimize.general_info', [
+      optimize.generalInfoEvent
     ]],
   ])
 }
