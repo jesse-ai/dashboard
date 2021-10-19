@@ -9,13 +9,19 @@ export default {
 
     const loginWatchInterval = setInterval(function () {
       if (mainStore.isAuthenticated) {
-        const wsp = new WebSocketAsPromised(`${settings.socketPath}?token=${sessionStorage.auth_key}`, {
+        let url
+        if (!window.Cypress) {
+          url = settings.socketPath
+        } else {
+          url = 'ws://127.0.0.1:8001/ws'
+        }
+        
+        const wsp = new WebSocketAsPromised(`${url}?token=${sessionStorage.auth_key}`, {
           packMessage: data => JSON.stringify(data),
           unpackMessage: data => JSON.parse(data),
           attachRequestId: (data, requestId) => Object.assign({ id: requestId }, data),
           extractRequestId: data => data && data.id
         })
-
 
         let openIntervalId = null
         let reopenAttempts = 3
