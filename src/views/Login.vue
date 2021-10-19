@@ -65,7 +65,9 @@ export default {
   },
   created () {
     if (sessionStorage.getItem('auth_key') !== null) {
-      this.setAuth()
+      if (!window.Cypress) {
+        this.setAuth()
+      }
     }
   },
   methods: {
