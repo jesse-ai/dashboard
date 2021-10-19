@@ -9,12 +9,10 @@ export default {
 
     const loginWatchInterval = setInterval(function () {
       if (mainStore.isAuthenticated) {
-        let url
-        if (!window.Cypress) {
-          url = settings.socketPath
-        } else {
+        let url = settings.socketPath
+        if (window.Cypress) {
           url = 'ws://127.0.0.1:8001/ws'
-        }
+        } 
         
         const wsp = new WebSocketAsPromised(`${url}?token=${sessionStorage.auth_key}`, {
           packMessage: data => JSON.stringify(data),
