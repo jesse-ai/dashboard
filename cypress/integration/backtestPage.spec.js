@@ -70,5 +70,10 @@ describe('test home page', () => {
         cy.wait(50)
         cy.get('[name=extra-delete-menu1]').click()
         cy.get('#extra-route-exchange1').should('not.exist');
+
+        // check errors of routes
+        cy.get('#trading-route-symbol1').type('btcsde')
+        cy.wait(50)
+        cy.get('#error0').should('have.text', 'Symbol parameter must contain "-" character!')
     })
 })
