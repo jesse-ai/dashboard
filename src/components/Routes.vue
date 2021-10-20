@@ -164,11 +164,11 @@
     </div>
 
     <!-- error section -->
-    <div v-if="totalRoutesError.length != 0" class="text-sm text-red-400 p-2 rounded-lg mb-4" >
-      <div v-for="item in totalRoutesError" :key="item" class="flex justify-start items-center mb-2">
+    <div id="error-section" class="text-sm text-red-400 p-2 rounded-lg mb-4" >
+      <div v-for="(item, i) in totalRoutesError" :key="i" class="flex justify-start items-center mb-2">
         <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
 
-        <div v-html="item" />
+        <div :id="'error' + i" v-html="item" />
       </div>
     </div>
   </div>
