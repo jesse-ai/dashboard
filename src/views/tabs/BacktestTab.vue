@@ -30,8 +30,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button class="flex justify-center items-center btn-secondary block mb-4 w-64" @click="cancel($route.params.id, svgObject, 'display'); svgObject['display'] = true">
-        <LoadingSvg :object="svgObject" name="display" />
+      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id, svgObject, 'display'); svgObject['display'] = true">
         Cancel
       </button>
     </div>
@@ -211,7 +210,6 @@ import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
-import LoadingSvg from '@/components/LoadingSvg'
 
 export default {
   name: 'BacktestTab',
@@ -223,7 +221,6 @@ export default {
     ClipboardIcon,
     CheckIcon,
     SlideOver,
-    LoadingSvg
   },
   props: {
     form: {
@@ -239,7 +236,6 @@ export default {
     return {
       copiedLogsInfo: false,
       svgObject: { display: false },
-      copiedResult: { result: this.results }
     }
   },
   computed: {
@@ -251,21 +247,8 @@ export default {
       return sessionStorage.auth_key
     }
   },
-  watch: {
-    copiedResult: {
-      handler () {
-        this.removeLoading()
-      },
-      deep: true
-    }
-  },
   methods: {
     ...mapActions(useBacktestStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
-    removeLoading () {
-      if (!this.results.executing) {
-        this.svgObject.display = false
-      }
-    },
     copyInfoLogs () {
       const infoLogsToCopy = document.querySelector('#copy-info-logs')
       infoLogsToCopy.setAttribute('type', 'text')
