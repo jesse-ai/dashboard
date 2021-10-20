@@ -30,7 +30,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
+      <button id="backtest-cancel-button" class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -187,11 +187,11 @@
         </div>
 
         <div v-else>
-          <button class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
+          <button id="start-button" class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
             Start
           </button>
 
-          <button class="btn-secondary text-center block mb-4 w-full" @click="startInNewTab($route.params.id)">
+          <button id="start-new-tab-button" class="btn-secondary text-center block mb-4 w-full" @click="startInNewTab($route.params.id)">
             Start in a new tab
           </button>
         </div>
