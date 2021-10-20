@@ -72,8 +72,17 @@ describe('test home page', () => {
         cy.get('#extra-route-exchange1').should('not.exist');
 
         // check errors of routes
-        cy.get('#trading-route-symbol1').type('btcsde')
+        cy.get('#trading-route-symbol1').type('btcsdescdscds')
         cy.wait(50)
-        cy.get('#error0').should('have.text', 'Symbol parameter must contain "-" character!')
+        cy.get('#error0').should('have.text', 'Maximum symbol length is exceeded!')
+        cy.get('#error1').should('have.text', 'Symbol parameter must contain "-" character!')
+
+        cy.get('#extra-route-symbol0').type('BTC-USDT')
+        cy.get('#error2').should('have.text', 'Extra routes timeframe and routes timeframe must be different')
+
+        cy.get('#trading-route-exchange1').select('Coinbase')
+        cy.get('#trading-route-symbol1').clear()
+        cy.get('#trading-route-symbol1').type('BTC-USDT')
+        cy.get('#error0').contains("each exchange-symbol pair can be traded only once!")
     })
 })
