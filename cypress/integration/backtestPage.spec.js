@@ -21,15 +21,54 @@ describe('test home page', () => {
         cy.contains('Import Candles')
         cy.contains('Start in a new tab')
 
+        // check add trading route
         cy.get('#add-route').click()
         cy.wait(50)
         cy.get('#trading-route-exchange1').should('have.value', 'Binance')
         cy.get('#trading-route-symbol1').should('have.value', '')
         cy.get('#trading-route-exchange1').contains('Bitfinex')
 
+        // check trading route delete button
         cy.get('#trading-route-menu-button1').click()
         cy.wait(50)
         cy.get('[name=trading-delete-menu1]').click()
         cy.get('#trading-route-exchange1').should('not.exist');
+
+        // check trading route duplicate
+        cy.get('#trading-route-exchange0').select('Coinbase')
+        cy.get('#trading-route-menu-button0').click()
+        cy.wait(50)
+        cy.get('[name=trading-duplicate-menu0]').click()
+        cy.get('#trading-route-exchange1').should('have.value', 'Coinbase');
+
+        // check trading route move up
+        cy.get('#trading-route-exchange1').select('Binance')
+        cy.get('#trading-route-menu-button1').click()
+        cy.wait(50)
+        cy.get('[name=trading-moveup-menu1]').click()
+        cy.get('#trading-route-exchange0').should('have.value', 'Binance');
+
+        // check trading route move down
+        cy.get('#trading-route-menu-button0').click()
+        cy.wait(50)
+        cy.get('[name=trading-movedown-menu0]').click()
+        cy.get('#trading-route-exchange1').should('have.value', 'Binance');
+
+        // check add extra route button
+        cy.get('#add-extra-route').click()
+        cy.get('#extra-route-exchange0').should('have.value', 'Binance')
+
+        // check extra route duplicate
+        cy.get('#extra-route-exchange0').select('Coinbase')
+        cy.get('#extra-route-menu-button0').click()
+        cy.wait(50)
+        cy.get('[name=extra-duplicate-menu0]').click()
+        cy.get('#extra-route-exchange1').should('have.value', 'Coinbase');
+
+        // check delete button of extra route
+        cy.get('#extra-route-menu-button1').click()
+        cy.wait(50)
+        cy.get('[name=extra-delete-menu1]').click()
+        cy.get('#extra-route-exchange1').should('not.exist');
     })
 })
