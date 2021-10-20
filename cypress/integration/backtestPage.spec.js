@@ -13,12 +13,23 @@ describe('test home page', () => {
         cy.contains('Welcome Back!')
         cy.get('input').type('test')
         cy.get('button').click()
+        cy.visit('/#/backtest')
         cy.wait(50)
     })
-    it('test backtest page', () => {
-        cy.visit('/#/backtest')
+    it('test routes section', () => {
         cy.contains('Routes')
         cy.contains('Import Candles')
         cy.contains('Start in a new tab')
+
+        cy.get('#add-route').click()
+        cy.wait(50)
+        cy.get('#trading-route-exchange1').should('have.value', 'Binance')
+        cy.get('#trading-route-symbol1').should('have.value', '')
+        cy.get('#trading-route-exchange1').contains('Bitfinex')
+
+        cy.get('#trading-route-menu-button1').click()
+        cy.wait(50)
+        cy.get('[name=trading-delete-menu1]').click()
+        cy.get('#trading-route-exchange1').should('not.exist');
     })
 })
