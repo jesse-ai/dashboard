@@ -115,7 +115,7 @@
                     <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
                       <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogin = true">
-                              <!-- Login to Jesse.Trade -->
+                        Login to Jesse.Trade
                       </button>
                     </MenuItem>
 
