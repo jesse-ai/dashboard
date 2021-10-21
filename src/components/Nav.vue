@@ -61,7 +61,7 @@
 
             <ThemeSwitch />
 
-            <button class="btn-nav"
+            <button data-cy="settings-icon" class="btn-nav"
                     @click="modals.settings = true">
               <span class="sr-only">Settings</span>
               <CogIcon class="h-6 w-6" aria-hidden="true" />

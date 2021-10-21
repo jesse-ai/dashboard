@@ -4,6 +4,7 @@
       <nav class="space-y-1">
         <button
           v-for="item in navigation" :key="item.name"
+          :data-cy="item.name + '-setting'"
           class="block w-full"
           :class="[currentTab === item.name ? 'bg-gray-100 dark:bg-gray-800 text-indigo-700 dark:text-indigo-400 hover:text-indigo-700' : 'hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-300 hover:bg-gray-50', 'group rounded-md px-3 py-2 flex items-center text-sm font-medium']"
           @click="currentTab = item.name">
@@ -16,12 +17,12 @@
     </aside>
 
     <!-- backtest -->
-    <div v-if="currentTab === 'Backtest'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Backtest'" data-cy="backtest-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Logs</Divider>
       <p>
         Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div data-cy="backtest-setting-logs-checkboxes" class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Checkbox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
         <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
         <Checkbox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
@@ -37,7 +38,8 @@
 
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="backtest-setting-data-input"
+                   placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.backtest"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -46,7 +48,7 @@
 
       <br>
 
-      <div v-for="(e, index) in settings.backtest.exchanges" :key="index">
+      <div v-for="(e, index) in settings.backtest.exchanges" :key="index" :data-cy="'backtest-setting-exchange-' + convertToSlug(e.name)">
         <Divider>{{ e.name }}</Divider>
 
         <div class="grid grid-cols-6 gap-6">
@@ -171,7 +173,7 @@
     </div>
 
     <!-- optimization -->
-    <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Optimization'" data-cy="optimization-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Fitness Function</Divider>
       <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
 
@@ -179,7 +181,7 @@
 
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="optimization-warmup-candles-input" placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.optimization"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -252,7 +254,13 @@ export default {
     ...mapState(useMainStore, ['settings'])
   },
   methods: {
-    round: _.round
+    round: _.round,
+    convertToSlug (Text) {
+      return Text
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '')
+    },
   }
 }
 </script>
