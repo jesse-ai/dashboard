@@ -34,7 +34,7 @@ describe('test home page', () => {
         cy.wait(50)
         cy.contains('Exchange')
 
-        // test start in new tab button0
+        // test start in new tab button
         cy.get('#start-new-tab-button').click()
         cy.wait(50)
         cy.get('#tab1').click()
