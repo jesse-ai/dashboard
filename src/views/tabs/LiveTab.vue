@@ -61,7 +61,7 @@
         View Logs
       </button>
 
-      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+      <button id="live-cancel-button" class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -131,14 +131,16 @@
           </button>
         </div>
 
-        <div v-else>
+        <div v-else id="live-action-button">
           <button v-if="isLoggedInToJesseTrade"
+                  id="live-start-button"
                   class="btn-primary text-center mr-2 block w-full mb-4"
                   @click="start($route.params.id)">
             Start
           </button>
 
           <button v-else
+                  id="live-login-button"
                   class="btn-primary text-center mr-2 block w-full mb-4"
                   @click="navModals.jesseTradeLogin = true">
             Login to Jesse.Trade

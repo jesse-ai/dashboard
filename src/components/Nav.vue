@@ -22,7 +22,7 @@
     description="Are you sure you want to log out from your Jesse account?"
     type="info" :object="modals" name="jesseTradeLogout"
   >
-    <button class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
+    <button id="confirm-logout-button" class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
   </ConfirmModal>
 
   <!-- Make strategy -->
@@ -113,14 +113,14 @@
 
                   <div class="py-1">
                     <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
-                      <button id="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogin = true">
-                        Login to Jesse.Trade
+                              <!-- Login to Jesse.Trade -->
                       </button>
                     </MenuItem>
 
                     <MenuItem v-else v-slot="{ active }">
-                      <button id="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogout = true">
                         Logout from Jesse.Trade
                       </button>
