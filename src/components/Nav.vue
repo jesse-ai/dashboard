@@ -120,7 +120,7 @@
                     </MenuItem>
 
                     <MenuItem v-else v-slot="{ active }">
-                      <button id="nav-logout-link" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button id="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogout = true">
                         Logout from Jesse.Trade
                       </button>
