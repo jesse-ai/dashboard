@@ -45,5 +45,14 @@ describe('test home page', () => {
         cy.get('#feedback-description').should('have.value', '')
         cy.get('#feedback-cancel-button').click()
         cy.get('#feedback-description').should('not.exist')
+
+        cy.get('#nav-sun-icon').should('not.exist')
+        // check theme Switch
+        cy.get('#theme-switch-button').click().should(() => {
+            expect(localStorage.getItem('theme')).to.eq('dark')
+        })
+        cy.get('#theme-switch-button').click().should(() => {
+            expect(localStorage.getItem('theme')).to.eq('light')
+        })
     })
 })

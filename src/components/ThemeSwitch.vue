@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-nav"
+  <button id="theme-switch-button" class="btn-nav"
           @click="toggle">
     <MoonIcon v-if="theme === 'light'"
               class="h-6 w-6"
