@@ -42,6 +42,7 @@
             <div class="flex space-x-4">
               <router-link
                 v-for="item in navigation"
+                :id="convertToSlug(item.name) + '-page-button'"
                 :key="item.name"
                 :to="item.to"
                 class="text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
@@ -144,7 +145,7 @@
     <DisclosurePanel class="sm:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
-        <div v-for="item in navigation" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
+        <div v-for="item in navigation" :id="convertToSlug(item.name) + '-page-button'" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
           <router-link
             :to="item.to"
             class="text-gray-700 dark:text-gray-300 text-sm font-medium"
@@ -283,6 +284,12 @@ export default {
     ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade'])
   },
   methods: {
+    convertToSlug (Text) {
+      return Text
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '')
+    },
     logoutFromJesseTrade () {
       axios.post('/logout-jesse-trade').then(res => {
         this.isLoggedInToJesseTrade = false
