@@ -31,6 +31,8 @@ describe('test home page', () => {
         cy.wait(50)
         cy.contains('Routes')
 
+        // close notification
+        cy.get('.notyf__dismiss-btn').click()
         // logout
         cy.get('#nav-menu-button').click()
         cy.wait(50)
@@ -42,12 +44,16 @@ describe('test home page', () => {
         cy.get('[name=nav-logout-button]').should('not.exist')
         cy.get('#live-action-button').should('have.text', ' Login to Jesse.Trade ')
 
+        // close notifications
+        cy.get('.notyf__dismiss-btn').click()
+
         // check login button
         cy.get('#live-login-button').click()
         cy.wait(50)
         cy.get('#slideover-title').should('have.text', 'Login to your Jesse account')
         cy.get('#login-cancel-button').click()
         cy.wait(50)
-        cy.get('#slideover-title').should('not.exist')
+        cy.get('#nav-menu-button').click()
+        cy.get('[name=nav-login-button]').should('not.exist')
     })
 })
