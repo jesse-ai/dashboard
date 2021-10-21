@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <p>
+    <p id="feedback-description">
       I would love to hear your feedback whether it's about a bug, suggestion, something you like, or something you hate about Jesse!
     </p>
 
@@ -20,12 +20,12 @@
     <br>
 
     <div class="flex justify-end">
-      <button class="btn-link mr-8"
+      <button id="feedback-cancel-button" class="btn-link mr-8"
               @click="modals.feedback = false">
         Cancel
       </button>
 
-      <button class="btn-primary w-48"
+      <button id="feedback-submit-button" class="btn-primary w-48"
               :disabled="!description.length"
               @click="submit()">
         Submit

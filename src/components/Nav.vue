@@ -55,7 +55,7 @@
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex items-center">
-            <button class="btn-secondary mr-4 text-sm" @click="openFeedback">
+            <button id="open-feedback-button" class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
             </button>
 
