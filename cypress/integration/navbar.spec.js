@@ -54,5 +54,23 @@ describe('test home page', () => {
         cy.get('#theme-switch-button').click().should(() => {
             expect(localStorage.getItem('theme')).to.eq('light')
         })
+
+        // check settings
+        cy.get('[data-cy=settings-icon]').click()
+        cy.wait(50)
+        // check backtests
+        cy.get('[data-cy=Backtest-setting]').click()
+        cy.get('[data-cy=backtest-setting-tab]').should('exist')
+        cy.get('[data-cy=backtest-setting-logs-checkboxes]').should('include.text', 'Trading Candles')
+        cy.get('[data-cy=backtest-setting-data-input]').should('exist')
+        cy.get('[data-cy=backtest-setting-exchange-binance').should('exist')
+        cy.get('[data-cy=backtest-setting-exchange-binance-futures').should('exist')
+        cy.get('[data-cy=backtest-setting-exchange-bitfinex').should('exist')
+
+        // check Optimization
+        cy.get('[data-cy=Optimization-setting]').click()
+        cy.contains('Fitness Function')
+        cy.get('[data-cy=optimization-setting-tab').should('exist')
+        cy.get('[data-cy=optimization-warmup-candles-input]').should('exist')
     })
 })
