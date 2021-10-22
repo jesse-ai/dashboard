@@ -21,6 +21,11 @@
 
   <LayoutWithSidebar>
     <template #left>
+      <!-- exception  -->
+      <div v-if="results.exception.error && results.executing" class="mb-8">
+        <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      </div>
+
       <!-- Execution -->
       <div v-if="results.executing">
         <Divider>Info</Divider>
@@ -31,8 +36,6 @@
       <div v-if="!results.executing && !results.showResults"
            class="px-6">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
-
-        <pre>{{ form }}</pre>
 
         <Divider class="mt-16">Options</Divider>
 
@@ -163,7 +166,7 @@
            class="flex flex-col items-center justify-center select-none"
       >
         <div class="mb-8 w-full">
-          <button class="btn-secondary block mb-4 w-full" @click="cancel($route.params.id)">
+          <button class="btn-cancel block mb-4 w-full" @click="cancel($route.params.id)">
             Cancel
           </button>
         </div>
@@ -173,11 +176,6 @@
         </div>
 
         <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
-
-        <!-- exception  -->
-        <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
-          <Exception :title="results.exception.error" :content="results.exception.traceback" />
-        </div>
       </div>
     </template>
   </LayoutWithSidebar>

@@ -90,7 +90,11 @@ export const useOptimizationStore = defineStore({
       })
     },
     cancel (id) {
-      this.tabs[id].results.executing = false
+      // this.tabs[id].results.executing = false
+      if (this.tabs[id].results.exception.error) {
+        this.tabs[id].results.executing = false
+        return
+      }
       axios.delete('/optimization', {
         headers: {},
         data: {
@@ -209,6 +213,12 @@ export const useOptimizationStore = defineStore({
       // optimization is finished, time to show charts:
       this.tabs[id].results.executing = false
       this.tabs[id].results.showResults = true
+    },
+    terminationEvent (id) {
+      if (this.tabs[id].results.executing) {
+        this.tabs[id].results.executing = false
+        this.notyf.success('Session terminated successfully')
+      }
     }
   }
 })

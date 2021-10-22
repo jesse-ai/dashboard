@@ -34,6 +34,10 @@
         @apply font-medium select-none items-center shadow-sm px-2.5 py-1.5 rounded text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 focus:outline-none text-base tracking-wide;
     }
 
+    .btn-cancel {
+        @apply font-medium select-none items-center shadow-sm px-2.5 py-1.5 rounded text-red-500 dark:text-red-400 bg-white dark:bg-gray-700 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 focus:outline-none text-base tracking-wide;
+    }
+
     .btn-danger {
         @apply font-medium select-none items-center justify-center px-2.5 py-1.5 border border-transparent rounded shadow-sm text-white bg-red-600 hover:bg-red-500 focus:outline-none tracking-wide;
     }

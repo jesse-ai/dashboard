@@ -30,7 +30,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
+      <button class="btn-cancel block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>

@@ -36,6 +36,9 @@ export default function () {
     ['backtest.general_info', [
       backtest.generalInfoEvent
     ]],
+    ['backtest.termination', [
+      backtest.terminationEvent
+    ]],
 
     // candles
     ['candles.progressbar', [
@@ -46,6 +49,9 @@ export default function () {
     ]],
     ['candles.exception', [
       candles.exceptionEvent
+    ]],
+    ['candles.termination', [
+      candles.terminationEvent
     ]],
 
     // live and paper
@@ -103,6 +109,12 @@ export default function () {
     ['livetrade.exception', [
       live.exceptionEvent
     ]],
+    ['papertrade.unexpectedTermination', [
+      live.unexpectedTerminationEvent
+    ]],
+    ['livetrade.unexpectedTermination', [
+      live.unexpectedTerminationEvent
+    ]],
     ['papertrade.termination', [
       live.terminationEvent
     ]],
@@ -115,6 +127,15 @@ export default function () {
     ]],
     ['optimize.general_info', [
       optimize.generalInfoEvent
+    ]],
+    ['optimize.metrics', [
+      optimize.metricsEvent
+    ]],
+    ['optimize.exception', [
+      optimize.exceptionEvent
+    ]],
+    ['optimize.termination', [
+      optimize.terminationEvent
     ]],
   ])
 }

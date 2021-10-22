@@ -92,7 +92,11 @@ export const useBacktestStore = defineStore({
       })
     },
     cancel (id) {
-      this.tabs[id].results.executing = false
+      if (this.tabs[id].results.exception.error) {
+        this.tabs[id].results.executing = false
+        return
+      }
+
       axios.delete('/backtest', {
         headers: {},
         data: {
@@ -140,6 +144,7 @@ export const useBacktestStore = defineStore({
       )}] ${data.message}\n`
     },
     exceptionEvent (id, data) {
+      console.error(data)
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
     },
@@ -198,6 +203,12 @@ export const useBacktestStore = defineStore({
       // backtest is finished, time to show charts:
       this.tabs[id].results.executing = false
       this.tabs[id].results.showResults = true
+    },
+    terminationEvent (id) {
+      if (this.tabs[id].results.executing) {
+        this.tabs[id].results.executing = false
+        this.notyf.success('Session terminated successfully')
+      }
     }
   }
 })

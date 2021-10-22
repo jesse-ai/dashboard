@@ -73,7 +73,11 @@ export const useCandlesStore = defineStore({
       })
     },
     cancel (id) {
-      this.tabs[id].results.executing = false
+      if (this.tabs[id].results.exception.error) {
+        this.tabs[id].results.executing = false
+        return
+      }
+
       axios.delete('/import-candles', {
         headers: {},
         data: {
@@ -102,6 +106,12 @@ export const useCandlesStore = defineStore({
     exceptionEvent (id, data) {
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
+    },
+    terminationEvent (id) {
+      if (this.tabs[id].results.executing) {
+        this.tabs[id].results.executing = false
+        this.notyf.success('Session terminated successfully')
+      }
     },
   }
 })

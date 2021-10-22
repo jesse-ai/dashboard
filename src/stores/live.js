@@ -432,8 +432,15 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.booting = false
       this.tabs[id].results.showResults = true
     },
-    terminationEvent (id, data) {
+    unexpectedTerminationEvent (id, data) {
       this.tabs[id].results.finished = true
+    },
+    terminationEvent (id) {
+      if (!this.tabs[id].results.finished) {
+        this.tabs[id].results.finished = true
+        this.notyf.success('Session terminated successfully')
+      }
     }
+
   }
 })

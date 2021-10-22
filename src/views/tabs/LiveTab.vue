@@ -61,7 +61,7 @@
         View Logs
       </button>
 
-      <button class="btn-secondary w-64" @click="cancel($route.params.id)">
+      <button class="btn-cancel w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -129,7 +129,7 @@
             New session
           </button>
 
-          <button v-else class="btn-secondary text-center mr-2 block w-full mb-4" @click="modals.terminationConfirm = true">
+          <button v-else class="btn-cancel text-center mr-2 block w-full mb-4" @click="modals.terminationConfirm = true">
             Stop
           </button>
         </div>
