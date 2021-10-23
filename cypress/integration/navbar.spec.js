@@ -60,6 +60,8 @@ describe('test home page', () => {
         cy.wait(50)
         // check backtests
         cy.get('[data-cy=Backtest-setting]').click()
+        cy.get('[data-cy="optimization-setting-tab"]').should('not.exist')
+        cy.get('[data-cy="live-setting-tab"]').should('not.exist')
         cy.get('[data-cy=backtest-setting-tab]').should('exist')
         cy.get('[data-cy=backtest-setting-logs-checkboxes]').should('include.text', 'Trading Candles')
         cy.get('[data-cy=backtest-setting-data-input]').should('exist')
@@ -69,8 +71,25 @@ describe('test home page', () => {
 
         // check Optimization
         cy.get('[data-cy=Optimization-setting]').click()
+        cy.get('[data-cy="backtest-setting-tab"]').should('not.exist')
+        cy.get('[data-cy="live-setting-tab"]').should('not.exist')
         cy.contains('Fitness Function')
         cy.get('[data-cy=optimization-setting-tab').should('exist')
         cy.get('[data-cy=optimization-warmup-candles-input]').should('exist')
+        cy.get('[data-cy=ratio-radio-groups]').should('exist')
+
+        // check live tab
+        cy.get('[data-cy=Live-setting]').click()
+        cy.get('[data-cy="backtest-setting-tab"]').should('not.exist')
+        cy.get('[data-cy="backtest-optimization-tab"]').should('not.exist')
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "You can filter the types of events that you want to be logged. Logging is often useful for debugging and recommended. Hence, it doesn't hurt to enable them all: ")
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "Order Submission")
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "1m candles")
+        cy.get('[data-cy="live-setting-warmup-candles-input"]').should('exist')
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "Jesse can notify every time something interesting happens so you don't have to monitor your bots 24/7. Currently, Telegram and Discord drivers are supported")
+        cy.get('[data-cy="live-setting-enabled-notification"]').should('exist')
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "Errors")
+        cy.get('[data-cy="setting-live-tab"]').should('include.text', "Opened Positions")
+        cy.get('[data-cy="live-setting-report-notification-timeframe"]').should('have.value', "1h")
     })
 })
