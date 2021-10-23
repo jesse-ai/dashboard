@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between">
+  <div :data-cy="name + '-radio-groups'" class="flex items-center justify-between">
     <div class="font-semibold">{{ title }}</div>
 
     <div>

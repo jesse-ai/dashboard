@@ -72,7 +72,7 @@
     </div>
 
     <!-- live -->
-    <div v-if="currentTab === 'Live'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Live'" data-cy="setting-live-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Logs</Divider>
       <p>
         You can filter the types of events that you want to be logged. Logging is often useful for debugging
@@ -95,7 +95,8 @@
 
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="live-setting-warmup-candles-input"
+                   placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.live"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -110,7 +111,7 @@
         To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Checkbox name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
+        <Checkbox data-cy="live-setting-enabled-notification" name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
       </div>
 
       <div v-if="settings.live.notifications.enabled">
@@ -137,7 +138,7 @@
           choose the timeframe for how frequently you want to receive them:
         </p>
 
-        <select v-model="settings.live.notifications.position_report_timeframe"
+        <select v-model="settings.live.notifications.position_report_timeframe" data-cy="live-setting-report-notification-timeframe"
                 class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
           <option v-for="item in timeframes" :key="item">{{ item }}</option>
         </select>
