@@ -9,7 +9,7 @@
     <!--      </div>-->
     <div class="hidden sm:block">
       <nav class="relative rounded-lg shadow flex divide-x divide-gray-200 dark:divide-gray-700" aria-label="Tabs">
-        <div v-for="(tab, name, index) in tabs" :id="'tab' + index" :key="tab.id"
+        <div v-for="(tab, name, index) in tabs" :key="tab.id" :data-cy="'tab' + index"
              class="relative group min-w-0 flex-1 overflow-hidden text-center flex items-center "
         >
           <router-link
@@ -21,7 +21,7 @@
           </router-link>
 
           <!-- Tab close button -->
-          <button v-show="Object.keys(tabs).length > 1" :id="'tab-close-button' + index" class="absolute right-[1em] focus:outline-none" @click="closeTab(tab.id)">
+          <button v-show="Object.keys(tabs).length > 1" :data-cy="'tab-close-button' + index" class="absolute right-[1em] focus:outline-none" @click="closeTab(tab.id)">
             <XIcon class="h-5 w-5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full" aria-hidden="true" />
           </button>
         </div>

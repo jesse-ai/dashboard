@@ -30,7 +30,7 @@
     <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
 
     <div class="mt-8">
-      <button id="backtest-cancel-button" class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
+      <button data-cy="backtest-cancel-button" class="btn-secondary block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -44,13 +44,13 @@
   <LayoutWithSidebar else>
     <template #left>
       <!-- Content -->
-      <div v-if="!results.executing && !results.showResults"
+      <div v-if="!results.executing && !results.showResults" data-cy="backtest-content-section"
            class="px-6">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>
 
-        <div class="grid grid-cols-1 gap-6">
+        <div data-cy="backtest-option-section" class="grid grid-cols-1 gap-6">
           <!-- debug mode -->
           <ToggleButton
             :object="form"
@@ -99,6 +99,7 @@
         <div class="flex items-center select-none flex-1 mb-4">
           <input id="start_date"
                  v-model="form.start_date"
+                 data-cy="backtest-start-date"
                  type="date"
                  name="start_date"
                  class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 dark:focus:border-indigo-400 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-l-md border-r-0"
@@ -106,6 +107,7 @@
 
           <input id="finish_date"
                  v-model="form.finish_date"
+                 data-cy="backtest-finish-date"
                  type="date"
                  name="finish_date"
                  class="dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 dark:focus:border-indigo-400 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
@@ -187,11 +189,11 @@
         </div>
 
         <div v-else>
-          <button id="start-button" class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
+          <button data-cy="start-button" class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
             Start
           </button>
 
-          <button id="start-new-tab-button" class="btn-secondary text-center block mb-4 w-full" @click="startInNewTab($route.params.id)">
+          <button data-cy="start-new-tab-button" class="btn-secondary text-center block mb-4 w-full" @click="startInNewTab($route.params.id)">
             Start in a new tab
           </button>
         </div>
