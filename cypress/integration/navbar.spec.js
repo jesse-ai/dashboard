@@ -7,6 +7,7 @@ describe('test home page', () => {
         cy.intercept('post', '/get-config', { fixture: 'getConfig.json' }).as('getConfig')
         cy.intercept('post', '/update-config', { fixture: 'updateConfig.json' }).as('updateConfig')
         cy.intercept('post', 'feedback', { fixture: 'feedback.json' }).as('feedback')
+        cy.intercept('post', 'make-strategy', { fixture: 'makeStrategy.json' }).as('makeStrategy')
 
         sessionStorage.auth_key = null
         axios.defaults.headers.common.Authorization = null
@@ -29,6 +30,7 @@ describe('test home page', () => {
 
         cy.get('#live-page-button').click()
         cy.url().should('include', '/live/1')
+        cy.wait(500)
 
         // check feedback
         cy.get('#open-feedback-button').click()
@@ -45,6 +47,8 @@ describe('test home page', () => {
         cy.get('#feedback-description').should('have.value', '')
         cy.get('#feedback-cancel-button').click()
         cy.get('#feedback-description').should('not.exist')
+        // close notification
+        cy.get('.notyf__dismiss-btn').click()
 
         cy.get('#nav-sun-icon').should('not.exist')
         // check theme Switch
@@ -91,5 +95,23 @@ describe('test home page', () => {
         cy.get('[data-cy="setting-live-tab"]').should('include.text', "Errors")
         cy.get('[data-cy="setting-live-tab"]').should('include.text', "Opened Positions")
         cy.get('[data-cy="live-setting-report-notification-timeframe"]').should('have.value', "1h")
+        cy.get('#slideover-close-button').click()
+        cy.wait(50)
+
+        // test dropdown menu
+        cy.get('[data-cy="nav-dropdown-menu-button"]').click()
+        cy.get('[data-cy="nav-dropdown-menu-items"]').should('exist')
+        cy.get('[data-cy="nav-create-strategy"]').click()
+        cy.wait(50)
+        cy.get("#make-strategy-modal").should('exist')
+        cy.get("#make-strategy-modal").should('include.text', 'Filling this form will create a new strategy class with all the starting methods in it')
+        cy.get('#strategy').type('test-strategy')
+        cy.get('[data-cy="make-strategy-button"]').click()
+        cy.get('.notyf__message').should('include.text', 'Success')
+        cy.get('.notyf__dismiss-btn').click()
+        cy.get('[data-cy="nav-dropdown-menu-button"]').click()
+        cy.get('[data-cy="nav-documentation-link"]').should('have.attr', 'href', 'https://docs.jesse.trade/')
+        cy.get('[data-cy="nav-strategies-link"]').should('have.attr', 'href', 'https://jesse.trade/strategies')
+        cy.get('[data-cy="nav-help-center-link"]').should('have.attr', 'href', 'https://jesse.trade/help')
     })
 })
