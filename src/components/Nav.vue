@@ -74,17 +74,17 @@
 
             <!-- Profile dropdown -->
             <Menu as="div" class="relative z-40">
-              <MenuButton id="nav-menu-button" class="btn-nav">
+              <MenuButton data-cy="nav-dropdown-menu-button" class="btn-nav">
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
               </MenuButton>
 
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
+                <MenuItems data-cy="nav-dropdown-menu-items" class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <button id="nav-create-strategy" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button data-cy="nav-create-strategy" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.makeStrategy = true">
                         New Strategy
                       </button>
@@ -93,19 +93,19 @@
 
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <a id="nav-documentation-link" href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-documentation-link" href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
                         Documentation
                       </a>
                     </MenuItem>
 
                     <MenuItem v-slot="{ active }">
-                      <a id="nav-strategies-link" href="https://jesse.trade/strategies" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-strategies-link" href="https://jesse.trade/strategies" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
                         Strategies
                       </a>
                     </MenuItem>
 
                     <MenuItem v-slot="{ active }">
-                      <a id="nav-help-center-link" href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-help-center-link" href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
                         Help Center
                       </a>
                     </MenuItem>

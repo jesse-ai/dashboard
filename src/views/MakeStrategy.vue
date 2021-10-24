@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full select-none">
+  <div id="make-strategy-modal" class="w-full select-none">
     <p>
       Filling this form will create a new strategy class with all the starting methods in it.
     </p>
@@ -25,8 +25,8 @@
     </div>
 
     <div class="flex justify-end mt-8">
-      <button class="btn-link mr-8" @click="modals.makeStrategy = false">Cancel</button>
-      <button class="btn-primary w-32" @click="create">Create</button>
+      <button data-cy="cancel-make-strategy-button" class="btn-link mr-8" @click="modals.makeStrategy = false">Cancel</button>
+      <button data-cy="make-strategy-button" class="btn-primary w-32" @click="create">Create</button>
     </div>
   </div>
 </template>
