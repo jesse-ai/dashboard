@@ -1,13 +1,13 @@
 <template>
   <div class="select-none">
     <DividerWithButtons title="Routes">
-      <button id="add-route" type="button"
+      <button data-cy="add-route" type="button"
               class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-900 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
               @click="addRoute">
         <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
         <span>Trading Route</span>
       </button>
-      <button id="add-extra-route" type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-900 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
+      <button data-cy="add-extra-route" type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-900 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
               @click="addExtraRoute">
         <PlusSmIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
         <span>Extra Route</span>
@@ -16,30 +16,30 @@
 
     <!-- Trading Routes -->
     <div v-for="(r, i) in form.routes"
-         :id="'trading-route' + i"
          :key="r.exchange + i"
+         :data-cy="'trading-route' + i"
          class="flex border dark:bg-backdrop-dark dark:border-gray-900 rounded-lg mb-4">
-      <select :id="'trading-route-exchange' + i" v-model="r.exchange"
+      <select v-model="r.exchange" :data-cy="'trading-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
 
-      <input :id="'trading-route-symbol' + i"
-             v-model="r.symbol"
+      <input v-model="r.symbol"
+             :data-cy="'trading-route-symbol' + i"
              type="text"
              class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 "
              placeholder="ex: BTC-USDT"
              @input="r.symbol = $event.target.value.toUpperCase()"
       >
 
-      <select :id="'trading-route-timeframe' + i"
-              v-model="r.timeframe"
+      <select v-model="r.timeframe"
+              :data-cy="'trading-route-timeframe' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
         <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
 
-      <select :id="'trading-route-strategy' + i"
-              v-model="r.strategy"
+      <select v-model="r.strategy"
+              :data-cy="'trading-route-strategy' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
         <option v-for="item in routes.strategies" :key="item">{{ item }}</option>
       </select>
@@ -47,7 +47,7 @@
       <!-- More Button -->
       <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-r-lg">
         <Menu as="div" class="relative block h-full w-full">
-          <MenuButton :id="'trading-route-menu-button' + i" class="px-5 block text-left h-full w-full focus:outline-none">
+          <MenuButton :data-cy="'trading-route-menu-button' + i" class="px-5 block text-left h-full w-full focus:outline-none">
             <DotsVerticalIcon class="h-8 w-8 text-gray-400" />
           </MenuButton>
 
@@ -92,24 +92,24 @@
     <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
 
     <div v-for="(r, i) in form.extra_routes"
-         :id="'extra-route' + i"
          :key="r.exchange + i + r.timeframe"
+         :data-cy="'extra-route' + i"
          class="flex border dark:bg-backdrop-dark dark:border-gray-900 rounded-lg mb-4">
-      <select :id="'extra-route-exchange' + i" v-model="r.exchange"
+      <select v-model="r.exchange" :data-cy="'extra-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
         <option v-for="item in exchanges" :key="item">{{ item }}</option>
       </select>
 
-      <input :id="'extra-route-symbol' + i"
-             v-model="r.symbol"
+      <input v-model="r.symbol"
+             :data-cy="'extra-route-symbol' + i"
              type="text"
              class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 "
              placeholder="ex: BTC-USDT"
              @input="r.symbol = $event.target.value.toUpperCase()"
       >
 
-      <select :id="'extra-route-timeframe' + i"
-              v-model="r.timeframe"
+      <select v-model="r.timeframe"
+              :data-cy="'extra-route-timeframe' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
         <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
       </select>
@@ -117,7 +117,7 @@
       <!-- More Button -->
       <div class="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-r-lg">
         <Menu as="div" class="relative block h-full w-full">
-          <MenuButton :id="'extra-route-menu-button' + i" class="px-5 block text-left h-full w-full focus:outline-none">
+          <MenuButton :data-cy="'extra-route-menu-button' + i" class="px-5 block text-left h-full w-full focus:outline-none">
             <DotsVerticalIcon class="h-8 w-8 text-gray-400"/>
           </MenuButton>
 
@@ -168,7 +168,7 @@
       <div v-for="(item, i) in totalRoutesError" :key="i" class="flex justify-start items-center mb-2">
         <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
 
-        <div :id="'error' + i" v-html="item" />
+        <div :data-cy="'error' + i" v-html="item" />
       </div>
     </div>
   </div>
