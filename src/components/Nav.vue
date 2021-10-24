@@ -22,7 +22,7 @@
     description="Are you sure you want to log out from your Jesse account?"
     type="info" :object="modals" name="jesseTradeLogout"
   >
-    <button id="confirm-logout-button" class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
+    <button data-cy="confirm-logout-button" class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
   </ConfirmModal>
 
   <!-- Make strategy -->

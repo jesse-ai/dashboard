@@ -15,7 +15,7 @@
               <div class="h-full flex flex-col py-6 bg-white dark:bg-backdrop-dark shadow-xl overflow-y-scroll">
                 <div class="px-4 sm:px-6 border-b-2 dark:border-gray-800 pb-6">
                   <div class="flex items-start justify-between">
-                    <DialogTitle id="slideover-title" class="text-lg font-medium text-gray-900 dark:text-gray-100 select-none" v-text="title"/>
+                    <DialogTitle data-cy="slideover-title" class="text-lg font-medium text-gray-900 dark:text-gray-100 select-none" v-text="title"/>
 
                     <div class="ml-3 h-7 flex items-center">
                       <slot name="buttons"/>
