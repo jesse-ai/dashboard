@@ -44,9 +44,11 @@
                 v-for="item in navigation"
                 :key="item.name"
                 :to="item.to"
-                class="text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+                class="flex items-center text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
                 :class="$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200'"
               >
+                <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-2 h-6 w-6']" aria-hidden="true" />
+
                 {{ item.name }}
               </router-link>
             </div>
@@ -149,7 +151,8 @@
             :to="item.to"
             class="text-gray-700 dark:text-gray-300 text-sm font-medium"
           >
-            <div class="w-full p-2">
+            <div class="flex items-center w-full p-2">
+              <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 mr-2 h-6 w-6']" aria-hidden="true" />
               {{ item.name }}
             </div>
           </router-link>
@@ -217,7 +220,7 @@
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
+import { SaveIcon, CalculatorIcon, ChipIcon, CurrencyDollarIcon, MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
@@ -248,6 +251,10 @@ export default {
     SlideOver,
     CogIcon,
     DotsVerticalIcon,
+    CalculatorIcon, 
+    ChipIcon, 
+    CurrencyDollarIcon,
+    SaveIcon
   },
   setup () {
     const open = ref(false)
@@ -261,15 +268,18 @@ export default {
       navigation: [
         {
           name: 'Import Candles',
-          to: '/candles/'
+          to: '/candles/',
+          icon: SaveIcon
         },
         {
           name: 'Backtest',
-          to: '/backtest/'
+          to: '/backtest/',
+          icon: CalculatorIcon
         },
         {
           name: 'Live',
-          to: '/live/'
+          to: '/live/',
+          icon: CurrencyDollarIcon
         },
         // {
         //   name: 'Optimization',
