@@ -31,14 +31,14 @@
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <img class="block lg:hidden h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
             <img class="hidden lg:block h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
           </div>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden md:block md:ml-6">
             <div class="flex space-x-4">
               <router-link
                 v-for="item in navigation"
@@ -54,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="hidden sm:ml-6 sm:block">
+        <div class="hidden md:ml-6 md:block">
           <div class="flex items-center">
             <button class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
@@ -132,7 +132,7 @@
             </Menu>
           </div>
         </div>
-        <div class="-mr-2 flex sm:hidden">
+        <div class="-mr-2 flex md:hidden">
           <!-- Mobile menu button -->
           <DisclosureButton class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:focus:ring-gray-800">
             <span class="sr-only">Open main menu</span>
@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <DisclosurePanel class="sm:hidden">
+    <DisclosurePanel class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
         <div v-for="item in navigation" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
