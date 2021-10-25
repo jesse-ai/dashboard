@@ -70,7 +70,12 @@ export const useMainStore = defineStore({
         // sharpe, calmar, sortino, omega
         ratio: 'sharpe',
         warm_up_candles: 210,
-        exchanges: {},
+        exchange: {
+          balance: 10_000,
+          fee: 0.001,
+          futures_leverage: 3,
+          futures_leverage_mode: 'cross',
+        },
       }
     },
     routes: {

@@ -172,11 +172,13 @@
 
     <!-- optimization -->
     <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+      <!-- Fitness Function-->
       <Divider>Fitness Function</Divider>
       <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
 
       <br>
 
+      <!-- Data -->
       <Divider>Data</Divider>
       <div>
         <FormInput placeholder="ex: 210"
@@ -188,27 +190,25 @@
 
       <br>
 
-      <div v-for="(e, index) in settings.optimization.exchanges" :key="index">
-        <Divider>{{ e.name }}</Divider>
+      <!-- exchange -->
+      <Divider>Exchange</Divider>
+      <p>
+        Because the optimize mode is limited to one route only, it makes sense to have only one configuration section for the exchange values. Depending on the exchange you define in your route, these configurations will be used.
+      </p>
 
-        <div class="grid grid-cols-6 gap-6">
-          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
-                     :step="1000" />
+      <div class="grid grid-cols-6 gap-6">
+        <FormInput :title="`Starting Capital`"
+                   :object="settings.optimization.exchange" name="balance" input-type="number"
+                   :step="1000" />
 
-          <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
-                     :step="0.0001" />
-        </div>
-
-        <br>
-
-        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
-
-        <br>
-
-        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
-
-        <br>
+        <FormInput :title="`Trading Fee (${round(settings.optimization.exchange.fee * 100, 2)}%)`"
+                   :object="settings.optimization.exchange" name="fee" input-type="number"
+                   :step="0.0001" />
       </div>
+
+      <RadioGroups title="Leverage Mode:" :object="settings.optimization.exchange" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+
+      <NumberInput title="Leverage (x):" name="futures_leverage" :object="settings.optimization.exchange"/>
     </div>
   </div>
 </template>
@@ -242,10 +242,6 @@ export default {
         { name: 'Live', icon: CurrencyDollarIcon },
       ],
       currentTab: 'Backtest',
-      plans: [
-        { name: 'Cross', priceMonthly: 29, priceYearly: 290, limit: 'Up to 5 active job postings' },
-        { name: 'Isolated', priceMonthly: 99, priceYearly: 990, limit: 'Up to 25 active job postings' },
-      ]
     }
   },
   computed: {

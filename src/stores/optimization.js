@@ -77,6 +77,8 @@ export const useOptimizationStore = defineStore({
         config: mainStore.settings.optimization,
         start_date: this.tabs[id].form.start_date,
         finish_date: this.tabs[id].form.finish_date,
+        optimal_total: 8,
+        cpu_cores: 4,
         debug_mode: this.tabs[id].form.debug_mode,
         export_csv: this.tabs[id].form.export_csv,
         export_json: this.tabs[id].form.export_json,
