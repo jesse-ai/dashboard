@@ -187,7 +187,7 @@
           <CircleProgressbar :progress="results.progressbar.current"/>
         </div>
 
-        <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+        <h3 class="mt-8" v-text="remainingTimeText"/>
       </div>
     </template>
   </LayoutWithSidebar>
@@ -245,6 +245,13 @@ export default {
     ...mapState(useMainStore, ['isInitiated']),
     auth_key () {
       return sessionStorage.auth_key
+    },
+    remainingTimeText () {
+      if (Math.round(this.results.progressbar.estimated_remaining_seconds) === 0) {
+        return 'Please wait...'
+      }
+
+      return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
     }
   },
   methods: {

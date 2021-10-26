@@ -54,7 +54,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+    <h3 class="mt-8" v-text="remainingTimeText"/>
 
     <div class="mt-8">
       <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="modals.infoLogs = true">
@@ -298,7 +298,14 @@ export default {
     ...mapState(useMainStore, ['isInitiated', 'isLoggedInToJesseTrade']),
     ...mapState(useMainStore, {
       navModals: 'modals'
-    })
+    }),
+    remainingTimeText () {
+      if (Math.round(this.results.progressbar.estimated_remaining_seconds) === 0) {
+        return 'Please wait...'
+      }
+
+      return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
+    }
   },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),

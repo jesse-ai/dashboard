@@ -27,7 +27,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8">{{ Math.round(results.progressbar.estimated_remaining_seconds) }} seconds remaining...</h3>
+    <h3 class="mt-8" v-text="remainingTimeText"/>
 
     <div class="mt-8">
       <button class="btn-cancel block mb-4 w-64" @click="cancel($route.params.id)">
@@ -244,6 +244,13 @@ export default {
     ...mapState(useMainStore, ['isInitiated']),
     auth_key () {
       return sessionStorage.auth_key
+    },
+    remainingTimeText () {
+      if (Math.round(this.results.progressbar.estimated_remaining_seconds) === 0) {
+        return 'Please wait...'
+      }
+
+      return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
     }
   },
   methods: {
