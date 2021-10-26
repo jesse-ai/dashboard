@@ -65,10 +65,10 @@
         <!-- optimal_total -->
         <div class="select-none">
           <Divider class="mt-16">Optimal Trades</Divider>
-          <p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
             The number that tells Jesse how many trades you would find optimal for your strategy in the targeted time
             period so that it can filter out those DNAs that cause too few trades.
-            <a href="https://docs.jesse.trade/docs/optimize/executing-the-optimize-mode.html" target="_blank" class="btn-link italic">More Details...</a>
+            <a href="https://docs.jesse.trade/docs/optimize/executing-the-optimize-mode.html" target="_blank" class="font-semibold hover:underline italic">More Details...</a>
           </p>
           <br>
           <NumberInput title="Optimal number of trades:" name="optimal_total" :object="form"/>
