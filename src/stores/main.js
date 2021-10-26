@@ -10,6 +10,9 @@ export const useMainStore = defineStore({
     isAuthenticated: false,
     isLoggedInToJesseTrade: false,
     hasLivePluginInstalled: false,
+    systemInfo: {
+      cpu_cores: 0,
+    },
     theme: localStorage.theme,
     modals: {
       settings: false,
@@ -67,6 +70,7 @@ export const useMainStore = defineStore({
         },
       },
       optimization: {
+        cpu_cores: 2,
         // sharpe, calmar, sortino, omega
         ratio: 'sharpe',
         warm_up_candles: 210,
@@ -90,6 +94,7 @@ export const useMainStore = defineStore({
     initiate () {
       axios.post('/general-info').then(res => {
         const data = res.data
+        this.systemInfo.cpu_cores = data.cpu_cores
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies

@@ -62,6 +62,18 @@
             description="Exports a JSON file of all DNAs on completion"/>
         </div>
 
+        <!-- optimal_total -->
+        <div class="select-none">
+          <Divider class="mt-16">Optimal Trades</Divider>
+          <p>
+            The number that tells Jesse how many trades you would find optimal for your strategy in the targeted time
+            period so that it can filter out those DNAs that cause too few trades.
+            <a href="https://docs.jesse.trade/docs/optimize/executing-the-optimize-mode.html" target="_blank" class="btn-link italic">More Details...</a>
+          </p>
+          <br>
+          <NumberInput title="Optimal number of trades:" name="optimal_total" :object="form"/>
+        </div>
+
         <Divider class="mt-16">Duration</Divider>
 
         <div class="flex items-center select-none flex-1 mb-4">

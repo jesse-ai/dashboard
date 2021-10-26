@@ -17,7 +17,8 @@ function newTab () {
       export_csv: false,
       export_json: false,
       routes: [],
-      extra_routes: []
+      extra_routes: [],
+      optimal_total: 50,
     },
     results: {
       showResults: false,
@@ -77,8 +78,7 @@ export const useOptimizationStore = defineStore({
         config: mainStore.settings.optimization,
         start_date: this.tabs[id].form.start_date,
         finish_date: this.tabs[id].form.finish_date,
-        optimal_total: 8,
-        cpu_cores: 4,
+        optimal_total: this.tabs[id].form.optimal_total,
         debug_mode: this.tabs[id].form.debug_mode,
         export_csv: this.tabs[id].form.export_csv,
         export_json: this.tabs[id].form.export_json,

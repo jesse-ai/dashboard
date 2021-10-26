@@ -172,6 +172,16 @@
 
     <!-- optimization -->
     <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+      <!-- CPU cores -->
+      <Divider>CPU</Divider>
+      <div>
+        <FormInput placeholder="ex: 4"
+                   :title="`CPU cores to use for optimization (${settings.optimization.cpu_cores}/${systemInfo.cpu_cores})`"
+                   :object="settings.optimization"
+                   description="How many CPU cores of your machine would you like to be used for optimization?"
+                   name="cpu_cores" input-type="number" />
+      </div>
+
       <!-- Fitness Function-->
       <Divider>Fitness Function</Divider>
       <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
@@ -245,7 +255,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['settings'])
+    ...mapState(useMainStore, ['settings', 'systemInfo'])
   },
   methods: {
     round: _.round
