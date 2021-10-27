@@ -54,7 +54,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8" v-text="remainingTimeText"/>
+    <h3 class="mt-8 animate-pulse" v-text="remainingTimeText"/>
 
     <div class="mt-8">
       <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="modals.infoLogs = true">
