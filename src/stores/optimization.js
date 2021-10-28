@@ -151,6 +151,7 @@ export const useOptimizationStore = defineStore({
       this.tabs[id].results.generalInfo = [
         ['Started At', data.started_at],
         ['Index', data.index],
+        ['Average Execution Time', `${_.round(data.average_execution_seconds, 2)} seconds`],
         ['Trading Route', data.trading_route],
       ]
       if ('population_size' in data) {
