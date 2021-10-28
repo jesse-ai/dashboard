@@ -31,28 +31,30 @@
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <img class="block lg:hidden h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
             <img class="hidden lg:block h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
           </div>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden md:block md:ml-6">
             <div class="flex space-x-4">
               <router-link
                 v-for="item in navigation"
                 :key="item.name"
                 :to="item.to"
-                class="text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+                class="flex items-center text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
                 :class="$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200'"
               >
+                <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-2 h-6 w-6']" aria-hidden="true" />
+
                 {{ item.name }}
               </router-link>
             </div>
           </div>
         </div>
-        <div class="hidden sm:ml-6 sm:block">
+        <div class="hidden md:ml-6 md:block">
           <div class="flex items-center">
             <button class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
@@ -130,7 +132,7 @@
             </Menu>
           </div>
         </div>
-        <div class="-mr-2 flex sm:hidden">
+        <div class="-mr-2 flex md:hidden">
           <!-- Mobile menu button -->
           <DisclosureButton class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:focus:ring-gray-800">
             <span class="sr-only">Open main menu</span>
@@ -141,7 +143,7 @@
       </div>
     </div>
 
-    <DisclosurePanel class="sm:hidden">
+    <DisclosurePanel class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
         <div v-for="item in navigation" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
@@ -149,7 +151,8 @@
             :to="item.to"
             class="text-gray-700 dark:text-gray-300 text-sm font-medium"
           >
-            <div class="w-full p-2">
+            <div class="flex items-center w-full p-2">
+              <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 mr-2 h-6 w-6']" aria-hidden="true" />
               {{ item.name }}
             </div>
           </router-link>
@@ -217,7 +220,7 @@
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
+import { SaveIcon, CalculatorIcon, ChipIcon, CurrencyDollarIcon, MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
@@ -248,6 +251,10 @@ export default {
     SlideOver,
     CogIcon,
     DotsVerticalIcon,
+    CalculatorIcon, 
+    ChipIcon, 
+    CurrencyDollarIcon,
+    SaveIcon
   },
   setup () {
     const open = ref(false)
@@ -261,21 +268,23 @@ export default {
       navigation: [
         {
           name: 'Import Candles',
-          to: '/candles/'
+          to: '/candles/',
+          icon: SaveIcon
         },
         {
           name: 'Backtest',
-          to: '/backtest/'
+          to: '/backtest/',
+          icon: CalculatorIcon
+        },
+        {
+          name: 'Live',
+          to: '/live/',
+          icon: CurrencyDollarIcon
         },
         // {
         //   name: 'Optimization',
         //   to: '/optimization/'
         // },
-        {
-          name: 'Live',
-          to: '/live/'
-        },
-
       ]
     }
   },
