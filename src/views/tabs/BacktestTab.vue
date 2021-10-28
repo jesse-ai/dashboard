@@ -220,7 +220,7 @@ export default {
     MultipleValuesTable,
     ClipboardIcon,
     CheckIcon,
-    SlideOver
+    SlideOver,
   },
   props: {
     form: {
@@ -235,6 +235,7 @@ export default {
   data () {
     return {
       copiedLogsInfo: false,
+      svgObject: { display: false },
     }
   },
   computed: {
