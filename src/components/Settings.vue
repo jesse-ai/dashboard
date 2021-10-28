@@ -4,8 +4,9 @@
       <nav class="space-y-1">
         <button
           v-for="item in navigation" :key="item.name"
+          :data-cy="item.name + '-setting'"
           class="block w-full"
-          :class="[currentTab === item.name ? 'bg-gray-100 dark:bg-gray-800 text-indigo-700 dark:text-indigo-400 hover:text-indigo-700' : 'hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-300 hover:bg-gray-50', 'group rounded-md px-3 py-2 flex items-center text-sm font-medium']"
+          :class="[currentTab === item.name ? 'bg-gray-100 dark:bg-gray-800 text-indigo-700 dark:text-indigo-400 hover:text-indigo-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-300', 'group rounded-md px-3 py-2 flex items-center text-sm font-medium']"
           @click="currentTab = item.name">
           <component :is="item.icon" :class="[currentTab === item.name ? 'text-indigo-500 dark:text-indigo-400 group-hover:text-indigo-500' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-3 h-6 w-6']" aria-hidden="true" />
           <span class="truncate">
@@ -16,12 +17,12 @@
     </aside>
 
     <!-- backtest -->
-    <div v-if="currentTab === 'Backtest'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Backtest'" data-cy="backtest-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Logs</Divider>
       <p>
         Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div data-cy="backtest-setting-logs-checkboxes" class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Checkbox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
         <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
         <Checkbox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
@@ -37,7 +38,8 @@
 
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="backtest-setting-data-input"
+                   placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.backtest"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -46,7 +48,7 @@
 
       <br>
 
-      <div v-for="(e, index) in settings.backtest.exchanges" :key="index">
+      <div v-for="(e, index) in settings.backtest.exchanges" :key="index" :data-cy="'backtest-setting-exchange-' + convertToSlug(e.name)">
         <Divider>{{ e.name }}</Divider>
 
         <div class="grid grid-cols-6 gap-6">
@@ -70,7 +72,7 @@
     </div>
 
     <!-- live -->
-    <div v-if="currentTab === 'Live'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Live'" data-cy="setting-live-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider>Logs</Divider>
       <p>
         You can filter the types of events that you want to be logged. Logging is often useful for debugging
@@ -93,7 +95,8 @@
 
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="live-setting-warmup-candles-input"
+                   placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.live"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -108,7 +111,7 @@
         To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Checkbox name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
+        <Checkbox data-cy="live-setting-enabled-notification" name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
       </div>
 
       <div v-if="settings.live.notifications.enabled">
@@ -135,7 +138,7 @@
           choose the timeframe for how frequently you want to receive them:
         </p>
 
-        <select v-model="settings.live.notifications.position_report_timeframe"
+        <select v-model="settings.live.notifications.position_report_timeframe" data-cy="live-setting-report-notification-timeframe"
                 class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
           <option v-for="item in timeframes" :key="item">{{ item }}</option>
         </select>
@@ -171,7 +174,7 @@
     </div>
 
     <!-- optimization -->
-    <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+    <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full" data-cy="optimization-setting-tab">
       <!-- CPU cores -->
       <Divider>CPU</Divider>
       <div>
@@ -191,7 +194,7 @@
       <!-- Data -->
       <Divider>Data</Divider>
       <div>
-        <FormInput placeholder="ex: 210"
+        <FormInput data-cy="optimization-warmup-candles-input" placeholder="ex: 210"
                    title="Warmup Candles"
                    :object="settings.optimization"
                    description="Number of warmup candles that is loaded before starting each session"
@@ -258,7 +261,13 @@ export default {
     ...mapState(useMainStore, ['settings', 'systemInfo'])
   },
   methods: {
-    round: _.round
+    round: _.round,
+    convertToSlug (Text) {
+      return Text
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '')
+    },
   }
 }
 </script>

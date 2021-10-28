@@ -66,7 +66,7 @@
         View Logs
       </button>
 
-      <button class="btn-cancel w-64" @click="cancel($route.params.id)">
+      <button data-cy="live-cancel-button" class="btn-secondary w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
     </div>
@@ -80,7 +80,7 @@
   <LayoutWithSidebar v-else>
     <template #left>
       <!-- form -->
-      <div v-if="!results.booting && !results.monitoring && !results.showResults"
+      <div v-if="!results.booting && !results.monitoring && !results.showResults" data-cy="live-page-content"
            class="px-4 sm:px-6 md:px-8">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
@@ -139,14 +139,16 @@
           </button>
         </div>
 
-        <div v-else>
+        <div v-else data-cy="live-action-button">
           <button v-if="isLoggedInToJesseTrade"
+                  data-cy="live-start-button"
                   class="btn-primary text-center mr-2 block w-full mb-4"
                   @click="start($route.params.id)">
             Start
           </button>
 
           <button v-else
+                  data-cy="live-login-button"
                   class="btn-primary text-center mr-2 block w-full mb-4"
                   @click="navModals.jesseTradeLogin = true">
             Login to Jesse.Trade

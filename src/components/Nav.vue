@@ -22,7 +22,7 @@
     description="Are you sure you want to log out from your Jesse account?"
     type="info" :object="modals" name="jesseTradeLogout"
   >
-    <button class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
+    <button data-cy="confirm-logout-button" class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
   </ConfirmModal>
 
   <!-- Make strategy -->
@@ -42,6 +42,7 @@
             <div class="flex space-x-4">
               <router-link
                 v-for="item in navigation"
+                :id="convertToSlug(item.name) + '-page-button'"
                 :key="item.name"
                 :to="item.to"
                 class="flex items-center text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
@@ -56,13 +57,13 @@
         </div>
         <div class="hidden md:ml-6 md:block">
           <div class="flex items-center">
-            <button class="btn-secondary mr-4 text-sm" @click="openFeedback">
+            <button id="open-feedback-button" class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
             </button>
 
             <ThemeSwitch />
 
-            <button class="btn-nav"
+            <button data-cy="settings-icon" class="btn-nav"
                     @click="modals.settings = true">
               <span class="sr-only">Settings</span>
               <CogIcon class="h-6 w-6" aria-hidden="true" />
@@ -75,17 +76,17 @@
 
             <!-- Profile dropdown -->
             <Menu as="div" class="relative z-40">
-              <MenuButton class="btn-nav">
+              <MenuButton data-cy="nav-dropdown-menu-button" class="btn-nav">
                 <span class="sr-only">Settings</span>
                 <DotsVerticalIcon class="h-6 w-6" aria-hidden="true" />
               </MenuButton>
 
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
                           leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
+                <MenuItems data-cy="nav-dropdown-menu-items" class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button data-cy="nav-create-strategy" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.makeStrategy = true">
                         New Strategy
                       </button>
@@ -94,7 +95,7 @@
 
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <a href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-documentation-link" href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
                         Documentation
                       </a>
                     </MenuItem>
@@ -106,7 +107,7 @@
                     </MenuItem>
 
                     <MenuItem v-slot="{ active }">
-                      <a href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-help-center-link" href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
                         Help Center
                       </a>
                     </MenuItem>
@@ -114,14 +115,14 @@
 
                   <div class="py-1">
                     <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
-                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogin = true">
                         Login to Jesse.Trade
                       </button>
                     </MenuItem>
 
                     <MenuItem v-else v-slot="{ active }">
-                      <button :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogout = true">
                         Logout from Jesse.Trade
                       </button>
@@ -146,7 +147,7 @@
     <DisclosurePanel class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
-        <div v-for="item in navigation" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
+        <div v-for="item in navigation" :id="convertToSlug(item.name) + '-page-button'" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
           <router-link
             :to="item.to"
             class="text-gray-700 dark:text-gray-300 text-sm font-medium"
@@ -293,6 +294,12 @@ export default {
     ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade'])
   },
   methods: {
+    convertToSlug (Text) {
+      return Text
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '')
+    },
     logoutFromJesseTrade () {
       axios.post('/logout-jesse-trade').then(res => {
         this.isLoggedInToJesseTrade = false

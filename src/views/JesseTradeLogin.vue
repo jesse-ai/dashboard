@@ -1,6 +1,6 @@
 <template>
   <div class="w-full select-none">
-    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded">
+    <div id="login-modal-description" class="bg-gray-100 dark:bg-gray-700 p-4 rounded">
       <h3>Why login?</h3>
       <div class="opacity-80">
         <p class="mt-2">
@@ -45,8 +45,8 @@
              class="input">
 
       <div class="flex justify-end mt-8">
-        <button class="btn-link mr-8" @click="modals.jesseTradeLogin = false">Cancel</button>
-        <button class="btn-primary w-32" type="submit">Login</button>
+        <button data-cy="login-cancel-button" class="btn-link mr-8" @click="modals.jesseTradeLogin = false">Cancel</button>
+        <button data-cy="login-submit-button" class="btn-primary w-32" type="submit">Login</button>
       </div>
     </form>
   </div>
