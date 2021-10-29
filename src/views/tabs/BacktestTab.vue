@@ -118,6 +118,10 @@
       <div v-if="results.showResults"
            class="w-full mx-auto px-6">
         <div>
+          <div v-if="results.alert.message" class="mb-10">
+            <Alert :data="results.alert"/>
+          </div>
+
           <Divider>Routes</Divider>
           <MultipleValuesTable :data="results.routes_info" header />
 

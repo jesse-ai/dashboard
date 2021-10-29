@@ -39,6 +39,9 @@ export default function () {
     ['backtest.termination', [
       backtest.terminationEvent
     ]],
+    ['backtest.alert', [
+      backtest.alertEvent
+    ]],
 
     // candles
     ['candles.progressbar', [

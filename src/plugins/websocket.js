@@ -12,8 +12,8 @@ export default {
         let url = settings.socketPath
         if (window.Cypress) {
           url = 'ws://127.0.0.1:8001/ws'
-        } 
-        
+        }
+
         const wsp = new WebSocketAsPromised(`${url}?token=${sessionStorage.auth_key}`, {
           packMessage: data => JSON.stringify(data),
           unpackMessage: data => JSON.parse(data),
@@ -76,7 +76,7 @@ export default {
           const id = message.id
           const actions = socketActions().get(event)
 
-          // console.log(event, id, data)
+          console.log(event, id, data)
 
           if (actions !== undefined) {
             actions.forEach(action => {

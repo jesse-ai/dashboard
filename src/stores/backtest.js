@@ -40,6 +40,10 @@ function newTab () {
       },
       charts: {
         equity_curve: []
+      },
+      alert: {
+        message: '',
+        type: ''
       }
     }
   })
@@ -209,6 +213,9 @@ export const useBacktestStore = defineStore({
         this.tabs[id].results.executing = false
         this.notyf.success('Session terminated successfully')
       }
-    }
+    },
+    alertEvent (id, data) {
+      this.tabs[id].results.alert = data
+    },
   }
 })
