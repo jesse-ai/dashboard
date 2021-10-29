@@ -221,7 +221,17 @@
 <script>
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { SaveIcon, CalculatorIcon, ChipIcon, CurrencyDollarIcon, MenuIcon, XIcon, CogIcon, DotsVerticalIcon } from '@heroicons/vue/outline'
+import {
+  SaveIcon,
+  CalculatorIcon,
+  ChipIcon,
+  CurrencyDollarIcon,
+  MenuIcon,
+  XIcon,
+  CogIcon,
+  DotsVerticalIcon,
+  DownloadIcon
+} from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
@@ -252,8 +262,8 @@ export default {
     SlideOver,
     CogIcon,
     DotsVerticalIcon,
-    CalculatorIcon, 
-    ChipIcon, 
+    CalculatorIcon,
+    ChipIcon,
     CurrencyDollarIcon,
     SaveIcon
   },
@@ -270,7 +280,7 @@ export default {
         {
           name: 'Import Candles',
           to: '/candles/',
-          icon: SaveIcon
+          icon: DownloadIcon
         },
         {
           name: 'Backtest',
@@ -278,14 +288,15 @@ export default {
           icon: CalculatorIcon
         },
         {
+          name: 'Optimization',
+          to: '/optimization/',
+          icon: ChipIcon
+        },
+        {
           name: 'Live',
           to: '/live/',
           icon: CurrencyDollarIcon
         },
-        // {
-        //   name: 'Optimization',
-        //   to: '/optimization/'
-        // },
       ]
     }
   },
