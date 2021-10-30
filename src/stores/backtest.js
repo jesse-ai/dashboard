@@ -106,6 +106,10 @@ export const useBacktestStore = defineStore({
         data: {
           id
         }
+      }).then(() => {
+        if (window.Cypress) {
+          this.tabs[id].results.executing = false
+        }
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     rerun (id) {
