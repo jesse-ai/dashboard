@@ -83,6 +83,11 @@ export const useCandlesStore = defineStore({
         data: {
           id
         }
+      }).then(() => {
+        // if was in test cancel execution directly
+        if (window.Cypress) {
+          this.tabs[id].results.executing = false
+        }
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
 

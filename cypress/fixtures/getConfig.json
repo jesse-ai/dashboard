@@ -3,168 +3,142 @@
         "data": {
             "optimization": {
                 "ratio": "sharpe",
-                "exchanges": [],
+                "cpu_cores": 2,
+                "exchange": {
+                    "fee": 0.001,
+                    "balance": 10000,
+                    "futures_leverage": 3,
+                    "futures_leverage_mode": "cross"
+                },
+                "warm_up_candles": 210
+            },
+            "live": {
+                "logging": {
+                    "position_closed": true,
+                    "order_submission": true,
+                    "trading_candles": true,
+                    "shorter_period_candles": false,
+                    "position_reduced": true,
+                    "position_opened": true,
+                    "order_cancellation": true,
+                    "order_execution": true,
+                    "position_increased": true,
+                    "balance_update": true
+                },
+                "notifications": {
+                    "events": {
+                        "opened_position": true,
+                        "errors": true,
+                        "updated_position": true,
+                        "submitted_orders": true,
+                        "terminated_session": true,
+                        "executed_orders": true,
+                        "started_session": true,
+                        "cancelled_orders": true
+                    },
+                    "enabled": true,
+                    "position_report_timeframe": "1h"
+                },
+                "exchanges": {
+                    "FTX Futures": {
+                        "futures_leverage": 2,
+                        "name": "FTX Futures",
+                        "futures_leverage_mode": "cross",
+                        "settlement_currency": "USD",
+                        "fee": 0.001,
+                        "balance": 10000
+                    },
+                    "Testnet Binance Futures": {
+                        "futures_leverage": 2,
+                        "name": "Testnet Binance Futures",
+                        "futures_leverage_mode": "cross",
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
+                        "balance": 10000
+                    },
+                    "Binance Futures": {
+                        "futures_leverage": 2,
+                        "name": "Binance Futures",
+                        "futures_leverage_mode": "cross",
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
+                        "balance": 10000
+                    }
+                },
                 "warm_up_candles": 210
             },
             "backtest": {
                 "logging": {
-                    "position_opened": true,
-                    "order_submission": true,
-                    "order_execution": true,
-                    "order_cancellation": true,
-                    "trading_candles": true,
-                    "balance_update": true,
                     "position_closed": true,
+                    "order_submission": true,
+                    "trading_candles": true,
                     "shorter_period_candles": false,
+                    "position_reduced": true,
+                    "position_opened": true,
+                    "order_cancellation": true,
+                    "order_execution": true,
                     "position_increased": true,
-                    "position_reduced": true
+                    "balance_update": true
                 },
-                "warm_up_candles": 210,
-                "exchanges": [
-                    {
-                        "name": "Binance",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
+                "exchanges": {
+                    "Testnet Binance Futures": {
                         "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Binance Inverse Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Bitfinex",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Coinbase",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
                         "name": "Testnet Binance Futures",
-                        "fee": 0.001,
                         "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
                         "balance": 10000
                     },
-                    {
-                        "name": "Binance",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
+                    "OKEX": {
                         "futures_leverage": 2,
+                        "name": "OKEX",
+                        "futures_leverage_mode": "isolated",
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
                         "balance": 10000
                     },
-                    {
-                        "name": "Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
+                    "Binance Inverse Futures": {
                         "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
                         "name": "Binance Inverse Futures",
-                        "fee": 0.001,
                         "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
                         "balance": 10000
                     },
-                    {
+                    "Binance": {
+                        "futures_leverage": 2,
+                        "name": "Binance",
+                        "futures_leverage_mode": "isolated",
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
+                        "balance": 10000
+                    },
+                    "Bitfinex": {
+                        "futures_leverage": 2,
                         "name": "Bitfinex",
-                        "fee": 0.001,
                         "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
+                        "settlement_currency": "USD",
+                        "fee": 0.001,
                         "balance": 10000
                     },
-                    {
+                    "Coinbase": {
+                        "futures_leverage": 2,
                         "name": "Coinbase",
-                        "fee": 0.001,
                         "futures_leverage_mode": "isolated",
-                        "futures_leverage": 2,
+                        "settlement_currency": "USD",
+                        "fee": 0.001,
                         "balance": 10000
                     },
-                    {
-                        "name": "Testnet Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "isolated",
+                    "Binance Futures": {
                         "futures_leverage": 2,
+                        "name": "Binance Futures",
+                        "futures_leverage_mode": "isolated",
+                        "settlement_currency": "USDT",
+                        "fee": 0.001,
                         "balance": 10000
                     }
-                ]
-            },
-            "live": {
-                "notifications": {
-                    "enabled": true,
-                    "events": {
-                        "started_session": true,
-                        "cancelled_orders": true,
-                        "updated_position": true,
-                        "terminated_session": true,
-                        "executed_orders": true,
-                        "opened_position": true,
-                        "submitted_orders": true,
-                        "errors": true
-                    },
-                    "position_report_timeframe": "1h"
                 },
-                "logging": {
-                    "position_opened": true,
-                    "order_submission": true,
-                    "order_execution": true,
-                    "order_cancellation": true,
-                    "trading_candles": true,
-                    "balance_update": true,
-                    "position_closed": true,
-                    "shorter_period_candles": false,
-                    "position_increased": true,
-                    "position_reduced": true
-                },
-                "warm_up_candles": 210,
-                "exchanges": [
-                    {
-                        "name": "Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "cross",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Testnet Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "cross",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "cross",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    },
-                    {
-                        "name": "Testnet Binance Futures",
-                        "fee": 0.001,
-                        "futures_leverage_mode": "cross",
-                        "futures_leverage": 2,
-                        "balance": 10000
-                    }
-                ]
+                "warm_up_candles": 210
             }
         }
     }
