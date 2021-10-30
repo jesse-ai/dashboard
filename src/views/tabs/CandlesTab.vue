@@ -45,6 +45,15 @@
                class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 w-full px-6 py-6 border border-gray-200 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 dark:border-gray-900 rounded-md"
                @input="form.symbol = $event.target.value.toUpperCase()">
 
+        <!-- symbol error section -->
+        <div v-if="totalSymbolError.length >> 0" id="error-section" class="text-sm text-red-400 p-2 rounded-lg mb-4 mt-2" >
+          <div v-for="(item, i) in totalSymbolError" :key="i" class="flex justify-start items-center mb-2">
+            <ExclamationIcon class="-ml-1.5 mr-1 h-5 w-5"/>
+
+            <div :data-cy="'error' + i" v-html="item" />
+          </div>
+        </div>
+
         <Divider class="mt-16">Start Date</Divider>
         <div class="flex items-center select-none flex-1">
           <input v-model="form.start_date"
@@ -89,10 +98,11 @@ import { mapActions, mapState } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { useMainStore } from '@/stores/main'
+import { ExclamationIcon } from '@heroicons/vue/solid'
 
 export default {
   name: 'CandlesTab',
-  components: { LayoutWithSidebar },
+  components: { LayoutWithSidebar, ExclamationIcon },
   props: {
     form: {
       type: Object,
@@ -101,6 +111,12 @@ export default {
     results: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      totalSymbolError: [],
+      copiedForm: { symbol: this.form }
     }
   },
   computed: {
@@ -119,7 +135,14 @@ export default {
     },
     isInitiated (newValue, oldValue) {
       this.initiate()
-    }
+    },
+    copiedForm: {
+      handler () {
+        console.log('hi')
+        this.checkSymbol()
+      },
+      deep: true
+    },
   },
   created () {
     this.initiate()
@@ -130,7 +153,36 @@ export default {
       if (this.isInitiated === true && this.form.exchange === '') {
         this.form.exchange = this.routes.exchanges[0]
       }
-    }
+    },
+    checkSymbol () {
+      this.totalSymbolError = []
+      const symbolErrors = []
+
+      const ERRORS = {
+        maxSymbolLengthErrorMessage: 'Maximum symbol length is exceeded!',
+        mustContainDashErrorMessage: 'Symbol parameter must contain "-" character!',
+      }
+
+      if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && this.form.symbol.length > 9) {
+        symbolErrors.push(ERRORS.maxSymbolLengthErrorMessage)
+      }
+
+      if (this.form.symbol.length >= 5) {
+        let checkDash = false
+        for (const item1 of this.form.symbol.substring(3, 5)) {
+          if (item1 === '-') {
+            checkDash = true
+          }
+        }
+        if (!checkDash) {
+          symbolErrors.push(ERRORS.mustContainDashErrorMessage)
+        }
+      }
+
+      for (const item of symbolErrors) {
+        this.totalSymbolError.push(item)
+      }
+    },
   }
 }
 </script>
