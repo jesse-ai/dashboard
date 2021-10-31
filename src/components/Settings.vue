@@ -266,12 +266,19 @@ export default {
   methods: {
     round: _.round,
     sortExchanges () {
-      const sortKeys = Object.keys(this.settings.backtest.exchanges).sort()
-      const exchange = {}
-      for (const item of sortKeys) {
-        exchange[item] = this.settings.backtest.exchanges[item]
+      const sortBacktestKeys = Object.keys(this.settings.backtest.exchanges).sort()
+      const sortLiveKeys = Object.keys(this.settings.live.exchanges).sort()
+      const backtestExchange = {}
+      const liveExchange = {}
+      for (const item of sortBacktestKeys) {
+        backtestExchange[item] = this.settings.backtest.exchanges[item]
       }
-      this.settings.backtest.exchanges = exchange
+      this.settings.backtest.exchanges = backtestExchange
+
+      for (const item of sortLiveKeys) {
+        liveExchange[item] = this.settings.live.exchanges[item]
+      }
+      this.settings.live.exchanges = liveExchange
     },
     convertToSlug (Text) {
       return Text
