@@ -260,8 +260,19 @@ export default {
   computed: {
     ...mapState(useMainStore, ['settings', 'systemInfo'])
   },
+  mounted () {
+    this.sortExchanges()
+  },
   methods: {
     round: _.round,
+    sortExchanges () {
+      const sortKeys = Object.keys(this.settings.backtest.exchanges).sort()
+      const exchange = {}
+      for (const item of sortKeys) {
+        exchange[item] = this.settings.backtest.exchanges[item]
+      }
+      this.settings.backtest.exchanges = exchange
+    },
     convertToSlug (Text) {
       return Text
         .toLowerCase()
