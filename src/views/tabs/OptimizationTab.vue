@@ -50,19 +50,19 @@
             title="Debug Mode"
             description="Displays detailed logs about the genetics algorithm. Use it if you are interested in the genetics algorithm and are familiar with its basics."/>
 
-          <!-- export csv -->
-          <ToggleButton
-            :object="form"
-            name="export_csv"
-            title="Export CSV"
-            description="Exports a CSV file of all DNAs on completion"/>
+          <!--          &lt;!&ndash; export csv &ndash;&gt;-->
+          <!--          <ToggleButton-->
+          <!--            :object="form"-->
+          <!--            name="export_csv"-->
+          <!--            title="Export CSV"-->
+          <!--            description="Exports a CSV file of all DNAs on completion"/>-->
 
-          <!-- export json -->
-          <ToggleButton
-            :object="form"
-            name="export_json"
-            title="Export JSON"
-            description="Exports a JSON file of all DNAs on completion"/>
+          <!--          &lt;!&ndash; export json &ndash;&gt;-->
+          <!--          <ToggleButton-->
+          <!--            :object="form"-->
+          <!--            name="export_json"-->
+          <!--            title="Export JSON"-->
+          <!--            description="Exports a JSON file of all DNAs on completion"/>-->
         </div>
 
         <!-- optimal_total -->
