@@ -28,8 +28,10 @@
 
       <!-- Execution -->
       <div v-if="results.executing">
-        <Divider>Info</Divider>
-        <KeyValueTable :data="results.generalInfo"/>
+        <div v-if="results.generalInfo">
+          <Divider>Info</Divider>
+          <KeyValueTable :data="results.generalInfo"/>
+        </div>
       </div>
 
       <!-- Content -->
@@ -187,7 +189,7 @@
           <CircleProgressbar :progress="results.progressbar.current"/>
         </div>
 
-        <h3 class="mt-8 animate-pulse" v-text="remainingTimeText"/>
+        <h3 v-if="!results.exception.error" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
       </div>
     </template>
   </LayoutWithSidebar>
