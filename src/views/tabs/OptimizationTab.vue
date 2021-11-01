@@ -28,9 +28,10 @@
 
       <!-- Execution -->
       <div v-if="results.executing">
-        <div v-if="results.generalInfo">
+        <div>
           <Divider>Info</Divider>
-          <KeyValueTable :data="results.generalInfo"/>
+          <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo"/>
+          <TablePlaceholder v-else/>
         </div>
       </div>
 
