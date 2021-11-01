@@ -287,11 +287,11 @@ export default {
           to: '/backtest/',
           icon: CalculatorIcon
         },
-        // {
-        //   name: 'Optimization',
-        //   to: '/optimization/',
-        //   icon: ChipIcon
-        // },
+        {
+          name: 'Optimization',
+          to: '/optimization/',
+          icon: ChipIcon
+        },
         {
           name: 'Live',
           to: '/live/',
