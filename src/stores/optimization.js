@@ -222,6 +222,6 @@ export const useOptimizationStore = defineStore({
         this.tabs[id].results.executing = false
         this.notyf.success('Session terminated successfully')
       }
-    }
+    },
   }
 })

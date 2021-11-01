@@ -59,7 +59,7 @@
              v-html="content"/>
       </div>
     </div>
-    <textarea v-show="showException" id="exception-info" :value="content" class="fixed left-0 bottom-0 opacity-0"/>?
+    <textarea v-show="showException" id="exception-info" :value="content" class="fixed left-0 bottom-0 opacity-0"/>
   </div>
 </template>
 
