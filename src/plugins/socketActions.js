@@ -143,6 +143,9 @@ export default function () {
     ['optimize.alert', [
       optimize.alertEvent
     ]],
+    ['optimize.best_candidates', [
+      optimize.bestCandidatesEvent
+    ]],
   ])
 }
 

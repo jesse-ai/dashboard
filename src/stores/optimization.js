@@ -85,8 +85,6 @@ export const useOptimizationStore = defineStore({
         export_json: this.tabs[id].form.export_json,
       }
 
-      console.log(params)
-
       axios.post('/optimization', params).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
         this.tabs[id].results.executing = false
@@ -149,6 +147,10 @@ export const useOptimizationStore = defineStore({
       this.tabs[id].results.exception.traceback = data.traceback
     },
     generalInfoEvent (id, data) {
+      if (!this.tabs[id].results.executing) {
+        this.tabs[id].results.executing = true
+      }
+      
       this.tabs[id].results.generalInfo = [
         ['Started At', data.started_at],
         ['Index', data.index],
@@ -206,5 +208,8 @@ export const useOptimizationStore = defineStore({
         this.notyf.success('Session terminated successfully')
       }
     },
+    bestCandidatesEvent (id, data) {
+      console.log(id, data)
+    }
   }
 })
