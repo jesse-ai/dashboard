@@ -197,7 +197,7 @@
           <CircleProgressbar :progress="results.progressbar.current"/>
         </div>
 
-        <h3 v-if="!results.exception.error" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
+        <h3 v-if="!results.exception.error && !results.best_candidates.length" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
       </div>
     </template>
   </LayoutWithSidebar>
