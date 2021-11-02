@@ -74,6 +74,7 @@ export const useBacktestStore = defineStore({
       this.tabs[id].results.infoLogs = ''
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
+      this.tabs[id].results.alert.message = ''
 
       const mainStore = useMainStore()
 
