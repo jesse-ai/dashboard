@@ -80,8 +80,7 @@
   <LayoutWithSidebar v-else>
     <template #left>
       <!-- form -->
-      <div v-if="!results.booting && !results.monitoring && !results.showResults" data-cy="live-page-content"
-           class="px-4 sm:px-6 md:px-8">
+      <div v-if="!results.booting && !results.monitoring && !results.showResults" data-cy="live-page-content">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>

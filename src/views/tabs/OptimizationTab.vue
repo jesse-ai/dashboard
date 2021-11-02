@@ -21,6 +21,11 @@
 
   <LayoutWithSidebar>
     <template #left>
+      <!-- alert -->
+      <div v-if="results.alert.message" class="mb-10">
+        <Alert :data="results.alert"/>
+      </div>
+
       <!-- exception  -->
       <div v-if="results.exception.error && results.executing" class="mb-8">
         <Exception :title="results.exception.error" :content="results.exception.traceback" />
@@ -36,8 +41,7 @@
       </div>
 
       <!-- Content -->
-      <div v-if="!results.executing && !results.showResults"
-           class="px-6">
+      <div v-if="!results.executing && !results.showResults">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>

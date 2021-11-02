@@ -43,9 +43,13 @@
 
   <LayoutWithSidebar else>
     <template #left>
+      <!-- alert -->
+      <div v-if="results.alert.message" class="mb-10">
+        <Alert :data="results.alert"/>
+      </div>
+
       <!-- Content -->
-      <div v-if="!results.executing && !results.showResults" data-cy="backtest-content-section"
-           class="px-6">
+      <div v-if="!results.executing && !results.showResults" data-cy="backtest-content-section">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
         <Divider class="mt-16">Options</Divider>
@@ -118,10 +122,6 @@
       <div v-if="results.showResults"
            class="w-full mx-auto px-6">
         <div>
-          <div v-if="results.alert.message" class="mb-10">
-            <Alert :data="results.alert"/>
-          </div>
-
           <Divider>Routes</Divider>
           <MultipleValuesTable :data="results.routes_info" header />
 

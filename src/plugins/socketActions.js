@@ -140,6 +140,9 @@ export default function () {
     ['optimize.termination', [
       optimize.terminationEvent
     ]],
+    ['optimize.alert', [
+      optimize.alertEvent
+    ]],
   ])
 }
 

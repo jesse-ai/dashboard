@@ -23,13 +23,14 @@
 
   <LayoutWithSidebar v-else>
     <template #left>
-      <div v-if="results.alert.message" class="px-6 mb-10">
+      <!-- alert -->
+      <div v-if="results.alert.message" class="mb-10">
         <Alert :data="results.alert"/>
       </div>
 
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults" data-cy="candles-page-content"
-           class="px-6 pb-4">
+           class="pb-4">
         <Divider>Exchange</Divider>
         <select
           v-model="form.exchange"
