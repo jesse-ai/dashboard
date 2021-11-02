@@ -33,10 +33,13 @@
 
       <!-- Execution -->
       <div v-if="results.executing">
-        <div>
-          <Divider>Info</Divider>
-          <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo"/>
-          <TablePlaceholder v-else/>
+        <Divider>Info</Divider>
+        <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo" />
+        <TablePlaceholder v-else/>
+
+        <div v-if="results.best_candidates.length" class="mt-16">
+          <Divider>Best DNA Candidates</Divider>
+          <MultipleValuesTable :data="results.best_candidates" header/>
         </div>
       </div>
 

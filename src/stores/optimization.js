@@ -29,6 +29,7 @@ function newTab () {
         estimated_remaining_seconds: 0
       },
       routes_info: [],
+      best_candidates: [],
       metrics: [],
       generalInfo: {},
       infoLogs: '',
@@ -150,21 +151,21 @@ export const useOptimizationStore = defineStore({
       if (!this.tabs[id].results.executing) {
         this.tabs[id].results.executing = true
       }
-      
+
       this.tabs[id].results.generalInfo = [
-        ['Started At', data.started_at],
+        ['Started at', data.started_at],
         ['Index', data.index],
-        ['Average Execution Time', `${_.round(data.average_execution_seconds, 2)} seconds`],
-        ['Trading Route', data.trading_route],
+        ['Average strategy execution time', `${_.round(data.average_execution_seconds, 2)} seconds`],
+        ['Trading route', data.trading_route],
       ]
       if ('population_size' in data) {
-        this.tabs[id].results.generalInfo.push(['Population Size', data.population_size])
+        this.tabs[id].results.generalInfo.push(['Population size', data.population_size])
       }
       if ('iterations' in data) {
         this.tabs[id].results.generalInfo.push(['Iterations', data.iterations])
       }
       if ('solution_length' in data) {
-        this.tabs[id].results.generalInfo.push(['Solution Length', data.solution_length])
+        this.tabs[id].results.generalInfo.push(['Solution length', data.solution_length])
       }
     },
     metricsEvent (id, data) {
@@ -210,6 +211,31 @@ export const useOptimizationStore = defineStore({
     },
     bestCandidatesEvent (id, data) {
       console.log(id, data)
-    }
+      // 'training_win_rate': self.population[j]['training_log']['win-rate'],
+      // 'training_total_trades': self.population[j]['training_log']['total'],
+      // 'training_pnl': self.population[j]['training_log']['PNL'],
+      // 'testing_win_rate': self.population[j]['testing_log']['win-rate'],
+      // 'testing_total_trades': self.population[j]['testing_log']['total'],
+      // 'testing_pnl': self.population[j]['testing_log']['PNL'],
+
+      const arr = [
+        ['Rank', 'DNA', 'Fitness', 'Training-Testing Win-rate', 'Training-Testing total trades', 'Training-Testing PNL']
+      ]
+      data.forEach(item => {
+        arr.push([
+          { value: `#${item.rank}`, style: '' },
+          { value: item.dna, style: '', tag: 'code' },
+          { value: item.fitness, style: '' },
+
+          { value: `${item.training_win_rate}% | ${item.testing_win_rate}%`, style: '' },
+          { value: `${item.training_total_trades} | ${item.testing_total_trades}`, style: '' },
+          { value: `${item.training_pnl}% | ${item.testing_pnl}%`, style: '' },
+        ])
+      })
+      this.tabs[id].results.best_candidates = arr
+    },
+    alertEvent (id, data) {
+      this.tabs[id].results.alert = data
+    },
   }
 })
