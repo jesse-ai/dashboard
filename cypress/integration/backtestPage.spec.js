@@ -2,6 +2,7 @@ const { default: axios } = require('axios')
 
 describe('test home page', () => {
     beforeEach(() => {
+        // mock important requests
         cy.intercept('post', '/auth', { fixture: 'login.json' }).as('login')
         cy.intercept('post', '/general-info', { fixture: 'generalInfo.json' }).as('generalInfo')
         cy.intercept('post', '/get-config', { fixture: 'getConfig.json' }).as('getConfig')
@@ -9,8 +10,10 @@ describe('test home page', () => {
         cy.intercept('post', '/backtest', { fixture: 'backtest.json' }).as('backtest')
         cy.intercept('delete', '/backtest', { fixture: 'deleteBacktest.json' }).as('backtest')
 
+        // remove cookies and storage 
         sessionStorage.auth_key = null
         axios.defaults.headers.common.Authorization = null
+        // visit first page and type password
         cy.visit('/')
         cy.contains('Welcome Back!')
         cy.get('input').type('test')
@@ -22,6 +25,7 @@ describe('test home page', () => {
         // close notification
         cy.get('.notyf__dismiss-btn').click()
 
+        // check main title of page
         cy.get('[data-cy="backtest-content-section"]').should('include.text', 'Routes')
         cy.get('[data-cy="backtest-content-section"]').should('include.text', 'Options')
 
@@ -91,16 +95,20 @@ describe('test home page', () => {
     })
 
     it('test options, duration and tabs', () => {
+        // options fields
         cy.get('[data-cy="backtest-option-section"]').should("include.text", 'Debug Mode')
         cy.get('[data-cy="backtest-option-section"]').should("include.text", 'Export JSON')
 
+        // duration field text
         cy.get('[data-cy="backtest-start-date"]').should('have.value', '2021-05-25')
 
         // press start button
         cy.get('[data-cy="start-button"]').click()
         cy.wait(50)
         cy.contains('Tab 1 - 0%')
-        cy.contains('seconds remaining')
+        cy.wait(50)
+        cy.contains('Please wait')
+        // press cancel button
         cy.get('[data-cy="backtest-cancel-button"]').click()
         cy.wait(50)
         cy.contains('Routes')
@@ -110,7 +118,8 @@ describe('test home page', () => {
         cy.wait(50)
         cy.get('[data-cy="tab1"]').click()
         cy.wait(50)
-        cy.contains('seconds remaining')
+        cy.contains('Please wait')
+        // press cancel
         cy.get('[data-cy="backtest-cancel-button"]').click()
         cy.wait(50)
         cy.contains('Routes')

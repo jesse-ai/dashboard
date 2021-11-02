@@ -106,6 +106,11 @@ export const useBacktestStore = defineStore({
         data: {
           id
         }
+      }).then(() => {
+        // this is for passing cypress tests
+        if (window.Cypress) {
+          this.tabs[id].results.executing = false
+        }
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     rerun (id) {

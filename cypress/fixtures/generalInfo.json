@@ -8,8 +8,6 @@
         "OKEX",
         "Testnet Binance Futures"
     ],
-    "has_live_plugin_installed": true,
-    "is_logged_in_to_jesse_trade": true,
     "live_exchanges": [
         "Binance Futures",
         "FTX Futures",
@@ -18,5 +16,8 @@
     "strategies": [
         "ExampleStrategy",
         "TestLiveMode01"
-    ]
+    ],
+    "has_live_plugin_installed": true,
+    "is_logged_in_to_jesse_trade": true,
+    "cpu_cores": 8
 }
