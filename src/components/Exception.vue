@@ -26,13 +26,17 @@
     <br>
 
     <!-- export chart -->
-    <ToggleButton
-      :object="form"
-      name="attachLogs"
-      title="Attach Debugging Logs"
-      description="Attach the log file of this session along with this report which helps Jesse's team"/>
+    <ToggleButton v-if="hasLogs"
+                  :object="form"
+                  name="attachLogs"
+                  title="Attach Debugging Logs"
+                  description="Attach the log file of this session along with this report which helps Jesse's team"/>
+
+    <Alert v-else :data="alert"/>
 
     <br>
+
+
 
     <div>
       <button class="btn-primary mr-4" @click="report">Submit</button>
@@ -80,7 +84,7 @@ import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import axios from 'axios'
-import Tabs from '@/components/Tabs'
+
 
 export default {
   name: 'Exception',
@@ -116,11 +120,29 @@ export default {
       form: {
         description: '',
         attachLogs: true,
-      }
+      },
     }
   },
   computed: {
     ...mapState(useMainStore, ['modals', 'isLoggedInToJesseTrade']),
+    hasLogs () {
+      return this.debugMode && this.mode === 'backtest'
+    },
+    alert () {
+      // warn if log file is not present
+      if (!this.hasLogs) {
+        return {
+          message: 'It is highly recommended to rerun this session while ' +
+            'enabling the debug-mode submit the report then so the log file would be attached to your report.',
+          type: 'warning'
+        }
+      }
+
+      return {
+        message: '',
+        type: ''
+      }
+    }
   },
   methods: {
     report () {
@@ -128,7 +150,7 @@ export default {
         description: this.form.description,
         traceback: this.content,
         mode: this.mode,
-        attach_logs: this.attachLogs,
+        attach_logs: this.form.attachLogs,
         session_id: this.sessionId
       }).then((res) => {
         if (res.data.status === 'success') {
@@ -170,7 +192,6 @@ export default {
 
       this.modals.exceptionReport = true
     }
-
   },
 }
 </script>
