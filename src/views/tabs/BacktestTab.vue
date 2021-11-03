@@ -43,7 +43,11 @@
 
     <!-- exception  -->
     <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
-      <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      <Exception :title="results.exception.error"
+                 :content="results.exception.traceback"
+                 mode="backtest"
+                 :debug-mode="form.debug_mode"
+                 :session-id="results.generalInfo.session_id"/>
     </div>
   </div>
 

@@ -17,11 +17,20 @@
     <br>
 
     <label class="font-semibold">Description (optional):</label>
-    <textarea id="content" v-model="description"
+    <textarea id="content" v-model="form.description"
               placeholder="Describe how the exception occurred..."
               name="content"
               rows="10"
               class="dark:bg-gray-800 dark:border-gray-900 mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300 rounded" />
+
+    <br>
+
+    <!-- export chart -->
+    <ToggleButton
+      :object="form"
+      name="attachLogs"
+      title="Attach Debugging Logs"
+      description="Attach the log file of this session along with this report which helps Jesse's team"/>
 
     <br>
 
@@ -71,6 +80,7 @@ import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import axios from 'axios'
+import Tabs from '@/components/Tabs'
 
 export default {
   name: 'Exception',
@@ -85,13 +95,28 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    mode: {
+      type: String,
+      required: true
+    },
+    debugMode: {
+      type: Boolean,
+      required: true
+    },
+    sessionId: {
+      type: String,
+      required: true
     }
   },
   data () {
     return {
       showException: '',
-      description: '',
       copied: false,
+      form: {
+        description: '',
+        attachLogs: true,
+      }
     }
   },
   computed: {
@@ -100,11 +125,14 @@ export default {
   methods: {
     report () {
       axios.post('/report-exception', {
-        description: this.description,
+        description: this.form.description,
         traceback: this.content,
+        mode: this.mode,
+        attach_logs: this.attachLogs,
+        session_id: this.sessionId
       }).then((res) => {
         if (res.data.status === 'success') {
-          this.description = ''
+          this.form.description = ''
           this.notyf.success(res.data.message)
           this.modals.exceptionReport = false
         } else if (res.data.status === 'error') {
@@ -123,7 +151,7 @@ export default {
         document.execCommand('copy')
         this.copied = true
 
-        /* unselect the range */
+        // unselect the range
         infoErrorToCopy.setAttribute('type', 'hidden')
         window.getSelection().removeAllRanges()
         this.showException = false
