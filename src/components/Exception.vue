@@ -2,6 +2,10 @@
   <SlideOver name="exceptionReport"
              :object="modals"
              title="Report">
+    <div v-if="!hasLogs" class="mb-4">
+      <Alert :data="alert"/>
+    </div>
+
     <p>
       If the exception you're seeing is not clear and you think it might be a bug, please send us a report to help
       us debugging and fixing it in a future release.
@@ -32,11 +36,7 @@
                   title="Attach Debugging Logs"
                   description="Attach the log file of this session along with this report which helps Jesse's team"/>
 
-    <Alert v-else :data="alert"/>
-
     <br>
-
-
 
     <div>
       <button class="btn-primary mr-4" @click="report">Submit</button>
@@ -132,8 +132,8 @@ export default {
       // warn if log file is not present
       if (!this.hasLogs) {
         return {
-          message: 'It is highly recommended to rerun this session while ' +
-            'enabling the debug-mode submit the report then so the log file would be attached to your report.',
+          message: 'It is highly recommended to attach log files with reports. To do that, press cancel, enable "Debug Mode", and  ' +
+            'run again. ',
           type: 'warning'
         }
       }
