@@ -124,11 +124,7 @@ export default {
   computed: {
     ...mapState(useMainStore, ['routes', 'isInitiated']),
     remainingTimeText () {
-      if (Math.round(this.results.progressbar.estimated_remaining_seconds) === 0) {
-        return 'Please wait...'
-      }
-
-      return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
+      return helpers.remainingTimeText(this.results.progressbar.estimated_remaining_seconds)
     }
   },
   watch: {
