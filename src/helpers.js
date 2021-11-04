@@ -17,7 +17,15 @@ const helpers = {
 
   currentTime () {
     return dayjs().utc().format('HH:mm:ss')
-  }
+  },
+
+  localStorageSet (key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+  },
+
+  localStorageGet (key) {
+    return JSON.parse(localStorage.getItem(key))
+  },
 }
 
 export default helpers
