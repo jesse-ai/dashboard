@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import _ from 'lodash'
 dayjs.extend(utc)
 
 const helpers = {
@@ -25,6 +26,10 @@ const helpers = {
 
   localStorageGet (key) {
     return JSON.parse(localStorage.getItem(key))
+  },
+
+  getDefaultFromLocalStorage (key, defaultForm) {
+    return _.merge(defaultForm, helpers.localStorageGet(key))
   },
 }
 

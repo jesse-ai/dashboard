@@ -100,6 +100,7 @@ import { useCandlesStore } from '@/stores/candles'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { useMainStore } from '@/stores/main'
 import { ExclamationIcon } from '@heroicons/vue/solid'
+import helpers from '@/helpers'
 
 export default {
   name: 'CandlesTab',
@@ -136,7 +137,7 @@ export default {
         this.initiate()
 
         if (this.isInitiated === true && this.form.exchange !== '') {
-          localStorage.setItem('candlesForm', JSON.stringify(this.form))
+          helpers.localStorageSet('candlesForm', this.form)
         }
       },
       deep: true

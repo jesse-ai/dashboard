@@ -226,6 +226,7 @@ import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
+import helpers from '@/helpers'
 
 export default {
   name: 'BacktestTab',
@@ -273,7 +274,7 @@ export default {
   watch: {
     form: {
       handler () {
-        localStorage.setItem('backtestForm', JSON.stringify(this.form))
+        helpers.localStorageSet('backtestForm', this.form)
       },
       deep: true
     },

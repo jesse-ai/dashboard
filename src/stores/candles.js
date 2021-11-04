@@ -5,28 +5,15 @@ import axios from '@/http'
 
 let idCounter = 0
 
-/**
- * A function that gets the value from localStorage using helpers.localStorageGet and
- * then merges it with the default value. Returns the merged value.
- */
-function getDefaultForm () {
-  const defaultForm = {
-    start_date: '2021-01-01',
-    exchange: '',
-    symbol: '',
-  }
-
-  const value = helpers.localStorageGet('candlesForm')
-
-  return _.merge(defaultForm, value)
-}
-
-
 function newTab () {
   return _.cloneDeep({
     id: ++idCounter,
     name: 'Tab 0',
-    form: getDefaultForm(),
+    form: helpers.getDefaultFromLocalStorage('candlesForm', {
+      start_date: '2021-01-01',
+      exchange: '',
+      symbol: '',
+    }),
     results: {
       showResults: false,
       executing: false,
