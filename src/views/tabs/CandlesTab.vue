@@ -131,8 +131,15 @@ export default {
     }
   },
   watch: {
-    form () {
-      this.initiate()
+    form: {
+      handler () {
+        this.initiate()
+
+        if (this.isInitiated === true && this.form.exchange !== '') {
+          localStorage.setItem('candlesForm', JSON.stringify(this.form))
+        }
+      },
+      deep: true
     },
     isInitiated (newValue, oldValue) {
       this.initiate()
