@@ -21,7 +21,7 @@
 
     <div class="flex justify-end">
       <button id="feedback-cancel-button" class="btn-link mr-8"
-              @click="modals.feedback = false">
+              @click="close">
         Cancel
       </button>
 
@@ -57,12 +57,16 @@ export default {
         if (res.data.status === 'success') {
           this.description = ''
           this.notyf.success(res.data.message)
+          this.close()
         } else if (res.data.status === 'error') {
           this.notyf.error(res.data.message)
         }
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
+    },
+    close () {
+      this.modals.feedback = false
     }
   }
 }
