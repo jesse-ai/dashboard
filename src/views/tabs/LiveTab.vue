@@ -315,6 +315,14 @@ export default {
       return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
     }
   },
+  watch: {
+    form: {
+      handler () {
+        helpers.localStorageSet('liveForm', this.form)
+      },
+      deep: true
+    },
+  },
   methods: {
     ...mapActions(useLiveStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'stop', 'newLive']),
     copyInfoLogs () {
