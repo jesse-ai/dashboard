@@ -24,3 +24,6 @@ pnpm-debug.log*
 .env
 
 package-lock.json
+
+cypress/videos
+cypress/screenshots
