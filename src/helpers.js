@@ -31,6 +31,33 @@ const helpers = {
   getDefaultFromLocalStorage (key, defaultForm) {
     return _.merge(defaultForm, helpers.localStorageGet(key))
   },
+
+  secondsToHumanReadable (seconds) {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds - (hours * 3600)) / 60)
+    const secondsLeft = _.round(
+      seconds - (hours * 3600) - (minutes * 60),
+      2
+    )
+    return `${hours}h ${minutes}m ${secondsLeft}s`
+  },
+
+  remainingTimeText (seconds) {
+    if (Math.round(seconds) === 0) {
+      return 'Please wait...'
+    }
+
+    if (seconds > 60) {
+      const remainingSecondsInReadableFormat = this.secondsToHumanReadable(
+        seconds
+      )
+
+      return `${remainingSecondsInReadableFormat} remaining...`
+    }
+
+    return `${Math.round(seconds)} seconds remaining...`
+  }
+
 }
 
 export default helpers
