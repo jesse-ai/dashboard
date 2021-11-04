@@ -33,11 +33,21 @@
       <button data-cy="backtest-cancel-button" class="btn-cancel block mb-4 w-64" @click="cancel($route.params.id)">
         Cancel
       </button>
+
+      <a v-if="form.debug_mode"
+         :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+         class="btn-secondary block mb-4 w-64 text-center">
+        Debugging Logs
+      </a>
     </div>
 
     <!-- exception  -->
     <div v-if="results.exception.error && results.executing" class="mx-auto container mt-8">
-      <Exception :title="results.exception.error" :content="results.exception.traceback" />
+      <Exception :title="results.exception.error"
+                 :content="results.exception.traceback"
+                 mode="backtest"
+                 :debug-mode="form.debug_mode"
+                 :session-id="results.generalInfo.session_id"/>
     </div>
   </div>
 
