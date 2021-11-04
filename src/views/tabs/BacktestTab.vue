@@ -270,6 +270,14 @@ export default {
       return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
     }
   },
+  watch: {
+    form: {
+      handler () {
+        localStorage.setItem('backtestForm', JSON.stringify(this.form))
+      },
+      deep: true
+    },
+  },
   methods: {
     ...mapActions(useBacktestStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
     copyInfoLogs () {
@@ -287,7 +295,8 @@ export default {
         this.copiedLogsInfo = false
       }, 3000)
     },
-  }
+  },
+
 }
 </script>
 
