@@ -130,7 +130,7 @@
 
       <!-- Results -->
       <div v-if="results.showResults"
-           class="w-full mx-auto px-6">
+           class="w-full mx-auto">
         <div>
           <Divider>Routes</Divider>
           <MultipleValuesTable :data="results.routes_info" header />
