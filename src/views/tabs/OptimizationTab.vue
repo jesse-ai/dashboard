@@ -217,6 +217,7 @@ import Routes from '@/components/Routes'
 import Divider from '@/components/Divider'
 import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Exception from '@/components/Exception'
+import helpers from '@/helpers'
 
 export default {
   name: 'OptimizationTab',
@@ -263,6 +264,14 @@ export default {
 
       return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
     }
+  },
+  watch: {
+    form: {
+      handler () {
+        helpers.localStorageSet('optimizationForm', this.form)
+      },
+      deep: true
+    },
   },
   methods: {
     ...mapActions(useOptimizationStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newOptimization']),

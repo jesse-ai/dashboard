@@ -10,16 +10,16 @@ function newTab () {
   return _.cloneDeep({
     id: ++idCounter,
     name: 'Tab 0',
-    form: {
-      start_date: '2021-05-25',
-      finish_date: '2021-06-05',
+    form: helpers.getDefaultFromLocalStorage('optimizationForm', {
+      start_date: '2021-01-01',
+      finish_date: '2021-06-01',
       debug_mode: false,
       export_csv: false,
       export_json: false,
       routes: [],
       extra_routes: [],
       optimal_total: 50,
-    },
+    }),
     results: {
       showResults: false,
       executing: false,
