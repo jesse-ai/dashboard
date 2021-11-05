@@ -73,7 +73,12 @@
 
     <!-- exception  -->
     <div v-if="results.exception.error" class="mx-auto container mt-8">
-      <Exception :title="results.exception.error" :content="results.exception.traceback"/>
+      <Exception :title="results.exception.error"
+                 :content="results.exception.traceback"
+                 mode="live"
+                 :debug-mode="form.debug_mode"
+                 :session-id="results.generalInfo.session_id"
+      />
     </div>
   </div>
 
@@ -104,7 +109,12 @@
       <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
         <!-- exception  -->
         <div v-if="results.exception.error" class="mb-8">
-          <Exception :title="results.exception.error" :content="results.exception.traceback"/>
+          <Exception :title="results.exception.error"
+                     :content="results.exception.traceback"
+                     mode="live"
+                     :debug-mode="form.debug_mode"
+                     :session-id="results.generalInfo.session_id"
+          />
         </div>
 
         <!-- Candlesticks chart-->

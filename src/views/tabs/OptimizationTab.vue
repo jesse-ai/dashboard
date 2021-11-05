@@ -28,7 +28,10 @@
 
       <!-- exception  -->
       <div v-if="results.exception.error && results.executing" class="mb-8">
-        <Exception :title="results.exception.error" :content="results.exception.traceback" />
+        <Exception :title="results.exception.error"
+                   :content="results.exception.traceback"
+                   mode="optimize"
+        />
       </div>
 
       <!-- Execution -->

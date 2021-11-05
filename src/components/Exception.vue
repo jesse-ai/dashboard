@@ -2,7 +2,7 @@
   <SlideOver name="exceptionReport"
              :object="modals"
              title="Report">
-    <div v-if="!hasLogs" class="mb-4">
+    <div v-if="alert.message" class="mb-4">
       <Alert :data="alert"/>
     </div>
 
@@ -30,7 +30,7 @@
     <br>
 
     <!-- export chart -->
-    <ToggleButton v-if="hasLogs"
+    <ToggleButton v-if="showLogToggle"
                   :object="form"
                   name="attachLogs"
                   title="Attach Debugging Logs"
@@ -106,11 +106,12 @@ export default {
     },
     debugMode: {
       type: Boolean,
-      required: true
+      default: false
     },
     sessionId: {
       type: String,
-      required: true
+      required: false,
+      default: null
     }
   },
   data () {
@@ -125,12 +126,8 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ['modals', 'isLoggedInToJesseTrade']),
-    hasLogs () {
-      return this.debugMode && this.mode === 'backtest'
-    },
     alert () {
-      // warn if log file is not present
-      if (!this.hasLogs) {
+      if (this.mode === 'backtest' && !this.debugMode) {
         return {
           message: 'It is highly recommended to attach log files with reports. To do that, press cancel, enable "Debug Mode", and  ' +
             'run again. ',
@@ -142,6 +139,9 @@ export default {
         message: '',
         type: ''
       }
+    },
+    showLogToggle () {
+      return (this.mode === 'backtest' && this.debugMode) || this.mode === 'live'
     }
   },
   methods: {
