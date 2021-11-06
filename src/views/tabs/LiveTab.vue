@@ -138,12 +138,14 @@
       <!-- Action Buttons -->
       <div v-if="!results.booting">
         <div v-if="results.monitoring">
-          <button v-if="results.finished" class="btn-primary text-center block mb-4 w-full"
+          <button v-if="results.finished" class="flex justify-center items-center btn-primary text-center mb-4 w-full"
                   @click="newLive($route.params.id)">
+            <DocumentAddIcon class="w-5 h-5 mr-2" />
             New session
           </button>
 
-          <button v-else class="btn-cancel text-center mr-2 block w-full mb-4" @click="modals.terminationConfirm = true">
+          <button v-else class="flex items-center justify-center btn-cancel text-center mr-2 w-full mb-4" @click="modals.terminationConfirm = true">
+            <StopIcon class="w-5 h-5 mr-2" />
             Stop
           </button>
         </div>
@@ -151,8 +153,9 @@
         <div v-else data-cy="live-action-button">
           <button v-if="isLoggedInToJesseTrade"
                   data-cy="live-start-button"
-                  class="btn-primary text-center mr-2 block w-full mb-4"
+                  class="flex justify-center items-center btn-primary text-center mr-2 w-full mb-4"
                   @click="start($route.params.id)">
+            <PlayIcon class="w-5 h-5 mr-2" />
             Start
           </button>
 
@@ -261,7 +264,7 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardIcon, ClipboardListIcon, CheckIcon } from '@heroicons/vue/outline'
+import { ClipboardIcon, ClipboardListIcon, CheckIcon, PlayIcon, DocumentAddIcon, StopIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -283,7 +286,10 @@ export default {
     Exception,
     MultipleValuesTable,
     ClipboardIcon,
-    CheckIcon
+    CheckIcon,
+    PlayIcon, 
+    DocumentAddIcon,
+    StopIcon
   },
   props: {
     form: {
