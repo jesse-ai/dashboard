@@ -9,12 +9,13 @@
     "start-cypress-server": "nodemon --watch server cypress/server/index.js",
     "cli-test": "cypress run",
     "test": "cypress open",
-    "jest": "npm run jest"
+    "jest": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@headlessui/vue": "^1.3.0",
     "@heroicons/vue": "^1.0.1",
     "@tailwindcss/forms": "^0.3.3",
+    "@vue/cli-plugin-unit-jest": "^5.0.0-beta.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.5",
@@ -48,6 +49,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "nodemon": "^2.0.13",
     "postcss": "^8.3.0",
-    "tailwindcss": "^2.2.0"
+    "tailwindcss": "^2.2.0",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-0"
   }
 }
