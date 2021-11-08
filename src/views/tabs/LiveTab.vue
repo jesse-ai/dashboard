@@ -140,7 +140,7 @@
         <div v-if="results.monitoring">
           <button v-if="results.finished" class="flex justify-center items-center btn-primary text-center mb-4 w-full"
                   @click="newLive($route.params.id)">
-            <DocumentAddIcon class="w-5 h-5 mr-2" />
+            <PlusSmIcon class="w-5 h-5 mr-2" />
             New session
           </button>
 
@@ -155,7 +155,7 @@
                   data-cy="live-start-button"
                   class="flex justify-center items-center btn-primary text-center mr-2 w-full mb-4"
                   @click="start($route.params.id)">
-            <PlayIcon class="w-5 h-5 mr-2" />
+            <LightningBoltIcon class="w-5 h-5 mr-2" />
             Start
           </button>
 
@@ -264,7 +264,7 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardIcon, ClipboardListIcon, CheckIcon, PlayIcon, DocumentAddIcon, StopIcon } from '@heroicons/vue/outline'
+import { ClipboardIcon, ClipboardListIcon, CheckIcon, LightningBoltIcon, PlusSmIcon, StopIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -287,8 +287,8 @@ export default {
     MultipleValuesTable,
     ClipboardIcon,
     CheckIcon,
-    PlayIcon, 
-    DocumentAddIcon,
+    LightningBoltIcon,
+    PlusSmIcon,
     StopIcon
   },
   props: {

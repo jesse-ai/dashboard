@@ -140,7 +140,7 @@
           </button>
 
           <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newOptimization($route.params.id)">
-            <DocumentAddIcon class="w-5 h-5 mr-2" />
+            <PlusSmIcon class="w-5 h-5 mr-2" />
             New session
           </button>
 
@@ -183,7 +183,7 @@
 
         <div v-else>
           <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
-            <PlayIcon class="w-5 h-5 mr-2" />
+            <LightningBoltIcon class="w-5 h-5 mr-2" />
             Start
           </button>
         </div>
@@ -212,12 +212,12 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useOptimizationStore } from '@/stores/optimization'
-import { PlayIcon } from '@heroicons/vue/outline'
+import { LightningBoltIcon } from '@heroicons/vue/outline'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
-import { ClipboardIcon, CheckIcon, RefreshIcon, DocumentAddIcon } from '@heroicons/vue/solid'
+import { ClipboardIcon, CheckIcon, RefreshIcon, PlusSmIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import Routes from '@/components/Routes'
@@ -240,9 +240,9 @@ export default {
     Divider,
     CircleProgressbar,
     Exception,
-    PlayIcon,
+    LightningBoltIcon,
     RefreshIcon,
-    DocumentAddIcon
+    PlusSmIcon
   },
   props: {
     form: {
