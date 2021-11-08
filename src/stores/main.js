@@ -130,7 +130,7 @@ export const useMainStore = defineStore({
           this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
         })
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        console.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
 
