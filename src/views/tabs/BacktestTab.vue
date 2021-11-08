@@ -157,11 +157,13 @@
       <!-- Action Buttons -->
       <div v-if="!results.executing">
         <div v-if="results.showResults">
-          <button class="btn-primary text-center block mb-4 w-full" @click="rerun($route.params.id)">
+          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="rerun($route.params.id)">
+            <RefreshIcon class="w-5 h-5 mr-2" />
             Rerun
           </button>
 
-          <button class="btn-success text-center block mb-4 w-full" @click="newBacktest($route.params.id)">
+          <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newBacktest($route.params.id)">
+            <ReplyIcon class="w-5 h-5 mr-2" />
             New session
           </button>
 
@@ -203,11 +205,13 @@
         </div>
 
         <div v-else>
-          <button data-cy="start-button" class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
+          <button data-cy="start-button" class="flex items-center justify-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
+            <PlayIcon class="w-5 h-5 mr-2" />
             Start
           </button>
 
-          <button data-cy="start-new-tab-button" class="btn-secondary text-center block mb-4 w-full" @click="startInNewTab($route.params.id)">
+          <button data-cy="start-new-tab-button" class="flex items-center justify-center btn-secondary text-center mb-4 w-full" @click="startInNewTab($route.params.id)">
+            <DocumentAddIcon class="w-5 h-5 mr-2" />
             Start in a new tab
           </button>
         </div>
@@ -224,6 +228,7 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
+import { PlayIcon, DocumentAddIcon, RefreshIcon, ReplyIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import helpers from '@/helpers'
@@ -238,6 +243,10 @@ export default {
     ClipboardIcon,
     CheckIcon,
     SlideOver,
+    PlayIcon,
+    DocumentAddIcon,
+    RefreshIcon, 
+    ReplyIcon
   },
   props: {
     form: {

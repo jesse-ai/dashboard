@@ -134,11 +134,13 @@
       <!-- Action Buttons -->
       <div v-if="!results.executing">
         <div v-if="results.showResults">
-          <button class="btn-primary text-center block mb-4 w-full" @click="rerun($route.params.id)">
+          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="rerun($route.params.id)">
+            <RefreshIcon class="w-5 h-5 mr-2" />
             Rerun
           </button>
 
-          <button class="btn-success text-center block mb-4 w-full" @click="newOptimization($route.params.id)">
+          <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newOptimization($route.params.id)">
+            <DocumentAddIcon class="w-5 h-5 mr-2" />
             New session
           </button>
 
@@ -180,7 +182,8 @@
         </div>
 
         <div v-else>
-          <button class="btn-primary text-center block mb-4 w-full" @click="start($route.params.id)">
+          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
+            <PlayIcon class="w-5 h-5 mr-2" />
             Start
           </button>
         </div>
@@ -209,11 +212,12 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useOptimizationStore } from '@/stores/optimization'
+import { PlayIcon } from '@heroicons/vue/outline'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
-import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
+import { ClipboardIcon, CheckIcon, RefreshIcon, DocumentAddIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import Routes from '@/components/Routes'
@@ -235,7 +239,10 @@ export default {
     Routes,
     Divider,
     CircleProgressbar,
-    Exception
+    Exception,
+    PlayIcon,
+    RefreshIcon,
+    DocumentAddIcon
   },
   props: {
     form: {

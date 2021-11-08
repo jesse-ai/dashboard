@@ -84,11 +84,13 @@
         </div>
 
         <div v-else>
-          <button data-cy="start-button" class="btn-primary text-center block w-full mb-4" @click="start($route.params.id)">
+          <button data-cy="start-button" class="flex items-center justify-center btn-primary text-center w-full mb-4" @click="start($route.params.id)">
+            <PlayIcon class="w-5 h-5 mr-2" />
             Start
           </button>
 
-          <button data-cy="start-new-tab-button" class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">
+          <button data-cy="start-new-tab-button" class="flex items-center justify-center btn-secondary text-center w-full mb-4" @click="startInNewTab($route.params.id)">
+            <DocumentAddIcon class="w-5 h-5 mr-2" />
             Start in a new tab
           </button>
         </div>
@@ -100,6 +102,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
+import { PlayIcon, DocumentAddIcon } from '@heroicons/vue/outline'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { useMainStore } from '@/stores/main'
 import { ExclamationIcon } from '@heroicons/vue/solid'
@@ -107,7 +110,7 @@ import helpers from '@/helpers'
 
 export default {
   name: 'CandlesTab',
-  components: { LayoutWithSidebar, ExclamationIcon },
+  components: { LayoutWithSidebar, ExclamationIcon, PlayIcon, DocumentAddIcon },
   props: {
     form: {
       type: Object,
