@@ -21,6 +21,7 @@ module.exports = {
     'vue/singleline-html-element-content-newline': 'off',
     'vue/html-closing-bracket-spacing': 'off',
     'vue/html-closing-bracket-newline': 'off',
+    'vue/no-template-shadow': 'off',
     'no-multiple-empty-lines': 0,
     'no-trailing-spaces': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'space-before-function-paren': ['error', {
