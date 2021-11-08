@@ -1,14 +1,12 @@
-// test('test divider component', () => {
-//   const wrapper = mount(Divider, {
-//     slots: {
-//       default: 'test content'
-//     }
-//   })
-//   // check divider component display sended content in slot tag
-//   expect(wrapper.html()).toContain('test content')
-// })
+import helpers from '@/helpers'
 
-// test 1 == 1
-test('test divider component', () => {
-  expect(1).toBe(1)
+
+test('test helpers.currentTime()', () => {
+  expect(helpers.currentTime())
+    .toBe(new Date().toISOString().slice(11, 19))
+})
+
+test('test helpers.timestampToTime()', () => {
+  expect(helpers.timestampToTime(1588888888000))
+    .toBe('2020-05-07 22:01:28')
 })
