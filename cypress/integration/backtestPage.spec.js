@@ -100,7 +100,7 @@ describe('test home page', () => {
         cy.get('[data-cy="backtest-option-section"]').should("include.text", 'Export JSON')
 
         // duration field text
-        cy.get('[data-cy="backtest-start-date"]').should('have.value', '2021-05-25')
+        cy.get('[data-cy="backtest-start-date"]').should('have.value', '2021-01-01')
 
         // press start button
         cy.get('[data-cy="start-button"]').click()
