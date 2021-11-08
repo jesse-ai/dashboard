@@ -2,6 +2,7 @@
   <div class="flex items-start select-none">
     <div class="h-5 flex items-center">
       <input :id="name" v-model="object[name]"
+             data-test="checkboxInput"
              type="checkbox"
              :name="name"
              :class="[object[name] ? 'dark:border-gray-600' : 'dark:border-gray-500', 'focus:ring-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-300 focus:ring-offset-0 rounded cursor-pointer']"
