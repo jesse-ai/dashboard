@@ -169,37 +169,43 @@
 
           <a v-if="form.debug_mode"
              :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Debugging Logs
           </a>
 
           <a v-if="form.export_chart && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Legacy Chart
           </a>
 
           <a v-if="form.export_full_reports && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             QuantStats Report
           </a>
 
           <a v-if="form.export_csv && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             CSV
           </a>
 
           <a v-if="form.export_json && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             JSON
           </a>
 
           <a v-if="form.export_tradingview && hasExecutedTrades"
              :href="`http://127.0.0.1:8000/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             TradingView Pine Editor
           </a>
         </div>
@@ -228,7 +234,7 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
-import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon } from '@heroicons/vue/outline'
+import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon, DocumentDownloadIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import helpers from '@/helpers'
@@ -246,7 +252,8 @@ export default {
     LightningBoltIcon,
     PlusSmIcon,
     RefreshIcon,
-    ReplyIcon
+    ReplyIcon,
+    DocumentDownloadIcon
   },
   props: {
     form: {
