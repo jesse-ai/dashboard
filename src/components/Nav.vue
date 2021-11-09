@@ -86,8 +86,9 @@
                 <MenuItems data-cy="nav-dropdown-menu-items" class="bg-white dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-64 rounded-md border-gray-200 dark:border-gray-900 shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100 dark:divide-gray-900">
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <button data-cy="nav-create-strategy" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button data-cy="nav-create-strategy" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-left items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.makeStrategy = true">
+                        <DocumentAddIcon class="w-5 h-5 mr-2" />
                         New Strategy
                       </button>
                     </MenuItem>
@@ -95,19 +96,22 @@
 
                   <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                      <a data-cy="nav-documentation-link" href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-documentation-link" href="https://docs.jesse.trade/" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-start items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        <CollectionIcon class="w-5 h-5 mr-2" />
                         Documentation
                       </a>
                     </MenuItem>
 
                     <MenuItem v-slot="{ active }">
-                      <a href="https://jesse.trade/strategies" data-cy="nav-strategies-link" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a href="https://jesse.trade/strategies" data-cy="nav-strategies-link" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-start items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        <DocumentTextIcon class="w-5 h-5 mr-2" />
                         Sample Strategies
                       </a>
                     </MenuItem>
 
                     <MenuItem v-slot="{ active }">
-                      <a data-cy="nav-help-center-link" href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                      <a data-cy="nav-help-center-link" href="https://jesse.trade/help" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-start items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']" target="_blank">
+                        <QuestionMarkCircleIcon class="w-5 h-5 mr-2" />
                         Help Center
                       </a>
                     </MenuItem>
@@ -115,15 +119,17 @@
 
                   <div class="py-1">
                     <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
-                      <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-left items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogin = true">
+                        <LoginIcon class="w-5 h-5 mr-2" />
                         Login to Jesse.Trade
                       </button>
                     </MenuItem>
 
                     <MenuItem v-else v-slot="{ active }">
-                      <button name="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
+                      <button name="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-left items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
                               @click="modals.jesseTradeLogout = true">
+                        <LogoutIcon class="w-5 h-5 mr-2" />
                         Logout from Jesse.Trade
                       </button>
                     </MenuItem>
@@ -230,7 +236,13 @@ import {
   XIcon,
   CogIcon,
   DotsVerticalIcon,
-  DownloadIcon
+  DownloadIcon,
+  DocumentAddIcon,
+  LoginIcon,
+  LogoutIcon,
+  DocumentTextIcon,
+  QuestionMarkCircleIcon,
+  CollectionIcon
 } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState, mapWritableState } from 'pinia'
@@ -265,7 +277,13 @@ export default {
     CalculatorIcon,
     ChipIcon,
     CurrencyDollarIcon,
-    SaveIcon
+    SaveIcon,
+    DocumentAddIcon,
+    LoginIcon,
+    LogoutIcon,
+    DocumentTextIcon,
+    QuestionMarkCircleIcon,
+    CollectionIcon
   },
   setup () {
     const open = ref(false)
