@@ -157,7 +157,7 @@
 
         <br>
 
-        <p>Balances and fees will be fetched from the exchange in live trading. But for paper trading you can set them here:</p>
+        <p>Balances and fees will be fetched from the exchange in live trading. But for <b>paper trading</b> you can set them here:</p>
 
         <br>
 
