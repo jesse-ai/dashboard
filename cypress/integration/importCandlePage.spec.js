@@ -33,7 +33,7 @@ describe('test home page', () => {
         cy.get('[data-cy="symbol-error-section"]').should('contain.text', 'Symbol parameter must contain "-" character!')
         cy.get('[data-cy="candles-symbol"]').type('somesome')
         cy.get('[data-cy="symbol-error-section"]').should('contain.text', 'Maximum symbol length is exceeded!')
-        cy.get('[data-cy="candles-start-date"]').should('have.value', '2021-06-01')
+        cy.get('[data-cy="candles-start-date"]').should('have.value', '2021-01-01')
 
         // test start button
         cy.get('[data-cy="start-button"]').click()
