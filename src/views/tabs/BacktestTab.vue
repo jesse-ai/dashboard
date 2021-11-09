@@ -34,7 +34,7 @@
         Cancel
       </button>
 
-      <a v-if="form.debug_mode"
+      <a v-if="form.debug_mode && results.exception.error"
          :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
          class="btn-secondary block mb-4 w-64 text-center">
         Debugging Logs
