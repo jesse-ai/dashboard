@@ -35,8 +35,10 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="block lg:hidden h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
-            <img class="hidden lg:block h-8 w-auto" src="@/assets/imgs/jesse.png" alt="Jesse Logo" >
+            <!-- light -->
+            <img class="h-9 w-auto dark:hidden" src="@/assets/imgs/logo-light.png" alt="Jesse Logo" >
+            <!-- dark -->
+            <img class="hidden dark:block h-10 w-auto" src="@/assets/imgs/logo-dark.svg" alt="Jesse Logo" >
           </div>
           <div class="hidden md:block md:ml-6">
             <div class="flex space-x-4">
@@ -320,7 +322,7 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ['modals']),
-    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade'])
+    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade']),
   },
   methods: {
     convertToSlug (Text) {
