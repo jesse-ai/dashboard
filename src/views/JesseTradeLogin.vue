@@ -79,12 +79,11 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           this.notyf.success(res.data.message)
+          this.isLoggedInToJesseTrade = true
+          this.modals.jesseTradeLogin = false
         } else {
           this.notyf.error(res.data.message)
         }
-
-        this.isLoggedInToJesseTrade = true
-        this.modals.jesseTradeLogin = false
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
