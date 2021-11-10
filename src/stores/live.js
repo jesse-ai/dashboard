@@ -360,11 +360,11 @@ export const useLiveStore = defineStore({
 
       // look for order in rawOrders, if exists, update, else, add
       const newOrder = data
-      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
-      if (orderIndex === -1) {
+      const index = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
+      if (index === -1) {
         this.tabs[id].results.rawOrders.push(newOrder)
       } else {
-        this.tabs[id].results.rawOrders[orderIndex] = newOrder
+        this.tabs[id].results.rawOrders[index] = newOrder
       }
 
       this.updateOrders(id)
