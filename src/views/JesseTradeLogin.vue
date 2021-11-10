@@ -45,7 +45,7 @@
              class="input">
 
       <div class="flex justify-end mt-8">
-        <button data-cy="login-cancel-button" class="btn-link mr-8" @click="modals.jesseTradeLogin = false">Cancel</button>
+        <button data-cy="login-cancel-button" class="btn-link mr-8" type="reset" @click="modals.jesseTradeLogin = false">Cancel</button>
         <button data-cy="login-submit-button" class="btn-primary w-32" type="submit">Login</button>
       </div>
     </form>
