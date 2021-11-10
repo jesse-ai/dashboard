@@ -106,7 +106,7 @@
       </div>
 
       <!-- Monitoring Dashboard -->
-      <div v-if="results.monitoring" class="px-4 sm:px-6 md:px-8">
+      <div v-if="results.monitoring">
         <!-- exception  -->
         <div v-if="results.exception.error" class="mb-8">
           <Exception :title="results.exception.error"
@@ -145,7 +145,7 @@
           </button>
 
           <button v-else class="flex items-center justify-center btn-cancel text-center mr-2 w-full mb-4" @click="modals.terminationConfirm = true">
-            <StopIcon class="w-5 h-5 mr-2" />
+            <BanIcon class="w-5 h-5 mr-2" />
             Stop
           </button>
         </div>
@@ -264,7 +264,7 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardIcon, ClipboardListIcon, CheckIcon, LightningBoltIcon, PlusSmIcon, StopIcon } from '@heroicons/vue/outline'
+import { ClipboardIcon, ClipboardListIcon, CheckIcon, LightningBoltIcon, PlusSmIcon, BanIcon } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -289,7 +289,7 @@ export default {
     CheckIcon,
     LightningBoltIcon,
     PlusSmIcon,
-    StopIcon
+    BanIcon
   },
   props: {
     form: {
