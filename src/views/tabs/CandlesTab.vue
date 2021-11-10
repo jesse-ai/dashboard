@@ -10,7 +10,8 @@
     <h3 class="mt-8 animate-pulse" v-text="remainingTimeText"/>
 
     <div class="mt-8">
-      <button data-cy="import-candles-cancel-button" class="btn-secondary w-64" @click="cancel($route.params.id)">
+      <button data-cy="import-candles-cancel-button" class="flex items-center justify-center btn-secondary w-64" @click="cancel($route.params.id)">
+        <StopIcon class="w-5 h-5 mr-2" />
         Cancel
       </button>
     </div>
@@ -102,7 +103,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useCandlesStore } from '@/stores/candles'
-import { LightningBoltIcon, PlusSmIcon } from '@heroicons/vue/outline'
+import { LightningBoltIcon, PlusSmIcon, StopIcon } from '@heroicons/vue/outline'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import { useMainStore } from '@/stores/main'
 import { ExclamationIcon } from '@heroicons/vue/solid'
@@ -110,7 +111,7 @@ import helpers from '@/helpers'
 
 export default {
   name: 'CandlesTab',
-  components: { LayoutWithSidebar, ExclamationIcon, LightningBoltIcon, PlusSmIcon },
+  components: { LayoutWithSidebar, ExclamationIcon, LightningBoltIcon, PlusSmIcon, StopIcon },
   props: {
     form: {
       type: Object,
