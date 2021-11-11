@@ -31,7 +31,7 @@
 
     <div class="mt-8">
       <button data-cy="backtest-cancel-button" class="flex justify-center items-center btn-cancel mb-4 w-64" @click="cancel($route.params.id)">
-        <StopIcon class="w-5 h-5 mr-2" />
+        <BanIcon class="w-5 h-5 mr-2" />
         Cancel
       </button>
 
@@ -236,7 +236,7 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
-import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon, DocumentDownloadIcon, StopIcon } from '@heroicons/vue/outline'
+import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon, DocumentDownloadIcon, BanIcon } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import helpers from '@/helpers'
@@ -256,7 +256,7 @@ export default {
     RefreshIcon,
     ReplyIcon,
     DocumentDownloadIcon,
-    StopIcon
+    BanIcon
   },
   props: {
     form: {

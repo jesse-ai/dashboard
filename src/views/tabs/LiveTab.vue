@@ -68,7 +68,7 @@
       </button>
 
       <button data-cy="live-cancel-button" class="flex justify-center items-center btn-secondary w-64" @click="cancel($route.params.id)">
-        <StopIcon class="w-5 h-5 mr-2" />
+        <BanIcon class="w-5 h-5 mr-2" />
         Cancel
       </button>
     </div>
