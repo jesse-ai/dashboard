@@ -169,8 +169,9 @@
       </div>
 
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
+        <button class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
                 @click="modals.makeStrategy = true">
+          <DocumentAddIcon class="w-5 h-5 mr-2" />
           New Strategy
         </button>
       </div>
@@ -178,32 +179,37 @@
       <!-- docs, help and strategies links -->
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
         <div class="w-full">
-          <a href="https://docs.jesse.trade/" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+          <a href="https://docs.jesse.trade/" class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+            <CollectionIcon class="w-5 h-5 mr-2" />
             Documentation
           </a>
         </div>
 
         <div class="w-full">
-          <a href="https://jesse.trade/strategies" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+          <a href="https://jesse.trade/strategies" class="flex justify-start items-start w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+            <DocumentTextIcon class="w-5 h-5 mr-2" />
             Sample Strategies
           </a>
         </div>
 
         <div class="w-full">
-          <a href="https://jesse.trade/help" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+          <a href="https://jesse.trade/help" class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md" target="_blank">
+            <QuestionMarkCircleIcon class="w-5 h-5 mr-2" />
             Help Center
           </a>
         </div>
       </div>
 
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button v-if="!isLoggedInToJesseTrade" class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
+        <button v-if="!isLoggedInToJesseTrade" class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
                 @click="modals.jesseTradeLogin = true">
+          <LoginIcon class="w-5 h-5 mr-2" />
           Login to Jesse.Trade
         </button>
 
-        <button v-else class="w-full text-left block px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
+        <button v-else class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
                 @click="modals.jesseTradeLogout = true">
+          <LogoutIcon class="w-5 h-5 mr-2" />
           Logout from Jesse.Trade
         </button>
       </div>

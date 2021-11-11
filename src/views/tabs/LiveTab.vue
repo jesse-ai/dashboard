@@ -62,11 +62,13 @@
     <h3 class="mt-8 animate-pulse" v-text="remainingTimeText"/>
 
     <div class="mt-8">
-      <button v-if="form.debug_mode" class="btn-primary block mb-4 w-64" @click="modals.infoLogs = true">
+      <button v-if="form.debug_mode" class="flex justify-center items-center btn-primary mb-4 w-64" @click="modals.infoLogs = true">
+        <ClipboardListIcon class="w-5 h-5 mr-2"/>
         View Logs
       </button>
 
-      <button data-cy="live-cancel-button" class="btn-secondary w-64" @click="cancel($route.params.id)">
+      <button data-cy="live-cancel-button" class="flex justify-center items-center btn-secondary w-64" @click="cancel($route.params.id)">
+        <StopIcon class="w-5 h-5 mr-2" />
         Cancel
       </button>
     </div>
