@@ -38,8 +38,8 @@
               </button>
             </div>
 
-            <div :class="[description ? '' : 'items-center', 'sm:flex sm:items-start']">
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <div :class="[description ? '' : 'items-center', 'flex items-start justify-start']">
+              <div class="mt-3 sm:mt-0 sm:ml-4 text-left">
                 <div v-if="description" class="my-4 ml-8">
                   <p class="text-sm text-gray-500 dark:text-gray-300">
                     {{ description }}
@@ -48,13 +48,13 @@
               </div>
             </div>
 
-            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+            <div class="mt-5 sm:mt-4 flex justify-end">
               <!-- action button which must insert in main component -->
-              <slot />
-
               <button ref="cancelButtonRef" type="button" class="font-medium select-none items-center text-gray-700 dark:text-gray-300 hover:underline focus:outline-none text-base tracking-wide mr-4" @click="object[name] = false">
                 {{ type === 'danger' ? 'Cancel' : 'Close' }}
               </button>
+
+              <slot />
             </div>
           </div>
         </TransitionChild>

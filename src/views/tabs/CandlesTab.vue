@@ -150,7 +150,6 @@ export default {
     },
     copiedForm: {
       handler () {
-        console.log('hi')
         this.checkSymbol()
       },
       deep: true
