@@ -38,9 +38,9 @@
 
     <br>
 
-    <div>
-      <button class="btn-primary mr-4" @click="report">Submit</button>
-      <button class="btn-link text-indigo-600 dark:text-indigo-400" @click="modals.exceptionReport = false">Cancel</button>
+    <div class="flex justify-end item-center">
+      <button class="btn-link text-indigo-600 dark:text-indigo-400 mr-4" @click="modals.exceptionReport = false">Cancel</button>
+      <button class="btn-primary" @click="report">Submit</button>
     </div>
   </SlideOver>
 
