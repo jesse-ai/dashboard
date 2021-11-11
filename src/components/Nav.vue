@@ -31,7 +31,7 @@
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
-    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
@@ -40,7 +40,7 @@
             <!-- dark -->
             <img class="hidden dark:block h-10 w-auto" src="@/assets/imgs/logo-dark.svg" alt="Jesse Logo" >
           </div>
-          <div class="hidden md:block md:ml-6">
+          <div class="hidden lg:block lg:ml-6">
             <div class="flex space-x-4">
               <router-link
                 v-for="item in navigation"
@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class="hidden md:ml-6 md:block">
+        <div class="hidden lg:ml-6 lg:block">
           <div class="flex items-center">
             <button id="open-feedback-button" class="btn-secondary mr-4 text-sm" @click="openFeedback">
               Feedback
@@ -141,7 +141,7 @@
             </Menu>
           </div>
         </div>
-        <div class="-mr-2 flex md:hidden">
+        <div class="-mr-2 flex lg:hidden">
           <!-- Mobile menu button -->
           <DisclosureButton class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:focus:ring-gray-800">
             <span class="sr-only">Open main menu</span>
@@ -152,7 +152,7 @@
       </div>
     </div>
 
-    <DisclosurePanel class="md:hidden">
+    <DisclosurePanel class="lg:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
         <div v-for="item in navigation" :id="convertToSlug(item.name) + '-page-button'" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
