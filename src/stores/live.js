@@ -72,7 +72,7 @@ export const useLiveStore = defineStore({
       this.tabs[tab.id] = tab
       this.start(tab.id)
     },
-    start (id) {
+    reset (id) {
       this.tabs[id].results.progressbar.current = 0
       this.tabs[id].results.booting = true
       this.tabs[id].results.finished = false
@@ -80,6 +80,17 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.errorLogs = ''
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
+      this.tabs[id].results.routes_info = []
+      this.tabs[id].results.metrics = []
+      this.tabs[id].results.generalInfo = {}
+      this.tabs[id].results.positions = []
+      this.tabs[id].results.rawOrders = []
+      this.tabs[id].results.orders = []
+      this.tabs[id].results.candles = []
+      this.tabs[id].results.currentCandles = {}
+    },
+    start (id) {
+      this.reset(id)
 
       const mainStore = useMainStore()
 
@@ -347,13 +358,14 @@ export const useLiveStore = defineStore({
       //   "executed_at": 1628148961000
       // }
 
-      // look for order in rawOrders, if exists, update, else, add
+      // look for order in rawOrders using order.id, if exists, update the entire order object, else, add it
       const newOrder = data
-      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, o => o.id === newOrder.id)
-      if (orderIndex === -1) {
-        this.tabs[id].results.rawOrders.push(newOrder)
-      } else {
+      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, { id: newOrder.id })
+
+      if (orderIndex > -1) {
         this.tabs[id].results.rawOrders[orderIndex] = newOrder
+      } else {
+        this.tabs[id].results.rawOrders.push(newOrder)
       }
 
       this.updateOrders(id)
@@ -380,13 +392,13 @@ export const useLiveStore = defineStore({
         const item = this.tabs[id].results.rawOrders[i]
 
         this.tabs[id].results.orders.push([
-          { value: helpers.timestampToTimeOnly(item.created_at), style: '' },
-          { value: item.symbol, style: '' },
-          { value: item.type, style: '' },
+          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs' },
+          { value: item.symbol, style: 'text-xs' },
+          { value: item.type, style: 'text-xs' },
           { value: item.side, style: colorBasedOnSide(item.side) },
-          { value: item.price, style: '' },
+          { value: item.price, style: 'text-xs' },
           { value: item.qty, style: colorBasedOnSide(item.side) },
-          { value: item.status, style: '' },
+          { value: item.status, style: 'text-xs' },
         ])
       }
     },

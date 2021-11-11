@@ -44,6 +44,7 @@ describe('test home page', () => {
 
         // check trading route duplicate
         cy.get('[data-cy="trading-route-exchange0"]').select('Coinbase')
+        cy.wait(100)
         cy.get('[data-cy="trading-route-menu-button0"]').click()
         cy.wait(50)
         cy.get('[name=trading-duplicate-menu0]').click()
@@ -51,12 +52,14 @@ describe('test home page', () => {
 
         // check trading route move up
         cy.get('[data-cy="trading-route-exchange1"]').select('Binance')
+        cy.wait(50)
         cy.get('[data-cy="trading-route-menu-button1"]').click()
         cy.wait(50)
         cy.get('[name=trading-moveup-menu1]').click()
         cy.get('[data-cy="trading-route-exchange0"]').should('have.value', 'Binance');
 
         // check trading route move down
+        cy.wait(50)
         cy.get('[data-cy="trading-route-menu-button0"]').click()
         cy.wait(50)
         cy.get('[name=trading-movedown-menu0]').click()
@@ -68,6 +71,7 @@ describe('test home page', () => {
 
         // check extra route duplicate
         cy.get('[data-cy="extra-route-exchange0"]').select('Coinbase')
+        cy.wait(50)
         cy.get('[data-cy="extra-route-menu-button0"]').click()
         cy.wait(50)
         cy.get('[name=extra-duplicate-menu0]').click()
@@ -89,6 +93,7 @@ describe('test home page', () => {
         cy.get('[data-cy="error2"]').should('have.text', 'Extra routes timeframe and routes timeframe must be different')
 
         cy.get('[data-cy="trading-route-exchange1"]').select('Coinbase')
+        cy.wait(50)
         cy.get('[data-cy="trading-route-symbol1"]').clear()
         cy.get('[data-cy="trading-route-symbol1"]').type('BTC-USDT')
         cy.get('[data-cy="error0"]').should("include.text", "each exchange-symbol pair can be traded only once!")
@@ -100,7 +105,7 @@ describe('test home page', () => {
         cy.get('[data-cy="backtest-option-section"]').should("include.text", 'Export JSON')
 
         // duration field text
-        cy.get('[data-cy="backtest-start-date"]').should('have.value', '2021-05-25')
+        cy.get('[data-cy="backtest-start-date"]').should('have.value', '2021-01-01')
 
         // press start button
         cy.get('[data-cy="start-button"]').click()

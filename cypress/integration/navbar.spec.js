@@ -54,9 +54,8 @@ describe('test home page', () => {
         cy.get('.notyf__message').should('include.text', 'Feedback submitted successfully')
         // after feedback description input will be reset
         cy.get('#feedback-description').should('have.value', '')
-        // close feedback modal
-        cy.get('#feedback-cancel-button').click()
         cy.get('#feedback-description').should('not.exist')
+
         // close notification
         cy.get('.notyf__dismiss-btn').click()
 

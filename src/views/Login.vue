@@ -2,7 +2,8 @@
   <section v-if="open" class="absolute top-o l-0 w-full h-screen bg-white dark:bg-backdrop-dark z-40 select-none flex items-center justify-center">
     <div class="text-center">
       <div class="w-full text-center">
-        <img class="animate-bounce h-32 w-auto mx-auto" src="@/assets/imgs/jesse-logo.svg" alt="Jesse Logo" >
+        <img class="animate-bounce h-32 w-auto mx-auto dark:hidden" src="@/assets/imgs/logo-light.png" alt="Jesse Logo" >
+        <img class="animate-bounce h-32 w-auto mx-auto hidden dark:block" src="@/assets/imgs/logo-dark.svg" alt="Jesse Logo" >
       </div>
 
       <br>
