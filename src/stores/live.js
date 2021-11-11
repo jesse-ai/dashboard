@@ -27,6 +27,7 @@ function newTab () {
       booting: false,
       monitoring: false,
       finished: false,
+      terminating: false,
       progressbar: {
         current: 0,
         estimated_remaining_seconds: 0
@@ -124,9 +125,8 @@ export const useLiveStore = defineStore({
           paper_mode: this.tabs[id].form.paper_mode
         }
       }).then(res => {
-        this.tabs[id].results.finished = true
         this.tabs[id].modals.terminationConfirm = false
-        this.notyf.success('Live session terminated')
+        this.tabs[id].results.terminating = true
       }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
@@ -450,9 +450,9 @@ export const useLiveStore = defineStore({
     terminationEvent (id) {
       if (!this.tabs[id].results.finished) {
         this.tabs[id].results.finished = true
+        this.tabs[id].results.terminating = false
         this.notyf.success('Session terminated successfully')
       }
     }
-
   }
 })
