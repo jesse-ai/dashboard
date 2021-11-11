@@ -31,7 +31,7 @@
   </SlideOver>
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
-    <div class="max-w-7xl mx-auto px-4 lg:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
