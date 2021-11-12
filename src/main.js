@@ -5,8 +5,8 @@ import router from './router'
 import websocket from './plugins/websocket'
 import notyf from '@/plugins/notyf'
 // Sentry
-import * as Sentry from '@sentry/vue'
-import { Integrations } from '@sentry/tracing'
+// import * as Sentry from '@sentry/vue'
+// import { Integrations } from '@sentry/tracing'
 
 import 'notyf/notyf.min.css'
 import './assets/styles/styles.css'
@@ -18,23 +18,25 @@ const pinia = createPinia()
 // create Vue instance
 const app = createApp(App)
 
-// sentry
-Sentry.init({
-  app,
-  dsn: 'https://f5d14d55118a4ed5895272599a63ec60@sentry.jesse.trade/2',
-  integrations: [
-    new Integrations.BrowserTracing({
-      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      // tracingOrigins: ['localhost', 'my-site-url.com', /^\//],
-      tracingOrigins: ['localhost', /^\//],
-    }),
-  ],
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-  logErrors: true,
-})
+// // sentry
+// Sentry.init({
+//   app,
+//   dsn: 'https://f5d14d55118a4ed5895272599a63ec60@sentry.jesse.trade/2',
+//   integrations: [
+//     new Integrations.BrowserTracing({
+//       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+//       // tracingOrigins: ['localhost', 'my-site-url.com', /^\//],
+//       // tracingOrigins: ['localhost', /^\//],
+//       // allow tracingOrigins to be anything using regex
+//       tracingOrigins: [/^\//],
+//     }),
+//   ],
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+//   logErrors: true,
+// })
 
 app.use(pinia)
 app.use(router)

@@ -146,9 +146,10 @@
             New session
           </button>
 
-          <button v-else class="flex items-center justify-center btn-cancel text-center mr-2 w-full mb-4" @click="modals.terminationConfirm = true">
+          <button v-else :disabled="results.terminating"
+                  class="flex items-center justify-center btn-cancel text-center mr-2 w-full mb-4" @click="modals.terminationConfirm = true">
             <BanIcon class="w-5 h-5 mr-2" />
-            Stop
+            {{ results.terminating ? 'Terminating...' : 'Terminate' }}
           </button>
         </div>
 
