@@ -93,6 +93,10 @@ export const useCandlesStore = defineStore({
 
     progressbarEvent (id, data) {
       this.tabs[id].results.progressbar = data
+
+      if (this.tabs[id].results.progressbar.current < 100 && this.tabs[id].results.executing === false) {
+        this.tabs[id].results.executing = true
+      }
     },
     alertEvent (id, data) {
       this.tabs[id].results.alert = data
