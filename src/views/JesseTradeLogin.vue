@@ -45,7 +45,7 @@
              class="input">
 
       <div class="flex justify-end mt-8">
-        <button data-cy="login-cancel-button" class="btn-link mr-8" @click="modals.jesseTradeLogin = false">Cancel</button>
+        <button data-cy="login-cancel-button" class="btn-link mr-8" type="reset" @click="modals.jesseTradeLogin = false">Cancel</button>
         <button data-cy="login-submit-button" class="btn-primary w-32" type="submit">Login</button>
       </div>
     </form>
@@ -79,12 +79,11 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           this.notyf.success(res.data.message)
+          this.isLoggedInToJesseTrade = true
+          this.modals.jesseTradeLogin = false
         } else {
           this.notyf.error(res.data.message)
         }
-
-        this.isLoggedInToJesseTrade = true
-        this.modals.jesseTradeLogin = false
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
