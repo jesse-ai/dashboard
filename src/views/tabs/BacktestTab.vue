@@ -27,7 +27,7 @@
       <CircleProgressbar :progress="results.progressbar.current"/>
     </div>
 
-    <h3 class="mt-8 animate-pulse" v-text="remainingTimeText"/>
+    <h3 v-if="!results.exception.error" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
 
     <div class="mt-8">
       <button data-cy="backtest-cancel-button" class="flex justify-center items-center btn-cancel mb-4 w-64" @click="cancel($route.params.id)">
