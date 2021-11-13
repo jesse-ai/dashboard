@@ -35,7 +35,7 @@
         Cancel
       </button>
 
-      <a v-if="form.debug_mode && results.exception.error"
+      <a v-if="form.debug_mode && results.exception.error && results.progressbar.current !== 0"
          :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
          class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
         <DocumentDownloadIcon class="w-5 h-5 mr-2" />
