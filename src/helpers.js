@@ -56,8 +56,19 @@ const helpers = {
     }
 
     return `${Math.round(seconds)} seconds remaining...`
-  }
+  },
 
+  /**
+   * A helper function that rounds the input to 2 decimals but only if the number is bigger than 1.
+   * Used for displaying prices
+   */
+  roundPrice (price) {
+    if (price > 1) {
+      return _.round(price, 2)
+    }
+
+    return price
+  },
 }
 
 export default helpers

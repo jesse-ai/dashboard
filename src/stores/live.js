@@ -336,8 +336,8 @@ export const useLiveStore = defineStore({
           { value: item.symbol, style: '' },
           { value: item.strategy_name, style: '' },
           { value: item.qty, style: colorBasedOnType(item.type) },
-          { value: item.entry, style: '' },
-          { value: item.current_price, style: '' },
+          { value: helpers.roundPrice(item.entry), style: '' },
+          { value: helpers.roundPrice(item.current_price), style: '' },
           { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: colorBasedOnNumber(item.pnl) },
         ])
       }
