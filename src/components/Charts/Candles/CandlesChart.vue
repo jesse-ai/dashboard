@@ -7,9 +7,6 @@ import { createChart, CrosshairMode } from 'lightweight-charts'
 import { useMainStore } from '@/stores/main'
 import { mapWritableState } from 'pinia'
 
-let chart = null
-let candleSeries = null
-
 export default {
   name: 'CandlesChart',
   components: {},
@@ -29,6 +26,9 @@ export default {
   },
   data () {
     return {
+      chart: null,
+      candleSeries: null,
+      lines: {},
       settings: {
         width: 800,
         height: 380,
@@ -76,9 +76,11 @@ export default {
           grid: {
             vertLines: {
               color: '#525252',
+              visible: false
             },
             horzLines: {
               color: '#525252',
+              visible: false
             }
           },
           priceScale: {
@@ -102,7 +104,15 @@ export default {
     },
     ...mapWritableState(useMainStore, [
       'theme'
-    ])
+    ]),
+    positionEntry () {
+      return this.results.positions[1][3].value
+    },
+    positionType () {
+      if (this.results.positions[1][2].value > 0) return 'long'
+      if (this.results.positions[1][2].value < 0) return 'short'
+      return 'close'
+    },
   },
   watch: {
     currentCandles (newValue, oldValue) {
@@ -112,54 +122,71 @@ export default {
     },
     theme (newVal) {
       this.checkTheme(newVal)
+    },
+    positionEntry (newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.updatePositionEntry()
+      }
     }
   },
   mounted () {
     this.settings.width = this.$refs.chart.clientWidth
 
-    chart = createChart(this.$refs.chart, this.settings)
+    this.chart = createChart(this.$refs.chart, this.settings)
 
-    candleSeries = chart.addCandlestickSeries()
-    candleSeries.setData(this.candles)
+    this.candleSeries = this.chart.addCandlestickSeries()
+    this.candleSeries.setData(this.candles)
 
-    chart.timeScale().fitContent()
+    this.chart.timeScale().fitContent()
 
     if (localStorage.theme === 'light') {
-      chart.applyOptions(this.lightTheme.chart)
-      // lineSeries.applyOptions(this.lightTheme.series)
+      this.chart.applyOptions(this.lightTheme.chart)
     } else {
-      chart.applyOptions(this.darkTheme.chart)
-      // lineSeries.applyOptions(this.darkTheme.series)
+      this.chart.applyOptions(this.darkTheme.chart)
     }
 
-    // TODO: show position entry and order prices lines on the chart. Example below:
-    // const entryPrice = {
-    //   price: 31900,
-    //   color: '#333',
-    //   lineWidth: 1,
-    //   lineStyle: 0,
-    //   axisLabelVisible: true,
-    //   title: 'Entry Price',
-    // }
-    // candleSeries.createPriceLine(entryPrice)
+    this.updatePositionEntry()
   },
   beforeUnmount () {
-    chart = null
-    candleSeries = null
+    this.chart = null
+    this.candleSeries = null
   },
   methods: {
+    updatePositionEntry () {
+      const color = this.positionType === 'long' ? '#00AB5C' : '#FF497D'
+
+      if (this.positionEntry > 0) {
+        console.log('open:', this.positionEntry)
+        const entryPrice = {
+          price: this.positionEntry,
+          color: color,
+          lineWidth: 1.5,
+          lineStyle: 0,
+          axisLabelVisible: true,
+          title: 'Entry Price',
+        }
+        this.lines.positionEntry = this.candleSeries.createPriceLine(entryPrice)
+      } else {
+        console.log('close:', this.positionEntry)
+        if (this.lines.positionEntry) {
+          console.log('remove!', this.lines.positionEntry)
+          this.candleSeries.removePriceLine(this.lines.positionEntry)
+          this.lines.positionEntry = null
+        }
+      }
+    },
     updateCurrentCandle (candle) {
       if (candle === undefined) {
         throw new TypeError('candle is undefined!')
       }
 
-      candleSeries.update(candle)
+      this.candleSeries.update(candle)
     },
     checkTheme (val) {
       if (val === 'light') {
-        chart.applyOptions(this.lightTheme.chart)
+        this.chart.applyOptions(this.lightTheme.chart)
       } else {
-        chart.applyOptions(this.darkTheme.chart)
+        this.chart.applyOptions(this.darkTheme.chart)
       }
     }
   }
