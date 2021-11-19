@@ -36,12 +36,12 @@
 
       <!-- Execution -->
       <div v-if="results.executing">
-        <Divider>Info</Divider>
+        <Divider title="Info"/>
         <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo" />
         <TablePlaceholder v-else/>
 
         <div v-if="results.best_candidates.length" class="mt-16">
-          <Divider>Best DNA Candidates</Divider>
+          <Divider title="Best DNA Candidates"/>
           <MultipleValuesTable :data="results.best_candidates" header/>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <div v-if="!results.executing && !results.showResults">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
-        <Divider class="mt-16">Options</Divider>
+        <Divider class="mt-16" title="Options"/>
 
         <div class="grid grid-cols-1 gap-6">
           <!-- debug mode -->
@@ -77,7 +77,7 @@
 
         <!-- optimal_total -->
         <div class="select-none">
-          <Divider class="mt-16">Optimal Trades</Divider>
+          <Divider class="mt-16" title="Optimal Trades"/>
           <p class="text-sm text-gray-500 dark:text-gray-400">
             The number that tells Jesse how many trades you would find optimal for your strategy in the targeted time
             period so that it can filter out those DNAs that cause too few trades.
@@ -87,7 +87,7 @@
           <NumberInput title="Optimal number of trades:" name="optimal_total" :object="form"/>
         </div>
 
-        <Divider class="mt-16">Duration</Divider>
+        <Divider class="mt-16" title="Duration"/>
 
         <div class="flex items-center select-none flex-1 mb-4">
           <input id="start_date"
@@ -109,16 +109,16 @@
       <div v-if="results.showResults"
            class="w-full mx-auto px-6">
         <div>
-          <Divider>Routes</Divider>
+          <Divider title="Routes"/>
           <MultipleValuesTable :data="results.routes_info" header />
 
-          <Divider class="mt-16">Info</Divider>
+          <Divider class="mt-16" title="Info"/>
           <KeyValueTable :data="results.info"/>
 
-          <Divider v-if="hasExecutedTrades" class="mt-16">Equity Curve</Divider>
+          <Divider v-if="hasExecutedTrades" class="mt-16" title="Equity Curve"/>
           <EquityCurve v-if="hasExecutedTrades" :equity-curve="results.charts.equity_curve"/>
 
-          <Divider v-if="hasExecutedTrades" class="mt-16">Performance</Divider>
+          <Divider v-if="hasExecutedTrades" class="mt-16" title="Performance"/>
           <KeyValueTable v-if="hasExecutedTrades" :data="results.metrics"/>
 
           <div v-if="!hasExecutedTrades"

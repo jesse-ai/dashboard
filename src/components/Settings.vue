@@ -18,7 +18,7 @@
 
     <!-- backtest -->
     <div v-if="currentTab === 'Backtest'" data-cy="backtest-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      <Divider>Logs</Divider>
+      <Divider title="Logs"/>
       <p>
         Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
       </p>
@@ -36,7 +36,7 @@
 
       <br>
 
-      <Divider>Data</Divider>
+      <Divider title="Data"/>
       <div>
         <FormInput data-cy="backtest-setting-data-input"
                    placeholder="ex: 210"
@@ -49,7 +49,7 @@
       <br>
 
       <div v-for="(e, index) in settings.backtest.exchanges" :key="index" :data-cy="'backtest-setting-exchange-' + convertToSlug(e.name)">
-        <Divider>{{ e.name }}</Divider>
+        <Divider :title="e.name"/>
 
         <div class="grid grid-cols-6 gap-6">
           <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
@@ -73,7 +73,7 @@
 
     <!-- live -->
     <div v-if="currentTab === 'Live'" data-cy="setting-live-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      <Divider>Logs</Divider>
+      <Divider title="Logs"/>
       <p>
         You can filter the types of events that you want to be logged. Logging is often useful for debugging
         and recommended. Hence, it doesn't hurt to enable them all:
@@ -93,7 +93,7 @@
 
       <br>
 
-      <Divider>Data</Divider>
+      <Divider title="Data"/>
       <div>
         <FormInput data-cy="live-setting-warmup-candles-input"
                    placeholder="ex: 210"
@@ -105,7 +105,7 @@
 
       <br>
 
-      <Divider>Notifications</Divider>
+      <Divider title="Notifications"/>
       <p>
         Jesse can notify every time something interesting happens so you don't have to monitor your bots 24/7. Currently, Telegram and Discord drivers are supported. <br><br>
         To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
@@ -147,7 +147,7 @@
       </div>
 
       <div v-for="(e, index) in settings.live.exchanges" :key="index">
-        <Divider>{{ e.name }}</Divider>
+        <Divider :title="e.name"/>
 
         <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
 
@@ -176,7 +176,7 @@
     <!-- optimization -->
     <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full" data-cy="optimization-setting-tab">
       <!-- CPU cores -->
-      <Divider>CPU</Divider>
+      <Divider title="CPU"/>
       <div>
         <FormInput placeholder="ex: 4"
                    :title="`CPU cores to use for optimization (${settings.optimization.cpu_cores}/${systemInfo.cpu_cores})`"
@@ -186,13 +186,13 @@
       </div>
 
       <!-- Fitness Function-->
-      <Divider>Fitness Function</Divider>
+      <Divider title="Fitness Function"/>
       <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
 
       <br>
 
       <!-- Data -->
-      <Divider>Data</Divider>
+      <Divider title="Data"/>
       <div>
         <FormInput data-cy="optimization-warmup-candles-input" placeholder="ex: 210"
                    title="Warmup Candles"
@@ -204,7 +204,7 @@
       <br>
 
       <!-- exchange -->
-      <Divider>Exchange</Divider>
+      <Divider title="Exchange"/>
       <p>
         Because the optimize mode is limited to one route only, it makes sense to have only one configuration section for the exchange values. Depending on the exchange you define in your route, these configurations will be used.
       </p>

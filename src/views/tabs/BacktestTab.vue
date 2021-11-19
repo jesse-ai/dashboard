@@ -64,7 +64,7 @@
       <div v-if="!results.executing && !results.showResults" data-cy="backtest-content-section">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
-        <Divider class="mt-16">Options</Divider>
+        <Divider class="mt-16" title="Options"/>
 
         <div data-cy="backtest-option-section" class="grid grid-cols-1 gap-6">
           <!-- debug mode -->
@@ -110,7 +110,7 @@
             description="Exports executed trades in a JSON format"/>
         </div>
 
-        <Divider class="mt-16">Duration</Divider>
+        <Divider class="mt-16" title="Duration"/>
 
         <div class="flex items-center select-none flex-1 mb-4">
           <input id="start_date"
@@ -240,6 +240,7 @@ import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon, DocumentDownload
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import helpers from '@/helpers'
+import Divider from '@/components/Divider'
 
 export default {
   name: 'BacktestTab',
@@ -256,7 +257,8 @@ export default {
     RefreshIcon,
     ReplyIcon,
     DocumentDownloadIcon,
-    BanIcon
+    BanIcon,
+    Divider
   },
   props: {
     form: {

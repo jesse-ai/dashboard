@@ -35,7 +35,7 @@
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults" data-cy="candles-page-content"
            class="pb-4">
-        <Divider>Exchange</Divider>
+        <Divider title="Exchange"/>
         <select
           v-model="form.exchange"
           data-cy="candles-exchange"
@@ -43,7 +43,7 @@
           <option v-for="item in routes.exchanges" :key="item">{{ item }}</option>
         </select>
 
-        <Divider class="mt-16">Symbol</Divider>
+        <Divider class="mt-16" title="Symbol"/>
         <input v-model="form.symbol"
                data-cy="candles-symbol"
                placeholder="ex: BTC-USDT"
@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <Divider class="mt-16">Start Date</Divider>
+        <Divider class="mt-16" title="Start Date"/>
         <div class="flex items-center select-none flex-1">
           <input v-model="form.start_date"
                  data-cy="candles-start-date"

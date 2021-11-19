@@ -90,7 +90,7 @@
       <div v-if="!results.booting && !results.monitoring && !results.showResults" data-cy="live-page-content">
         <Routes v-if="isInitiated" :form="form" :results="results"/>
 
-        <Divider class="mt-16">Options</Divider>
+        <Divider class="mt-16" title="Options"/>
 
         <div class="grid grid-cols-1 gap-6">
           <ToggleButton
@@ -125,13 +125,13 @@
         </div>
 
         <!--tables-->
-        <Divider class="mt-12">Routes</Divider>
+        <Divider class="mt-12" title="Routes"/>
         <MultipleValuesTable :data="results.routes" header/>
 
-        <Divider class="mt-12">Positions</Divider>
+        <Divider class="mt-12" title="Positions"/>
         <MultipleValuesTable :data="results.positions" header/>
 
-        <Divider class="mt-12">Orders</Divider>
+        <Divider class="mt-12" title="Orders"/>
         <MultipleValuesTable :data="results.orders" header/>
       </div>
     </template>
