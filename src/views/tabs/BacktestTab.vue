@@ -56,7 +56,7 @@
   <LayoutWithSidebar else>
     <template #left>
       <!-- alert -->
-      <div v-if="results.showResults && results.alert.message" class="mb-10">
+      <div v-if="results.showResults && results.alert.message">
         <Alert :data="results.alert"/>
       </div>
 

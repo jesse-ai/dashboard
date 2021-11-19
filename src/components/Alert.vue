@@ -1,5 +1,5 @@
 <template>
-  <div v-if="open" class="rounded-md p-4" :class="backgroundColor">
+  <div v-if="open" class="rounded-md p-4 mb-10" :class="backgroundColor">
     <div class="flex">
       <div class="flex-shrink-0">
         <component :is="icon" class="h-5 w-5 text-green-400" :class="textColor" aria-hidden="true" />
