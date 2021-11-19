@@ -36,7 +36,7 @@
       </button>
 
       <a v-if="form.debug_mode && results.exception.error"
-         :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+         :href="`${baseURL}/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
          class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
         <DocumentDownloadIcon class="w-5 h-5 mr-2" />
         Debugging Logs
@@ -170,42 +170,42 @@
           </button>
 
           <a v-if="form.debug_mode"
-             :href="`http://127.0.0.1:8000/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Debugging Logs
           </a>
 
           <a v-if="form.export_chart && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Legacy Chart
           </a>
 
           <a v-if="form.export_full_reports && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             QuantStats Report
           </a>
 
           <a v-if="form.export_csv && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             CSV
           </a>
 
           <a v-if="form.export_json && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             JSON
           </a>
 
           <a v-if="form.export_tradingview && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="`${baseURL}/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             TradingView Pine Editor
@@ -278,7 +278,7 @@ export default {
     hasExecutedTrades () {
       return this.results.metrics.length > 0
     },
-    ...mapState(useMainStore, ['isInitiated']),
+    ...mapState(useMainStore, ['isInitiated', 'baseURL']),
     auth_key () {
       return sessionStorage.auth_key
     },

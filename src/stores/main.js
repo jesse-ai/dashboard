@@ -5,6 +5,7 @@ import _ from 'lodash'
 export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
+    baseURL: '',
     isConnected: false,
     isInitiated: false,
     isAuthenticated: false,
@@ -132,6 +133,9 @@ export const useMainStore = defineStore({
       }).catch(error => {
         console.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
+
+      // set baseUrl to axios.defaults.baseURL
+      this.baseURL = axios.defaults.baseURL
     },
 
     updateConfig: _.throttle(
