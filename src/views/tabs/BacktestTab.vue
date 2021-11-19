@@ -134,16 +134,16 @@
       <div v-if="results.showResults"
            class="w-full mx-auto">
         <div>
-          <Divider>Routes</Divider>
+          <Divider title="Routes"/>
           <MultipleValuesTable :data="results.routes_info" header />
 
-          <Divider class="mt-16">Info</Divider>
+          <Divider class="mt-16" title="Info"/>
           <KeyValueTable :data="results.info"/>
 
-          <Divider v-if="hasExecutedTrades" class="mt-16">Equity Curve</Divider>
+          <Divider v-if="hasExecutedTrades" class="mt-16" title="Equity Curve"/>
           <EquityCurve v-if="hasExecutedTrades" :equity-curve="results.charts.equity_curve"/>
 
-          <Divider v-if="hasExecutedTrades" class="mt-16">Performance</Divider>
+          <Divider v-if="hasExecutedTrades" class="mt-16" title="Performance"/>
           <KeyValueTable v-if="hasExecutedTrades" :data="results.metrics"/>
 
           <div v-if="!hasExecutedTrades"
