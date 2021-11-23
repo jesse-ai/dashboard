@@ -52,9 +52,11 @@ export default {
           grid: {
             vertLines: {
               color: '#f1f1f1',
+              visible: false,
             },
             horzLines: {
               color: '#f1f1f1',
+              visible: false,
             }
           },
           priceScale: {
