@@ -6,6 +6,7 @@
 import { createChart, CrosshairMode } from 'lightweight-charts'
 import { useMainStore } from '@/stores/main'
 import { mapWritableState } from 'pinia'
+import _ from 'lodash'
 
 export default {
   name: 'CandlesChart',
@@ -28,7 +29,9 @@ export default {
     return {
       chart: null,
       candleSeries: null,
-      lines: {},
+      lines: {
+        orderEntries: {}
+      },
       settings: {
         width: 800,
         height: 380,
@@ -113,6 +116,9 @@ export default {
       if (this.results.positions[1][2].value < 0) return 'short'
       return 'close'
     },
+    firstPosition () {
+      return this.results.positions[1]
+    },
   },
   watch: {
     currentCandles (newValue, oldValue) {
@@ -127,6 +133,14 @@ export default {
       if (newValue !== oldValue) {
         this.updatePositionEntry()
       }
+    },
+    // watch 'results.rawOrders' and its in object values and execute this.updateOrderEntries()
+    // when the value changes
+    'results.rawOrders': {
+      handler (newValue, oldValue) {
+        this.updateOrderEntries()
+      },
+      deep: true
     }
   },
   mounted () {
@@ -146,6 +160,7 @@ export default {
     }
 
     this.updatePositionEntry()
+    this.updateOrderEntries()
   },
   beforeUnmount () {
     this.chart = null
@@ -155,8 +170,13 @@ export default {
     updatePositionEntry () {
       const color = this.positionType === 'long' ? '#00AB5C' : '#FF497D'
 
+      // first remove price line
+      if (this.lines.positionEntry) {
+        this.candleSeries.removePriceLine(this.lines.positionEntry)
+      }
+
+      // then add a new price line
       if (this.positionEntry > 0) {
-        console.log('open:', this.positionEntry)
         const entryPrice = {
           price: this.positionEntry,
           color: color,
@@ -166,14 +186,35 @@ export default {
           title: 'Entry Price',
         }
         this.lines.positionEntry = this.candleSeries.createPriceLine(entryPrice)
-      } else {
-        console.log('close:', this.positionEntry)
-        if (this.lines.positionEntry) {
-          console.log('remove!', this.lines.positionEntry)
-          this.candleSeries.removePriceLine(this.lines.positionEntry)
-          this.lines.positionEntry = null
-        }
       }
+    },
+    updateOrderEntries () {
+      const PositionSymbol = this.firstPosition[0].value
+
+      // remove all previous lines for orders
+      for (const key in this.lines.orderEntries) {
+        this.candleSeries.removePriceLine(this.lines.orderEntries[key])
+        delete this.lines.orderEntries[key]
+      }
+
+      // then add them again if needed
+      this.results.rawOrders.forEach(order => {
+        const color = order.side === 'buy' ? '#00AB5C' : '#FF497D'
+        const title = _.startCase(_.lowerCase(`${order.side} ${order.type}`))
+
+        // if order is active and its symbol is the same as the position symbol
+        if (order.status === 'ACTIVE' && order.symbol === PositionSymbol) {
+          const orderPrice = {
+            price: order.price,
+            color,
+            lineWidth: 1,
+            lineStyle: 3,
+            axisLabelVisible: true,
+            title,
+          }
+          this.lines.orderEntries[order.id] = this.candleSeries.createPriceLine(orderPrice)
+        }
+      })
     },
     updateCurrentCandle (candle) {
       if (candle === undefined) {
