@@ -15,8 +15,8 @@
 
     <label class="font-semibold">Exception:</label>
     <pre
-      class="mt-2 text-sm whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 dark:border-gray-800 border border-gray-200 "
-      v-html="content"/>
+      class="break-all lg:break-normal mt-2 text-sm whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 dark:border-gray-800 border border-gray-200 overflow-x-scroll"
+      v-html="content" />
 
     <br>
 
@@ -38,9 +38,9 @@
 
     <br>
 
-    <div>
-      <button class="btn-primary mr-4" @click="report">Submit</button>
-      <button class="btn-link text-indigo-600 dark:text-indigo-400" @click="modals.exceptionReport = false">Cancel</button>
+    <div class="flex justify-end item-center">
+      <button class="btn-link text-indigo-600 dark:text-indigo-400 mr-4" @click="modals.exceptionReport = false">Cancel</button>
+      <button class="btn-primary" @click="report">Submit</button>
     </div>
   </SlideOver>
 
