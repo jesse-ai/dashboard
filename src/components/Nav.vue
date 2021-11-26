@@ -48,7 +48,7 @@
                 :key="item.name"
                 :to="item.to"
                 class="flex items-center text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
-                :class="$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200'"
+                :class="($route.path.startsWith(item.to) && item.to !== '/') || $route.path === item.to ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200'"
               >
                 <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-2 h-6 w-6']" aria-hidden="true" />
 
@@ -250,7 +250,8 @@ import {
   LogoutIcon,
   DocumentTextIcon,
   QuestionMarkCircleIcon,
-  CollectionIcon
+  CollectionIcon,
+  HomeIcon
 } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import { mapState, mapWritableState } from 'pinia'
@@ -291,7 +292,8 @@ export default {
     LogoutIcon,
     DocumentTextIcon,
     QuestionMarkCircleIcon,
-    CollectionIcon
+    CollectionIcon,
+    HomeIcon
   },
   setup () {
     const open = ref(false)
@@ -303,6 +305,11 @@ export default {
   data () {
     return {
       navigation: [
+        {
+          name: 'Home',
+          to: '/',
+          icon: HomeIcon
+        },
         {
           name: 'Import Candles',
           to: '/candles/',

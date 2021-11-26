@@ -9,6 +9,7 @@ import Live from '@/views/Live'
 import Optimization from '@/views/Optimization'
 
 import { watch } from 'vue'
+import Home from '@/views/Home'
 
 // Check whether socket is connected or not
 const isSocketConnected = (to, from, next) => {
@@ -30,11 +31,16 @@ const isSocketConnected = (to, from, next) => {
 }
 
 const routes = [
-  { path: '/', redirect: '/backtest/1' },
   { path: '/backtest', redirect: '/backtest/1' },
   { path: '/candles', redirect: '/candles/1' },
   { path: '/live', redirect: '/live/1' },
   { path: '/optimization', redirect: '/optimization/1' },
+  {
+    path: '/',
+    component: Home,
+    name: 'Home',
+    beforeEnter: isSocketConnected,
+  },
   {
     path: '/candles/:id',
     component: Candles,
