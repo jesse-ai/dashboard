@@ -133,55 +133,7 @@
     <template #right>
       <!-- Action Buttons -->
       <div v-if="!results.executing">
-        <div v-if="results.showResults">
-          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="rerun($route.params.id)">
-            <RefreshIcon class="w-5 h-5 mr-2" />
-            Rerun
-          </button>
-
-          <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newOptimization($route.params.id)">
-            <PlusSmIcon class="w-5 h-5 mr-2" />
-            New session
-          </button>
-
-          <a v-if="form.debug_mode"
-             :href="`http://127.0.0.1:8000/download/optimization/log/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            Debugging Logs
-          </a>
-
-          <a v-if="form.export_chart && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/optimization/chart/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            Legacy Chart
-          </a>
-
-          <a v-if="form.export_full_reports && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/optimization/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            QuantStats Report
-          </a>
-
-          <a v-if="form.export_csv && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/optimization/csv/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            CSV
-          </a>
-
-          <a v-if="form.export_json && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/optimization/json/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            JSON
-          </a>
-
-          <a v-if="form.export_tradingview && hasExecutedTrades"
-             :href="`http://127.0.0.1:8000/download/optimization/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
-             class="btn-secondary text-center block mb-4 w-full">
-            TradingView Pine Editor
-          </a>
-        </div>
-
-        <div v-else>
+        <div>
           <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
             <LightningBoltIcon class="w-5 h-5 mr-2" />
             Start

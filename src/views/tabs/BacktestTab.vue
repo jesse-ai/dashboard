@@ -36,7 +36,7 @@
       </button>
 
       <a v-if="form.debug_mode && results.exception.error && results.progressbar.current !== 0"
-         :href="`${baseURL}/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+         :href="logsUrl"
          class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
         <DocumentDownloadIcon class="w-5 h-5 mr-2" />
         Debugging Logs
@@ -170,42 +170,42 @@
           </button>
 
           <a v-if="form.debug_mode"
-             :href="`${baseURL}/download/backtest/log/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="logsUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Debugging Logs
           </a>
 
           <a v-if="form.export_chart && hasExecutedTrades"
-             :href="`${baseURL}/download/backtest/chart/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="legacyChartUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             Legacy Chart
           </a>
 
           <a v-if="form.export_full_reports && hasExecutedTrades"
-             :href="`${baseURL}/download/backtest/full-reports/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="fullReportsUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             QuantStats Report
           </a>
 
           <a v-if="form.export_csv && hasExecutedTrades"
-             :href="`${baseURL}/download/backtest/csv/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="csvUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             CSV
           </a>
 
           <a v-if="form.export_json && hasExecutedTrades"
-             :href="`${baseURL}/download/backtest/json/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="jsonUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             JSON
           </a>
 
           <a v-if="form.export_tradingview && hasExecutedTrades"
-             :href="`${baseURL}/download/backtest/tradingview/${results.generalInfo.session_id}?token=${auth_key}`"
+             :href="tradingviewUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2" />
             TradingView Pine Editor
@@ -277,6 +277,48 @@ export default {
     }
   },
   computed: {
+    legacyChartUrl () {
+      let url = `/download/backtest/chart/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
+    logsUrl () {
+      let url = `/download/backtest/log/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
+    tradingviewUrl () {
+      let url = `/download/backtest/tradingview/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
+    fullReportsUrl () {
+      let url = `/download/backtest/full-reports/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
+    csvUrl () {
+      let url = `/download/backtest/csv/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
+    jsonUrl () {
+      let url = `/download/backtest/json/${this.results.generalInfo.session_id}?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
     hasExecutedTrades () {
       return this.results.metrics.length > 0
     },
