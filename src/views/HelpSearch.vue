@@ -1,7 +1,7 @@
 <template>
   <!-- search section -->
   <div class="w-full flex justify-center">
-    <div class="mb-4 px-2 w-full md:w-2/3 mt-6">
+    <div class="mb-4 mt-8 px-2 w-full md:w-2/3">
       <div class="relative">
         <div class="absolute left-2 inset-y-0 pl-3 flex items-center">
           <svg
