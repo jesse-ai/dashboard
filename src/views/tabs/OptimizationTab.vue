@@ -169,7 +169,7 @@ import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
-import { ClipboardIcon, CheckIcon, RefreshIcon, PlusSmIcon } from '@heroicons/vue/solid'
+import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import Routes from '@/components/Routes'
@@ -193,8 +193,6 @@ export default {
     CircleProgressbar,
     Exception,
     LightningBoltIcon,
-    RefreshIcon,
-    PlusSmIcon
   },
   props: {
     form: {
