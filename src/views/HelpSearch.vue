@@ -152,7 +152,7 @@ export default {
       this.search_error = false
       this.search_loading = true
       axios
-        .get('http://jesse.trade/api/help/search', { params: { item } })
+        .get('https://jesse.trade/api/help/search', { params: { item } })
         .then((response) => {
           this.show_search = true
           this.search_result = response.data
