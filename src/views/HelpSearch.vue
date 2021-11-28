@@ -16,21 +16,21 @@
         </div>
 
         <input
-          v-model="search_query"
+          v-model="query"
           class="w-full pl-14 pr-4 py-4 rounded-full outline-none border-2 border-gray-200 focus:border-indigo-600 focus:ring-0 dark:bg-gray-800 dark:border-gray-900"
           type="text"
           placeholder="Search..."
-          @input="is_typing = true"
+          @input="typing = true"
         >
       </div>
       <div
-        v-if="search_query"
+        v-if="query"
         class="relative"
       >
         <!-- loading -->
         <div
-          v-if="search_loading"
-          class="w-full absolute bg-white p-2 mt-2 border border-gray-300 rounded shadow-md"
+          v-if="loading"
+          class="w-full absolute bg-white p-2 mt-2 border border-gray-300 rounded shadow-md z-50"
         >
           <div class="py-4 px-4 text-gray-600">
             Searching ...
@@ -39,7 +39,7 @@
 
         <!-- error message -->
         <div
-          v-else-if="search_error && show_search"
+          v-else-if="error && showResults"
           class="w-full absolute bg-white p-2 mt-2 border border-gray-300 rounded shadow-md"
         >
           <div
@@ -67,14 +67,14 @@
 
         <!-- search result -->
         <div
-          v-else-if="search_result.length != 0 && show_search"
+          v-else-if="results.length != 0 && showResults"
           class="w-full absolute bg-white px-2 py-2 mt-2 rounded shadow-lg border border-gray-300 max-h-64 overflow-y-auto z-50"
         >
           <div
-            v-for="item in search_result"
+            v-for="item in results"
             :key="item.id"
           >
-            <a :href="'/help/faq/' + item.slug" target="_blank">
+            <a :href="'https://jesse.trade/help/faq/' + item.slug" target="_blank">
               <div
                 class="px-2 py-4 rounded text-gray-600 hover:bg-indigo-500 hover:text-white"
               >
@@ -85,15 +85,15 @@
 
           <div class="flex justify-end p-2">
             <img
-              src="/imgs/search-by-algolia-light-background.svg"
+              src="@/assets/imgs/search-by-algolia-light-background.svg"
               alt="search by Algolia"
             >
           </div>
         </div>
 
         <div
-          v-else-if="search_result.length === 0 && show_search"
-          class="w-full absolute bg-white p-2 mt-2 border border-gray-300 rounded shadow-md"
+          v-else-if="results.length === 0 && showResults"
+          class="w-full absolute bg-white p-2 mt-2 border border-gray-300 rounded shadow-md z-50"
         >
           <div
             class="py-4 px-4 text-gray-600 flex items-center text-sm md:text-base"
@@ -127,41 +127,42 @@ import _ from 'lodash'
 export default {
   data () {
     return {
-      show_search: false,
-      search_loading: false,
-      search_result: '',
-      is_typing: false,
-      search_query: '',
+      showResults: false,
+      loading: false,
+      error: false,
+      results: '',
+      typing: false,
+      query: '',
     }
   },
   watch: {
-    search_query: _.debounce(function () {
-      this.is_typing = false
+    query: _.debounce(function () {
+      this.typing = false
     }, 1000),
-    is_typing: function (value) {
-      if (!value && this.search_query) {
-        this.searchProducts(this.search_query)
-      } else if (this.search_result && this.search_query.length === 0) {
-        this.search_result = []
-        this.show_search = false
+    typing: function (value) {
+      if (!value && this.query) {
+        this.searchProducts(this.query)
+      } else if (this.results && this.query.length === 0) {
+        this.results = []
+        this.showResults = false
       }
     },
   },
   methods: {
     searchProducts (item) {
-      this.search_error = false
-      this.search_loading = true
+      this.error = false
+      this.loading = true
       axios
         .get('https://jesse.trade/api/help/search', { params: { item } })
         .then((response) => {
-          this.show_search = true
-          this.search_result = response.data
-          this.search_loading = false
+          this.showResults = true
+          this.results = response.data
+          this.loading = false
         })
         .catch(() => {
-          this.show_search = true
-          this.search_loading = false
-          this.search_error = true
+          this.showResults = true
+          this.loading = false
+          this.error = true
         })
     },
   },
