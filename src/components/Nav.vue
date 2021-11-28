@@ -71,6 +71,7 @@
               <CogIcon class="h-6 w-6" aria-hidden="true" />
             </button>
 
+            <!-- Notifications -->
             <!--            <button class="p-1 mx-2 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">-->
             <!--              <span class="sr-only">View notifications</span>-->
             <!--              <BellIcon class="h-6 w-6" aria-hidden="true" />-->
@@ -154,7 +155,6 @@
 
     <DisclosurePanel class="lg:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
-        <!-- Current: "bg-gray-300 text-gray-600", Default: "text-gray-700 hover:bg-gray-300 hover:text-gray-600" -->
         <div v-for="item in navigation" :id="convertToSlug(item.name) + '-page-button'" :key="item.name" :class="[$route.path.startsWith(item.to) ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200', 'rounded-md']">
           <router-link
             :to="item.to"
@@ -262,6 +262,7 @@ import JesseTradeLogin from '@/views/JesseTradeLogin'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
 import axios from 'axios'
 import MakeStrategy from '@/views/MakeStrategy'
+import ThemeSwitch from '@/components/ThemeSwitch'
 
 export default {
   name: 'Nav',
@@ -293,7 +294,8 @@ export default {
     DocumentTextIcon,
     QuestionMarkCircleIcon,
     CollectionIcon,
-    HomeIcon
+    HomeIcon,
+    ThemeSwitch
   },
   setup () {
     const open = ref(false)
