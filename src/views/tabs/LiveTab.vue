@@ -175,7 +175,7 @@
         </div>
       </div>
 
-      <hr class="my-8 border-2 dark:border-gray-600 rounded-full">
+      <hr v-if="results.monitoring" class="my-8 border-2 dark:border-gray-600 rounded-full">
 
       <!-- general info table-->
       <dl v-if="results.monitoring"
