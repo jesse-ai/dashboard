@@ -20,6 +20,9 @@ module.exports = {
       indigo: colors.indigo,
       yellow: colors.amber,
       'cool-gray': colors.coolGray,
+      pink: colors.pink,
+      blue: colors.blue,
+      purple: colors.purple,
       primary: {
         DEFAULT: '#4f46e5',
         dark: '#f9b537'

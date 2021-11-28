@@ -1,5 +1,10 @@
 <template>
   <div class="max-w-6xl w-full mx-auto px-4 py-5">
+    <div class="bg-pink-500"/>
+    <div/>
+    <div/>
+    <div/>
+
     <h1 class="mb-1 font-bold">Charts</h1>
 
     <h2 class="mb-4">
