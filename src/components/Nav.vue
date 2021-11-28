@@ -50,7 +50,7 @@
                 class="flex items-center text-gray-700 dark:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
                 :class="($route.path.startsWith(item.to) && item.to !== '/') || $route.path === item.to ? 'bg-gray-200 dark:bg-gray-900' : 'hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200'"
               >
-                <component :is="item.icon" :class="[$route.path.startsWith(item.to) ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-2 h-6 w-6']" aria-hidden="true" />
+                <component :is="item.icon" :class="[($route.path.startsWith(item.to) && item.to !== '/') || $route.path === item.to ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400', 'flex-shrink-0 -ml-1 mr-2 h-6 w-6']" aria-hidden="true" />
 
                 {{ item.name }}
               </router-link>
