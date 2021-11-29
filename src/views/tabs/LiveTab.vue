@@ -164,8 +164,10 @@
 
           <button v-else
                   data-cy="live-login-button"
-                  class="btn-primary text-center mr-2 block w-full mb-4"
+                  class="flex items-center justify-center btn-primary text-center mb-4 w-full"
                   @click="navModals.jesseTradeLogin = true">
+            <LoginIcon class="w-5 h-5 mr-2" />
+
             Login to Jesse.Trade
           </button>
 
@@ -267,7 +269,15 @@ import Logs from '@/components/Logs'
 import { useLiveStore } from '@/stores/live'
 import helpers from '@/helpers'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
-import { ClipboardIcon, ClipboardListIcon, CheckIcon, LightningBoltIcon, PlusSmIcon, BanIcon } from '@heroicons/vue/outline'
+import {
+  ClipboardIcon,
+  ClipboardListIcon,
+  CheckIcon,
+  LightningBoltIcon,
+  PlusSmIcon,
+  BanIcon,
+  LoginIcon
+} from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
@@ -292,7 +302,8 @@ export default {
     CheckIcon,
     LightningBoltIcon,
     PlusSmIcon,
-    BanIcon
+    BanIcon,
+    LoginIcon
   },
   props: {
     form: {
