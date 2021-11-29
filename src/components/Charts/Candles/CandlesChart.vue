@@ -7,7 +7,6 @@ import { createChart, CrosshairMode } from 'lightweight-charts'
 import { useMainStore } from '@/stores/main'
 import { mapWritableState } from 'pinia'
 import _ from 'lodash'
-import helpers from '@/helpers'
 
 export default {
   name: 'CandlesChart',
