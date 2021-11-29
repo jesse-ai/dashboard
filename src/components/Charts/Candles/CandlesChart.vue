@@ -7,6 +7,7 @@ import { createChart, CrosshairMode } from 'lightweight-charts'
 import { useMainStore } from '@/stores/main'
 import { mapWritableState } from 'pinia'
 import _ from 'lodash'
+import helpers from '@/helpers'
 
 export default {
   name: 'CandlesChart',
@@ -221,6 +222,17 @@ export default {
     updateCurrentCandle (candle) {
       if (candle === undefined) {
         throw new TypeError('candle is undefined!')
+      }
+
+      // make sure this.results.candles array is not empty
+      if (this.candles.length === 0) {
+        return
+      }
+
+      // return if the last existing candle is fresher than candle
+      const lastExistingCandle = this.results.candles[this.results.candles.length - 1]
+      if (lastExistingCandle.time > candle.time) {
+        return
       }
 
       this.candleSeries.update(candle)
