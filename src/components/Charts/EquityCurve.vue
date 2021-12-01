@@ -92,7 +92,7 @@ export default {
   },
   computed: {
     ...mapWritableState(useMainStore, [
-      'theme'      
+      'theme',
     ])
   },
   watch: {

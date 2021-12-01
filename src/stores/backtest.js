@@ -157,7 +157,6 @@ export const useBacktestStore = defineStore({
       )}] ${data.message}\n`
     },
     exceptionEvent (id, data) {
-      console.error(data)
       this.tabs[id].results.exception.error = data.error
       this.tabs[id].results.exception.traceback = data.traceback
     },

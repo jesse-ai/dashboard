@@ -226,7 +226,6 @@ export const useLiveStore = defineStore({
 
         if (!res.data.data.length) {
           this.notyf.error('Could not load candles')
-          console.error('Candles array for the "/get-candles" endpoint response cannot be empty')
         }
       }).catch(error => {
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
