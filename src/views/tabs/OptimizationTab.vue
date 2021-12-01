@@ -35,7 +35,7 @@
       </div>
 
       <!-- Execution -->
-      <div v-if="results.executing">
+      <div v-if="results.executing || results.showResults">
         <Divider title="Info"/>
         <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo" />
         <TablePlaceholder v-else/>
@@ -104,35 +104,11 @@
                  class="dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 dark:bg-backdrop-dark flex-1 cursor-pointer focus:ring-indigo-500 focus:border-indigo-500 dark:focus:border-indigo-400 flex justify-center items-center w-48 py-4 text-center sm:text-sm border-gray-300 rounded-r-md">
         </div>
       </div>
-
-      <!-- Results -->
-      <div v-if="results.showResults"
-           class="w-full mx-auto px-6">
-        <div>
-          <Divider title="Routes"/>
-          <MultipleValuesTable :data="results.routes_info" header />
-
-          <Divider class="mt-16" title="Info"/>
-          <KeyValueTable :data="results.info"/>
-
-          <Divider v-if="hasExecutedTrades" class="mt-16" title="Equity Curve"/>
-          <EquityCurve v-if="hasExecutedTrades" :equity-curve="results.charts.equity_curve"/>
-
-          <Divider v-if="hasExecutedTrades" class="mt-16" title="Performance"/>
-          <KeyValueTable v-if="hasExecutedTrades" :data="results.metrics"/>
-
-          <div v-if="!hasExecutedTrades"
-               class="text-yellow-500 border-yellow-400 bg-yellow-50 dark:bg-gray-700 dark:text-yellow-400 mt-16 text-center text-2xl rounded border-2 border-dashed dark:border-gray-800 py-16 select-none"
-          >
-            No trades were executed via this strategy!
-          </div>
-        </div>
-      </div>
     </template>
 
     <template #right>
       <!-- Action Buttons -->
-      <div v-if="!results.executing">
+      <div v-if="!results.executing && !results.showResults">
         <div>
           <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
             <LightningBoltIcon class="w-5 h-5 mr-2" />
@@ -157,6 +133,15 @@
 
         <h3 v-if="!results.exception.error && !results.best_candidates.length" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
       </div>
+      <!-- Show Results -->
+      <div v-if="results.showResults">
+        <div class="mb-8 w-full">
+          <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newSession">
+            <ReplyIcon class="w-5 h-5 mr-2" />
+            New session
+          </button>
+        </div>
+      </div>
     </template>
   </LayoutWithSidebar>
 </template>
@@ -164,7 +149,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useOptimizationStore } from '@/stores/optimization'
-import { LightningBoltIcon } from '@heroicons/vue/outline'
+import { LightningBoltIcon, ReplyIcon } from '@heroicons/vue/outline'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
@@ -193,6 +178,7 @@ export default {
     CircleProgressbar,
     Exception,
     LightningBoltIcon,
+    ReplyIcon,
   },
   props: {
     form: {
@@ -246,6 +232,14 @@ export default {
         this.copiedLogsInfo = false
       }, 3000)
     },
+    newSession () {
+      this.results.showResults = false
+      this.results.executing = false
+      this.results.progressbar.current = 0
+      this.results.progressbar.estimated_remaining_seconds = 0
+      this.results.alert.message = ''
+      this.results.alert.type = ''
+    }
   }
 }
 </script>

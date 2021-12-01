@@ -70,6 +70,13 @@ export const useOptimizationStore = defineStore({
       this.tabs[id].results.infoLogs = ''
       this.tabs[id].results.exception.traceback = ''
       this.tabs[id].results.exception.error = ''
+      this.tabs[id].results.alert.message = ''
+      this.tabs[id].results.alert.type = ''
+      this.tabs[id].results.metrics = []
+      this.tabs[id].results.generalInfo = {}
+      this.tabs[id].results.best_candidates = []
+      this.tabs[id].results.routes_info = []
+      this.tabs[id].results.showResults = false
 
       const mainStore = useMainStore()
 
@@ -236,6 +243,8 @@ export const useOptimizationStore = defineStore({
     },
     alertEvent (id, data) {
       this.tabs[id].results.alert = data
+      this.tabs[id].results.executing = false
+      this.tabs[id].results.showResults = true
     },
   }
 })
