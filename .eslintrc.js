@@ -23,18 +23,18 @@ module.exports = {
     'vue/html-closing-bracket-newline': 'off',
     'vue/no-template-shadow': 'off',
     'no-multiple-empty-lines': 0,
-    'no-trailing-spaces': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-trailing-spaces': process.env.NODE_ENV === 'production' ? 'warn' : 'warn',
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'always',
       asyncArrow: 'always'
     }],
-    'prefer-const': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'padded-blocks': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    'prefer-const': process.env.NODE_ENV === 'production' ? 'error' : 'error',
+    'padded-blocks': process.env.NODE_ENV === 'production' ? 'warn' : 'warn',
     'comma-dangle': 0,
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 'warn' : 'warn',
-    'vue/no-unused-vars': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    'vue/no-unused-vars': process.env.NODE_ENV === 'production' ? 'error' : 'error',
+    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 'error' : 'error',
     'vue/max-attributes-per-line': ['error', {
       singleline: 4,
       multiline: {
