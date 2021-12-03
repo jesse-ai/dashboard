@@ -304,9 +304,11 @@ export default {
       open,
     }
   },
-  data () {
-    return {
-      navigation: [
+  computed: {
+    ...mapState(useMainStore, ['modals', 'hasLivePluginInstalled']),
+    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade']),
+    navigation () {
+      const arr = [
         {
           name: 'Home',
           to: '/',
@@ -327,17 +329,18 @@ export default {
           to: '/optimization/',
           icon: ChipIcon
         },
-        {
+      ]
+
+      if (this.hasLivePluginInstalled) {
+        arr.push({
           name: 'Live',
           to: '/live/',
           icon: CurrencyDollarIcon
-        },
-      ]
+        })
+      }
+
+      return arr
     }
-  },
-  computed: {
-    ...mapState(useMainStore, ['modals']),
-    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade']),
   },
   methods: {
     convertToSlug (Text) {

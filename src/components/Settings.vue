@@ -249,16 +249,21 @@ export default {
   data () {
     return {
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D'],
-      navigation: [
-        { name: 'Backtest', icon: CalculatorIcon },
-        { name: 'Optimization', icon: ChipIcon },
-        { name: 'Live', icon: CurrencyDollarIcon },
-      ],
       currentTab: 'Backtest',
     }
   },
   computed: {
-    ...mapState(useMainStore, ['settings', 'systemInfo'])
+    ...mapState(useMainStore, ['settings', 'systemInfo', 'hasLivePluginInstalled']),
+    navigation () {
+      const arr = [
+        { name: 'Backtest', icon: CalculatorIcon },
+        { name: 'Optimization', icon: ChipIcon },
+      ]
+      if (this.hasLivePluginInstalled) {
+        arr.push({ name: 'Live', icon: CurrencyDollarIcon })
+      }
+      return arr
+    }
   },
   mounted () {
     this.sortExchanges()
