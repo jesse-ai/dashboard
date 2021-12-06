@@ -11,20 +11,6 @@
     <Feedback/>
   </SlideOver>
 
-  <!-- Jesse.Trade Login -->
-  <SlideOver :object="modals" name="jesseTradeLogin" title="Login to your Jesse account" width="max-w-lg">
-    <JesseTradeLogin />
-  </SlideOver>
-
-  <!-- Jesse.Trade Logout -->
-  <ConfirmModal
-    title="Logout Confirm"
-    description="Are you sure you want to log out from your Jesse account?"
-    type="info" :object="modals" name="jesseTradeLogout"
-  >
-    <button data-cy="confirm-logout-button" class="btn-danger ml-2" @click="logoutFromJesseTrade">Logout</button>
-  </ConfirmModal>
-
   <!-- Make strategy -->
   <SlideOver :object="modals" name="makeStrategy" title="Make a new strategy" width="max-w-lg">
     <MakeStrategy />
@@ -119,24 +105,6 @@
                       </a>
                     </MenuItem>
                   </div>
-
-                  <div class="py-1">
-                    <MenuItem v-if="!isLoggedInToJesseTrade" v-slot="{ active }">
-                      <button name="nav-login-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-left items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                              @click="modals.jesseTradeLogin = true">
-                        <LoginIcon class="w-5 h-5 mr-2" />
-                        Login to Jesse.Trade
-                      </button>
-                    </MenuItem>
-
-                    <MenuItem v-else v-slot="{ active }">
-                      <button name="nav-logout-button" :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-left items-center w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300']"
-                              @click="modals.jesseTradeLogout = true">
-                        <LogoutIcon class="w-5 h-5 mr-2" />
-                        Logout from Jesse.Trade
-                      </button>
-                    </MenuItem>
-                  </div>
                 </MenuItems>
               </transition>
             </Menu>
@@ -200,20 +168,6 @@
         </div>
       </div>
 
-      <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
-        <button v-if="!isLoggedInToJesseTrade" class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
-                @click="modals.jesseTradeLogin = true">
-          <LoginIcon class="w-5 h-5 mr-2" />
-          Login to Jesse.Trade
-        </button>
-
-        <button v-else class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
-                @click="modals.jesseTradeLogout = true">
-          <LogoutIcon class="w-5 h-5 mr-2" />
-          Logout from Jesse.Trade
-        </button>
-      </div>
-
       <!-- options and feedback button -->
       <div class="flex justify-between items-center px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
         <button class="btn-nav ml-0"
@@ -258,16 +212,13 @@ import { mapState, mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Feedback from '@/views/Feedback'
 import Settings from '@/components/Settings'
-import JesseTradeLogin from '@/views/JesseTradeLogin'
 import ConfirmModal from '@/components/Modals/ConfirmModal'
-import axios from 'axios'
 import MakeStrategy from '@/views/MakeStrategy'
 import ThemeSwitch from '@/components/ThemeSwitch'
 
 export default {
   name: 'Nav',
   components: {
-    JesseTradeLogin,
     ConfirmModal,
     Settings,
     Feedback,
@@ -349,22 +300,7 @@ export default {
         .replace(/ /g, '-')
         .replace(/[^\w-]+/g, '')
     },
-    logoutFromJesseTrade () {
-      axios.post('/logout-jesse-trade').then(res => {
-        this.isLoggedInToJesseTrade = false
-        this.modals.jesseTradeLogout = false
-        this.notyf.success(res.data.message)
-      }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-      })
-    },
     openFeedback () {
-      if (!this.isLoggedInToJesseTrade) {
-        this.notyf.error('You need to login to your Jesse account to be able to send a feedback')
-        this.modals.jesseTradeLogin = true
-        return
-      }
-
       this.modals.feedback = true
     }
   }

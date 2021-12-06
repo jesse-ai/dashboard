@@ -125,7 +125,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals', 'isLoggedInToJesseTrade']),
+    ...mapState(useMainStore, ['modals']),
     alert () {
       if (this.mode === 'backtest' && !this.debugMode) {
         return {
@@ -184,12 +184,6 @@ export default {
       }, 3000)
     },
     openReport () {
-      if (!this.isLoggedInToJesseTrade) {
-        this.notyf.error('You need to login to your Jesse account to be able to send a report')
-        this.modals.jesseTradeLogin = true
-        return
-      }
-
       this.modals.exceptionReport = true
     }
   },

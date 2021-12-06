@@ -154,21 +154,12 @@
         </div>
 
         <div v-else data-cy="live-action-button">
-          <button v-if="isLoggedInToJesseTrade"
-                  data-cy="live-start-button"
-                  class="flex justify-center items-center btn-primary text-center mr-2 w-full mb-4"
-                  @click="start($route.params.id)">
+          <button
+            data-cy="live-start-button"
+            class="flex justify-center items-center btn-primary text-center mr-2 w-full mb-4"
+            @click="start($route.params.id)">
             <LightningBoltIcon class="w-5 h-5 mr-2" />
             Start
-          </button>
-
-          <button v-else
-                  data-cy="live-login-button"
-                  class="flex items-center justify-center btn-primary text-center mb-4 w-full"
-                  @click="navModals.jesseTradeLogin = true">
-            <LoginIcon class="w-5 h-5 mr-2" />
-
-            Login to Jesse.Trade
           </button>
 
           <!--          <button class="btn-secondary text-center block w-full mb-4" @click="startInNewTab($route.params.id)">-->
@@ -276,7 +267,6 @@ import {
   LightningBoltIcon,
   PlusSmIcon,
   BanIcon,
-  LoginIcon
 } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
@@ -303,7 +293,6 @@ export default {
     LightningBoltIcon,
     PlusSmIcon,
     BanIcon,
-    LoginIcon
   },
   props: {
     form: {
@@ -333,7 +322,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['isInitiated', 'isLoggedInToJesseTrade']),
+    ...mapState(useMainStore, ['isInitiated']),
     ...mapState(useMainStore, {
       navModals: 'modals'
     }),
