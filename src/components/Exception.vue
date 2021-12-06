@@ -15,17 +15,27 @@
 
     <label class="font-semibold">Exception:</label>
     <pre
-      class="break-all lg:break-normal mt-2 text-sm whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 dark:border-gray-800 border border-gray-200 overflow-x-scroll"
+      class="break-all lg:break-normal mt-2 text-sm whitespace-pre-line px-6 py-6 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 dark:border-gray-800 border border-gray-200"
       v-html="content" />
 
     <br>
 
-    <label class="font-semibold">Description (optional):</label>
-    <textarea id="content" v-model="form.description"
-              placeholder="Describe how the exception occurred..."
-              name="content"
-              rows="10"
-              class="dark:bg-gray-800 dark:border-gray-900 mt-2 block w-full focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 sm:text-sm border border-gray-300 rounded" />
+    <FormTextarea title="Description (optional):"
+                  placeholder="Describe how the exception occurred..."
+                  name="description"
+                  :object="form"
+                  :rows="10"
+    />
+
+    <br>
+
+    <FormInput title="Email (optional)"
+               description="Enter your email address for us to know who sent the feedback and possibly reply back to you."
+               input-type="email"
+               placeholder="Email address..."
+               name="email"
+               :object="form"
+    />
 
     <br>
 
@@ -121,6 +131,7 @@ export default {
       form: {
         description: '',
         attachLogs: true,
+        email: ''
       },
     }
   },
@@ -148,6 +159,7 @@ export default {
     report () {
       axios.post('/report-exception', {
         description: this.form.description,
+        email: this.form.email,
         traceback: this.content,
         mode: this.mode,
         attach_logs: this.form.attachLogs,
@@ -155,6 +167,7 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           this.form.description = ''
+          this.form.email = ''
           this.notyf.success(res.data.message)
           this.modals.exceptionReport = false
         } else if (res.data.status === 'error') {

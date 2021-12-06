@@ -6,16 +6,21 @@
 
     <br>
 
-    <div class="mt-2">
-      <div class="mt-1">
-        <textarea id="description"
-                  v-model="description"
+    <FormTextarea title="Description"
+                  placeholder="Type here..."
                   name="description"
-                  rows="8"
-                  class="mt-1 input"
-                  placeholder="Type here..." />
-      </div>
-    </div>
+                  :object="form"
+    />
+
+    <br>
+
+    <FormInput title="Email (optional)"
+               description="Enter your email address for us to know who sent the feedback and possibly reply back to you."
+               input-type="email"
+               placeholder="Email address..."
+               name="email"
+               :object="form"
+    />
 
     <br>
 
@@ -26,7 +31,7 @@
       </button>
 
       <button id="feedback-submit-button" class="btn-primary w-48"
-              :disabled="!description.length"
+              :disabled="!form.description.length"
               @click="submit()">
         Submit
       </button>
@@ -38,12 +43,17 @@
 import axios from 'axios'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
-
+import FormInput from '@/components/Functional/FormInput'
+import FormTextarea from '@/components/Functional/FormTextarea'
 export default {
   name: 'Feedback',
+  components: { FormInput, FormTextarea },
   data () {
     return {
-      description: '',
+      form: {
+        email: '',
+        description: '',
+      }
     }
   },
   computed: {
@@ -52,10 +62,12 @@ export default {
   methods: {
     submit () {
       axios.post('/feedback', {
-        description: this.description
+        description: this.form.description,
+        email: this.form.email
       }).then((res) => {
         if (res.data.status === 'success') {
-          this.description = ''
+          this.form.description = ''
+          this.form.email = ''
           this.notyf.success(res.data.message)
           this.close()
         } else if (res.data.status === 'error') {
