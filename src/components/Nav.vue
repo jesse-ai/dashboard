@@ -257,7 +257,6 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ['modals', 'hasLivePluginInstalled']),
-    ...mapWritableState(useMainStore, ['isLoggedInToJesseTrade']),
     navigation () {
       const arr = [
         {

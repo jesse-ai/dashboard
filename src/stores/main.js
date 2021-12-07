@@ -9,7 +9,6 @@ export const useMainStore = defineStore({
     isConnected: false,
     isInitiated: false,
     isAuthenticated: false,
-    isLoggedInToJesseTrade: false,
     hasLivePluginInstalled: false,
     systemInfo: {
       cpu_cores: 0,
@@ -97,7 +96,6 @@ export const useMainStore = defineStore({
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
-        this.isLoggedInToJesseTrade = data.is_logged_in_to_jesse_trade
         this.hasLivePluginInstalled = data.has_live_plugin_installed
         this.routes.exchanges.forEach(item => {
           this.settings.backtest.exchanges[item] = {
