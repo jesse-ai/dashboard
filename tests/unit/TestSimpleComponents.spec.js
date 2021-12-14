@@ -5,8 +5,8 @@ import Checkbox from '../../src/components/Checkbox.vue'
 
 test('test divider component', () => {
   const wrapper = mount(Divider, {
-    slots: {
-      default: 'test content'
+    props: {
+      title: 'test content'
     }
   })
   // check divider component display sended content in slot tag
