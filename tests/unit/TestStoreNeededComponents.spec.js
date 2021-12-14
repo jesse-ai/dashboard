@@ -23,7 +23,5 @@ describe('test component which use pinia store', () => {
         await wrapper.find('#theme-switch-button').trigger('click')
         expect(localStorage.getItem('theme')).toEqual('light')
         expect(main.theme).toBe('light')
-        expect(wrapper.find('SunIcon').exists()).toBe(true)
-
     })
 })
