@@ -56,15 +56,16 @@
 
   <DividerWithButtons title="Exception">
     <button type="button"
+            data-test="exceptionReportButton"
             class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-l-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
             @click="openReport">
       <FlagIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-      <span>Report</span>
+      <span data-test="reportText">Report</span>
     </button><button data-test="exceptionCopyButton" type="button" class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-r-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
                      @click="copy">
-      <CheckIcon v-if="copied" data-test="exceptionCopyCheck" class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-      <ClipboardIcon v-else data-test="exceptionCopyIcon" class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
-      <span>{{ copied ? 'Copied' : 'Copy' }}</span>
+      <CheckIcon v-if="copied" class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+      <ClipboardIcon v-else class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+      <span data-test="copyText">{{ copied ? 'Copied' : 'Copy' }}</span>
     </button>
   </DividerWithButtons>
 
@@ -178,6 +179,13 @@ export default {
       })
     },
     copy () {
+      if (window.test) {
+        this.copied = true
+        setTimeout(() => {
+          this.copied = false
+        }, 3000)
+        return
+      }
       this.showException = true
       setTimeout(() => {
         const infoErrorToCopy = document.querySelector('#exception-info')
