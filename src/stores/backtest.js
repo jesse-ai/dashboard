@@ -176,7 +176,7 @@ export const useBacktestStore = defineStore({
         ['Starting => Finishing Balance', `${_.round(data.starting_balance, 2)} => ${_.round(data.finishing_balance, 2)}`],
         ['Open Trades', data.total_open_trades],
         ['Total Paid Fees', _.round(data.fee, 2)],
-        ['Max Drawdown', _.round(data.max_drawdown, 2)],
+        ['Max Drawdown', `${_.round(data.max_drawdown, 2)}%`],
         ['Annual Return', `${_.round(data.annual_return, 2)}%`],
         ['Expectancy', `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`],
         ['Avg Win | Avg Loss', `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`],
