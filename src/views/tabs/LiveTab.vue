@@ -275,10 +275,12 @@ import SlideOver from '@/components/Functional/SlideOver'
 import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Exception from '@/components/Exception'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
+import Divider from '@/components/Divider'
 
 export default {
   name: 'LiveTab',
   components: {
+    Divider,
     ToggleButton,
     LayoutWithSidebar,
     Logs,
