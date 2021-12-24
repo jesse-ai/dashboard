@@ -208,7 +208,7 @@ import {
   HomeIcon
 } from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
-import { mapState, mapWritableState } from 'pinia'
+import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import Feedback from '@/views/Feedback'
 import Settings from '@/components/Settings'
