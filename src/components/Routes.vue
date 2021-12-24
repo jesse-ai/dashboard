@@ -89,7 +89,7 @@
     </div>
 
     <!-- Extra Routes-->
-    <Divider v-if="form.extra_routes.length">Extra Routes</Divider>
+    <Divider v-if="form.extra_routes.length" title="Extra Routes" />
 
     <div v-for="(r, i) in form.extra_routes"
          :key="r.exchange + i + r.timeframe"
