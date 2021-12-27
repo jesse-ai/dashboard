@@ -10,15 +10,14 @@ export const useMainStore = defineStore({
     isInitiated: false,
     isAuthenticated: false,
     hasLivePluginInstalled: false,
-    systemInfo: {
-      cpu_cores: 0,
-    },
+    systemInfo: {},
     theme: localStorage.theme,
     modals: {
       settings: false,
       exceptionReport: false,
       feedback: false,
       makeStrategy: false,
+      about: false,
     },
     settings: {
       backtest: {
@@ -92,7 +91,7 @@ export const useMainStore = defineStore({
     initiate () {
       axios.post('/general-info').then(res => {
         const data = res.data
-        this.systemInfo.cpu_cores = data.cpu_cores
+        this.systemInfo = data.system_info
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
