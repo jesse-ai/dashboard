@@ -3,7 +3,7 @@
     <KeyValueTable :data="tableData"/>
 
     <div class="flex justify-end mt-8">
-      <button data-cy="cancel-make-strategy-button" class="btn-link mr-8" @click="modals.makeStrategy = false">
+      <button data-cy="cancel-make-strategy-button" class="btn-link mr-8" @click="modals.about = false">
         Close
       </button>
     </div>
