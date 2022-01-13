@@ -155,7 +155,7 @@ export default {
 
     this.chart.timeScale().fitContent()
 
-    if (localStorage.theme === 'light') {
+    if (this.theme === 'light') {
       this.chart.applyOptions(this.lightTheme.chart)
     } else {
       this.chart.applyOptions(this.darkTheme.chart)
