@@ -48,7 +48,7 @@
                data-cy="candles-symbol"
                placeholder="ex: BTC-USDT"
                class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 w-full px-6 py-6 border border-gray-200 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 dark:border-gray-900 rounded-md"
-               @input="form.symbol = $event.target.value.toUpperCase()">
+        >
 
         <!-- symbol error section -->
         <div v-if="totalSymbolError.length >> 0" data-cy="symbol-error-section" class="text-sm text-red-400 p-2 rounded-lg mb-4 mt-2" >
