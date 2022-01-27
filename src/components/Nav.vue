@@ -21,6 +21,8 @@
     <About />
   </SlideOver>
 
+  <Announcement />
+
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
     <div class="mx-auto px-4 lg:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -270,10 +272,12 @@ import ConfirmModal from '@/components/Modals/ConfirmModal'
 import MakeStrategy from '@/views/MakeStrategy'
 import About from '@/views/About'
 import ThemeSwitch from '@/components/ThemeSwitch'
+import Announcement from '@/components/Announcement'
 
 export default {
   name: 'Nav',
   components: {
+    Announcement,
     ConfirmModal,
     Settings,
     Feedback,

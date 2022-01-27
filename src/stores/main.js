@@ -18,6 +18,7 @@ export const useMainStore = defineStore({
       feedback: false,
       makeStrategy: false,
       about: false,
+      announcement: false,
     },
     settings: {
       backtest: {
