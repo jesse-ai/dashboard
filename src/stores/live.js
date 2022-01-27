@@ -39,6 +39,7 @@ function newTab () {
       positions: [],
       rawOrders: [],
       orders: [],
+      watchlist: [],
       candles: [],
       currentCandles: {},
       infoLogs: '',
@@ -89,6 +90,7 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.orders = []
       this.tabs[id].results.candles = []
       this.tabs[id].results.currentCandles = {}
+      this.tabs[id].results.watchlist = []
     },
     start (id) {
       this.reset(id)
@@ -287,6 +289,9 @@ export const useLiveStore = defineStore({
     },
     currentCandlesEvent (id, data) {
       this.tabs[id].results.currentCandles = data
+    },
+    watchlistEvent (id, data) {
+      this.tabs[id].results.watchlist = data
     },
     positionsEvent (id, data) {
       // sample

@@ -250,6 +250,12 @@
           </div>
         </div>
       </dl>
+
+      <!-- watch list -->
+      <div v-if="results.monitoring && results.watchlist.length">
+        <Divider class="mt-8" title="Watch List"/>
+        <KeyValueTable :data="results.watchlist"/>
+      </div>
     </template>
   </LayoutWithSidebar>
 </template>
@@ -276,10 +282,12 @@ import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Exception from '@/components/Exception'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import Divider from '@/components/Divider'
+import KeyValueTable from '@/components/KeyValueTable'
 
 export default {
   name: 'LiveTab',
   components: {
+    KeyValueTable,
     Divider,
     ToggleButton,
     LayoutWithSidebar,

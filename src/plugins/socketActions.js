@@ -82,6 +82,12 @@ export default function () {
     ['livetrade.general_info', [
       live.generalInfoEvent
     ]],
+    ['papertrade.watch_list', [
+      live.watchlistEvent
+    ]],
+    ['livetrade.watch_list', [
+      live.watchlistEvent
+    ]],
     ['papertrade.current_candles', [
       live.currentCandlesEvent
     ]],
