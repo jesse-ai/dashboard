@@ -35,6 +35,7 @@ function newTab () {
       },
       routes_info: [],
       metrics: [],
+      hyperparameters: [],
       generalInfo: {},
       infoLogs: '',
       exception: {
@@ -162,6 +163,9 @@ export const useBacktestStore = defineStore({
     },
     generalInfoEvent (id, data) {
       this.tabs[id].results.generalInfo = data
+    },
+    hyperparametersEvent (id, data) {
+      this.tabs[id].results.hyperparameters = data
     },
     metricsEvent (id, data) {
       // no trades were executed

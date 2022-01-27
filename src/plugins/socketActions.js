@@ -24,6 +24,9 @@ export default function () {
     ['backtest.metrics', [
       backtest.metricsEvent
     ]],
+    ['backtest.hyperparameters', [
+      backtest.hyperparametersEvent
+    ]],
     ['backtest.info_log', [
       backtest.infoLogEvent
     ]],

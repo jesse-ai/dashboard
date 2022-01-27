@@ -140,6 +140,9 @@
           <Divider class="mt-16" title="Info"/>
           <KeyValueTable :data="results.info"/>
 
+          <Divider v-if="results.hyperparameters.length" class="mt-16" title="Hyperparameters"/>
+          <KeyValueTable v-if="results.hyperparameters.length" :data="results.hyperparameters"/>
+
           <Divider v-if="hasExecutedTrades" class="mt-16" title="Equity Curve"/>
           <EquityCurve v-if="hasExecutedTrades" :equity-curve="results.charts.equity_curve"/>
 
