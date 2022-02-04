@@ -29,7 +29,6 @@
              type="text"
              class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 "
              placeholder="ex: BTC-USDT"
-             @input="r.symbol = $event.target.value.toUpperCase()"
       >
 
       <select v-model="r.timeframe"
@@ -105,7 +104,6 @@
              type="text"
              class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 "
              placeholder="ex: BTC-USDT"
-             @input="r.symbol = $event.target.value.toUpperCase()"
       >
 
       <select v-model="r.timeframe"
@@ -283,7 +281,7 @@ export default {
       }
 
       for (const item of this.form.routes) {
-        if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && item.symbol.length > 9) {
+        if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && item.symbol.length > 19) {
           symbolErrors.push(ERRORS.maxSymbolLengthErrorMessage)
         }
 

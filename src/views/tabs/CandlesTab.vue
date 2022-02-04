@@ -174,7 +174,7 @@ export default {
         mustContainDashErrorMessage: 'Symbol parameter must contain "-" character!',
       }
 
-      if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && this.form.symbol.length > 9) {
+      if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && this.form.symbol.length > 19) {
         symbolErrors.push(ERRORS.maxSymbolLengthErrorMessage)
       }
 
