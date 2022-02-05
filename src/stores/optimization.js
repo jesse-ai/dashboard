@@ -80,6 +80,17 @@ export const useOptimizationStore = defineStore({
 
       const mainStore = useMainStore()
 
+      // make sure symbols are uppercase
+      this.tabs[id].form.routes = this.tabs[id].form.routes.map(route => {
+        route.symbol = route.symbol.toUpperCase()
+        return route
+      })
+      // also for extra_routes
+      this.tabs[id].form.extra_routes = this.tabs[id].form.extra_routes.map(route => {
+        route.symbol = route.symbol.toUpperCase()
+        return route
+      })
+
       const params = {
         id,
         routes: this.tabs[id].form.routes,
