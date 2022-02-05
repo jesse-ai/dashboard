@@ -35,7 +35,7 @@
       </div>
 
       <!-- Execution -->
-      <div v-if="results.executing || results.showResults">
+      <div v-if="(results.executing || results.showResults) && !results.exception.error">
         <Divider title="Info"/>
         <KeyValueTable v-if="results.generalInfo.length" :data="results.generalInfo" />
         <TablePlaceholder v-else/>
