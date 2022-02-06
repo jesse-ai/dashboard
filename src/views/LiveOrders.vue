@@ -30,13 +30,14 @@ export default {
       if (!this.orders.length) return []
 
       const arr = [
-        ['Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
+        ['ID', 'Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
       ]
       // inverse loop
       for (let i = this.orders.length - 1; i >= 0; i--) {
         const item = this.orders[i]
         arr.push([
-          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs' },
+          { value: item.id.slice(-12), style: 'text-xs', tooltip: item.id, tag: 'code' },
+          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs', tooltip: helpers.timestampToTime(item.created_at) },
           { value: item.symbol, style: 'text-xs' },
           { value: item.type, style: 'text-xs' },
           { value: item.side, style: helpers.colorBasedOnSide(item.side) },
