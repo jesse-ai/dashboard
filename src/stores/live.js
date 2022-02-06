@@ -377,7 +377,7 @@ export const useLiveStore = defineStore({
         const item = this.tabs[id].results.rawOrders[i]
 
         this.tabs[id].results.orders.push([
-          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs' },
+          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs', tooltip: helpers.timestampToTime(item.created_at) },
           { value: item.symbol, style: 'text-xs' },
           { value: item.type, style: 'text-xs' },
           { value: item.side, style: helpers.colorBasedOnSide(item.side) },
