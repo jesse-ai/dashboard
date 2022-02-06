@@ -69,6 +69,36 @@ const helpers = {
 
     return price
   },
+
+  colorBasedOnSide (orderSide) {
+    if (orderSide === 'buy') {
+      return 'text-green-600 dark:text-green-400'
+    } else if (orderSide === 'sell') {
+      return 'text-red-500 dark:text-red-400'
+    } else {
+      return 'text-gray-900 dark:text-gray-200'
+    }
+  },
+
+  colorBasedOnType (positionType) {
+    if (positionType === 'long') {
+      return 'text-green-600 dark:text-green-400'
+    } else if (positionType === 'short') {
+      return 'text-red-500 dark:text-red-400'
+    } else {
+      return 'text-gray-900 dark:text-gray-200'
+    }
+  },
+
+  colorBasedOnNumber (num) {
+    if (num > 0) {
+      return 'text-green-600 dark:text-green-400'
+    } else if (num < 0) {
+      return 'text-red-500 dark:text-red-400'
+    } else {
+      return 'text-gray-900 dark:text-gray-200'
+    }
+  }
 }
 
 export default helpers

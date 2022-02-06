@@ -20,7 +20,8 @@ function newTab () {
     modals: {
       infoLogs: false,
       errorLogs: false,
-      terminationConfirm: false
+      terminationConfirm: false,
+      orders: false,
     },
     results: {
       showResults: false,
@@ -86,7 +87,6 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.metrics = []
       this.tabs[id].results.generalInfo = {}
       this.tabs[id].results.positions = []
-      this.tabs[id].results.rawOrders = []
       this.tabs[id].results.orders = []
       this.tabs[id].results.candles = []
       this.tabs[id].results.currentCandles = {}
@@ -320,26 +320,6 @@ export const useLiveStore = defineStore({
       //   "pnl_perc": null
       // }
 
-      function colorBasedOnType (positionType) {
-        if (positionType === 'long') {
-          return 'text-green-600 dark:text-green-400'
-        } else if (positionType === 'short') {
-          return 'text-red-500 dark:text-red-400'
-        } else {
-          return 'text-gray-900 dark:text-gray-200'
-        }
-      }
-
-      function colorBasedOnNumber (num) {
-        if (num > 0) {
-          return 'text-green-600 dark:text-green-400'
-        } else if (num < 0) {
-          return 'text-red-500 dark:text-red-400'
-        } else {
-          return 'text-gray-900 dark:text-gray-200'
-        }
-      }
-
       this.tabs[id].results.positions = [
         [
           'Symbol', 'Strategy', 'QTY', 'Entry', 'Price', 'PNL'
@@ -350,10 +330,10 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.positions.push([
           { value: item.symbol, style: '' },
           { value: item.strategy_name, style: '' },
-          { value: item.qty, style: colorBasedOnType(item.type) },
+          { value: item.qty, style: helpers.colorBasedOnType(item.type) },
           { value: helpers.roundPrice(item.entry), style: '' },
           { value: helpers.roundPrice(item.current_price), style: '' },
-          { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: colorBasedOnNumber(item.pnl) },
+          { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: helpers.colorBasedOnNumber(item.pnl) },
         ])
       }
     },
@@ -386,16 +366,6 @@ export const useLiveStore = defineStore({
       this.updateOrders(id)
     },
     updateOrders (id) {
-      function colorBasedOnSide (orderSide) {
-        if (orderSide === 'buy') {
-          return 'text-green-600 dark:text-green-400'
-        } else if (orderSide === 'sell') {
-          return 'text-red-500 dark:text-red-400'
-        } else {
-          return 'text-gray-900 dark:text-gray-200'
-        }
-      }
-
       this.tabs[id].results.orders = [
         ['Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
       ]
@@ -410,9 +380,9 @@ export const useLiveStore = defineStore({
           { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs' },
           { value: item.symbol, style: 'text-xs' },
           { value: item.type, style: 'text-xs' },
-          { value: item.side, style: colorBasedOnSide(item.side) },
+          { value: item.side, style: helpers.colorBasedOnSide(item.side) },
           { value: item.price, style: 'text-xs' },
-          { value: item.qty, style: colorBasedOnSide(item.side) },
+          { value: item.qty, style: helpers.colorBasedOnSide(item.side) },
           { value: item.status, style: 'text-xs' },
         ])
       }
