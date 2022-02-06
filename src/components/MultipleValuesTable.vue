@@ -21,14 +21,27 @@
                   class="px-6 py-4 whitespace-nowrap text-sm font-medium"
                   :class="d[subIndex].style"
                 >
-                  <code v-if="d[subIndex].tag === 'code'"
-                        class="rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
-                        v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
-                  <pre v-else-if="d[subIndex].tag === 'pre'"
-                       class="whitespace-pre-line rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
-                       v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
-                  <span v-else
-                        v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                  <Tooltip v-if="d[subIndex].tooltip" :title="d[subIndex].tooltip">
+                    <code v-if="d[subIndex].tag === 'code'"
+                          class="rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
+                          v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                    <pre v-else-if="d[subIndex].tag === 'pre'"
+                         class="whitespace-pre-line rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
+                         v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                    <span v-else
+                          v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                  </Tooltip>
+
+                  <span v-else>
+                    <code v-if="d[subIndex].tag === 'code'"
+                          class="rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
+                          v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                    <pre v-else-if="d[subIndex].tag === 'pre'"
+                         class="whitespace-pre-line rounded border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 select-text text-sm dark:text-gray-300 w-full px-4 sm:px-6 py-2"
+                         v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                    <span v-else
+                          v-text="d[subIndex].value === 0 ? '' : d[subIndex].value"/>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -46,8 +59,10 @@
 
 
 <script>
+import Tooltip from '@/components/Tooltip'
 export default {
   name: 'MultipleValuesTable',
+  components: { Tooltip },
   props: {
     header: {
       type: Boolean,
