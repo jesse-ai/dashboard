@@ -88,6 +88,7 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.generalInfo = {}
       this.tabs[id].results.positions = []
       this.tabs[id].results.orders = []
+      this.tabs[id].results.rawOrders = []
       this.tabs[id].results.candles = []
       this.tabs[id].results.currentCandles = {}
       this.tabs[id].results.watchlist = []
