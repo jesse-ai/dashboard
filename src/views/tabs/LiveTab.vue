@@ -140,10 +140,10 @@
         <MultipleValuesTable :data="results.positions" header/>
 
         <DividerWithButtons class="mt-12" title="Orders">
-          <button data-cy="add-extra-route"
-                  type="button"
-                  class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-900 text-sm leading-5 font-medium rounded-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
-                  @click="modals.orders = true">
+          <button
+            type="button"
+            class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 dark:border-gray-900 text-sm leading-5 font-medium rounded-full text-gray-700 dark:text-gray-100 bg-white dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
+            @click="modals.orders = true">
             <CollectionIcon class="-ml-1.5 mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
             <span>More</span>
           </button>
