@@ -125,6 +125,13 @@
           <button class="btn-cancel block mb-4 w-full" @click="cancel($route.params.id)">
             Cancel
           </button>
+
+          <a v-if="form.debug_mode"
+             :href="logsUrl"
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            Debugging Logs
+          </a>
         </div>
 
         <div>
@@ -140,6 +147,13 @@
             <ReplyIcon class="w-5 h-5 mr-2" />
             New session
           </button>
+
+          <a v-if="form.debug_mode"
+             :href="logsUrl"
+             class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
+            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            Debugging Logs
+          </a>
         </div>
       </div>
     </template>
@@ -149,7 +163,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useOptimizationStore } from '@/stores/optimization'
-import { LightningBoltIcon, ReplyIcon } from '@heroicons/vue/outline'
+import { DocumentDownloadIcon, LightningBoltIcon, ReplyIcon } from '@heroicons/vue/outline'
 import Logs from '@/components/Logs'
 import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
@@ -171,6 +185,7 @@ export default {
     ToggleButton,
     MultipleValuesTable,
     ClipboardIcon,
+    DocumentDownloadIcon,
     CheckIcon,
     SlideOver,
     Routes,
@@ -199,13 +214,20 @@ export default {
     hasExecutedTrades () {
       return this.results.metrics.length > 0
     },
-    ...mapState(useMainStore, ['isInitiated']),
+    ...mapState(useMainStore, ['isInitiated', 'baseURL']),
     auth_key () {
       return sessionStorage.auth_key
     },
     remainingTimeText () {
       return helpers.remainingTimeText(this.results.progressbar.estimated_remaining_seconds)
-    }
+    },
+    logsUrl () {
+      let url = `/download/optimize/log?token=${this.auth_key}`
+      if (this.baseURL !== '/') {
+        url = this.baseURL + url
+      }
+      return url
+    },
   },
   watch: {
     form: {
