@@ -308,17 +308,19 @@ export const useLiveStore = defineStore({
     positionsEvent (id, data) {
       // sample
       // {
-      //   "type": "close",
-      //   "strategy_name": "TestLiveMode01",
-      //   "symbol": "BTC-USDT",
-      //   "leverage": 3,
-      //   "opened_at": 1626109441000,
-      //   "qty": 0,
-      //   "entry": null,
-      //   "current_price": 33228.3,
-      //   "liq_price": null,
-      //   "pnl": 0,
-      //   "pnl_perc": null
+      // currency: "USDT"
+      // current_price: 42151
+      // entry: 42116
+      // leverage: 2
+      // liq_price: null
+      // opened_at: 1644830823000
+      // pnl: 5.460000000000036
+      // pnl_perc: 0.1662076170576514
+      // qty: 0.156
+      // strategy_name: "TestLiveMode01"
+      // symbol: "BTC-USDT"
+      // type: "long"
+      // value: 6575.556
       // }
 
       this.tabs[id].results.positions = [
@@ -327,11 +329,12 @@ export const useLiveStore = defineStore({
         ]
       ]
 
+
       for (const item of data) {
         this.tabs[id].results.positions.push([
           { value: item.symbol, style: '' },
           { value: item.strategy_name, style: '' },
-          { value: item.qty, style: helpers.colorBasedOnType(item.type) },
+          { value: item.qty, style: helpers.colorBasedOnType(item.type), tooltip: `${item.value} ${item.currency}` },
           { value: helpers.roundPrice(item.entry), style: '' },
           { value: helpers.roundPrice(item.current_price), style: '' },
           { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: helpers.colorBasedOnNumber(item.pnl) },
