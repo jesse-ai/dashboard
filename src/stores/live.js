@@ -18,6 +18,7 @@ function newTab () {
       extra_routes: []
     }),
     modals: {
+      reportWithoutException: false,
       infoLogs: false,
       errorLogs: false,
       terminationConfirm: false,

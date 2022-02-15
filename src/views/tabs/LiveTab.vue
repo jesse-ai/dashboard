@@ -7,6 +7,18 @@
     <LiveOrders :orders="results.rawOrders" />
   </SlideOver>
 
+  <!-- report without exception -->
+  <SlideOver name="reportWithoutException"
+             :object="modals"
+             width="max-w-3xl"
+             title="Report">
+    <template #default>
+      <ReportLiveSession
+        :session-id="results.generalInfo.session_id"
+        @close="modals.reportWithoutException = false" />
+    </template>
+  </SlideOver>
+
   <!-- general logs modal -->
   <SlideOver name="infoLogs"
              :object="modals"
@@ -16,6 +28,7 @@
     </template>
 
     <template #buttons>
+      <!-- copy button -->
       <button
         class="btn-nav"
         @click="copyInfoLogs">
@@ -167,6 +180,13 @@
             <BanIcon class="w-5 h-5 mr-2" />
             {{ results.terminating ? 'Terminating...' : 'Terminate' }}
           </button>
+
+          <!-- report button -->
+          <button v-if="results.monitoring || results.finished"
+                  class="flex items-center justify-center btn-secondary text-center mr-2 w-full mb-4" @click="modals.reportWithoutException = true">
+            <FlagIcon class="w-5 h-5 mr-2" />
+            Report
+          </button>
         </div>
 
         <div v-else data-cy="live-action-button">
@@ -290,7 +310,7 @@ import {
   LightningBoltIcon,
   PlusSmIcon,
   BanIcon,
-  CollectionIcon
+  CollectionIcon, FlagIcon
 } from '@heroicons/vue/outline'
 import ToggleButton from '@/components/ToggleButton'
 import { useMainStore } from '@/stores/main'
@@ -302,10 +322,12 @@ import MultipleValuesTable from '@/components/MultipleValuesTable'
 import Divider from '@/components/Divider'
 import KeyValueTable from '@/components/KeyValueTable'
 import DividerWithButtons from '@/components/DividerWithButtons'
+import ReportLiveSession from '@/views/ReportLiveSession'
 
 export default {
   name: 'LiveTab',
   components: {
+    ReportLiveSession,
     KeyValueTable,
     Divider,
     DividerWithButtons,
@@ -320,6 +342,7 @@ export default {
     Exception,
     MultipleValuesTable,
     ClipboardIcon,
+    FlagIcon,
     CheckIcon,
     LightningBoltIcon,
     PlusSmIcon,
