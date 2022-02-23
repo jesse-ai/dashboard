@@ -313,7 +313,7 @@ export const useLiveStore = defineStore({
       // current_price: 42151
       // entry: 42116
       // leverage: 2
-      // liq_price: null
+      // liquidation_price: null
       // opened_at: 1644830823000
       // pnl: 5.460000000000036
       // pnl_perc: 0.1662076170576514
@@ -326,7 +326,7 @@ export const useLiveStore = defineStore({
 
       this.tabs[id].results.positions = [
         [
-          'Symbol', 'Strategy', 'QTY', 'Entry', 'Price', 'PNL'
+          'Symbol', 'QTY', 'Entry', 'Price', 'Liq Price', 'PNL'
         ]
       ]
 
@@ -334,10 +334,10 @@ export const useLiveStore = defineStore({
       for (const item of data) {
         this.tabs[id].results.positions.push([
           { value: item.symbol, style: '' },
-          { value: item.strategy_name, style: '' },
           { value: item.qty, style: helpers.colorBasedOnType(item.type), tooltip: `${item.value} ${item.currency}` },
           { value: helpers.roundPrice(item.entry), style: '' },
           { value: helpers.roundPrice(item.current_price), style: '' },
+          { value: helpers.roundPrice(item.liquidation_price), style: '' },
           { value: `${_.round(item.pnl, 2)} (${_.round(item.pnl_perc, 2)}%)`, style: helpers.colorBasedOnNumber(item.pnl) },
         ])
       }
