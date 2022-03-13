@@ -1,5 +1,5 @@
 <template>
-  <span class="relative" @mouseenter="showIt" @mouseleave="hideIt">
+  <span class="relative underline" @mouseenter="showIt" @mouseleave="hideIt">
     <span v-show="show"
           class="absolute -top-10 z-90 bg-gray-900 rounded px-2 py-1 text-sm text-white"
           v-text="title"
