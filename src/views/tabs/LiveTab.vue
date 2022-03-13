@@ -4,7 +4,7 @@
              :object="modals"
              width="max-w-5xl"
              title="Orders">
-    <LiveOrders :orders="results.rawOrders" />
+    <LiveOrders :orders="results.orders" />
   </SlideOver>
 
   <!-- report without exception -->
@@ -161,7 +161,7 @@
             <span>More</span>
           </button>
         </DividerWithButtons>
-        <MultipleValuesTable :data="results.orders" header/>
+        <MultipleValuesTable :data="orders" header/>
       </div>
     </template>
 
@@ -387,7 +387,30 @@ export default {
       }
 
       return `${Math.round(this.results.progressbar.estimated_remaining_seconds)} seconds remaining...`
-    }
+    },
+    orders () {
+      if (!this.results.orders) return []
+
+      const arr = [
+        ['Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
+      ]
+      const limitCount = 5
+      const len = this.results.orders.length
+      const loopLength = (len - limitCount) >= 0 ? (len - limitCount) : 0
+      for (let i = len - 1; i >= loopLength; i--) {
+        const item = this.results.orders[i]
+        arr.push([
+          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs', tooltip: helpers.timestampToTime(item.created_at) },
+          { value: item.symbol, style: 'text-xs' },
+          { value: item.type, style: 'text-xs' },
+          { value: item.side, style: helpers.colorBasedOnSide(item.side) },
+          { value: item.price, style: 'text-xs' },
+          { value: item.qty, style: helpers.colorBasedOnSide(item.side) },
+          { value: item.status, style: 'text-xs' },
+        ])
+      }
+      return arr
+    },
   },
   watch: {
     form: {

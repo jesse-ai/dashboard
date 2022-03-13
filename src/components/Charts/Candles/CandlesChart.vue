@@ -138,7 +138,7 @@ export default {
     },
     // watch 'results.rawOrders' and its in object values and execute this.updateOrderEntries()
     // when the value changes
-    'results.rawOrders': {
+    'results.orders': {
       handler (newValue, oldValue) {
         this.updateOrderEntries()
       },
@@ -200,7 +200,7 @@ export default {
       }
 
       // then add them again if needed
-      this.results.rawOrders.forEach(order => {
+      this.results.orders.forEach(order => {
         const color = order.side === 'buy' ? '#00AB5C' : '#FF497D'
         const title = _.startCase(_.lowerCase(`${order.side} ${order.type}`))
 

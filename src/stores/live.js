@@ -39,7 +39,6 @@ function newTab () {
       metrics: [],
       generalInfo: {},
       positions: [],
-      rawOrders: [],
       orders: [],
       watchlist: [],
       candles: [],
@@ -89,7 +88,6 @@ export const useLiveStore = defineStore({
       this.tabs[id].results.generalInfo = {}
       this.tabs[id].results.positions = []
       this.tabs[id].results.orders = []
-      this.tabs[id].results.rawOrders = []
       this.tabs[id].results.candles = []
       this.tabs[id].results.currentCandles = {}
       this.tabs[id].results.watchlist = []
@@ -227,7 +225,6 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.monitoring = true
         this.fetchCandles(id)
         this.fetchLogs(id)
-        this.fetchOrders(id)
       }
     },
     fetchCandles (id) {
@@ -283,23 +280,6 @@ export const useLiveStore = defineStore({
         this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
-    fetchOrders (id) {
-      // info logs
-      axios.post('/get-orders', {
-        id,
-        session_id: this.tabs[id].results.generalInfo.session_id,
-      }).then(res => {
-        const arr = res.data.data
-
-        arr.forEach(data => {
-          this.tabs[id].results.rawOrders.push(data)
-        })
-
-        this.updateOrders(id)
-      }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
-      })
-    },
     currentCandlesEvent (id, data) {
       this.tabs[id].results.currentCandles = data
     },
@@ -330,7 +310,6 @@ export const useLiveStore = defineStore({
         ]
       ]
 
-
       for (const item of data) {
         this.tabs[id].results.positions.push([
           { value: item.symbol, style: '' },
@@ -342,55 +321,27 @@ export const useLiveStore = defineStore({
         ])
       }
     },
-    orderEvent (id, data) {
-      // sample:
-      // {
-      //   "id": "141fc2f6-0871-44f2-90cf-891e7e130042",
-      //   "symbol": "BTC-USDT",
-      //   "side": "buy",
-      //   "type": "MARKET",
-      //   "qty": 0.497,
-      //   "price": 38826.4,
-      //   "flag": null,
-      //   "status": "EXECUTED",
-      //   "created_at": 1628148960000,
-      //   "canceled_at": null,
-      //   "executed_at": 1628148961000
-      // }
+    ordersEvent (id, data) {
+      // sample
+      // [
+      //   {
+      //     canceled_at: null
+      //     created_at: 1646753299000
+      //     exchange_id: "9803ddb2-21f6-42bb-92c4-702dd04d0f97"
+      //     executed_at: null
+      //     filled_qty: 0
+      //     id: "61b21def-b22a-4ec4-aa03-ae17786c0d43"
+      //     price: 38838
+      //     qty: 0.311
+      //     session_id: null
+      //     side: "sell"
+      //     status: "CANCELED"
+      //     symbol: "BTC-USDT"
+      //     type: "LIMIT"
+      //   },
+      // ]
 
-      // look for order in rawOrders using order.id, if exists, update the entire order object, else, add it
-      const newOrder = data
-      const orderIndex = _.findIndex(this.tabs[id].results.rawOrders, { id: newOrder.id })
-
-      if (orderIndex > -1) {
-        this.tabs[id].results.rawOrders[orderIndex] = newOrder
-      } else {
-        this.tabs[id].results.rawOrders.push(newOrder)
-      }
-
-      this.updateOrders(id)
-    },
-    updateOrders (id) {
-      this.tabs[id].results.orders = [
-        ['Created', 'Symbol', 'Type', 'Side', 'Price', 'QTY', 'Status']
-      ]
-
-      const limitCount = 5
-      const len = this.tabs[id].results.rawOrders.length
-      const loopLength = (len - limitCount) >= 0 ? (len - limitCount) : 0
-      for (let i = len - 1; i >= loopLength; i--) {
-        const item = this.tabs[id].results.rawOrders[i]
-
-        this.tabs[id].results.orders.push([
-          { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs', tooltip: helpers.timestampToTime(item.created_at) },
-          { value: item.symbol, style: 'text-xs' },
-          { value: item.type, style: 'text-xs' },
-          { value: item.side, style: helpers.colorBasedOnSide(item.side) },
-          { value: item.price, style: 'text-xs' },
-          { value: item.qty, style: helpers.colorBasedOnSide(item.side) },
-          { value: item.status, style: 'text-xs' },
-        ])
-      }
+      this.tabs[id].results.orders = data
     },
     metricsEvent (id, data) {
       this.tabs[id].results.metrics = [

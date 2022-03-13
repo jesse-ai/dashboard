@@ -73,11 +73,11 @@ export default function () {
     ['livetrade.positions', [
       live.positionsEvent
     ]],
-    ['papertrade.order', [
-      live.orderEvent
+    ['papertrade.orders', [
+      live.ordersEvent
     ]],
-    ['livetrade.order', [
-      live.orderEvent
+    ['livetrade.orders', [
+      live.ordersEvent
     ]],
     ['papertrade.general_info', [
       live.generalInfoEvent
