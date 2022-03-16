@@ -399,13 +399,14 @@ export default {
       const loopLength = (len - limitCount) >= 0 ? (len - limitCount) : 0
       for (let i = len - 1; i >= loopLength; i--) {
         const item = this.results.orders[i]
+        const qty = item.status === 'PARTIALLY FILLED' ? `${item.filled_qty}/${item.qty}` : item.qty
         arr.push([
           { value: helpers.timestampToTimeOnly(item.created_at), style: 'text-xs', tooltip: helpers.timestampToTime(item.created_at) },
           { value: item.symbol, style: 'text-xs' },
           { value: item.type, style: 'text-xs' },
           { value: item.side, style: helpers.colorBasedOnSide(item.side) },
           { value: item.price, style: 'text-xs' },
-          { value: item.qty, style: helpers.colorBasedOnSide(item.side) },
+          { value: qty, style: helpers.colorBasedOnSide(item.side) },
           { value: item.status, style: 'text-xs' },
         ])
       }
