@@ -16,7 +16,7 @@
       </nav>
     </aside>
 
-    <!-- backtest -->
+    <!-- backtest settings -->
     <div v-if="currentTab === 'Backtest'" data-cy="backtest-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
       <Divider title="Logs"/>
       <p>
@@ -71,8 +71,23 @@
       </div>
     </div>
 
-    <!-- live -->
+    <!-- live settings -->
     <div v-if="currentTab === 'Live'" data-cy="setting-live-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
+      <Divider title="Persistency"/>
+      <p>
+        If persistency is <b>enabled</b>, on new live session, Jesse will try to <b>continue</b> the previous
+        running session based on the existing positions and orders on the exchange.
+        <br>
+        <br>
+        If it's <b>disabled</b>, Jesse will first <b>close</b> all existing positions and orders before <b>starting</b> or <b>terminating</b> live sessions.
+      </p>
+      <ToggleButton :object="settings.live"
+                    name="persistency"
+                    title="Enable Persistency"
+      />
+
+      <br>
+
       <Divider title="Logs"/>
       <p>
         You can filter the types of events that you want to be logged. Logging is often useful for debugging
@@ -173,7 +188,7 @@
       </div>
     </div>
 
-    <!-- optimization -->
+    <!-- optimization settings -->
     <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full" data-cy="optimization-setting-tab">
       <!-- CPU cores -->
       <Divider title="CPU"/>
@@ -236,10 +251,12 @@ import { useMainStore } from '@/stores/main'
 import FormInput from '@/components/Functional/FormInput'
 import NumberInput from '@/components/Functional/NumberInput'
 import _ from 'lodash'
+import ToggleButton from '@/components/ToggleButton'
 
 
 export default {
   components: {
+    ToggleButton,
     Checkbox,
     Divider,
     RadioGroups,
@@ -249,7 +266,17 @@ export default {
   data () {
     return {
       timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D'],
-      currentTab: 'Backtest',
+      currentTab: 'Live',
+      persistencyOptions: [
+        {
+          name: 'Continue Session',
+          description: 'Continue from the previous session using existing data on the exchange'
+        },
+        {
+          name: 'New Session',
+          description: 'Start a fresh sessions. Close existing positions and orders on the exchange'
+        }
+      ],
     }
   },
   computed: {

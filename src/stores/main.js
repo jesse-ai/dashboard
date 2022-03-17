@@ -38,6 +38,7 @@ export const useMainStore = defineStore({
         exchanges: {},
       },
       live: {
+        persistency: true,
         logging: {
           order_submission: true,
           order_cancellation: true,
