@@ -1,4 +1,7 @@
 <template>
+  <!-- new version announcement -->
+  <UpdateBanner />
+
   <!-- Settings -->
   <SlideOver name="settings"
              :object="modals"
@@ -20,8 +23,6 @@
   <SlideOver :object="modals" name="about" title="About" width="max-w-lg">
     <About />
   </SlideOver>
-
-  <Announcement />
 
   <Disclosure v-slot="{ open }" as="nav" class="bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-900 select-none">
     <div class="mx-auto px-4 lg:px-6 lg:px-8">
@@ -272,7 +273,7 @@ import ConfirmModal from '@/components/Modals/ConfirmModal'
 import MakeStrategy from '@/views/MakeStrategy'
 import About from '@/views/About'
 import ThemeSwitch from '@/components/ThemeSwitch'
-import Announcement from '@/components/Announcement'
+import Announcement from '@/components/UpdateBanner'
 
 export default {
   name: 'Nav',

@@ -11,6 +11,7 @@ export const useMainStore = defineStore({
     isAuthenticated: false,
     hasLivePluginInstalled: false,
     systemInfo: {},
+    updateInfo: {},
     theme: localStorage.theme,
     modals: {
       settings: false,
@@ -18,7 +19,6 @@ export const useMainStore = defineStore({
       feedback: false,
       makeStrategy: false,
       about: false,
-      announcement: false,
     },
     settings: {
       backtest: {
@@ -94,6 +94,7 @@ export const useMainStore = defineStore({
       axios.post('/general-info').then(res => {
         const data = res.data
         this.systemInfo = data.system_info
+        this.updateInfo = data.update_info
         this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
