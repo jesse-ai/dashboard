@@ -111,11 +111,11 @@ export default {
       'theme'
     ]),
     positionEntry () {
-      return this.results.positions[1][3].value
+      return this.results.positions[1][2].value
     },
     positionType () {
-      if (this.results.positions[1][2].value > 0) return 'long'
-      if (this.results.positions[1][2].value < 0) return 'short'
+      if (this.results.positions[1][1].value > 0) return 'long'
+      if (this.results.positions[1][1].value < 0) return 'short'
       return 'close'
     },
     firstPosition () {
