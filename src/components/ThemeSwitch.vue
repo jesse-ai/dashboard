@@ -19,6 +19,7 @@ import {
 } from '@heroicons/vue/outline'
 import { mapWritableState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import helpers from '@/helpers'
 
 export default {
   name: 'ThemeSwitch',
@@ -32,11 +33,7 @@ export default {
     ])
   },
   beforeMount () {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      this.theme = 'dark'
-    } else {
-      this.theme = 'light'
-    }
+    this.theme = helpers.currentTheme()
   },
   methods: {
     toggle () {

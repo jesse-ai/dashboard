@@ -98,7 +98,15 @@ const helpers = {
     } else {
       return 'text-gray-900 dark:text-gray-200'
     }
-  }
+  },
+
+  currentTheme () {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      return 'dark'
+    } else {
+      return 'light'
+    }
+  },
 }
 
 export default helpers
