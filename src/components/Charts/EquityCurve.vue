@@ -6,6 +6,7 @@
 import { createChart } from 'lightweight-charts'
 import { useMainStore } from '@/stores/main'
 import { mapWritableState } from 'pinia'
+import helpers from '@/helpers'
 
 let chart = null
 let lineSeries = null
@@ -115,7 +116,7 @@ export default {
     chart.timeScale().fitContent()
     lineSeries.setData(this.equityCurve)
 
-    if (localStorage.theme === 'light') {
+    if (helpers.currentTheme() === 'light') {
       chart.applyOptions(this.lightTheme.chart)
       lineSeries.applyOptions(this.lightTheme.series)
     } else {
