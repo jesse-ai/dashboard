@@ -95,20 +95,32 @@ export const useMainStore = defineStore({
         const data = res.data
         this.systemInfo = data.system_info
         this.updateInfo = data.update_info
-        this.routes.exchanges = data.exchanges
         this.routes.liveExchanges = data.live_exchanges
         this.routes.strategies = data.strategies
         this.hasLivePluginInstalled = data.has_live_plugin_installed
-        this.routes.exchanges.forEach(item => {
-          this.settings.backtest.exchanges[item] = {
-            name: item,
-            fee: 0.001,
-            futures_leverage_mode: 'isolated',
-            futures_leverage: 2,
-            balance: 10_000,
-            settlement_currency: 'USDT'
+
+        // create the list of exchanges
+        data.exchanges.forEach(item => {
+          const key = item[0]
+          const value = item[1]
+          this.routes.exchanges.push(key)
+          this.settings.backtest.exchanges[key] = {
+            name: key,
+            fee: value.fee,
+            balance: value.balance,
+            settlement_currency: value.settlement_currency,
+            type: value.type,
+          }
+          if (value.type === 'futures') {
+            this.settings.backtest.exchanges[key].futures_leverage_mode = value.futures_leverage_mode
+            this.settings.backtest.exchanges[key].futures_leverage = value.futures_leverage
           }
         })
+
+        // sort this.routes.exchanges
+        this.routes.exchanges.sort()
+
+        // TODO: do the same for live exchanges
         this.routes.liveExchanges.forEach(item => {
           this.settings.live.exchanges[item] = {
             name: item,

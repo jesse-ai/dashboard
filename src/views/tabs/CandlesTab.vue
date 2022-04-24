@@ -40,7 +40,7 @@
           v-model="form.exchange"
           data-cy="candles-exchange"
           class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full px-6 py-6 border border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 rounded-md">
-          <option v-for="item in routes.exchanges" :key="item">{{ item }}</option>
+          <option v-for="item in exchangesArray" :key="item">{{ item }}</option>
         </select>
 
         <Divider class="mt-16" title="Symbol"/>
@@ -132,7 +132,10 @@ export default {
     ...mapState(useMainStore, ['routes', 'isInitiated']),
     remainingTimeText () {
       return helpers.remainingTimeText(this.results.progressbar.estimated_remaining_seconds)
-    }
+    },
+    exchangesArray () {
+      return this.routes.exchanges
+    },
   },
   watch: {
     form: {

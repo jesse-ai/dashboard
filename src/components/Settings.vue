@@ -61,13 +61,18 @@
 
         <br>
 
-        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+        <RadioGroups title="Type:" :object="e" name="type" :options="['spot', 'futures']" />
 
         <br>
 
-        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
-
-        <br>
+        <div v-if="e.type === 'futures'">
+          <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode"
+                       :options="['cross', 'isolated']" />
+          <br>
+          <NumberInput v-if="e.type === 'futures'" title="Leverage (x):" name="futures_leverage"
+                       :object="e"/>
+          <br>
+        </div>
       </div>
     </div>
 
