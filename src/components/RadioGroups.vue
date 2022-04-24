@@ -54,7 +54,26 @@ export default {
     options: {
       type: Array,
       required: true
+    },
+    default: {
+      type: String,
+      default: ''
     }
   },
+  created () {
+    this.setDefaults()
+  },
+  methods: {
+    setDefaults () {
+    // check that the default value exists in the options array
+      if (this.default && !this.options.includes(this.default)) {
+        console.error(`The default value "${this.default}" is not in the options array. options: ${this.options}`)
+      }
+      // if no option is selected, set default value.
+      if (!this.object[this.name]) {
+        this.object[this.name] = this.default
+      }
+    }
+  }
 }
 </script>

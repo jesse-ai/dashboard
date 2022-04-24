@@ -36,8 +36,21 @@ export default {
       type: String,
       required: true
     },
+    default: {
+      type: Number,
+      default: 1
+    }
+  },
+  created () {
+    this.setDefault()
   },
   methods: {
+    setDefault () {
+      // if no option is selected, set default value.
+      if (!this.object[this.name]) {
+        this.object[this.name] = this.default
+      }
+    },
     increase () {
       this.object[this.name]++
     },
