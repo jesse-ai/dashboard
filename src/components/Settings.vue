@@ -52,7 +52,7 @@
         <Divider :title="e.name"/>
 
         <div class="grid grid-cols-6 gap-6">
-          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
+          <FormInput :title="`Starting Capital`" :object="e" name="balance" input-type="number"
                      :step="1000" />
 
           <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
@@ -67,10 +67,10 @@
 
         <div v-if="e.type === 'futures'">
           <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode"
-                       :options="['cross', 'isolated']" />
+                       :options="['cross', 'isolated']" default="isolated" />
           <br>
           <NumberInput v-if="e.type === 'futures'" title="Leverage (x):" name="futures_leverage"
-                       :object="e"/>
+                       :object="e" :default="1" />
           <br>
         </div>
       </div>
