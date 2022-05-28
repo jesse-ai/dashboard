@@ -80,3 +80,8 @@ files.keys().map(key =>
 )
 
 app.mount('#app')
+
+// display a warning asking user if he's sure about closing the window when they try to close the browser tab
+window.addEventListener('beforeunload', (event) => {
+  event.returnValue = 'Are you sure you want to leave?'
+})
