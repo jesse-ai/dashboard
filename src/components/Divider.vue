@@ -4,7 +4,8 @@
       <div class="w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600" />
     </div>
     <div class="relative flex justify-start">
-      <span class="pr-3 bg-white dark:bg-backdrop-dark text-lg font-medium text-gray-900 dark:text-gray-100"
+      <span class="pr-3 dark:bg-backdrop-dark text-lg font-medium text-gray-900 dark:text-gray-100"
+            :class="backgroundClasses"
             v-text="title"/>
     </div>
   </div>
@@ -18,8 +19,25 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    bgLight: {
+      type: String,
+      required: false,
+      default: 'bg-white'
+    },
+    bgDark: {
+      type: String,
+      required: false,
+      default: 'dark:bg-backdrop-dark'
     }
   },
-  // define a bool property that if true, will allow to toggle the content
+  computed: {
+    /**
+     * returns a string based on what's in the bgLight and bgDark props
+     */
+    backgroundClasses () {
+      return this.bgLight + ' ' + this.bgDark
+    }
+  }
 }
 </script>

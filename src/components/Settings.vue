@@ -18,230 +18,262 @@
 
     <!-- backtest settings -->
     <div v-if="currentTab === 'Backtest'" data-cy="backtest-setting-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      <Divider title="Logs"/>
-      <p>
-        Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
-      </p>
-      <div data-cy="backtest-setting-logs-checkboxes" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Checkbox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
-        <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
-        <Checkbox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
-        <Checkbox name="position_opened" title="Position Opened" :object="settings.backtest.logging"/>
-        <Checkbox name="position_increased" title="Position Increased" :object="settings.backtest.logging"/>
-        <Checkbox name="position_reduced" title="Position Reduced" :object="settings.backtest.logging"/>
-        <Checkbox name="position_closed" title="Position Closed" :object="settings.backtest.logging"/>
-        <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.backtest.logging"/>
-        <Checkbox name="trading_candles" title="Trading Candles" :object="settings.backtest.logging"/>
-      </div>
-
-      <br>
-
-      <Divider title="Data"/>
-      <div>
-        <FormInput data-cy="backtest-setting-data-input"
-                   placeholder="ex: 210"
-                   title="Warmup Candles"
-                   :object="settings.backtest"
-                   description="Number of warmup candles that is loaded before starting each session"
-                   name="warm_up_candles" input-type="number" />
-      </div>
-
-      <br>
-
-      <div v-for="(e, index) in settings.backtest.exchanges" :key="index" :data-cy="'backtest-setting-exchange-' + convertToSlug(e.name)">
-        <Divider :title="e.name"/>
-
-        <div class="grid grid-cols-6 gap-6">
-          <FormInput :title="`Starting Capital`" :object="e" name="balance" input-type="number"
-                     :step="1000" />
-
-          <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
-                     :step="0.0001" />
+      <Card>
+        <Heading>Logs</Heading>
+        <p>
+          Below configurations are used to filter out the extra logging info that are displayed when the <code>"--debug"</code> flag is enabled.
+        </p>
+        <br>
+        <div data-cy="backtest-setting-logs-checkboxes" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Checkbox name="order_submission" title="Order Submission" :object="settings.backtest.logging"/>
+          <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.backtest.logging"/>
+          <Checkbox name="order_execution" title="Order Execution" :object="settings.backtest.logging"/>
+          <Checkbox name="position_opened" title="Position Opened" :object="settings.backtest.logging"/>
+          <Checkbox name="position_increased" title="Position Increased" :object="settings.backtest.logging"/>
+          <Checkbox name="position_reduced" title="Position Reduced" :object="settings.backtest.logging"/>
+          <Checkbox name="position_closed" title="Position Closed" :object="settings.backtest.logging"/>
+          <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.backtest.logging"/>
+          <Checkbox name="trading_candles" title="Trading Candles" :object="settings.backtest.logging"/>
         </div>
+      </Card>
 
+      <Card>
+        <Heading>Data</Heading>
+        <div>
+          <FormInput data-cy="backtest-setting-data-input"
+                     placeholder="ex: 210"
+                     title="Warmup Candles"
+                     :object="settings.backtest"
+                     description="Number of warmup candles that is loaded before starting each session"
+                     name="warm_up_candles" input-type="number" />
+        </div>
+      </Card>
+
+      <Card>
+        <Heading>Exchanges</Heading>
+        <p>
+          Below you can modify configuration per each exchange. You can even choose to use a spot exchange's data for backtestig
+          in futures mode (just because spot exchanges usually have more historical data), and vice versa.
+        </p>
+        <br>
         <br>
 
-        <RadioGroups title="Type:" :object="e" name="type" :options="['spot', 'futures']" />
+        <div v-for="(e, index) in settings.backtest.exchanges" :key="index" :data-cy="'backtest-setting-exchange-' + convertToSlug(e.name)">
+          <Divider bg-light="bg-gray-50" bg-dark="dark:bg-gray-700" :title="e.name"/>
 
-        <br>
+          <div class="grid grid-cols-6 gap-6">
+            <FormInput :title="`Starting Capital`" :object="e" name="balance" input-type="number"
+                       :step="1000" />
 
-        <div v-if="e.type === 'futures'">
-          <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode"
-                       :options="['cross', 'isolated']" default="isolated" />
+            <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
+                       :step="0.0001" />
+          </div>
+
           <br>
-          <NumberInput v-if="e.type === 'futures'" title="Leverage (x):" name="futures_leverage"
-                       :object="e" :default="1" />
+
+          <RadioGroups title="Type:" :object="e" name="type" :options="['spot', 'futures']" />
+
           <br>
+
+          <div v-if="e.type === 'futures'">
+            <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode"
+                         :options="['cross', 'isolated']" default="isolated" />
+            <br>
+            <NumberInput v-if="e.type === 'futures'" title="Leverage (x):" name="futures_leverage"
+                         :object="e" :default="1" />
+            <br>
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
 
     <!-- live settings -->
     <div v-if="currentTab === 'Live'" data-cy="setting-live-tab" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full">
-      <Divider title="Persistency"/>
-      <p>
-        If persistency is <b>enabled</b>, on new live session, Jesse will try to <b>continue</b> the previous
-        running session based on the existing positions and orders on the exchange.
-        <br>
-        <br>
-        If it's <b>disabled</b>, Jesse will first <b>close</b> all existing positions and orders before <b>starting</b> or <b>terminating</b> live sessions.
-      </p>
-      <ToggleButton :object="settings.live"
-                    name="persistency"
-                    title="Enable Persistency"
-      />
-
-      <br>
-
-      <Divider title="Logs"/>
-      <p>
-        You can filter the types of events that you want to be logged. Logging is often useful for debugging
-        and recommended. Hence, it doesn't hurt to enable them all:
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Checkbox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
-        <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
-        <Checkbox name="order_execution" title="Order Execution" :object="settings.live.logging"/>
-        <Checkbox name="position_opened" title="Position Opened" :object="settings.live.logging"/>
-        <Checkbox name="position_increased" title="Position Increased" :object="settings.live.logging"/>
-        <Checkbox name="position_reduced" title="Position Reduced" :object="settings.live.logging"/>
-        <Checkbox name="position_closed" title="Position Closed" :object="settings.live.logging"/>
-        <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.live.logging"/>
-        <Checkbox name="trading_candles" title="Trading Candles" :object="settings.live.logging"/>
-      </div>
-
-      <br>
-
-      <Divider title="Data"/>
-      <div>
-        <FormInput data-cy="live-setting-warmup-candles-input"
-                   placeholder="ex: 210"
-                   title="Warmup Candles"
-                   :object="settings.live"
-                   description="Number of warmup candles that is loaded before starting each session"
-                   name="warm_up_candles" input-type="number" />
-      </div>
-
-      <br>
-
-      <Divider title="Notifications"/>
-      <p>
-        Jesse can notify every time something interesting happens so you don't have to monitor your bots 24/7. Currently, Telegram and Discord drivers are supported. <br><br>
-        To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Checkbox data-cy="live-setting-enabled-notification" name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
-      </div>
-
-      <div v-if="settings.live.notifications.enabled">
+      <Card>
+        <Heading>Persistency</Heading>
         <p>
-          You can choose for which events you want to receive notifications:
+          If persistency is <b>enabled</b>, on new live session, Jesse will try to <b>continue</b> the previous
+          running session based on the existing positions and orders on the exchange.
+          <br>
+          <br>
+          If it's <b>disabled</b>, Jesse will first <b>close</b> all existing positions and orders before <b>starting</b> or <b>terminating</b> live sessions.
+        </p>
+
+        <br>
+
+        <ToggleButton :object="settings.live"
+                      name="persistency"
+                      title="Enable Persistency"
+        />
+      </Card>
+
+      <Card>
+        <Heading>Logs</Heading>
+        <p>
+          You can filter the types of events that you want to be logged. Logging is often useful for debugging
+          and recommended. Hence, it doesn't hurt to enable them all:
         </p>
         <br>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Checkbox name="errors" title="Errors" :object="settings.live.notifications.events"/>
-          <Checkbox name="started_session" title="Session Start" :object="settings.live.notifications.events"/>
-          <Checkbox name="terminated_session" title="Session Termination" :object="settings.live.notifications.events"/>
-          <Checkbox name="submitted_orders" title="Order Submission" :object="settings.live.notifications.events"/>
-          <Checkbox name="cancelled_orders" title="Order Cancellation" :object="settings.live.notifications.events"/>
-          <Checkbox name="executed_orders" title="Order Execution" :object="settings.live.notifications.events"/>
-          <Checkbox name="opened_position" title="Opened Positions" :object="settings.live.notifications.events"/>
-          <Checkbox name="updated_position" title="Updated Position" :object="settings.live.notifications.events"/>
+          <Checkbox name="order_submission" title="Order Submission" :object="settings.live.logging"/>
+          <Checkbox name="order_cancellation" title="Order Cancellation" :object="settings.live.logging"/>
+          <Checkbox name="order_execution" title="Order Execution" :object="settings.live.logging"/>
+          <Checkbox name="position_opened" title="Position Opened" :object="settings.live.logging"/>
+          <Checkbox name="position_increased" title="Position Increased" :object="settings.live.logging"/>
+          <Checkbox name="position_reduced" title="Position Reduced" :object="settings.live.logging"/>
+          <Checkbox name="position_closed" title="Position Closed" :object="settings.live.logging"/>
+          <Checkbox name="shorter_period_candles" title="1m candles" :object="settings.live.logging"/>
+          <Checkbox name="trading_candles" title="Trading Candles" :object="settings.live.logging"/>
         </div>
+      </Card>
 
-        <br>
+      <br>
 
+      <Card>
+        <Heading>Data</Heading>
+        <div>
+          <FormInput data-cy="live-setting-warmup-candles-input"
+                     placeholder="ex: 210"
+                     title="Warmup Candles"
+                     :object="settings.live"
+                     description="Number of warmup candles that is loaded before starting each session"
+                     name="warm_up_candles" input-type="number" />
+        </div>
+      </Card>
+
+      <br>
+
+      <Card>
+        <Heading>
+          Notifications
+        </Heading>
         <p>
-          You will also receive recurring reports as notifications which are helpful when
-          you have open positions and want to know about latest status of them. You can
-          choose the timeframe for how frequently you want to receive them:
+          Jesse can notify every time something interesting happens so you don't have to monitor your bots 24/7. Currently, Telegram and Discord drivers are supported. <br><br>
+          To enter API keys for Telegram or Discord, check out your project's <code>.env</code> file.
         </p>
-
-        <select v-model="settings.live.notifications.position_report_timeframe" data-cy="live-setting-report-notification-timeframe"
-                class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <option v-for="item in timeframes" :key="item">{{ item }}</option>
-        </select>
-
         <br>
-      </div>
-
-      <div v-for="(e, index) in settings.live.exchanges" :key="index">
-        <Divider :title="e.name"/>
-
-        <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
-
-        <br>
-
-        <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
-
-        <br>
-
-        <p>Balances and fees will be fetched from the exchange in live trading. But for <b>paper trading</b> you can set them here:</p>
-
-        <br>
-
-        <div class="grid grid-cols-6 gap-6">
-          <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
-                     :step="1000" />
-
-          <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
-                     :step="0.0001" />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Checkbox data-cy="live-setting-enabled-notification" name="enabled" title="Enable Notifications" :object="settings.live.notifications" />
         </div>
-
         <br>
-      </div>
+
+        <div v-if="settings.live.notifications.enabled">
+          <p>
+            You can choose for which events you want to receive notifications:
+          </p>
+          <br>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Checkbox name="errors" title="Errors" :object="settings.live.notifications.events"/>
+            <Checkbox name="started_session" title="Session Start" :object="settings.live.notifications.events"/>
+            <Checkbox name="terminated_session" title="Session Termination" :object="settings.live.notifications.events"/>
+            <Checkbox name="submitted_orders" title="Order Submission" :object="settings.live.notifications.events"/>
+            <Checkbox name="cancelled_orders" title="Order Cancellation" :object="settings.live.notifications.events"/>
+            <Checkbox name="executed_orders" title="Order Execution" :object="settings.live.notifications.events"/>
+            <Checkbox name="opened_position" title="Opened Positions" :object="settings.live.notifications.events"/>
+            <Checkbox name="updated_position" title="Updated Position" :object="settings.live.notifications.events"/>
+          </div>
+
+          <br>
+
+          <p>
+            You will also receive recurring reports as notifications which are helpful when
+            you have open positions and want to know about latest status of them. You can
+            choose the timeframe for how frequently you want to receive them:
+          </p>
+
+          <select v-model="settings.live.notifications.position_report_timeframe" data-cy="live-setting-report-notification-timeframe"
+                  class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            <option v-for="item in timeframes" :key="item">{{ item }}</option>
+          </select>
+
+          <br>
+        </div>
+      </Card>
+
+      <Card>
+        <div v-for="(e, index) in settings.live.exchanges" :key="index">
+          <Divider :title="e.name" bg-light="bg-gray-50" bg-dark="dark:bg-gray-700" />
+
+          <RadioGroups title="Leverage Mode:" :object="e" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+
+          <br>
+
+          <NumberInput title="Leverage (x):" name="futures_leverage" :object="e"/>
+
+          <br>
+
+          <p>Balances and fees will be fetched from the exchange in live trading. But for <b>paper trading</b> you can set them here:</p>
+
+          <br>
+
+          <div class="grid grid-cols-6 gap-6">
+            <FormInput :title="`Starting Capital (${e.settlement_currency})`" :object="e" name="balance" input-type="number"
+                       :step="1000" />
+
+            <FormInput :title="`Trading Fee (${round(e.fee * 100, 2)}%)`" :object="e" name="fee" input-type="number"
+                       :step="0.0001" />
+          </div>
+
+          <br>
+        </div>
+      </Card>
     </div>
 
     <!-- optimization settings -->
     <div v-if="currentTab === 'Optimization'" class="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 w-full" data-cy="optimization-setting-tab">
       <!-- CPU cores -->
-      <Divider title="CPU"/>
-      <div>
-        <FormInput placeholder="ex: 4"
-                   :title="`CPU cores to use for optimization (${settings.optimization.cpu_cores}/${systemInfo.cpu_cores})`"
-                   :object="settings.optimization"
-                   description="How many CPU cores of your machine would you like to be used for optimization?"
-                   name="cpu_cores" input-type="number" />
-      </div>
+      <Card>
+        <Heading>CPU</Heading>
+        <div>
+          <FormInput placeholder="ex: 4"
+                     :title="`CPU cores to use for optimization (${settings.optimization.cpu_cores}/${systemInfo.cpu_cores})`"
+                     :object="settings.optimization"
+                     description="How many CPU cores of your machine would you like to be used for optimization?"
+                     name="cpu_cores" input-type="number" />
+        </div>
+      </Card>
 
       <!-- Fitness Function-->
-      <Divider title="Fitness Function"/>
-      <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
-
-      <br>
+      <Card>
+        <Heading>Fitness Function</Heading>
+        <RadioGroups title="Ratio:" :object="settings.optimization" name="ratio" :options="['sharpe', 'calmar', 'sortino', 'omega']" />
+      </Card>
 
       <!-- Data -->
-      <Divider title="Data"/>
-      <div>
-        <FormInput data-cy="optimization-warmup-candles-input" placeholder="ex: 210"
-                   title="Warmup Candles"
-                   :object="settings.optimization"
-                   description="Number of warmup candles that is loaded before starting each session"
-                   name="warm_up_candles" input-type="number" />
-      </div>
-
-      <br>
+      <Card>
+        <Heading>Data</Heading>
+        <div>
+          <FormInput data-cy="optimization-warmup-candles-input" placeholder="ex: 210"
+                     title="Warmup Candles"
+                     :object="settings.optimization"
+                     description="Number of warmup candles that is loaded before starting each session"
+                     name="warm_up_candles" input-type="number" />
+        </div>
+      </Card>
 
       <!-- exchange -->
-      <Divider title="Exchange"/>
-      <p>
-        Because the optimize mode is limited to one route only, it makes sense to have only one configuration section for the exchange values. Depending on the exchange you define in your route, these configurations will be used.
-      </p>
+      <Card>
+        <Heading>Exchange</Heading>
+        <p>
+          Because the optimize mode is limited to one route only, it makes sense to have only one configuration section for the exchange values. Depending on the exchange you define in your route, these configurations will be used.
+        </p>
+        <div class="grid grid-cols-6 gap-6 my-4">
+          <FormInput :title="`Starting Capital`"
+                     :object="settings.optimization.exchange" name="balance" input-type="number"
+                     :step="1000" />
 
-      <div class="grid grid-cols-6 gap-6">
-        <FormInput :title="`Starting Capital`"
-                   :object="settings.optimization.exchange" name="balance" input-type="number"
-                   :step="1000" />
+          <FormInput :title="`Trading Fee (${round(settings.optimization.exchange.fee * 100, 2)}%)`"
+                     :object="settings.optimization.exchange" name="fee" input-type="number"
+                     :step="0.0001" />
+        </div>
 
-        <FormInput :title="`Trading Fee (${round(settings.optimization.exchange.fee * 100, 2)}%)`"
-                   :object="settings.optimization.exchange" name="fee" input-type="number"
-                   :step="0.0001" />
-      </div>
 
-      <RadioGroups title="Leverage Mode:" :object="settings.optimization.exchange" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+        <RadioGroups title="Leverage Mode:" :object="settings.optimization.exchange" name="futures_leverage_mode" :options="['cross', 'isolated']" />
 
-      <NumberInput title="Leverage (x):" name="futures_leverage" :object="settings.optimization.exchange"/>
+        <br>
+
+        <NumberInput title="Leverage (x):" name="futures_leverage" :object="settings.optimization.exchange"/>
+      </Card>
     </div>
   </div>
 </template>
@@ -250,6 +282,8 @@
 import { CalculatorIcon, ChipIcon, CurrencyDollarIcon } from '@heroicons/vue/outline'
 import Checkbox from '@/components/Checkbox'
 import Divider from '@/components/Divider'
+import Heading from '@/components/Heading'
+import Card from '@/components/Card'
 import RadioGroups from '@/components/RadioGroups'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
@@ -264,6 +298,8 @@ export default {
     ToggleButton,
     Checkbox,
     Divider,
+    Heading,
+    Card,
     RadioGroups,
     FormInput,
     NumberInput
