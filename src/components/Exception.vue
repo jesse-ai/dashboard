@@ -29,15 +29,16 @@
 
     <br>
 
-    <FormInput title="Email (optional)"
-               description="Enter your email address for us to know who sent the feedback and possibly reply back to you."
-               input-type="email"
-               placeholder="Email address..."
-               name="email"
-               :object="form"
-    />
-
-    <br>
+    <div v-if="!hasLivePluginInstalled">
+      <FormInput title="Email (must be registered with on Jesse.Trade)"
+                 description="Enter your email address for us to know who sent the feedback and possibly reply back to you. It must be the email address of your account on Jesse.Trade"
+                 input-type="email"
+                 placeholder="Email address..."
+                 name="email"
+                 :object="form"
+      />
+      <br>
+    </div>
 
     <!-- export chart -->
     <ToggleButton v-if="showLogToggle"
@@ -50,7 +51,11 @@
 
     <div class="flex justify-end item-center">
       <button class="btn-link text-indigo-600 dark:text-indigo-400 mr-4" @click="modals.exceptionReport = false">Cancel</button>
-      <button class="btn-primary" @click="report">Submit</button>
+      <button
+        :disabled="!form.email.length && !hasLivePluginInstalled"
+        class="btn-primary" @click="report">
+        Submit
+      </button>
     </div>
   </SlideOver>
 
@@ -136,7 +141,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals']),
+    ...mapState(useMainStore, ['modals', 'hasLivePluginInstalled']),
     alert () {
       if (this.mode === 'backtest' && !this.debugMode) {
         return {

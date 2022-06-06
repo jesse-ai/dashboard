@@ -32,7 +32,7 @@
       </button>
 
       <button id="feedback-submit-button" class="btn-primary w-48"
-              :disabled="!form.description.length || !form.email.length"
+              :disabled="!form.description.length || (!form.email.length && !hasLivePluginInstalled)"
               @click="submit()">
         Submit
       </button>
