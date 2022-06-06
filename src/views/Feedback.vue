@@ -14,15 +14,16 @@
 
     <br>
 
-    <FormInput title="Email (optional)"
-               description="Enter your email address for us to know who sent the feedback and possibly reply back to you."
-               input-type="email"
-               placeholder="Email address..."
-               name="email"
-               :object="form"
-    />
-
-    <br>
+    <div v-if="!hasLivePluginInstalled">
+      <FormInput title="Email (must be registered with on Jesse.Trade)"
+                 description="Enter your email address for us to know who sent the feedback and possibly reply back to you. It must be the email address of your account on Jesse.Trade"
+                 input-type="email"
+                 placeholder="Email address..."
+                 name="email"
+                 :object="form"
+      />
+      <br>
+    </div>
 
     <div class="flex justify-end">
       <button id="feedback-cancel-button" class="btn-link mr-8"
@@ -31,7 +32,7 @@
       </button>
 
       <button id="feedback-submit-button" class="btn-primary w-48"
-              :disabled="!form.description.length"
+              :disabled="!form.description.length || !form.email.length"
               @click="submit()">
         Submit
       </button>
@@ -57,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals'])
+    ...mapState(useMainStore, ['modals', 'hasLivePluginInstalled'])
   },
   methods: {
     submit () {
