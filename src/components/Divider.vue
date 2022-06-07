@@ -4,7 +4,7 @@
       <div class="w-full border-t-2 border-dashed border-gray-300 dark:border-gray-600" />
     </div>
     <div class="relative flex justify-start">
-      <span class="pr-3 dark:bg-backdrop-dark text-lg font-medium text-gray-900 dark:text-gray-100"
+      <span class="pr-3 text-lg font-medium text-gray-900 dark:text-gray-100"
             :class="backgroundClasses"
             v-text="title"/>
     </div>
