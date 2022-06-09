@@ -12,10 +12,10 @@
       <button
         class="btn-nav"
         @click="copyInfoLogs">
-        <CheckIcon v-if="copiedLogsInfo" class="h-6 w-6" aria-hidden="true" />
-        <ClipboardIcon v-if="!copiedLogsInfo && results.infoLogs.length != 0" class="h-6 w-6" aria-hidden="true" />
+        <CheckIcon v-if="copiedLogsInfo" class="h-6 w-6" aria-hidden="true"/>
+        <ClipboardIcon v-if="!copiedLogsInfo && results.infoLogs.length != 0" class="h-6 w-6" aria-hidden="true"/>
       </button>
-      <input id="copy-info-logs" type="hidden" :value="results.infoLogs" >
+      <input id="copy-info-logs" type="hidden" :value="results.infoLogs">
     </template>
   </SlideOver>
 
@@ -30,15 +30,16 @@
     <h3 v-if="!results.exception.error" class="mt-8 animate-pulse" v-text="remainingTimeText"/>
 
     <div class="mt-8">
-      <button data-cy="backtest-cancel-button" class="flex justify-center items-center btn-cancel mb-4 w-64" @click="cancel($route.params.id)">
-        <BanIcon class="w-5 h-5 mr-2" />
+      <button data-cy="backtest-cancel-button" class="flex justify-center items-center btn-cancel mb-4 w-64"
+              @click="cancel($route.params.id)">
+        <BanIcon class="w-5 h-5 mr-2"/>
         Cancel
       </button>
 
       <a v-if="form.debug_mode && results.exception.error && results.progressbar.current !== 0"
          :href="logsUrl"
          class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-        <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+        <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
         Debugging Logs
       </a>
     </div>
@@ -135,10 +136,7 @@
            class="w-full mx-auto">
         <div>
           <Divider title="Routes"/>
-          <MultipleValuesTable :data="results.routes_info" header />
-
-          <Divider class="mt-16" title="Info"/>
-          <KeyValueTable :data="results.info"/>
+          <MultipleValuesTable :data="results.routes_info" header/>
 
           <Divider v-if="results.hyperparameters.length" class="mt-16" title="Hyperparameters"/>
           <KeyValueTable v-if="results.hyperparameters.length" :data="results.hyperparameters"/>
@@ -162,67 +160,76 @@
       <!-- Action Buttons -->
       <div v-if="!results.executing">
         <div v-if="results.showResults">
-          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full" @click="rerun($route.params.id)">
-            <RefreshIcon class="w-5 h-5 mr-2" />
+          <button class="flex justify-center items-center btn-primary text-center mb-4 w-full"
+                  @click="rerun($route.params.id)">
+            <RefreshIcon class="w-5 h-5 mr-2"/>
             Rerun
           </button>
 
-          <button class="flex justify-center items-center btn-success text-center mb-4 w-full" @click="newBacktest($route.params.id)">
-            <ReplyIcon class="w-5 h-5 mr-2" />
+          <button class="flex justify-center items-center btn-success text-center mb-4 w-full"
+                  @click="newBacktest($route.params.id)">
+            <ReplyIcon class="w-5 h-5 mr-2"/>
             New session
           </button>
 
           <a v-if="form.debug_mode"
              :href="logsUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             Debugging Logs
           </a>
 
           <a v-if="form.export_chart && hasExecutedTrades"
              :href="legacyChartUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             Legacy Chart
           </a>
 
           <a v-if="form.export_full_reports && hasExecutedTrades"
              :href="fullReportsUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             QuantStats Report
           </a>
 
           <a v-if="form.export_csv && hasExecutedTrades"
              :href="csvUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             CSV
           </a>
 
           <a v-if="form.export_json && hasExecutedTrades"
              :href="jsonUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             JSON
           </a>
 
           <a v-if="form.export_tradingview && hasExecutedTrades"
              :href="tradingviewUrl"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
-            <DocumentDownloadIcon class="w-5 h-5 mr-2" />
+            <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             TradingView Pine Editor
           </a>
+
+          <hr class="my-8 border-2 dark:border-gray-600 rounded-full">
+
+          <KeyValueTableSimple :data="results.info"/>
         </div>
 
         <div v-else>
-          <button data-cy="start-button" class="flex items-center justify-center btn-primary text-center mb-4 w-full" @click="start($route.params.id)">
-            <LightningBoltIcon class="w-5 h-5 mr-2" />
+          <button data-cy="start-button" class="flex items-center justify-center btn-primary text-center mb-4 w-full"
+                  @click="start($route.params.id)">
+            <LightningBoltIcon class="w-5 h-5 mr-2"/>
             Start
           </button>
 
-          <button data-cy="start-new-tab-button" class="flex items-center justify-center btn-secondary text-center mb-4 w-full" @click="startInNewTab($route.params.id)">
-            <PlusSmIcon class="w-5 h-5 mr-2" />
+          <button data-cy="start-new-tab-button"
+                  class="flex items-center justify-center btn-secondary text-center mb-4 w-full"
+                  @click="startInNewTab($route.params.id)">
+            <PlusSmIcon class="w-5 h-5 mr-2"/>
             Start in a new tab
           </button>
         </div>
@@ -239,7 +246,14 @@ import LayoutWithSidebar from '@/layouts/LayoutWithSidebar'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import { useMainStore } from '@/stores/main'
 import { ClipboardIcon, CheckIcon } from '@heroicons/vue/solid'
-import { LightningBoltIcon, PlusSmIcon, RefreshIcon, ReplyIcon, DocumentDownloadIcon, BanIcon } from '@heroicons/vue/outline'
+import {
+  LightningBoltIcon,
+  PlusSmIcon,
+  RefreshIcon,
+  ReplyIcon,
+  DocumentDownloadIcon,
+  BanIcon
+} from '@heroicons/vue/outline'
 import SlideOver from '@/components/Functional/SlideOver'
 import ToggleButton from '@/components/ToggleButton'
 import helpers from '@/helpers'

@@ -140,12 +140,10 @@ export const useBacktestStore = defineStore({
     candlesInfoEvent (id, data) {
       const list = [
         ['Period', data.duration],
-        [
-          'Starting-Ending Date',
-          `${helpers.timestampToDate(
-            data.starting_time
-          )} => ${helpers.timestampToDate(data.finishing_time)}`
-        ],
+        ['Starting Date', helpers.timestampToDate(
+          data.starting_time
+        )],
+        ['Ending Date', helpers.timestampToDate(data.finishing_time)],
         ['Exchange Type', data.exchange_type],
       ]
       if (data.exchange_type === 'futures') {
