@@ -138,15 +138,21 @@ export const useBacktestStore = defineStore({
     },
 
     candlesInfoEvent (id, data) {
-      this.tabs[id].results.info = [
+      const list = [
         ['Period', data.duration],
         [
           'Starting-Ending Date',
           `${helpers.timestampToDate(
             data.starting_time
           )} => ${helpers.timestampToDate(data.finishing_time)}`
-        ]
+        ],
+        ['Exchange Type', data.exchange_type],
       ]
+      if (data.exchange_type === 'futures') {
+        list.push(['Leverage', data.leverage])
+        list.push(['Leverage Mode', data.leverage_mode])
+      }
+      this.tabs[id].results.info = list
     },
     routesInfoEvent (id, data) {
       const arr = [['Exchange', 'Symbol', 'Timeframe', 'Strategy']]
