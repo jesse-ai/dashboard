@@ -290,7 +290,7 @@
       <!-- watch list -->
       <div v-if="results.monitoring && results.watchlist.length">
         <Divider class="mt-8" title="Watch List"/>
-        <KeyValueTable :data="results.watchlist"/>
+        <KeyValueTableSimple :data="results.watchlist"/>
       </div>
     </template>
   </LayoutWithSidebar>
@@ -320,7 +320,7 @@ import CircleProgressbar from '@/components/Functional/CircleProgressbar'
 import Exception from '@/components/Exception'
 import MultipleValuesTable from '@/components/MultipleValuesTable'
 import Divider from '@/components/Divider'
-import KeyValueTable from '@/components/KeyValueTable'
+import KeyValueTableSimple from '@/components/KeyValueTableSimple'
 import DividerWithButtons from '@/components/DividerWithButtons'
 import ReportLiveSession from '@/views/ReportLiveSession'
 
@@ -328,7 +328,7 @@ export default {
   name: 'LiveTab',
   components: {
     ReportLiveSession,
-    KeyValueTable,
+    KeyValueTableSimple,
     Divider,
     DividerWithButtons,
     ToggleButton,
