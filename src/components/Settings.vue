@@ -267,12 +267,29 @@
                      :step="0.0001" />
         </div>
 
+        <br>
 
-        <RadioGroups title="Leverage Mode:" :object="settings.optimization.exchange" name="futures_leverage_mode" :options="['cross', 'isolated']" />
+        <RadioGroups title="Type:"
+                     :object="settings.optimization.exchange"
+                     name="type"
+                     :options="['spot', 'futures']"
+                     default="futures"
+        />
 
         <br>
 
-        <NumberInput title="Leverage (x):" name="futures_leverage" :object="settings.optimization.exchange"/>
+        <div v-if="settings.optimization.exchange.type === 'futures'">
+          <RadioGroups title="Leverage Mode:"
+                       :object="settings.optimization.exchange"
+                       name="futures_leverage_mode"
+                       :options="['cross', 'isolated']"
+                       default="isolated"
+          />
+
+          <br>
+
+          <NumberInput title="Leverage (x):" name="futures_leverage" :object="settings.optimization.exchange" :default="1" />
+        </div>
       </Card>
     </div>
   </div>

@@ -76,6 +76,7 @@ export const useMainStore = defineStore({
         exchange: {
           balance: 10_000,
           fee: 0.001,
+          type: 'futures',
           futures_leverage: 3,
           futures_leverage_mode: 'cross',
         },
