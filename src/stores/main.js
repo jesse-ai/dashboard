@@ -101,6 +101,7 @@ export const useMainStore = defineStore({
         this.hasLivePluginInstalled = data.has_live_plugin_installed
 
         // create the list of exchanges
+        this.routes.exchanges = []
         data.exchanges.forEach(item => {
           const key = item[0]
           const value = item[1]
