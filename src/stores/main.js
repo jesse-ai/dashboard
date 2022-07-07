@@ -101,6 +101,7 @@ export const useMainStore = defineStore({
         this.hasLivePluginInstalled = data.has_live_plugin_installed
 
         // create the list of exchanges
+        this.routes.exchanges = []
         data.exchanges.forEach(item => {
           const key = item[0]
           const value = item[1]
@@ -121,7 +122,7 @@ export const useMainStore = defineStore({
         // sort this.routes.exchanges
         this.routes.exchanges.sort()
 
-        // TODO: do the same for live exchanges
+        // do the same for live exchanges
         this.routes.liveExchanges.forEach(item => {
           this.settings.live.exchanges[item] = {
             name: item,
