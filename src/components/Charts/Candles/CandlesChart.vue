@@ -204,8 +204,8 @@ export default {
         const color = order.side === 'buy' ? '#00AB5C' : '#FF497D'
         const title = _.startCase(_.lowerCase(`${order.side} ${order.type}`))
 
-        // if order is active and its symbol is the same as the position symbol
-        if (order.status === 'ACTIVE' && order.symbol === PositionSymbol) {
+        // if order is active or queued and its symbol is the same as the position symbol
+        if ((order.status === 'ACTIVE' || order.status === 'QUEUED') && order.symbol === PositionSymbol) {
           const orderPrice = {
             price: order.price,
             color,
