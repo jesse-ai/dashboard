@@ -122,7 +122,7 @@ export const useMainStore = defineStore({
         // sort this.routes.exchanges
         this.routes.exchanges.sort()
 
-        // TODO: do the same for live exchanges
+        // do the same for live exchanges
         this.routes.liveExchanges.forEach(item => {
           this.settings.live.exchanges[item] = {
             name: item,

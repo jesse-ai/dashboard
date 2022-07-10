@@ -311,9 +311,11 @@ export const useLiveStore = defineStore({
       ]
 
       for (const item of data) {
+        const qty = item.type === 'close' ? '' : item.qty
+        console.log(item.type, item.qty)
         this.tabs[id].results.positions.push([
           { value: item.symbol, style: '' },
-          { value: item.qty, style: helpers.colorBasedOnType(item.type), tooltip: `${item.value} ${item.currency}` },
+          { value: qty, style: helpers.colorBasedOnType(item.type), tooltip: `${item.value} ${item.currency}` },
           { value: helpers.roundPrice(item.entry), style: '' },
           { value: helpers.roundPrice(item.current_price), style: '' },
           { value: helpers.roundPrice(item.liquidation_price), style: '' },

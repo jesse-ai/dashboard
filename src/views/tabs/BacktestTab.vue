@@ -174,6 +174,7 @@
 
           <a v-if="form.debug_mode"
              :href="logsUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             Debugging Logs
@@ -181,6 +182,7 @@
 
           <a v-if="form.export_chart && hasExecutedTrades"
              :href="legacyChartUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             Legacy Chart
@@ -188,6 +190,7 @@
 
           <a v-if="form.export_full_reports && hasExecutedTrades"
              :href="fullReportsUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             QuantStats Report
@@ -195,6 +198,7 @@
 
           <a v-if="form.export_csv && hasExecutedTrades"
              :href="csvUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             CSV
@@ -202,6 +206,7 @@
 
           <a v-if="form.export_json && hasExecutedTrades"
              :href="jsonUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             JSON
@@ -209,6 +214,7 @@
 
           <a v-if="form.export_tradingview && hasExecutedTrades"
              :href="tradingviewUrl"
+             target="_blank"
              class="flex justify-center items-center btn-secondary text-center mb-4 w-full">
             <DocumentDownloadIcon class="w-5 h-5 mr-2"/>
             TradingView Pine Editor
