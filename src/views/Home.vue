@@ -64,10 +64,10 @@ export default {
         },
         {
           title: 'Tutorials',
-          description: 'Need step-by-step instructions? We have tutorials for for you',
+          description: 'Learn by watching the creator of Jesse writing strategies step-by-step',
           icon: AcademicCapIcon,
           background: 'bg-yellow-500',
-          url: 'https://jesse.trade/blog/tutorials/'
+          url: 'https://jesse.trade/youtube/'
         },
         {
           title: 'Discord',
