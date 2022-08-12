@@ -56,7 +56,7 @@ export default {
     return {
       items: [
         {
-          title: 'Docs',
+          title: 'Documentation',
           description: 'Our friendly documentation is the best place to find information about Jesse',
           icon: DocumentSearchIcon,
           background: 'bg-pink-500',
