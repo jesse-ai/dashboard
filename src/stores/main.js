@@ -39,6 +39,7 @@ export const useMainStore = defineStore({
       },
       live: {
         persistency: true,
+        generate_candles_from_1m: false,
         logging: {
           order_submission: true,
           order_cancellation: true,

@@ -108,6 +108,23 @@
       </Card>
 
       <Card>
+        <Heading>Candle Generation</Heading>
+        <p>
+          If the bellow option is <b>disabled</b>, Jesse will fetch candles for all timeframes (based on your routes) from the exchange. This ensures faster session start times and similar result in Jesse's chart and the one you see on the exchange (or TradingView).
+          <br>
+          <br>
+          If the bellow option is <b>enabled</b>, Jesse will fetch 1m candles from the exchange, and generate bigger timeframes by its own. Doing so, Jesse is able to offer timeframes that are not supported by the exchange. It also captures the real price action that a shady exchange might be covering up later. In such case, you'll see differnet candle chart in Jesse and the one you see on the exchange.
+        </p>
+
+        <br>
+
+        <ToggleButton :object="settings.live"
+                      name="generate_candles_from_1m"
+                      title="Generate Candles Locally"
+        />
+      </Card>
+
+      <Card>
         <Heading>Logs</Heading>
         <p>
           You can filter the types of events that you want to be logged. Logging is often useful for debugging
