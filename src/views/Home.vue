@@ -41,7 +41,7 @@ import {
   CalendarIcon,
   AcademicCapIcon,
   CodeIcon,
-  DocumentSearchIcon,
+  FilmIcon,
   UserGroupIcon,
   NewspaperIcon
 } from '@heroicons/vue/outline'
@@ -58,14 +58,14 @@ export default {
         {
           title: 'Documentation',
           description: 'Our friendly documentation is the best place to find information about Jesse',
-          icon: DocumentSearchIcon,
+          icon: AcademicCapIcon,
           background: 'bg-pink-500',
           url: 'https://docs.jesse.trade/'
         },
         {
           title: 'Tutorials',
           description: 'Learn by watching the creator of Jesse writing strategies step-by-step',
-          icon: AcademicCapIcon,
+          icon: FilmIcon,
           background: 'bg-yellow-500',
           url: 'https://jesse.trade/youtube/'
         },
