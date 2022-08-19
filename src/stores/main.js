@@ -104,9 +104,9 @@ export const useMainStore = defineStore({
         // create the list of exchanges
         this.routes.exchanges = []
         data.exchanges.forEach(item => {
-          const key = item[0]
-          const value = item[1]
-          this.routes.exchanges.push(key)
+          const key = item.name
+          const value = item
+          this.routes.exchanges.push(item)
           this.settings.backtest.exchanges[key] = {
             name: key,
             fee: value.fee,

@@ -35,6 +35,7 @@
       <!-- Content -->
       <div v-if="!results.executing && !results.showResults" data-cy="candles-page-content"
            class="pb-4">
+        <!-- exchange -->
         <Divider title="Exchange"/>
         <select
           v-model="form.exchange"
@@ -43,6 +44,7 @@
           <option v-for="item in exchangesArray" :key="item">{{ item }}</option>
         </select>
 
+        <!-- symbol -->
         <Divider class="mt-16" title="Symbol"/>
         <input v-model="form.symbol"
                data-cy="candles-symbol"
@@ -134,7 +136,11 @@ export default {
       return helpers.remainingTimeText(this.results.progressbar.estimated_remaining_seconds)
     },
     exchangesArray () {
-      return this.routes.exchanges
+      const arr = []
+      this.routes.exchanges.forEach(item => {
+        arr.push(item.name)
+      })
+      return arr
     },
   },
   watch: {

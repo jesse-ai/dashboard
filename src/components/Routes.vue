@@ -14,16 +14,22 @@
       </button>
     </DividerWithButtons>
 
-    <!-- Trading Routes -->
+    <!--
+     ================================
+      Trading Routes
+     ================================
+    -->
     <div v-for="(r, i) in form.routes"
          :key="r.exchange + i"
          :data-cy="'trading-route' + i"
          class="flex border dark:bg-backdrop-dark dark:border-gray-900 rounded-lg mb-4">
+      <!-- exchange -->
       <select v-model="r.exchange" :data-cy="'trading-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="item">{{ item }}</option>
+        <option v-for="item in exchanges" :key="item.name">{{ item.name }}</option>
       </select>
 
+      <!-- symbol -->
       <input v-model="r.symbol"
              :data-cy="'trading-route-symbol' + i"
              type="text"
@@ -31,10 +37,11 @@
              placeholder="ex: BTC-USDT"
       >
 
+      <!-- timeframe -->
       <select v-model="r.timeframe"
               :data-cy="'trading-route-timeframe' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
-        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in getSupportedTimeframes(r.exchange)" :key="item">{{ item }}</option>
       </select>
 
       <select v-model="r.strategy"
@@ -87,18 +94,24 @@
       </div>
     </div>
 
-    <!-- Extra Routes-->
+    <!--
+     ================================
+      Extra Routes
+     ================================
+    -->
     <Divider v-if="form.extra_routes.length" title="Extra Routes" />
 
     <div v-for="(r, i) in form.extra_routes"
          :key="r.exchange + i + r.timeframe"
          :data-cy="'extra-route' + i"
          class="flex border dark:bg-backdrop-dark dark:border-gray-900 rounded-lg mb-4">
+      <!-- exchange -->
       <select v-model="r.exchange" :data-cy="'extra-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="item">{{ item }}</option>
+        <option v-for="item in exchanges" :key="item.name">{{ item.name }}</option>
       </select>
 
+      <!-- symbol -->
       <input v-model="r.symbol"
              :data-cy="'extra-route-symbol' + i"
              type="text"
@@ -106,10 +119,11 @@
              placeholder="ex: BTC-USDT"
       >
 
+      <!-- timeframe -->
       <select v-model="r.timeframe"
               :data-cy="'extra-route-timeframe' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
-        <option v-for="item in routes.timeframes" :key="item">{{ item }}</option>
+        <option v-for="item in getSupportedTimeframes(r.exchange)" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -222,7 +236,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['routes']),
+    ...mapState(useMainStore, ['routes', 'settings']),
     exchanges () {
       const isLive = this.$route.name === 'Live'
       return isLive ? this.routes.liveExchanges : this.routes.exchanges
@@ -409,8 +423,6 @@ export default {
       newItem.strategy = item.strategy
       newItem.symbol = ''
       newItem.timeframe = item.timeframe
-
-
       this.form.routes.splice(itemIndex + 1, 0, newItem)
     },
     duplicateExtraRoutes (item) {
@@ -420,8 +432,6 @@ export default {
       newItem.strategy = item.strategy
       newItem.symbol = ''
       newItem.timeframe = item.timeframe
-
-
       this.form.extra_routes.splice(itemIndex + 1, 0, newItem)
     },
     moveUpRoutes (item) {
@@ -455,7 +465,20 @@ export default {
         this.form.extra_routes[itemIndex] = followingItem
         this.form.extra_routes[itemIndex + 1] = item
       }
-    }
+    },
+    getSupportedTimeframes (exchange) {
+      // if exchange is not selected, return empty array
+      if (!exchange) {
+        return []
+      }
+
+      // if settings.live.generate_candles_from_1m is true, return this.routes.timeframes
+      if (this.settings.live.generate_candles_from_1m) {
+        return this.routes.timeframes
+      }
+
+      return this.exchanges.find(item => item.name === exchange).supported_timeframes
+    },
   }
 }
 </script>
