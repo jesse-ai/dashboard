@@ -367,6 +367,16 @@ export default {
       return arr
     }
   },
+  created () {
+    // if this.$route.name is either "Backtest", "Optimization" or "Live", set the currentTab to that value
+    if (this.$route.name === 'Backtest') {
+      this.currentTab = 'Backtest'
+    } else if (this.$route.name === 'Optimization') {
+      this.currentTab = 'Optimization'
+    } else if (this.$route.name === 'Live') {
+      this.currentTab = 'Live'
+    }
+  },
   mounted () {
     this.sortExchanges()
   },
