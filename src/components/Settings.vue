@@ -154,7 +154,9 @@
                      title="Warmup Candles"
                      :object="settings.live"
                      description="Number of warmup candles that is loaded before starting each session"
-                     name="warm_up_candles" input-type="number" />
+                     name="warm_up_candles"
+                     :min="1"
+                     input-type="number" />
         </div>
       </Card>
 
