@@ -12,7 +12,7 @@ function newTab () {
     session_id: '',
     name: 'Tab 0',
     form: helpers.getDefaultFromLocalStorage('liveForm', {
-      debug_mode: false,
+      debug_mode: true,
       paper_mode: true,
       routes: [],
       extra_routes: []
