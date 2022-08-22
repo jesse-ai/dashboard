@@ -10,6 +10,7 @@
            :autocomplete="name"
            :placeholder="placeholder"
            :step="step"
+           :min="min"
            class="mt-1 input" >
 
     <input v-else
@@ -56,7 +57,11 @@ export default {
     step: {
       type: Number,
       default: 1
-    }
+    },
+    min: {
+      type: Number,
+      default: 0
+    },
   }
 }
 </script>
