@@ -477,7 +477,13 @@ export default {
         return this.routes.timeframes
       }
 
-      return this.exchanges.find(item => item.name === exchange).supported_timeframes
+      const selectedExchange = this.exchanges.find(item => item.name === exchange)
+      if (selectedExchange) {
+        return selectedExchange.supported_timeframes
+      } else {
+        console.log('Could not find the exchange. Check your route inputs.')
+        return []
+      }
     },
   }
 }
