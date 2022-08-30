@@ -125,8 +125,8 @@ export const useMainStore = defineStore({
 
         // do the same for live exchanges
         this.routes.liveExchanges.forEach(item => {
-          this.settings.live.exchanges[item] = {
-            name: item,
+          this.settings.live.exchanges[item.name] = {
+            name: item.name,
             fee: 0.001,
             futures_leverage_mode: 'cross',
             futures_leverage: 2,
