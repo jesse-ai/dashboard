@@ -41,7 +41,7 @@
           v-model="form.exchange"
           data-cy="candles-exchange"
           class="dark:bg-backdrop-dark hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer w-full px-6 py-6 border border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-0 dark:focus:border-indigo-400 focus:border-indigo-500 rounded-md">
-          <option v-for="item in exchangesArray" :key="item">{{ item }}</option>
+          <option v-for="item in backtestingExchangeNames" :key="item">{{ item }}</option>
         </select>
 
         <!-- symbol -->
@@ -131,16 +131,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['routes', 'isInitiated']),
+    ...mapState(useMainStore, ['isInitiated', 'backtestingExchangeNames']),
     remainingTimeText () {
       return helpers.remainingTimeText(this.results.progressbar.estimated_remaining_seconds)
-    },
-    exchangesArray () {
-      const arr = []
-      this.routes.exchanges.forEach(item => {
-        arr.push(item.name)
-      })
-      return arr
     },
   },
   watch: {
@@ -171,7 +164,7 @@ export default {
     ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
     initiate () {
       if (this.isInitiated === true && this.form.exchange === '') {
-        this.form.exchange = this.routes.exchanges[0]
+        this.form.exchange = this.backtestingExchangeNames[0]
       }
     },
     checkSymbol () {

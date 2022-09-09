@@ -38,16 +38,6 @@ import { useMainStore } from '@/stores/main'
 
 export default {
   name: 'MakeStrategy',
-  // props: {
-  //   object: {
-  //     type: Object,
-  //     required: true
-  //   },
-  //   name: {
-  //     type: String,
-  //     required: true
-  //   },
-  // },
   data () {
     return {
       form: {
@@ -56,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['modals', 'routes']),
+    ...mapState(useMainStore, ['strategies', 'modals']),
   },
   methods: {
     create () {
@@ -70,8 +60,8 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           this.notyf.success('Successfully created strategy')
-          this.routes.strategies.push(this.form.name)
-          this.routes.strategies.sort()
+          this.strategies.push(this.form.name)
+          this.strategies.sort()
           this.modals.makeStrategy = false
         } else {
           this.notyf.error(res.data.message)

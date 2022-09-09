@@ -83,58 +83,77 @@ export const useMainStore = defineStore({
         },
       }
     },
-    routes: {
-      exchanges: [],
-      liveExchanges: [],
-      timeframes: ['1m', '3m', '5m', '15m', '30m', '45m', '1h', '2h', '3h', '4h', '6h', '8h', '12h', '1D'],
-      strategies: [],
-    }
+    strategies: [],
+    exchangeInfo: {},
+    jesse_supported_timeframes: [],
   }),
+  getters: {
+    backtestingExchangeNames () {
+      const arr = []
+      for (const key in this.exchangeInfo) {
+        if (this.exchangeInfo[key].modes.backtesting) {
+          arr.push(key)
+        }
+      }
+      // sort arr's items by name alphabetically
+      return arr.sort()
+    },
 
+    liveExchangeNames () {
+      const arr = []
+      for (const key in this.exchangeInfo) {
+        if (this.exchangeInfo[key].modes.live_trading) {
+          arr.push(key)
+        }
+      }
+      return arr.sort()
+    }
+  },
   actions: {
     initiate () {
       axios.post('/general-info').then(res => {
         const data = res.data
         this.systemInfo = data.system_info
         this.updateInfo = data.update_info
-        this.routes.liveExchanges = data.live_exchanges
-        this.routes.strategies = data.strategies
+        this.strategies = data.strategies
+        this.exchangeInfo = data.exchanges
+        this.jesseSupportedTimeframes = data.jesse_supported_timeframes
         this.hasLivePluginInstalled = data.has_live_plugin_installed
 
-        // create the list of exchanges
-        this.routes.exchanges = []
-        data.exchanges.forEach(item => {
-          const key = item.name
-          const value = item
-          this.routes.exchanges.push(item)
-          this.settings.backtest.exchanges[key] = {
-            name: key,
-            fee: value.fee,
-            balance: value.balance,
-            settlement_currency: value.settlement_currency,
-            type: value.type,
-          }
-          if (value.type === 'futures') {
-            this.settings.backtest.exchanges[key].futures_leverage_mode = value.futures_leverage_mode
-            this.settings.backtest.exchanges[key].futures_leverage = value.futures_leverage
-          }
-        })
+        // create the list of exchanges by setting the default values (further down we
+        // will override the default values with the user's settings fetched from the database)
+        console.log(this.exchangeInfo)
+        // loop through the this.exchangeInfo object
+        for (const key in this.exchangeInfo) {
+          const value = this.exchangeInfo[key]
 
-        // sort this.routes.exchanges
-        this.routes.exchanges.sort()
-
-        // do the same for live exchanges
-        this.routes.liveExchanges.forEach(item => {
-          this.settings.live.exchanges[item.name] = {
-            name: item.name,
-            fee: 0.001,
-            futures_leverage_mode: 'cross',
-            futures_leverage: 2,
-            balance: 10_000,
-            settlement_currency: 'USDT'
+          // for backtests
+          if (value.modes.backtesting) {
+            this.settings.backtest.exchanges[key] = {
+              name: key,
+              fee: value.fee,
+              balance: 10000,
+              type: value.type,
+            }
+            if (value.type === 'futures') {
+              this.settings.backtest.exchanges[key].futures_leverage_mode = 'cross'
+              this.settings.backtest.exchanges[key].futures_leverage = 2
+            }
           }
-        })
 
+          // for live trading
+          if (value.modes.live_trading) {
+            this.settings.live.exchanges[value.name] = {
+              name: key,
+              fee: value.fee,
+              futures_leverage_mode: 'cross',
+              futures_leverage: 2,
+              balance: 10_000,
+            }
+          }
+        }
+
+        // fetch and merge the user's settings from the database
         axios.post('/get-config', {
           current_config: this.settings
         }).then(res => {

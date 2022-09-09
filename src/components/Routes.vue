@@ -26,7 +26,7 @@
       <!-- exchange -->
       <select v-model="r.exchange" :data-cy="'trading-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="item.name">{{ item.name }}</option>
+        <option v-for="item in exchanges" :key="exchangeInfo[item].name">{{ exchangeInfo[item].name }}</option>
       </select>
 
       <!-- symbol -->
@@ -47,7 +47,7 @@
       <select v-model="r.strategy"
               :data-cy="'trading-route-strategy' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 ">
-        <option v-for="item in routes.strategies" :key="item">{{ item }}</option>
+        <option v-for="item in strategies" :key="item">{{ item }}</option>
       </select>
 
       <!-- More Button -->
@@ -108,7 +108,7 @@
       <!-- exchange -->
       <select v-model="r.exchange" :data-cy="'extra-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="item.name">{{ item.name }}</option>
+        <option v-for="item in exchanges" :key="exchangeInfo[item].name">{{ exchangeInfo[item].name }}</option>
       </select>
 
       <!-- symbol -->
@@ -197,7 +197,7 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
-import { mapState } from 'pinia'
+import { mapState, mapGetters } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import DividerWithButtons from '@/components/DividerWithButtons'
 
@@ -236,10 +236,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['routes', 'settings']),
+    ...mapState(useMainStore, ['routes', 'jesseSupportedTimeframes', 'exchangeInfo', 'settings', 'strategies', 'backtestingExchangeNames', 'liveExchangeNames']),
     exchanges () {
-      const isLive = this.$route.name === 'Live'
-      return isLive ? this.routes.liveExchanges : this.routes.exchanges
+      console.log(this.$route.name === 'Live' ? this.liveExchangeNames : this.backtestingExchangeNames)
+      return this.$route.name === 'Live' ? this.liveExchangeNames : this.backtestingExchangeNames
     }
   },
   watch: {
@@ -383,8 +383,8 @@ export default {
       this.form.routes.push({
         exchange: this.exchanges[0],
         symbol: 'BTC-USDT',
-        timeframe: this.routes.timeframes[0],
-        strategy: this.routes.strategies[0]
+        timeframe: this.jesseSupportedTimeframes[0],
+        strategy: this.strategies[0]
       })
     },
     addRoute () {
@@ -392,8 +392,8 @@ export default {
       this.form.routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: '',
-        timeframe: this.routes.timeframes[0],
-        strategy: this.routes.strategies[0]
+        timeframe: this.jesseSupportedTimeframes[0],
+        strategy: this.strategies[0]
       })
     },
     addExtraRoute () {
@@ -401,7 +401,7 @@ export default {
       this.form.extra_routes.push({
         exchange: this.form.routes[this.form.routes.length - 1].exchange,
         symbol: '',
-        timeframe: this.routes.timeframes[0]
+        timeframe: this.jesseSupportedTimeframes[0]
       })
     },
     deleteRoute (item) {
@@ -467,19 +467,25 @@ export default {
       }
     },
     getSupportedTimeframes (exchange) {
+      console.log(exchange)
       // if exchange is not selected, return empty array
       if (!exchange) {
         return []
       }
 
-      // if settings.live.generate_candles_from_1m is true, return this.routes.timeframes
-      if (this.settings.live.generate_candles_from_1m) {
-        return this.routes.timeframes
+      // if not live, return jesseSupportedTimeframes
+      if (this.$route.name !== 'Live') {
+        return this.jesseSupportedTimeframes
       }
 
-      const selectedExchange = this.exchanges.find(item => item.name === exchange)
-      if (selectedExchange) {
-        return selectedExchange.supported_timeframes
+      // if settings.live.generate_candles_from_1m is true, return this.jesseSupportedTimeframes
+      if (this.settings.live.generate_candles_from_1m) {
+        return this.jesseSupportedTimeframes
+      }
+
+      if (exchange) {
+        console.log(exchange, this.exchangeInfo, this.exchangeInfo[exchange])
+        return this.exchangeInfo[exchange].supported_timeframes
       } else {
         console.log('Could not find the exchange. Check your route inputs.')
         return []
