@@ -159,6 +159,7 @@ export default {
   },
   created () {
     this.initiate()
+    this.checkSymbol()
   },
   methods: {
     ...mapActions(useCandlesStore, ['addTab', 'startInNewTab', 'start', 'cancel', 'rerun', 'newBacktest']),
@@ -174,6 +175,11 @@ export default {
       const ERRORS = {
         maxSymbolLengthErrorMessage: 'Maximum symbol length is exceeded!',
         mustContainDashErrorMessage: 'Symbol parameter must contain "-" character!',
+        emptySymbolErrorMessage: 'Symbol parameter cannot be empty',
+      }
+
+      if (this.form.symbol.length === 0) {
+        symbolErrors.push(ERRORS.emptySymbolErrorMessage)
       }
 
       if (!symbolErrors.includes(ERRORS.maxSymbolLengthErrorMessage) && this.form.symbol.length > 19) {
