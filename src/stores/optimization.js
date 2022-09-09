@@ -228,7 +228,6 @@ export const useOptimizationStore = defineStore({
       }
     },
     bestCandidatesEvent (id, data) {
-      // console.log(id, data)
       // 'training_win_rate': self.population[j]['training_log']['win-rate'],
       // 'training_total_trades': self.population[j]['training_log']['total'],
       // 'training_pnl': self.population[j]['training_log']['PNL'],

@@ -238,7 +238,6 @@ export default {
   computed: {
     ...mapState(useMainStore, ['routes', 'jesseSupportedTimeframes', 'exchangeInfo', 'settings', 'strategies', 'backtestingExchangeNames', 'liveExchangeNames']),
     exchanges () {
-      console.log(this.$route.name === 'Live' ? this.liveExchangeNames : this.backtestingExchangeNames)
       return this.$route.name === 'Live' ? this.liveExchangeNames : this.backtestingExchangeNames
     }
   },
@@ -467,7 +466,6 @@ export default {
       }
     },
     getSupportedTimeframes (exchange) {
-      console.log(exchange)
       // if exchange is not selected, return empty array
       if (!exchange) {
         return []
@@ -484,7 +482,6 @@ export default {
       }
 
       if (exchange) {
-        console.log(exchange, this.exchangeInfo, this.exchangeInfo[exchange])
         return this.exchangeInfo[exchange].supported_timeframes
       } else {
         console.log('Could not find the exchange. Check your route inputs.')

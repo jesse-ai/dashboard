@@ -122,7 +122,6 @@ export const useMainStore = defineStore({
 
         // create the list of exchanges by setting the default values (further down we
         // will override the default values with the user's settings fetched from the database)
-        console.log(this.exchangeInfo)
         // loop through the this.exchangeInfo object
         for (const key in this.exchangeInfo) {
           const value = this.exchangeInfo[key]
