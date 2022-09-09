@@ -5,18 +5,18 @@
     </div>
 
     <div class="flex">
-      <div class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-50 dark:bg-black dark:hover:bg-gray-900 dark:border-gray-900 rounded-l" @click="decrease">
+      <button class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-50 dark:bg-black dark:hover:bg-gray-900 dark:border-gray-900 rounded-l" @click="decrease">
         -
-      </div>
+      </button>
 
       <input v-model="object[name]"
              class="border border-gray-200 p-2 text-center focus:outline-none focus:ring-0 dark:bg-gray-800 dark:border-gray-900"
              type="text"
              :name="name" >
 
-      <div class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-50 dark:bg-black dark:hover:bg-gray-900 dark:border-gray-900 rounded-r" @click="increase">
+      <button class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-50 dark:bg-black dark:hover:bg-gray-900 dark:border-gray-900 rounded-r" @click="increase">
         +
-      </div>
+      </button>
     </div>
   </div>
 </template>
