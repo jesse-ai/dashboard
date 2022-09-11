@@ -481,12 +481,13 @@ export default {
         return this.jesseSupportedTimeframes
       }
 
-      if (exchange) {
-        return this.exchangeInfo[exchange].supported_timeframes
-      } else {
-        console.log('Could not find the exchange. Check your route inputs.')
+      // if the this.exchangeInfo does not include exchange, return empty array
+      if (!this.exchangeInfo[exchange]) {
         return []
       }
+
+      // if it does, return the supported timeframes
+      return this.exchangeInfo[exchange].supported_timeframes
     },
   }
 }
