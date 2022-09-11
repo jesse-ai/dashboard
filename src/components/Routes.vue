@@ -197,7 +197,7 @@ import {
 } from '@heroicons/vue/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import Divider from '@/components/Divider'
-import { mapState, mapGetters } from 'pinia'
+import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import DividerWithButtons from '@/components/DividerWithButtons'
 
