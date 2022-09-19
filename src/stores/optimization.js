@@ -203,7 +203,7 @@ export const useOptimizationStore = defineStore({
         ['Annual Return', `${_.round(data.annual_return, 2)}%`],
         ['Expectancy', `${_.round(data.expectancy, 2)} (${_.round(data.expectancy_percentage, 2)}%)`],
         ['Avg Win | Avg Loss', `${_.round(data.average_win, 2)} | ${_.round(data.average_loss, 2)}`],
-        ['Ratio Avg Win / Avg Loss', _.round(data.open_pl, 2)],
+        ['Ratio Avg Win / Avg Loss', _.round(data.ratio_avg_win_loss, 2)],
         ['Win-rate', `${_.round(data.win_rate * 100, 2)}%`],
         ['Longs | Shorts', `${_.round(data.longs_percentage, 2)}% | ${_.round(data.shorts_percentage, 2)}%`],
         ['Avg Holding Time', data.average_holding_period],

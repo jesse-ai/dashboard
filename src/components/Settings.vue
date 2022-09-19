@@ -194,11 +194,18 @@
 
           <br>
 
+          <Heading>
+            Recurring Position Reports
+          </Heading>
+
           <p>
-            You will also receive recurring reports as notifications which are helpful when
-            you have open positions and want to know about latest status of them. You can
-            choose the timeframe for how frequently you want to receive them:
+            You will also receive recurring reports about your positions as notifications.
+            This gives you a little ease of mind so you don't have to constantly check your positions.
           </p>
+
+          <br>
+
+          <p>You can choose the <strong>timeframe</strong> for how frequently you want to receive them:</p>
 
           <select v-model="settings.live.notifications.position_report_timeframe" data-cy="live-setting-report-notification-timeframe"
                   class="dark:bg-backdrop-dark dark:hover:bg-gray-800 hover:bg-gray-50 cursor-pointer w-full py-2 my-4 rounded border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
