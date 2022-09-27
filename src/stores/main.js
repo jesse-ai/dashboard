@@ -12,6 +12,7 @@ export const useMainStore = defineStore({
     hasLivePluginInstalled: false,
     systemInfo: {},
     updateInfo: {},
+    planInfo: {},
     theme: localStorage.theme,
     modals: {
       settings: false,
@@ -97,16 +98,6 @@ export const useMainStore = defineStore({
       }
       // sort arr's items by name alphabetically
       return arr.sort()
-    },
-
-    liveExchangeNames () {
-      const arr = []
-      for (const key in this.exchangeInfo) {
-        if (this.exchangeInfo[key].modes.live_trading) {
-          arr.push(key)
-        }
-      }
-      return arr.sort()
     }
   },
   actions: {
@@ -119,6 +110,7 @@ export const useMainStore = defineStore({
         this.exchangeInfo = data.exchanges
         this.jesseSupportedTimeframes = data.jesse_supported_timeframes
         this.hasLivePluginInstalled = data.has_live_plugin_installed
+        this.planInfo = data.plan_info
 
         // create the list of exchanges by setting the default values (further down we
         // will override the default values with the user's settings fetched from the database)

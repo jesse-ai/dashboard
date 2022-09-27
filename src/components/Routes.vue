@@ -24,9 +24,10 @@
          :data-cy="'trading-route' + i"
          class="flex border dark:bg-backdrop-dark dark:border-gray-900 rounded-lg mb-4">
       <!-- exchange -->
+
       <select v-model="r.exchange" :data-cy="'trading-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:border-gray-900 dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="exchangeInfo[item].name">{{ exchangeInfo[item].name }}</option>
+        <option v-for="item in exchanges" :key="item.name" :disabled="!allowedToTradeIn(item.name)">{{ item.name }} {{ allowedToTradeIn(item.name) ? '' : ' (premium only)' }}</option>
       </select>
 
       <!-- symbol -->
@@ -108,7 +109,7 @@
       <!-- exchange -->
       <select v-model="r.exchange" :data-cy="'extra-route-exchange' + i"
               class="dark:bg-backdrop-dark dark:hover:bg-gray-700 hover:bg-gray-50 cursor-pointer w-full pl-3 pr-10 py-6 border-0 border-r border-gray-200 dark:border-gray-900 focus:outline-none focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500  rounded-l-lg">
-        <option v-for="item in exchanges" :key="exchangeInfo[item].name">{{ exchangeInfo[item].name }}</option>
+        <option v-for="item in exchanges" :key="item.name" :disabled="!allowedToTradeIn(item.name)">{{ item.name }} {{ allowedToTradeIn(item.name) ? '' : ' (premium only)' }}</option>
       </select>
 
       <!-- symbol -->
@@ -236,9 +237,28 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['routes', 'jesseSupportedTimeframes', 'exchangeInfo', 'settings', 'strategies', 'backtestingExchangeNames', 'liveExchangeNames']),
+    ...mapState(useMainStore, ['routes', 'jesseSupportedTimeframes', 'exchangeInfo', 'settings', 'strategies', 'planInfo']),
+    isLive () {
+      return this.$route.name === 'Live'
+    },
     exchanges () {
-      return this.$route.name === 'Live' ? this.liveExchangeNames : this.backtestingExchangeNames
+      const arr = []
+
+      for (const key in this.exchangeInfo) {
+        if (this.isLive) {
+          if (this.exchangeInfo[key].modes.live_trading) {
+            arr.push(this.exchangeInfo[key])
+          }
+        } else {
+          if (this.exchangeInfo[key].modes.backtesting) {
+            arr.push(this.exchangeInfo[key])
+          }
+        }
+      }
+
+      // TODO: sort them
+
+      return arr
     }
   },
   watch: {
@@ -262,6 +282,18 @@ export default {
     this.initiate()
   },
   methods: {
+    allowedToTradeIn (exchangeName) {
+      // can trade everywhere if it's not for live mode
+      if (!this.isLive) return true
+
+      // premium plans can trade everywhere
+      if (this.planInfo.plan === 'premium') {
+        return true
+      }
+
+      // otherwise, can trade if "required_live_plan" property of the exchange is "free"
+      return this.exchangeInfo[exchangeName].required_live_plan === 'free'
+    },
     checkRoutes () {
       this.totalRoutesError = []
       const symbolErrors = []
@@ -375,12 +407,14 @@ export default {
       }
     },
     initiate () {
+      // if already loaded, return
       if (this.form.routes.length) {
         return
       }
 
+      // else, fill it with sample data
       this.form.routes.push({
-        exchange: this.exchanges[0],
+        exchange: this.exchanges[0].name,
         symbol: 'BTC-USDT',
         timeframe: this.jesseSupportedTimeframes[0],
         strategy: this.strategies[0]
