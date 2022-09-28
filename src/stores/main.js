@@ -155,8 +155,7 @@ export const useMainStore = defineStore({
           notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         })
       }).catch(error => {
-        console.log(error)
-        const msg = `[${error.response.status}]: ${error.response.statusText}`
+        const msg = `${error.response.data.error}`
         console.error(msg)
         notifier.error(msg)
       })
