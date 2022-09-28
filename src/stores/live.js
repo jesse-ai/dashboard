@@ -3,6 +3,7 @@ import _ from 'lodash'
 import helpers from '@/helpers'
 import axios from '@/http'
 import { useMainStore } from '@/stores/main'
+import notifier from '../notifier'
 
 let idCounter = 0
 
@@ -116,7 +117,7 @@ export const useLiveStore = defineStore({
         debug_mode: this.tabs[id].form.debug_mode,
         paper_mode: this.tabs[id].form.paper_mode,
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         this.tabs[id].results.booting = false
       })
     },
@@ -128,7 +129,7 @@ export const useLiveStore = defineStore({
           id,
           paper_mode: this.tabs[id].form.paper_mode
         }
-      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
+      }).catch(error => notifier.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     stop (id) {
       axios.delete('/live', {
@@ -140,7 +141,7 @@ export const useLiveStore = defineStore({
       }).then(res => {
         this.tabs[id].modals.terminationConfirm = false
         this.tabs[id].results.terminating = true
-      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
+      }).catch(error => notifier.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     newLive (id) {
       this.tabs[id].results.monitoring = false
@@ -173,7 +174,7 @@ export const useLiveStore = defineStore({
       )}] ${data.message}\n`
     },
     errorLogEvent (id, data) {
-      this.notyf.error(data.message)
+      notifier.error(data.message)
 
       this.tabs[id].results.errorLogs += `[${helpers.timestampToTime(
         data.timestamp
@@ -237,10 +238,10 @@ export const useLiveStore = defineStore({
         this.tabs[id].results.candles = res.data.data
 
         if (!res.data.data.length) {
-          this.notyf.error('Could not load candles')
+          notifier.error('Could not load candles')
         }
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
     fetchLogs (id) {
@@ -259,7 +260,7 @@ export const useLiveStore = defineStore({
           )}] ${data.message}\n`
         })
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
 
       // error logs
@@ -277,7 +278,7 @@ export const useLiveStore = defineStore({
           )}] ${data.message}\n`
         })
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
     currentCandlesEvent (id, data) {
@@ -393,7 +394,7 @@ export const useLiveStore = defineStore({
       if (!this.tabs[id].results.finished) {
         this.tabs[id].results.finished = true
         this.tabs[id].results.terminating = false
-        this.notyf.success('Session terminated successfully')
+        notifier.success('Session terminated successfully')
       }
     }
   }

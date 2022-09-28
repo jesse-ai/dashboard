@@ -3,12 +3,10 @@ import App from './App.vue'
 import router from './router'
 // Plugins
 import websocket from './plugins/websocket'
-import notyf from '@/plugins/notyf'
 // Sentry
 // import * as Sentry from '@sentry/vue'
 // import { Integrations } from '@sentry/tracing'
 
-import 'notyf/notyf.min.css'
 import './assets/styles/styles.css'
 
 
@@ -40,18 +38,6 @@ const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
-app.use(notyf, {
-  duration: 5000,
-  dismissible: true,
-  ripple: false,
-  position: { x: 'right', y: 'bottom' },
-  types: [
-    {
-      type: 'info',
-      background: '#009efa'
-    }
-  ]
-})
 
 let wsPath = ''
 if (process.env.VUE_APP_SOCKET_PATH === '/') {
@@ -64,7 +50,6 @@ app.use(websocket, {
 })
 pinia.use(({ store }) => {
   store.$router = markRaw(router)
-  store.notyf = markRaw(app.notyf)
 })
 
 // import and register vue components globally

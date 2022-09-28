@@ -35,6 +35,7 @@
 import axios from 'axios'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
+import notifier from '../notifier'
 
 export default {
   name: 'MakeStrategy',
@@ -51,7 +52,7 @@ export default {
   methods: {
     create () {
       if (!this.form.name.length) {
-        this.notyf.error('Please fill the strategy name.')
+        notifier.error('Please fill the strategy name.')
         return
       }
 
@@ -59,15 +60,15 @@ export default {
         name: this.form.name,
       }).then((res) => {
         if (res.data.status === 'success') {
-          this.notyf.success('Successfully created strategy')
+          notifier.success('Successfully created strategy')
           this.strategies.push(this.form.name)
           this.strategies.sort()
           this.modals.makeStrategy = false
         } else {
-          this.notyf.error(res.data.message)
+          notifier.error(res.data.message)
         }
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     }
   }

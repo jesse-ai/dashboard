@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import _ from 'lodash'
 import helpers from '@/helpers'
 import axios from '@/http'
+import notifier from '../notifier'
 
 let idCounter = 0
 
@@ -68,7 +69,7 @@ export const useCandlesStore = defineStore({
         symbol: this.tabs[id].form.symbol,
         start_date: this.tabs[id].form.start_date,
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         this.tabs[id].results.executing = false
       })
     },
@@ -88,7 +89,7 @@ export const useCandlesStore = defineStore({
         if (window.Cypress) {
           this.tabs[id].results.executing = false
         }
-      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
+      }).catch(error => notifier.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
 
     progressbarEvent (id, data) {
@@ -119,7 +120,7 @@ export const useCandlesStore = defineStore({
     terminationEvent (id) {
       if (this.tabs[id].results.executing) {
         this.tabs[id].results.executing = false
-        this.notyf.success('Session terminated successfully')
+        notifier.success('Session terminated successfully')
       }
     },
   }

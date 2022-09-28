@@ -46,6 +46,7 @@
 <script>
 import { ArrowNarrowRightIcon, LockClosedIcon } from '@heroicons/vue/outline/esm'
 import axios from '@/http'
+import notifier from '../notifier'
 import { useMainStore } from '@/stores/main'
 import { mapActions, mapWritableState } from 'pinia'
 
@@ -86,14 +87,14 @@ export default {
       }).then(res => {
         sessionStorage.auth_key = res.data.auth_token
         this.setAuth()
-        this.notyf.success('Logged in successfully')
+        notifier.success('Logged in successfully')
       }).catch(error => {
         if (!error.response) {
-          this.notyf.error(`${error}`)
+          notifier.error(`${error}`)
         } else if (error.response.status === 401) {
-          this.notyf.error('Incorrect password')
+          notifier.error('Incorrect password')
         } else {
-          this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+          notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         }
       })
     }

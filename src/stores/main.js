@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from '@/http'
 import _ from 'lodash'
+import notifier from '../notifier'
 
 export const useMainStore = defineStore({
   id: 'main',
@@ -151,10 +152,13 @@ export const useMainStore = defineStore({
           this.settings = res.data.data.data
           this.isInitiated = true
         }).catch(error => {
-          this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+          notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         })
       }).catch(error => {
-        console.error(`[${error.response.status}]: ${error.response.statusText}`)
+        console.log(error)
+        const msg = `[${error.response.status}]: ${error.response.statusText}`
+        console.error(msg)
+        notifier.error(msg)
       })
 
       // set baseUrl to axios.defaults.baseURL
@@ -168,7 +172,7 @@ export const useMainStore = defineStore({
         axios.post('/update-config', {
           current_config: this.settings
         }).catch(error => {
-          this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+          notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         })
       },
       1000,

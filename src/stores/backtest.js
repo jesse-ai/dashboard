@@ -3,6 +3,7 @@ import _ from 'lodash'
 import helpers from '@/helpers'
 import axios from '@/http'
 import { useMainStore } from '@/stores/main'
+import notifier from '../notifier'
 
 let idCounter = 0
 
@@ -107,7 +108,7 @@ export const useBacktestStore = defineStore({
         export_full_reports: this.tabs[id].form.export_full_reports,
         export_json: this.tabs[id].form.export_json,
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
         this.tabs[id].results.executing = false
       })
     },
@@ -127,7 +128,7 @@ export const useBacktestStore = defineStore({
         if (window.Cypress) {
           this.tabs[id].results.executing = false
         }
-      }).catch(error => this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`))
+      }).catch(error => notifier.error(`[${error.response.status}]: ${error.response.statusText}`))
     },
     rerun (id) {
       this.tabs[id].results.showResults = false
@@ -239,7 +240,7 @@ export const useBacktestStore = defineStore({
     terminationEvent (id) {
       if (this.tabs[id].results.executing) {
         this.tabs[id].results.executing = false
-        this.notyf.success('Session terminated successfully')
+        notifier.success('Session terminated successfully')
       }
     },
     alertEvent (id, data) {

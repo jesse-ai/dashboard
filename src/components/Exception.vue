@@ -99,7 +99,7 @@ import SlideOver from '@/components/Functional/SlideOver'
 import { mapState } from 'pinia'
 import { useMainStore } from '@/stores/main'
 import axios from 'axios'
-
+import notifier from '../notifier'
 
 export default {
   name: 'Exception',
@@ -173,13 +173,13 @@ export default {
         if (res.data.status === 'success') {
           this.form.description = ''
           this.form.email = ''
-          this.notyf.success(res.data.message)
+          notifier.success(res.data.message)
           this.modals.exceptionReport = false
         } else if (res.data.status === 'error') {
-          this.notyf.error(res.data.message)
+          notifier.error(res.data.message)
         }
       }).catch(error => {
-        this.notyf.error(`[${error.response.status}]: ${error.response.statusText}`)
+        notifier.error(`[${error.response.status}]: ${error.response.statusText}`)
       })
     },
     copy () {
