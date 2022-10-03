@@ -5,7 +5,7 @@ const notifier = new Notyf({
   duration: 5000,
   dismissible: true,
   ripple: false,
-  position: { x: 'right', y: 'bottom' },
+  position: { x: 'left', y: 'bottom' },
   types: [
     {
       type: 'info',
