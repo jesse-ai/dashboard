@@ -18,7 +18,7 @@
         <input
           v-model="query"
           class="w-full pl-14 pr-4 py-4 rounded-full outline-none border-2 border-gray-200 focus:border-indigo-600 focus:ring-0 dark:bg-gray-800 dark:border-gray-900"
-          type="text"
+          type="search"
           placeholder="Search..."
           @input="typing = true"
         >
