@@ -364,7 +364,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['settings', 'systemInfo', 'hasLivePluginInstalled']),
+    ...mapState(useMainStore, ['settings', 'systemInfo', 'hasLivePluginInstalled', 'planInfo', 'exchangeInfo']),
+    isLive () {
+      return this.$route.name === 'Live'
+    },
     navigation () {
       const arr = [
         { name: 'Backtest', icon: CalculatorIcon },
@@ -388,6 +391,7 @@ export default {
   },
   mounted () {
     this.sortExchanges()
+    this.removeInactiveLiveExchanges()
   },
   methods: {
     round: _.round,
@@ -405,6 +409,28 @@ export default {
         liveExchange[item] = this.settings.live.exchanges[item]
       }
       this.settings.live.exchanges = liveExchange
+    },
+    removeInactiveLiveExchanges () {
+      // loop through this.settings.live.exchanges, if the
+      // allowedToTradeIn(exchange.name) is false, remove
+      // that item from this.settings.live.exchanges
+      for (const exchange of Object.keys(this.settings.live.exchanges)) {
+        if (!this.allowedToTradeIn(exchange)) {
+          delete this.settings.live.exchanges[exchange]
+        }
+      }
+    },
+    allowedToTradeIn (exchangeName) {
+      // can trade everywhere if it's not for live mode
+      if (!this.isLive) return true
+
+      // premium plans can trade everywhere
+      if (this.planInfo.plan === 'premium') {
+        return true
+      }
+
+      // otherwise, can trade if "required_live_plan" property of the exchange is "free"
+      return this.exchangeInfo[exchangeName].required_live_plan === 'free'
     },
     convertToSlug (Text) {
       return Text
