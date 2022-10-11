@@ -256,7 +256,17 @@ export default {
         }
       }
 
-      // TODO: sort them
+      // sort by item.name alphabetically, however,
+      // if item.name starts with "Bitget", put it first
+      arr.sort((a, b) => {
+        if (a.name.startsWith('Bitget')) {
+          return -1
+        } else if (b.name.startsWith('Bitget')) {
+          return 1
+        } else {
+          return a.name.localeCompare(b.name)
+        }
+      })
 
       return arr
     }
