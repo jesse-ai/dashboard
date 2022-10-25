@@ -124,6 +124,8 @@
             :object="form"
             name="paper_mode"
             title="Paper Trade"
+            :disabled="planInfo.plan !== 'premium'"
+            :disabled-guide="planInfo.plan !== 'premium' ? 'Premium plan required' : ''"
             description="Trade in real-time using actual exchange data with PAPER money."/>
         </div>
       </div>
@@ -377,7 +379,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['isInitiated']),
+    ...mapState(useMainStore, ['isInitiated', 'planInfo']),
     ...mapState(useMainStore, {
       navModals: 'modals'
     }),
