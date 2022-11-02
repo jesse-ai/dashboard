@@ -90,7 +90,7 @@
 
                   <div class="py-1">
                     <MenuItem v-if="shouldShowUpgradeButton" v-slot="{ active }">
-                      <a href="https://jesse.trade/plans"
+                      <a href="https://jesse.trade/pricing"
                          :class="[active ? 'bg-gray-100 dark:bg-gray-800' : '', 'flex justify-start items-center w-full text-left px-4 py-2 text-sm text-yellow-500 dark:text-yellow-300']"
                          target="_blank">
                         <SparklesIcon class="w-5 h-5 mr-2"/>
@@ -194,7 +194,7 @@
 
       <div class="px-2 py-2 space-y-1 border-t border-gray-200 dark:border-gray-900">
         <a v-if="shouldShowUpgradeButton"
-           href="https://jesse.trade/plans" target="_blank"
+           href="https://jesse.trade/pricing" target="_blank"
            class="flex justify-start items-center w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-200 rounded-md"
         >
           <DocumentAddIcon class="w-5 h-5 mr-2"/>
