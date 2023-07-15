@@ -216,7 +216,7 @@
         </div>
       </Card>
 
-      <Card v-if="settings.live.exchanges.length">
+      <Card v-if="Object.keys(settings.live.exchanges).length">
         <div v-for="(e, index) in settings.live.exchanges" :key="index">
           <Divider :title="e.name" bg-light="bg-gray-50" bg-dark="dark:bg-gray-700" />
 
