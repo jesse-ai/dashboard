@@ -67,7 +67,7 @@ export default {
           description: 'Learn by watching the creator of Jesse writing strategies step-by-step',
           icon: FilmIcon,
           background: 'bg-yellow-500',
-          url: 'https://www.youtube.com/channel/UCP7GU8awozElC70LoRTXxjQ'
+          url: 'https://jesse.trade/youtube'
         },
         {
           title: 'Discord',
