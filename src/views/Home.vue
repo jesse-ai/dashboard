@@ -88,7 +88,7 @@ export default {
           description: 'Keep up with our latest developments',
           icon: NewspaperIcon,
           background: 'bg-indigo-500',
-          url: 'https://jesse.trade/blog/news'
+          url: 'https://jesse.trade/blog'
         },
         {
           title: 'Roadmap',
